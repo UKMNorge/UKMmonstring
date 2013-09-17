@@ -64,7 +64,7 @@ function UKMN_monstring() {
 	global $UKMN, $lang;
 	
 	if(isset($_GET['contact'])) {
-		UKM_loader('api/kontakt.class');
+		require_once('UKM/kontakt.class.php');
 		require_once('monstring.contact.php');
 		echo contactForm();
 		return;
