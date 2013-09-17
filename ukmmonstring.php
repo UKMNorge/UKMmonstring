@@ -83,7 +83,7 @@ function UKMN_monstring() {
 function my_admin_scripts() {
 	wp_enqueue_script('media-upload');
 	wp_enqueue_script('thickbox');
-	wp_register_script('UKMcontactImageupload', WP_PLUGIN_URL.'/UKMMonstring/monstring.image.js', array('jquery','media-upload','thickbox'));
+	wp_register_script('UKMcontactImageupload', plugin_dir_url( __FILE__ ).'monstring.image.js', array('jquery','media-upload','thickbox'));
 	wp_enqueue_script('UKMcontactImageupload');
 }
 
