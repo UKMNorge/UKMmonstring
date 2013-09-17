@@ -6,7 +6,7 @@ $helper_deadlines				= '<span style="font-style: normal; font-size: 11px; color:
 								.'</span>';
 
 ## TIME AND PLACE
-$lang['time_and_place']			= 'Tid og sted';
+$lang['time_and_place']			= 'Tid og stedet';
 $lang['upl_edit_place']			= 'Info om m&oslash;nstringen';
 $lang['upl_name']				= 'M&oslash;nstringsnavn';
 $lang['upl_name_help']			= 'Hva m&oslash;nstringen heter, vanligvis kommune- / bydelsnavnet, for eksempel Volda, eller Bjugn og &Oslash;rland';
