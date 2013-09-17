@@ -56,7 +56,7 @@ function UKMMonstring_form($user) {
 	return '<form id="form_myplace" method="post" action="'.$target.'" class="validate">'
 		.'	<div id="hugesubmit_monstring"><div id="lagre">Lagre</div></div>'
 
-		.  UKMN_fieldset('Hola!'.$lang['time_and_place'], 
+		.  UKMN_fieldset($lang['time_and_place'], 
 						 '<table><tr>'
 						.'<td valign="top" style="border-bottom:none;" width="50%">'.$form_place->run().'</td>'
 						.'<td valign="top" style="border-bottom:none;">'.$form_time->run().'</td>'
