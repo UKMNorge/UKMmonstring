@@ -7,7 +7,7 @@ Author: UKM Norge / M Mandal
 Version: 1.0 
 Author URI: http://www.ukm-norge.no
 */
-require_once('UKM/inc/ukmlog.inc.php');
+//require_once('UKM/inc/ukmlog.inc.php');
 
 ## HOOK MENU AND SCRIPTS
 if(is_admin()) {
