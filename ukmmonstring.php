@@ -9,6 +9,7 @@ Author URI: http://www.ukm-norge.no
 */
 //require_once('UKM/inc/ukmlog.inc.php');
 
+require_once('UKM/monstring.class.php');
 ## HOOK MENU AND SCRIPTS
 if(is_admin()) {
 	global $blog_id;
