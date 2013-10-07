@@ -113,8 +113,13 @@
 	{% if kommuner|length > 1 %}
 	<fieldset class="ukmfieldset">
 		<legend>Hovedkontakter ved påmelding</legend>
-		Her vil det komme en liste over hvilke kontaktpersoner som vises ved påmelding.
-		
+		Ved påmelding velger deltakerne kommune, og i påmeldingsvinduet vil det alltid vises 1 kontaktperson for mønstringen. <br />
+		Ettersom dette er en fellesmønstring kan du tilpasse hvilken kontakt som skal vises ved påmelding.<br /><br />
+		Kontaktperson som vises i påmelding er den øverste (i listen over) med den gitte kommunen. Hvis du ikke oppgir kommune på dine kontaktpersoner vil den øverste kontakten vises for alle kommuner.
+		<label>Hovedkontakter for din mønstring</label>
+		<ol id="hovedkontakter" class="unstyled">
+		{% embed "hovedkontakter.twig.html" %}{% endembed %}
+		</ol>
 	</fieldset>
 	{% endif %}
 	

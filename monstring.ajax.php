@@ -29,28 +29,6 @@ switch($_GET['action']) {
 		}
 		break;
 
-	####################
-	## CHANGE THE ORDER OF CONTACTS
-	case 'contactOrder':
-		if(isset($_GET['pl_id']) && isset($_GET['order'])) {
-			$ids = explode(',', $_GET['order']);
-			# Loop all IDs
-			for($i=0; $i<sizeof($ids); $i++) {
-				# Convert to int and skip if empty
-				$id = (int) $ids[$i];
-				if(empty($id))
-					continue;
-				# prepare query
-				$qry = new SQLins('smartukm_rel_pl_ab',
-								  array('pl_id'=>$_GET['pl_id'],
-								  		'ab_id'=>$id));
-				$qry->add('order', $i);
-				$res = $qry->run();
-			}
-			die('void');
-		}
-		die('Beklager, en feil har oppstått');
-	break;
 	case 'listMainContacts':
 		UKM_loader('api/monstring.class');
 		$place = new monstring($_GET['pl_id']);

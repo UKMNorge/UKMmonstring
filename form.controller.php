@@ -13,6 +13,14 @@ foreach($kontakter as $kontakt) {
 							   );
 }
 
+
+
+$contacts = $pl->kontakter_pamelding();
+foreach($contacts as $kommune => $c)
+	$hovedkontakter[] = array('kommune' => $kommune,
+							  'name' => $c->get('name')
+							  );
+
 $infos = array('name' => $pl->get('pl_name'),
 			   'place' => $pl->get('pl_place'),
 			   'start' => $pl->get('pl_start'),
@@ -28,6 +36,7 @@ $infos = array('name' => $pl->get('pl_name'),
 			   'site_type' => get_option('site_type'),
 			   'season' => get_option('season'),
 			   'kontaktpersoner' => $kontaktpersoner,
+			   'hovedkontakter' => $kontaktpersoner,
 			   'plugin_path' => plugin_dir_url( __FILE__ ),
 			  );
 ?>
