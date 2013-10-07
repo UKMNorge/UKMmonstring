@@ -35,6 +35,14 @@ jQuery(document).ready(function(){
     jQuery.datepicker.setDefaults(jQuery.datepicker.regional['no']);
 
 /* SORTABLE LIST */ 
-	jQuery( "#kontaktpersoner" ).sortable({update: function(event, ui) { UKMMonstring_cSave(jQuery('#sortable').sortable('toArray'))}});
+	jQuery( "#kontaktpersoner" ).sortable({update: function(event, ui) { 
+		jQuery.post(ajaxurl
+			{'action': 'UKMmonstring_save_kontaktpersoner',
+			 'order': jQuery('#kontaktpersoner').sortable('toArray') },
+			function(response) {
+				alert('response' + response);
+			}
+		)};
+	});
 	jQuery( "#kontaktpersoner" ).disableSelection();
 });

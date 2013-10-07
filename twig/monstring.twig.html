@@ -73,7 +73,7 @@
 		
 		<ol class="unstyled" id="kontaktpersoner">
 			{% for kontakt in kontaktpersoner %}
-			<li class="well well-mini">
+			<li class="well well-mini" id="{{kontakt.id}}">
 				<img src="{{plugin_path}}img/draogslipp.png" height="50" />
 				<div class="image">
 					{% if kontakt.image %}
@@ -92,6 +92,13 @@
 					<span class="UKMSMS">{{kontakt.phone}}</span><br />
 					<a href="mailto:{{kontakt.email}}">{{kontakt.email}}</a>
 				</div>
+				<div class="actions">
+					<a href="#" class="edit">
+						<img src="//ico.ukm.no/pencil-32.png" /> Endre
+					</a>
+					<a href="#" class="delete">
+						<img src="//ico.ukm.no/trash-32.png" /> Slett
+					</a>
 				<div class="clearfix"></div>
 			</li>
 			{% endfor %}

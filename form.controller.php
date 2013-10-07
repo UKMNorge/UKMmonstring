@@ -3,7 +3,8 @@ $pl = new monstring(get_option('pl_id'));
 
 $kontakter = $pl->kontakter();
 foreach($kontakter as $kontakt) {
-	$kontaktpersoner[] = array('name' => $kontakt->get('name'),
+	$kontaktpersoner[] = array('id' => $kontakt->get('id'),
+							   'name' => $kontakt->get('name'),
 							   'kommune' => $kontakt->get('kommunenavn'),
 							   'image' => $kontakt->get('picture'),
 							   'email' => $kontakt->get('email'),

@@ -15,6 +15,8 @@ if(is_admin()) {
 	global $blog_id;
 	if($blog_id != 1)
 		add_action('admin_menu', 'UKMMonstring_menu',200);
+
+	add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
 }
 
 ## CREATE A MENU
@@ -38,6 +40,11 @@ function UKMMonstring_script() {
 function UKMMonstring() {
 	require_once('form.controller.php');
 	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
+}
+
+function UKMmonstring_save_kontaktpersoner() {
+	var_dump($_POST);
+	die();
 }
 
 /*
