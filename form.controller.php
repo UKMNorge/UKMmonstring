@@ -21,6 +21,33 @@ foreach($contacts as $kommune => $c)
 							  'name' => $c->get('name')
 							  );
 
+$konferansier = $nettredaksjon = $arrangor = $sceneteknikk = $matkultur = false;
+if(!$pl->registered()) {
+	$konferansier = $nettredaksjon = $arrangor = $sceneteknikk = true;
+} else {
+	$bt = $pl->getBandTypes();	
+	foreach($bt as $btid => $btname) {
+		switch( $btid ) {
+			case '4':
+				$konferansier = true;
+				break;
+			case '5':
+				$nettredaksjon = true;
+				break;
+			case '6':
+				$matkultur = true;
+				break;
+			case '8':
+				$arrangor = true;
+				break;
+			case '9':
+				$sceneteknikk = true;
+				break;
+		}
+	}
+}
+
+
 $infos = array('name' => $pl->get('pl_name'),
 			   'place' => $pl->get('pl_place'),
 			   'start' => $pl->get('pl_start'),

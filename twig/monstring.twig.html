@@ -106,8 +106,11 @@
 				</div>
 				<div class="clearfix"></div>
 			</li>
+			{% else %}
+			<li>Det er ikke lagt til noen kontaktpersoner enda</li>
 			{% endfor %}
 		</ol>
+		<button type="button" class="btn btn-success" value="Legg til ny kontaktperson" />
 	</fieldset>
 	
 	{% if kommuner|length > 1 %}
