@@ -38,6 +38,9 @@ function UKMMonstring_script() {
 
 ## SHOW STATS OF PLACES
 function UKMMonstring() {
+	if($_SERVER['REQUEST_TYPE']==='POST')
+		require_once('form.save.php');
+
 	require_once('form.controller.php');
 	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
 }
