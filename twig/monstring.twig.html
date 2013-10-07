@@ -1,6 +1,6 @@
 <h2>Registrer mønstring</h2>
 
-<fieldset class="new-missing pull-left" style="margin-right: 2em;">
+<fieldset style="margin-right: 2em;">
 	<legend>Tid og sted</legend>
 
 	<div class="row-fluid">
@@ -17,7 +17,6 @@
 	    </div>
 	</div>
 
-
 	<div class="row-fluid">
 	    <div class="span6 datetime">
 			<label for="m_name">Når starter mønstringen?</label>
@@ -32,7 +31,7 @@
 
 
 
-<fieldset class="new-missing pull-left" style="margin-right: 2em;">
+<fieldset class="" style="margin-right: 2em;">
 	<legend>Påmeldingsfrist(er) og tilbud</legend>
 
 	<div class="row-fluid">
@@ -45,6 +44,4 @@
 			{% embed "datetime.twig.html" with {'name': 'pl_deadline2', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
 	    </div>
 	</div>
-
-	
 </fieldset>

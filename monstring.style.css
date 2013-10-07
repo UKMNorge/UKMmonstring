@@ -3,11 +3,11 @@ div.ui-datepicker, div.ui-datepicker table{
 
 div.datetime input.datepicker {
 	height: 28px;
-	width: 56%;
+	width: 55%;
 }
 
 div.datetime div.hourmin {
-	width: 30%;
+	width: 40%;
 	float: right;
 }
 div.datetime div.hourmin select {
