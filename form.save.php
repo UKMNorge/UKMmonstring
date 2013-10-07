@@ -22,6 +22,7 @@
 	}
 */
 	
+	var_dump($_POST);
 	$place->update('pl_place', 'pl_place');
 	
 	$_POST['date_from'] = getDatePickerTime('date_from');
