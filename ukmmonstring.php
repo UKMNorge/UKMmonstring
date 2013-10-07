@@ -33,7 +33,10 @@ function UKMMonstring_script() {
 
 ## SHOW STATS OF PLACES
 function UKMMonstring() {
-	echo TWIG('monstring.twig.html',array(), dirname(__FILE__));
+	
+	$infos = array();			
+
+	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
 }
 
 /*

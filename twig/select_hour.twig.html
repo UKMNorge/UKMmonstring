@@ -1,4 +1,4 @@
-<select name="{{name}}">
+<select name="{{name}}_time">
 	{% for i in range(0,23) %}
 		<option value="{{ i }}"{{ i == selected ? 'selected="selected"' : '' }}>
 			{% if i < 10 %}
