@@ -108,9 +108,15 @@
 			</li>
 			{% endfor %}
 		</ol>
-		
 	</fieldset>
 	
+	{% if kommuner|length > 1 %}
+	<fieldset class="ukmfieldset">
+		<legend>Hovedkontakter ved påmelding</legend>
+		Her vil det komme en liste over hvilke kontaktpersoner som vises ved påmelding.
+		
+	</fieldset>
+	{% endif %}
 	
 	<fieldset class="ukmfieldset">
 		<legend>Hva kan deltakerne melde på?</legend>

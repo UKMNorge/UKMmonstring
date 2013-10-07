@@ -43,7 +43,19 @@ function UKMMonstring() {
 }
 
 function UKMmonstring_save_kontaktpersoner() {
-	var_dump($_POST);
+	$pl_id = get_option('pl_id');
+
+	foreach($_POST['order'] as $contact) {
+		$id = (int) $contact;
+		if(empty($id))
+			continue;
+		# UPDATE ORDER
+		$qry = new SQLins('smartukm_rel_pl_ab',
+						  array('pl_id'=>$pl_id,
+						  		'ab_id'=>$id));
+		$qry->add('order', $i);
+		$res = $qry->run();
+	}
 	die();
 }
 
