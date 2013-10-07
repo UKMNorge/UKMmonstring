@@ -2,8 +2,6 @@ div.ui-datepicker, div.ui-datepicker table{
  font-size:10px;
 }
 
-
-
 .ukmfieldset {
     margin: 10px;
     margin-top: 18px;
@@ -27,13 +25,25 @@ div.ui-datepicker, div.ui-datepicker table{
 }
 
 .formleft label, .formright label {
- font-weight: bold;
- font-size: 15px;
+    font-weight: bold;
+    font-size: 15px;
+    padding-bottom: 30px;
+    padding-top: 20px;
+}
+
+.preinput {
+    margin-top: 0px; 
+    margin-bottom: 1px;
+    font-size: 11px;
 }
 
 .helper {
  margin-top: 0px;
- font-size: 12px;
+ font-size: 11px;
+}
+
+.timeexp {
+ margin: 0px;
 }
 
 ol#tilbud label {
