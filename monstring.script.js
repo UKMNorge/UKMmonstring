@@ -41,7 +41,7 @@ jQuery(document).ready(function(){
 			 'order': jQuery('#kontaktpersoner').sortable('toArray') },
 			function(response) {
 				alert('response' + response);
-			}
-	)};
+		});
+	}});
 	jQuery( "#kontaktpersoner" ).disableSelection();
 });
