@@ -17,13 +17,13 @@
 				<label for="date_from">N&aring;r starter m&oslash;nstringen?</label>
 				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="date_from_datepicker" value="01.01.1970"/> kl. 
 				{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
-				{% embed "hourhelper.twig.html" %}
+				{% embed "hourhelper.twig.html" %}{% endembed %}
 			</div>
 			<div style="margin-top: 2px; margin-bottom: 0px;">
 				<label for="date_to">N&aring;r slutter m&oslash;nstringen?</label>
 				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="date_to_datepicker" value="01.01.1970"/> kl. 
 				{% embed "select_hourmin.twig.html" with {'name': 'date_to', 'selected_hour': pl_stop_hour, 'selected_min': pl_stop_min} %}{% endembed %}
-				{% embed "hourhelper.twig.html" %}
+				{% embed "hourhelper.twig.html" %}{% endembed %}
 			</div>
 		</div>
 	
@@ -53,23 +53,23 @@
 		<legend style="border: none; margin-left: 10px; font-weight: bold; font-size: 16px;">
 			Påmeldingsfrist(er) og mønstringstilbud
 		</legend>
-		
+
 		<div style="width: 45%; float: left;">
 			<div style="margin-top: 2px; margin-bottom: 0px;">
-				<label for="date_from"><strong>Påmeldingsfrist 1</label>
+				<label for="date_from"><strong>Påmeldingsfrist 1</strong></label>
 				<p style="margin-bottom: 0px;">Gjelder scene, video, utstilling, matkultur</p>
-				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline_datepicker" value="01.01.1970"/> kl. 
+				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline_datepicker" value="01.01.1970" /> kl. 
 				{% embed "select_hourmin.twig.html" with {'name': 'deadline', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
+				{% embed "hourhelper.twig.html" %}{% endembed %}
 			</div>
 			<div style="margin-top: 2px; margin-bottom: 0px;">
-				<label for="date_from"><strong>Påmeldingsfrist 2</label>
+				<label for="date_from"><strong>Påmeldingsfrist 2</strong></label>
 				<p style="margin-bottom: 0px;">Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk</p>
 				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline2_datepicker" value="01.01.1970"/> kl. 
 				{% embed "select_hourmin.twig.html" with {'name': 'deadline2', 'selected_hour': pl_stop_hour, 'selected_min': pl_stop_min} %}{% endembed %}
-				{% embed "hourhelper.twig.html" %}
+				{% embed "hourhelper.twig.html" %}{% endembed %}
 			</div>
-		</div>
-		
+		</div>	
 		
 		<div style="width: 45%; float: left;">
 			<ol class="unstyled">
@@ -121,9 +121,9 @@
 			</ol>
 		</div>
 	</fieldset>
+</form>
 
-
-
+<!--
 
 
 
@@ -197,3 +197,4 @@
 	</fieldset>
 	<p class="submit"><input type="submit" class="button" name="place_submit" id="place_submit" value="Lagre" /></p>
 </form>
+-->
