@@ -64,7 +64,7 @@ function UKMMonstring() {
 				   'site_type' => get_option('site_type'),
 				   'season' => get_option('season'),
 				   'kontaktpersoner' => $kontaktpersoner,
-				   'plugin_path' => plugin_dir_url( __FILE__ )),
+				   'plugin_path' => plugin_dir_url( __FILE__ ),
 				  );
 	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
 }
