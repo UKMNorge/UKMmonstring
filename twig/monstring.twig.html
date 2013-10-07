@@ -33,16 +33,45 @@
 
 
 <fieldset class="ukmfieldset">
-	<legend>Påmeldingsfrist(er) og tilbud</legend>
+	<legend>Påmeldingsfrist(er)</legend>
 
 	<div class="row-fluid">
 	    <div class="span6 datetime">
 			<label for="m_name">Påmeldingsfrist 1</label>
 			{% embed "datetime.twig.html" with {'name': 'pl_deadline', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
+			Gjelder scene, video, utstilling, matkultur 
 	    </div>
 	    <div class="span6 datetime">
 			<label for="m_name">Påmeldingsfrist 2</label>
 			{% embed "datetime.twig.html" with {'name': 'pl_deadline2', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
+			Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk
 	    </div>
 	</div>
+</fieldset>
+
+<fieldset class="ukmfieldset">
+	<legend>Hva kan deltakerne melde på?</legend>
+
+	<div class="alert alert-info">
+		<strong>Mønstringen tillater automatisk følgende:</strong><br />
+		Musikk, dans, teater, litteratur, annet på scenen, film og utstilling
+	</div>
+
+	<div class="row-fluid">
+	    <div class="span6 datetime">
+			<label for="m_name">Påmeldingsfrist 1</label>
+			{% embed "datetime.twig.html" with {'name': 'pl_deadline', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
+			Gjelder scene, video, utstilling, matkultur 
+	    </div>
+	    <div class="span6 datetime">
+			<label for="m_name">Påmeldingsfrist 2</label>
+			{% embed "datetime.twig.html" with {'name': 'pl_deadline2', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
+			Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk
+	    </div>
+	</div>
+	
+	<div class="alert alert-warning">
+		00:00 betyr <strong>innen</strong> datoen du har angitt. 23:55 betyr <strong>i l&oslash;pet av</strong> datoen du har angitt
+	</div>
+</div>
 </fieldset>
