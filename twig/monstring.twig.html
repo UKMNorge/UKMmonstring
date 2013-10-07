@@ -75,7 +75,10 @@
 			{% for kontakt in kontaktpersoner %}
 			<li class="well well-mini">
 				<div class="image">
+					{% if kontakt.image %}
 					<img src="{{kontakt.image}}" class="img-circle" />
+					{% endif %}
+					&nbsp;
 				</div>
 				<div class="name">
 					<strong>{{kontakt.name}}</strong>
@@ -87,6 +90,7 @@
 					<span class="UKMSMS">{{kontakt.phone}}</span>
 					<a href="mailto:{{kontakt.email}}">{{kontakt.email}}</a>
 				</div>
+				<div class="clearfix"></div>
 			</li>
 			{% endfor %}
 		</ol>
