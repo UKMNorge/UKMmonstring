@@ -67,8 +67,8 @@ foreach($offers as $offer) {
 		$ins = new SQLins('smartukm_rel_pl_bt');
 		$ins->add('pl_id', $plid);
 		$ins->add('bt_id', $id);
-		$ins = $ins->run();
 		echo $ins->debug();
+		$ins = $ins->run();
 	} else 
 		echo 'NOinsert';
 }
