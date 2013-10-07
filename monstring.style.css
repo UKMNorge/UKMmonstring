@@ -5,9 +5,13 @@ div.datetime input.datepicker {
 	height: 28px;
 	width: 70%;
 }
+
 div.datetime div.hourmin {
 	width: 10%;
 	float: right;
+}
+div.datetime div.hourmin select {
+ width: 99%;
 }
 
 .row-fluid {

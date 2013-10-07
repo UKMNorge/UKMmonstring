@@ -21,14 +21,14 @@
 	<div class="row-fluid">
 	    <div class="span6 datetime">
 			<label for="m_name">Når starter mønstringen?</label>
-			<input class="datepicker" type="text" id="pl_start_date" name="pl_start_date" value="">
 			{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
+			<input class="datepicker" type="text" id="pl_start_date" name="pl_start_date" value="">
 
 	    </div>
 	    <div class="span6 datetime">
 			<label for="m_name">Når slutter mønstringen?</label>
-			<input class="datepicker" type="text" id="pl_stop_date" name="pl_stop_date" value="">
 			{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
+			<input class="datepicker" type="text" id="pl_stop_date" name="pl_stop_date" value="">
 	    </div>
 	</div>
 </fieldset>
@@ -37,33 +37,19 @@
 
 <fieldset class="new-missing pull-left" style="margin-right: 2em;">
 	<legend>Påmeldingsfrist(er) og tilbud</legend>
+
 	<div class="row-fluid">
-	    <div class="span6">
+	    <div class="span6 datetime">
 			<label for="m_name">Påmeldingsfrist 1</label>
-			<input class="input-block-level" type="text" id="m_name" name="m_name" value="" autofocus>
-			Gjelder
+			<input class="datepicker" type="text" id="pl_start_date" name="pl_start_date" value="">
+			{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
 	    </div>
-	    <div class="span6">
+	    <div class="span6 datetime">
 			<label for="m_name">Påmeldingsfrist 2</label>
-			<input class="input-block-level" type="text" id="m_name" name="m_name" value="">
-			F.eks. kulturhuset, ungdomsklubben osv.
+			<input class="datepicker" type="text" id="pl_stop_date" name="pl_stop_date" value="">
+			{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
 	    </div>
 	</div>
 
-
-	<div class="row-fluid">
-	    <div class="span6">
-			<label for="m_name">Når starter mønstringen?</label>
-			<input class="input-block-level" type="text" id="m_name" name="m_name" value="">
-			Skal <b>kun</b> inneholde kommune-/bydelsnavn, og <b>aldri</b> "UKM i" o.l.<br />
-			Fellesmønstringer kan bruke kallenavn som Valdres, Odalen osv
-	    </div>
-	    <div class="span6">
-			<label for="m_name">Når slutter mønstringen?</label>
-			<input class="input-block-level" type="text" id="m_name" name="m_name" value="">
-			Sånn ca. Du angir detaljer under menyvalget "program".
-	    </div>
-	</div>
-	
 	
 </fieldset>
