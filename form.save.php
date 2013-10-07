@@ -27,7 +27,7 @@
 	$_POST['date_from'] = getDatePickerTime('date_from');
 
 	var_dump($_POST['date_from']);
-	die():
+	die();
 	$place->update('pl_start', 'date_from');
 	$_POST['date_to'] = getDatePickerTime('date_to');
 	$place->update('pl_stop', 'date_to');
