@@ -21,3 +21,19 @@ div.datetime div.hourmin select {
 fieldset.ukmfieldset {
 	width: 750px;
 }
+
+
+ol#tilbud label {
+font-weight: normal;
+}
+ol#tilbud .title {
+ font-weight: bold;
+ width: 180px;
+}
+ol#tilbud li div {
+ float: left;
+ width: 40px;
+}
+ol#tilbud > li {
+ clear: both;
+}
