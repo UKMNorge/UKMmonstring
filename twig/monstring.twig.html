@@ -50,24 +50,7 @@
 		<legend>Påmeldingsfrist(er) og mønstringstilbud</legend>
 
 		<div class="formright">
-			<div>
-				<label for="date_from"><strong>Påmeldingsfrist 1</strong></label>
-				<p class="gjelder">Gjelder scene, video, utstilling, matkultur</p>
-				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline_datepicker" value="01.01.1970" /> kl. 
-				{% embed "select_hourmin.twig.html" with {'name': 'deadline', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
-				{% embed "hourhelper.twig.html" %}{% endembed %}
-			</div>
-			<div>
-				<label for="date_from"><strong>Påmeldingsfrist 2</strong></label>
-				<p class="gjelder">Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk</p>
-				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline2_datepicker" value="01.01.1970"/> kl. 
-				{% embed "select_hourmin.twig.html" with {'name': 'deadline2', 'selected_hour': pl_stop_hour, 'selected_min': pl_stop_min} %}{% endembed %}
-				{% embed "hourhelper.twig.html" %}{% endembed %}
-			</div>
-		</div>	
-		
-		<div class="formleft" id="tilbud">
-			<ol class="unstyled">
+			<ol class="unstyled" id="tilbud">
 				<li>
 					<div class="title">Konferansier</div>
 					<div class="yes">
@@ -115,6 +98,24 @@
 				</li>
 			</ol>
 		</div>
+		
+		<div class="formleft">
+			<div>
+				<label for="date_from"><strong>Påmeldingsfrist 1</strong></label>
+				<p class="gjelder">Gjelder scene, video, utstilling, matkultur</p>
+				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline_datepicker" value="01.01.1970" /> kl. 
+				{% embed "select_hourmin.twig.html" with {'name': 'deadline', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
+				{% embed "hourhelper.twig.html" %}{% endembed %}
+			</div>
+			<div>
+				<label for="date_from"><strong>Påmeldingsfrist 2</strong></label>
+				<p class="gjelder">Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk</p>
+				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline2_datepicker" value="01.01.1970"/> kl. 
+				{% embed "select_hourmin.twig.html" with {'name': 'deadline2', 'selected_hour': pl_stop_hour, 'selected_min': pl_stop_min} %}{% endembed %}
+				{% embed "hourhelper.twig.html" %}{% endembed %}
+			</div>
+		</div>	
+		
 	</fieldset>
 </form>
 
