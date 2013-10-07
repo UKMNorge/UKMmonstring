@@ -53,24 +53,19 @@ for($id=1; $id<4; $id++) {
 $offers = array(4,5,6,8,9);
 
 foreach($offers as $offer) {
-	echo 'TILBUD '. $offer;
 	if(!isset($_POST['tilbud_'. $offer]))
 		continue;
 
 	if(empty($id)||empty($plid)) continue;
-	echo 'delete';
-	$del = new SQLdel('smartukm_rel_pl_bt', array('pl_id'=>$plid, 'bt_id'=>$id));
+	$del = new SQLdel('smartukm_rel_pl_bt', array('pl_id'=>$plid, 'bt_id'=>$offer));
 	$del = $del->run();
 
 	if($_POST['tilbud_'. $offer] == 'true') {
-		echo 'insert';
 		$ins = new SQLins('smartukm_rel_pl_bt');
 		$ins->add('pl_id', $plid);
-		$ins->add('bt_id', $id);
-		echo $ins->debug();
+		$ins->add('bt_id', $offer);
 		$ins = $ins->run();
-	} else 
-		echo 'NOinsert';
+	}
 }
 
 
