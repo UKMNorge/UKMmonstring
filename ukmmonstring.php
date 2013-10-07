@@ -41,7 +41,7 @@ function UKMMonstring() {
 	$kontakter = $pl->kontakter();
 	foreach($kontakter as $kontakt) {
 		$kontaktpersoner[] = array('name' => $kontakt->get('name'),
-								   'kommune' => $kontakt->get('kommune'),
+								   'kommune' => $kontakt->get('kommunenavn'),
 								   'image' => $kontakt->get('picture'),
 								   'email' => $kontakt->get('email'),
 								   'phone' => $kontakt->get('tlf'),
