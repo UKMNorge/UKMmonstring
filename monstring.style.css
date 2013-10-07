@@ -1,31 +1,50 @@
-#hugesubmit_monstring {
-	border-color: #0a6158;
-	border-style: solid;
-	border-width: 1px;
-	cursor: pointer;
-	position: fixed;
-	left: 970px;
-	top: 124px;
-	background: #a0cf67;
-	color: #1e4a45;
-	font-weight: normal;
-	font-size: 14px;
-	text-align: center;
-	-moz-border-radius: 10px; /* Firefox */
-  	-webkit-border-radius: 10px; /* Safari, Chrome */
- 	border-radius: 10px; /* CSS3 */
- 	padding: 45px;
-}
-#hugesubmit_monstring div#lagre {
-	font-size: 24px;
-	font-weight: bold;
-	margin-bottom: 8px;
-}
-#hugesubmit_monstring:hover {
-	background: #b7e580;
-}
-
-
 div.ui-datepicker, div.ui-datepicker table{
  font-size:10px;
+}
+
+
+
+.ukmfieldset {
+    margin: 10px;
+    margin-top: 18px;
+    width: 750px;
+    background: #f1f1f1;
+    padding: 8px;
+}
+.ukmfieldset legend {
+    border: none;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.formright {
+    width: 350px;
+    float: right;
+}
+.formleft {
+    width: 350px;
+}
+
+.formleft label, .formright label {
+ font-weight: bold;
+ font-size: 15px;
+}
+
+.helper {
+ margin-top: 0px;
+ font-size: 12px;
+}
+
+ol#tilbud label {
+font-weight: normal;
+}
+ol#tilbud .title {
+ font-weight: bold;
+}
+ol#tilbud li div {
+ float: left;
+}
+ol#tilbud > li {
+ clear: both;
 }
