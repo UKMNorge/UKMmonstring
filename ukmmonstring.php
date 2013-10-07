@@ -54,7 +54,8 @@ function UKMmonstring_save_kontaktpersoner() {
 						  array('pl_id'=>$pl_id,
 						  		'ab_id'=>$id));
 		$qry->add('order', $i);
-		$res = $qry->run();
+		//$res = $qry->run();
+		echo $qry->debug();
 	}
 	die();
 }
