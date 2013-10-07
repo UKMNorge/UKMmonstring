@@ -12,7 +12,7 @@ jQuery(document).ready(function(){
 		jQuery('#place_submit').click();
 	});
 /* DATEPICKER */
-	jQuery( ".datepicker" ).datepicker( {minDate: new Date(UKMSEASON,0,1), maxDate: new Date(UKMSEASON, 2, 30), dateFormat: 'dd.mm.yy'});
+	jQuery( ".datepicker" ).datepicker( {minDate: new Date(UKMSEASON,0,1), maxDate: new Date(UKMSEASON, 2, 31), dateFormat: 'dd.mm.yy'});
 
     jQuery.datepicker.regional['no'] = {
 		closeText: 'Lukk',
