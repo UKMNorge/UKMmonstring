@@ -42,7 +42,6 @@ jQuery(document).ready(function(){
 			function(response) {
 				alert('response' + response);
 			}
-		)};
-	});
+	)};
 	jQuery( "#kontaktpersoner" ).disableSelection();
 });
