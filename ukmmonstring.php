@@ -54,6 +54,8 @@ function UKMMonstring() {
 				   'kontaktpersoner' => $pl->kontakter(),
 				  );
 
+	var_dump($infos['kontaktpersoner']);
+
 	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
 }
 
