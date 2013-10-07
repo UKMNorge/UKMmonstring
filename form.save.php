@@ -31,7 +31,6 @@ $place->update('pl_stop', 'date_to');
 $_POST['deadline'] = autocorrectDeadline(getDatePickerTime('deadline'));
 $place->update('pl_deadline','deadline');
 
-	    
 ##############################################################
 ## ADDED 01.12.2011
 ## INSERT RELATIONS BETWEEN PLACE AND STANDARD TYPES OF BANDS
@@ -48,6 +47,66 @@ for($id=1; $id<4; $id++) {
 	$ins = $ins->run();
 	#echo $ins->debug();
 }
+
+
+
+$offers = array(4,5,6,8,9);
+
+foreach($offers as $offer) {
+	if(!isset($_POST['tilbud_'. $offer]))
+		continue;
+
+	if(empty($id)||empty($plid)) continue;
+	$del = new SQLdel('smartukm_rel_pl_bt', array('pl_id'=>$plid, 'bt_id'=>$id));
+	$del = $del->run();
+
+	if($_POST['tilbud_'. $offer] == 'true') {
+		$ins = new SQLins('smartukm_rel_pl_bt');
+		$ins->add('pl_id', $plid);
+		$ins->add('bt_id', $id);
+		$ins = $ins->run();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// SAVE OFFERS HERE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #######################################################################
