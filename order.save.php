@@ -25,4 +25,4 @@ foreach($contacts as $kommune => $c)
 	$hovedkontakter[] = array('kommune' => $kommune,
 							  'name' => $c->get('name')
 							  );
-echo TWIG('hovedkontakter.twig.html', array('hovedkontakter' => $hovedkontakter), dirname(__FILE__)) . 'tata';
+echo TWIG('hovedkontakter.twig.html', array('hovedkontakter' => $hovedkontakter), dirname(__FILE__));
