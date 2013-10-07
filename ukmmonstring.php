@@ -50,6 +50,7 @@ function UKMMonstring() {
 				   'tilbud_matkultur' => true,
 				   'kommuner' => $pl->get('kommuner'),
 				   'site_type' => get_option('site_type'),
+				   'season' => get_option('season'),
 				  );
 
 	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));

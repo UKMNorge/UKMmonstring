@@ -5,14 +5,14 @@ function UKMMonstring_cSave(the_array) {
 	//alert('Hei ' + the_array);
 }
 
-jQuery(function(){
+jQuery(document).ready(function(){
 
 	jQuery('#hugesubmit_monstring').click(function(){
 		jQuery(this).find('#lagre').html('Lagrer...');
 		jQuery('#place_submit').click();
 	});
 /* DATEPICKER */
-	jQuery( ".datepicker" ).datepicker( {minDate: new Date(new Date().getFullYear(),0,1), maxDate: new Date(new Date().getFullYear(), 3, 30), dateFormat: 'dd.mm.yy'});
+	jQuery( ".datepicker" ).datepicker( {minDate: new Date(UKMSEASON,0,1), maxDate: new Date(UKMSEASON, 2, 30), dateFormat: 'dd.mm.yy'});
 
     jQuery.datepicker.regional['no'] = {
 		closeText: 'Lukk',
