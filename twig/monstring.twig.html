@@ -1,31 +1,33 @@
 <h2>Registrer mønstring</h2>
 
+<div id="hugesubmit"><div id="lagre">Lagre</div></div>
+
 
 <fieldset class="ukmfieldset">
 	<legend>Tid og sted</legend>
 
 	<div class="row-fluid">
 	    <div class="span6">
-			<label for="m_name">Mønstringsnavn</label>
-			<input class="input-block-level" type="text" id="m_name" name="m_name" value="" autofocus>
+			<label for="pl_name">Mønstringsnavn</label>
+			<input class="input-block-level" type="text" id="pl_name" name="pl_name" value="{{name}}" autofocus>
 			Skal <b>kun</b> inneholde kommune-/bydelsnavn, og <b>aldri</b> "UKM i" o.l.<br />
 			Fellesmønstringer kan bruke kallenavn som Valdres, Odalen osv
 	    </div>
 	    <div class="span6">
-			<label for="m_name">Hvor skal mønstringen være?</label>
-			<input class="input-block-level" type="text" id="m_name" name="m_name" value="">
+			<label for="pl_place">Hvor skal mønstringen være?</label>
+			<input class="input-block-level" type="text" id="pl_place" name="pl_place" value="{{place}}">
 			F.eks. kulturhuset, ungdomsklubben osv.
 	    </div>
 	</div>
 
 	<div class="row-fluid">
 	    <div class="span6 datetime">
-			<label for="m_name">Når starter mønstringen?</label>
-			{% embed "datetime.twig.html" with {'name': 'date_from', 'selected': '20.02.2013 18:55:00'} %}{% endembed %}
+			<label for="date_from_date">Når starter mønstringen?</label>
+			{% embed "datetime.twig.html" with {'name': 'date_from', 'selected': start} %}{% endembed %}
 	    </div>
 	    <div class="span6 datetime">
-			<label for="m_name">Når slutter mønstringen?</label>
-			{% embed "datetime.twig.html" with {'name': 'date_to', 'selected': '20.02.2013 18:55:00'} %}{% endembed %}
+			<label for="date_to_date">Når slutter mønstringen?</label>
+			{% embed "datetime.twig.html" with {'name': 'date_to', 'selected': stop} %}{% endembed %}
 	    </div>
 	</div>
 </fieldset>
@@ -37,13 +39,13 @@
 
 	<div class="row-fluid">
 	    <div class="span6 datetime">
-			<label for="m_name">Påmeldingsfrist 1</label>
-			{% embed "datetime.twig.html" with {'name': 'pl_deadline', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
+			<label for="pl_deadline_date">Påmeldingsfrist 1</label>
+			{% embed "datetime.twig.html" with {'name': 'pl_deadline', 'selected': deadline1} %}{% endembed %}
 			Gjelder scene, video, utstilling, matkultur 
 	    </div>
 	    <div class="span6 datetime">
-			<label for="m_name">Påmeldingsfrist 2</label>
-			{% embed "datetime.twig.html" with {'name': 'pl_deadline2', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
+			<label for="pl_deadline2_date">Påmeldingsfrist 2</label>
+			{% embed "datetime.twig.html" with {'name': 'pl_deadline2', 'selected': deadline2} %}{% endembed %}
 			Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk
 	    </div>
 	</div>
@@ -66,57 +68,57 @@
 <fieldset class="ukmfieldset">
 	<legend>Hva kan deltakerne melde på?</legend>
 
-	<div class="alert alert-info">
-		<strong>Mønstringen tillater automatisk:</strong> Musikk, dans, teater, litteratur, annet på scenen, film og utstilling
-	</div>
-	
 	<ol class="unstyled" id="tilbud">
 		<li>
 			<div class="title">Konferansier</div>
 			<div class="yes">
-				<label><input type="radio" class="bandtypesallowed" value="true" name="tilbud_4" checked="checked" /> ja</label>
+				<label><input type="radio" value="true" name="tilbud_4" {{ tilbud_konferansier ? 'checked="checked"' : '' }}/> ja</label>
 			</div>
 			<div class="no">
-				<label><input type="radio" class="bandtypesallowed" value="false" name="tilbud_4"/> nei</label>
+				<label><input type="radio" value="false" name="tilbud_4" {{ tilbud_konferansier ? '' : 'checked="checked"' }}/> nei</label>
 			</div>
 		</li>
 		<li>
 			<div class="title">Nettredaksjon</div>
 			<div class="yes">
-				<label><input type="radio" class="bandtypesallowed" value="true" name="tilbud_5" checked="checked" /> ja</label>
+				<label><input type="radio" value="true" name="tilbud_5" {{ tilbud_nettredaksjon ? 'checked="checked"' : '' }} /> ja</label>
 			</div>
 			<div class="no">
-				<label><input type="radio" class="bandtypesallowed" value="false" name="tilbud_5"/> nei</label>
+				<label><input type="radio" value="false" name="tilbud_5" {{ tilbud_nettredaksjon ? '' : 'checked="checked"' }}/> nei</label>
 			</div>
 		</li>
 		<li>
 			<div class="title">Arrangør</div>
 			<div class="yes">
-				<label><input type="radio" class="bandtypesallowed" value="true" name="tilbud_8" checked="checked" /> ja</label>
+				<label><input type="radio" value="true" name="tilbud_8" {{ tilbud_arrangor ? 'checked="checked"' : '' }} /> ja</label>
 			</div>
 			<div class="no">
-				<label><input type="radio" class="bandtypesallowed" value="false" name="tilbud_8"/> nei</label>
+				<label><input type="radio" value="false" name="tilbud_8" {{ tilbud_arrangor ? '' : 'checked="checked"' }}/> nei</label>
 			</div>
 		</li>
 		<li>
 			<div class="title">Sceneteknikk (lyd og lys)</div>
 			<div class="yes">
-				<label><input type="radio" class="bandtypesallowed" value="true" name="tilbud_9" checked="checked" /> ja</label>
+				<label><input type="radio" value="true" name="tilbud_9" {{ tilbud_sceneteknikk ? 'checked="checked"' : '' }} /> ja</label>
 			</div>
 			<div class="no">
-				<label><input type="radio" class="bandtypesallowed" value="false" name="tilbud_9"/> nei</label>
+				<label><input type="radio" value="false" name="tilbud_9" {{ tilbud_sceneteknikk ? '' : 'checked="checked"' }}/> nei</label>
 			</div>
 		</li>
 		<li>
 			<div class="title">Matkultur</div>
 			<div class="yes">
-				<label><input type="radio" class="bandtypesallowed" value="true" name="tilbud_6" /> ja</label>
+				<label><input type="radio" value="true" name="tilbud_6" {{ tilbud_matkultur ? 'checked="checked"' : '' }} /> ja</label>
 			</div>
 			<div class="no">
-				<label><input type="radio" class="bandtypesallowed" value="false" name="tilbud_6"/> nei</label>
+				<label><input type="radio" value="false" name="tilbud_6" {{ tilbud_matkultur ? '' : 'checked="checked"' }}/> nei</label>
 			</div>
 		</li>
 	</ol>		
+
+	<div class="alert alert-info">
+		<strong>Mønstringen tillater automatisk:</strong> Musikk, dans, teater, litteratur, annet på scenen, film og utstilling
+	</div>
 	
 </div>
 </fieldset>
@@ -124,7 +126,10 @@
 
 <fieldset class="ukmfieldset">
 	<legend>Hvilke kommuner er del av denne mønstringen?</legend>
-	Kommune 1, kommune 2
+	{% for kommune in kommuner %}
+		{{kommune.name}}
+		{% if loop.last == false %}, {% endif %}
+	{% endfor %}
 	<div class="alert alert-info">
 		Kun UKM Norge kan endre hvilke kommuner som er er med i mønstringen.
 	</div>

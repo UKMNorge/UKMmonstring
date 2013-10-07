@@ -36,8 +36,19 @@ function UKMMonstring_script() {
 
 ## SHOW STATS OF PLACES
 function UKMMonstring() {
-	
-	$infos = array();			
+	$pl = new monstring(get_option('pl_id'));
+	$infos = array('name' => $pl->get('pl_name'),
+				   'place' => $pl->get('pl_place'),
+				   'start' => $pl->get('pl_start'),
+				   'stop' => $pl->get('pl_stop'),
+				   'deadline1' => $pl->get('pl_deadline'),
+				   'deadline2' => $pl->get('pl_deadline2'),
+				   'tilbud_konferansier' => true,
+				   'tilbud_nettredaksjon' => true,
+				   'tilbud_arrangor' => true,
+				   'tilbud_sceneteknikk' => true,
+				   'tilbud_matkultur' => true,
+				  );
 
 	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
 }
