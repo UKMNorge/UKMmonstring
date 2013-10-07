@@ -1,7 +1,10 @@
 div.ui-datepicker, div.ui-datepicker table{
- font-size:10px;
+}
+
+div.span6 input.datepicker {
+	height: 28px;
 }
 
 .row-fluid {
- margin-bottom: 25px;
+	margin-bottom: 25px;
 }
