@@ -35,6 +35,6 @@ jQuery(document).ready(function(){
     jQuery.datepicker.setDefaults(jQuery.datepicker.regional['no']);
 
 /* SORTABLE LIST */ 
-	jQuery( "#sortable" ).sortable({update: function(event, ui) { UKMMonstring_cSave(jQuery('#sortable').sortable('toArray'))}});
-	jQuery( "#sortable" ).disableSelection();
+	jQuery( "#kontaktpersoner" ).sortable({update: function(event, ui) { UKMMonstring_cSave(jQuery('#sortable').sortable('toArray'))}});
+	jQuery( "#kontaktpersoner" ).disableSelection();
 });
