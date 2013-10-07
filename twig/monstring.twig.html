@@ -22,8 +22,6 @@
 	    <div class="span6 datetime">
 			<label for="m_name">Når starter mønstringen?</label>
 			{% embed "datetime.twig.html" with {'name': 'date_from', 'selected': '20.02.2013 18:55:00'} %}{% endembed %}
-			<input class="datepicker" type="text" id="pl_start_date" name="pl_start_date" value="">
-
 	    </div>
 	    <div class="span6 datetime">
 			<label for="m_name">Når slutter mønstringen?</label>
@@ -40,12 +38,10 @@
 	<div class="row-fluid">
 	    <div class="span6 datetime">
 			<label for="m_name">Påmeldingsfrist 1</label>
-			<input class="datepicker" type="text" id="pl_start_date" name="pl_start_date" value="">
 			{% embed "datetime.twig.html" with {'name': 'pl_deadline', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
 	    </div>
 	    <div class="span6 datetime">
 			<label for="m_name">Påmeldingsfrist 2</label>
-			<input class="datepicker" type="text" id="pl_stop_date" name="pl_stop_date" value="">
 			{% embed "datetime.twig.html" with {'name': 'pl_deadline2', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
 	    </div>
 	</div>
