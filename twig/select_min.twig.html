@@ -1,5 +1,5 @@
 <select name="{{name}}_min">
-	{% for i in range(0...60) %}
+	{% for i in range(0..60) %}
 		{% if i is divisible(5) %}
 		<option value="{{ i }}"{{ i == selected ? 'selected="selected"' : '' }}>
 			{% if i < 10 %}
