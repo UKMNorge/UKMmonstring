@@ -68,6 +68,7 @@ foreach($offers as $offer) {
 		$ins->add('pl_id', $plid);
 		$ins->add('bt_id', $id);
 		$ins = $ins->run();
+		echo $ins->debug();
 	} else 
 		echo 'NOinsert';
 }
