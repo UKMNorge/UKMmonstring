@@ -21,14 +21,13 @@
 	<div class="row-fluid">
 	    <div class="span6 datetime">
 			<label for="m_name">Når starter mønstringen?</label>
-			{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
+			{% embed "datetime.twig.html" with {'name': 'date_from', 'selected': '20.02.2013 18:55:00' %}{% endembed %}
 			<input class="datepicker" type="text" id="pl_start_date" name="pl_start_date" value="">
 
 	    </div>
 	    <div class="span6 datetime">
 			<label for="m_name">Når slutter mønstringen?</label>
-			{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
-			<input class="datepicker" type="text" id="pl_stop_date" name="pl_stop_date" value="">
+			{% embed "datetime.twig.html" with {'name': 'date_to', 'selected': '20.02.2013 18:55:00' %}{% endembed %}
 	    </div>
 	</div>
 </fieldset>
