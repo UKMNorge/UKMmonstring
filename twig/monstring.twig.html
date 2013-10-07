@@ -1,49 +1,48 @@
 <h2>Registrer mønstring</h2>
 
-<div style="width: 750px;">
-	<fieldset>
-		<legend>Tid og sted</legend>
-	
-		<div class="row-fluid">
-		    <div class="span6">
-				<label for="m_name">Mønstringsnavn</label>
-				<input class="input-block-level" type="text" id="m_name" name="m_name" value="" autofocus>
-				Skal <b>kun</b> inneholde kommune-/bydelsnavn, og <b>aldri</b> "UKM i" o.l.<br />
-				Fellesmønstringer kan bruke kallenavn som Valdres, Odalen osv
-		    </div>
-		    <div class="span6">
-				<label for="m_name">Hvor skal mønstringen være?</label>
-				<input class="input-block-level" type="text" id="m_name" name="m_name" value="">
-				F.eks. kulturhuset, ungdomsklubben osv.
-		    </div>
-		</div>
-	
-		<div class="row-fluid">
-		    <div class="span6 datetime">
-				<label for="m_name">Når starter mønstringen?</label>
-				{% embed "datetime.twig.html" with {'name': 'date_from', 'selected': '20.02.2013 18:55:00'} %}{% endembed %}
-		    </div>
-		    <div class="span6 datetime">
-				<label for="m_name">Når slutter mønstringen?</label>
-				{% embed "datetime.twig.html" with {'name': 'date_to', 'selected': '20.02.2013 18:55:00'} %}{% endembed %}
-		    </div>
-		</div>
-	</fieldset>
-	
-	
-	
-	<fieldset class="" style="margin-right: 2em;">
-		<legend>Påmeldingsfrist(er) og tilbud</legend>
-	
-		<div class="row-fluid">
-		    <div class="span6 datetime">
-				<label for="m_name">Påmeldingsfrist 1</label>
-				{% embed "datetime.twig.html" with {'name': 'pl_deadline', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
-		    </div>
-		    <div class="span6 datetime">
-				<label for="m_name">Påmeldingsfrist 2</label>
-				{% embed "datetime.twig.html" with {'name': 'pl_deadline2', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
-		    </div>
-		</div>
-	</fieldset>
-</div>
+
+<fieldset class="ukmfieldset">
+	<legend>Tid og sted</legend>
+
+	<div class="row-fluid">
+	    <div class="span6">
+			<label for="m_name">Mønstringsnavn</label>
+			<input class="input-block-level" type="text" id="m_name" name="m_name" value="" autofocus>
+			Skal <b>kun</b> inneholde kommune-/bydelsnavn, og <b>aldri</b> "UKM i" o.l.<br />
+			Fellesmønstringer kan bruke kallenavn som Valdres, Odalen osv
+	    </div>
+	    <div class="span6">
+			<label for="m_name">Hvor skal mønstringen være?</label>
+			<input class="input-block-level" type="text" id="m_name" name="m_name" value="">
+			F.eks. kulturhuset, ungdomsklubben osv.
+	    </div>
+	</div>
+
+	<div class="row-fluid">
+	    <div class="span6 datetime">
+			<label for="m_name">Når starter mønstringen?</label>
+			{% embed "datetime.twig.html" with {'name': 'date_from', 'selected': '20.02.2013 18:55:00'} %}{% endembed %}
+	    </div>
+	    <div class="span6 datetime">
+			<label for="m_name">Når slutter mønstringen?</label>
+			{% embed "datetime.twig.html" with {'name': 'date_to', 'selected': '20.02.2013 18:55:00'} %}{% endembed %}
+	    </div>
+	</div>
+</fieldset>
+
+
+
+<fieldset class="ukmfieldset">
+	<legend>Påmeldingsfrist(er) og tilbud</legend>
+
+	<div class="row-fluid">
+	    <div class="span6 datetime">
+			<label for="m_name">Påmeldingsfrist 1</label>
+			{% embed "datetime.twig.html" with {'name': 'pl_deadline', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
+	    </div>
+	    <div class="span6 datetime">
+			<label for="m_name">Påmeldingsfrist 2</label>
+			{% embed "datetime.twig.html" with {'name': 'pl_deadline2', 'selected': '10.02.2013 18:55:00'} %}{% endembed %}
+	    </div>
+	</div>
+</fieldset>

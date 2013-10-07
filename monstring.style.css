@@ -17,3 +17,7 @@ div.datetime div.hourmin select {
 .row-fluid {
 	margin-bottom: 25px;
 }
+
+fieldset.ukmfieldset {
+	width: 750px;
+}
