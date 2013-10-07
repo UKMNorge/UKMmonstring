@@ -6,17 +6,41 @@ div.datetime input.datepicker {
 	width: 55%;
 }
 
-
-
-#kontaktpersoner li div {
- float: left;
- width: 33%;
+#kontaktpersoner li > img {
+ float: right;
+ margin-right: 25px;
 }
+
+#kontaktpersoner li div.name {
+ width: 200px;
+ float: left;
+}
+#kontaktpersoner li div.data {
+ width: 230px;
+ float: left;
+}
+#kontaktpersoner li div.actions {
+ width: 80px;
+ float: left;
+}
+#kontaktpersoner li div.actions div.action {
+width: 40px;
+font-size: 11px;
+height: 40px;
+text-align:center;
+ float: left;
+}
+#kontaktpersoner li div.actions div.action img{
+ width: 20px;
+}
+
+
 #kontaktpersoner li {
 clear: both;
 }
 #kontaktpersoner .image {
  width: 80px;
+ float: left;
 }
 #kontaktpersoner .image img {
  height: 70px;

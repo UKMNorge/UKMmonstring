@@ -36,7 +36,7 @@ jQuery(document).ready(function(){
 
 /* SORTABLE LIST */ 
 	jQuery( "#kontaktpersoner" ).sortable({update: function(event, ui) { 
-		jQuery.post(ajaxurl
+		jQuery.post(ajaxurl,
 			{'action': 'UKMmonstring_save_kontaktpersoner',
 			 'order': jQuery('#kontaktpersoner').sortable('toArray') },
 			function(response) {
