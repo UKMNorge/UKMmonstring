@@ -38,7 +38,7 @@ function UKMMonstring_script() {
 
 ## SHOW STATS OF PLACES
 function UKMMonstring() {
-	if($_SERVER['REQUEST_TYPE']==='POST')
+	if($_SERVER['REQUEST_METHOD']==='POST')
 		require_once('form.save.php');
 
 	require_once('form.controller.php');
