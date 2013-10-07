@@ -38,17 +38,3 @@ jQuery(function(){
 	jQuery( "#sortable" ).sortable({update: function(event, ui) { UKMMonstring_cSave(jQuery('#sortable').sortable('toArray'))}});
 	jQuery( "#sortable" ).disableSelection();
 });
-
-
-jQuery(document).ready(function(){
-	jQuery('input.bandtypesallowed').click(function(){
-		var data = {
-			action: 'UKMMonstring_allow',
-			setting: jQuery(this).val(),
-			type: jQuery(this).attr('name')
-		};
-				
-		jQuery.post(ajaxurl, data, function(response){
-		});
-	});
-});

@@ -15,10 +15,28 @@ if(is_admin()) {
 	global $blog_id;
 	if($blog_id != 1)
 		add_action('admin_menu', 'UKMMonstring_menu',200);
-
-	add_action('wp_ajax_UKMMonstring_allow', 'UKMMonstring_allow');
 }
 
+## CREATE A MENU
+function UKMMonstring_menu() {
+	global $UKMN;
+	$page = add_menu_page('M&oslash;nstring', 'M&oslash;nstring', 'editor', 'UKMMonstring', 'UKMMonstring', 'http://ico.ukm.no/hus-menu.png',199);
+	add_action( 'admin_print_styles-' . $page, 'UKMMonstring_script' );
+
+}
+
+## INCLUDE SCRIPTS
+function UKMMonstring_script() {
+	wp_enqueue_script('UKMMonstring_script',  plugin_dir_url( __FILE__ )  . 'monstring.script.js' );
+	wp_enqueue_style( 'UKMMonstring_style', plugin_dir_url( __FILE__ ) .'monstring.style.css');
+}
+
+## SHOW STATS OF PLACES
+function UKMMonstring() {
+	echo TWIG('monstring.twig.html',array(), dirname(__FILE__));
+}
+
+/*
 function UKMMonstring_allow(){
 	$plid = (int)get_option('pl_id');
 	$type = (int)$_POST['type'];
@@ -45,24 +63,10 @@ function UKMMonstring_allow(){
 	}
 	die();
 }
+*/
 
-## CREATE A MENU
-function UKMMonstring_menu() {
-	global $UKMN;
-	$page = add_menu_page('M&oslash;nstring', 'M&oslash;nstring', 'editor', 'UKMMonstring', 'UKMN_monstring', 'http://ico.ukm.no/hus-menu.png',199);
-	add_action( 'admin_print_styles-' . $page, 'UKMMonstring_script' );
 
-}
-
-## INCLUDE SCRIPTS
-function UKMMonstring_script() {
-	wp_enqueue_script('UKMMonstring_script',  plugin_dir_url( __FILE__ )  . 'monstring.script.js' );
-	wp_enqueue_style( 'jquery-ui-stylefont', plugin_dir_url( __FILE__ ) .'monstring.style.css');
-}
-
-## SHOW STATS OF PLACES
-function UKMN_monstring() {
-	global $UKMN, $lang;
+/*
 	
 	if(isset($_GET['contact'])) {
 		require_once('UKM/kontakt.class.php');
@@ -77,9 +81,11 @@ function UKMN_monstring() {
 	require_once('monstring.save.php');
 
 	echo '<div class="wrap">'.UKMMonstring_form($place, $user).'</div>';
+
 	
 }
-
+*/
+/*
 
 function my_admin_scripts() {
 	wp_enqueue_script('media-upload');
@@ -102,4 +108,4 @@ function filter_iste($html, $id, $caption, $title, $align, $url, $size, $alt) {
 }
 
 
-?>
+*/

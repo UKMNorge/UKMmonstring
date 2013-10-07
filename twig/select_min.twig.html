@@ -1,0 +1,11 @@
+<select name="{{name}}">
+	{% for i in range(0,5,10,15,20,25,30,35,40,45,50,55) %}
+		<option value="{{ i }}"{{ i == selected ? 'selected="selected"' : '' }}>
+			{% if i < 10 %}
+			0{{ i }}
+			{% else %}
+			{{ i }}
+			{% endif %}
+		</option>
+	{% endfor %}
+</select>
