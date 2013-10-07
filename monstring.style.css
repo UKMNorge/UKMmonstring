@@ -2,65 +2,6 @@ div.ui-datepicker, div.ui-datepicker table{
  font-size:10px;
 }
 
-.ukmfieldset {
-    margin: 10px;
-    margin-top: 18px;
-    width: 750px;
-    background: #f1f1f1;
-    padding: 8px;
-}
-.ukmfieldset legend {
-    border: none;
-    margin-left: 10px;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.formright {
-    width: 350px;
-    float: right;
-}
-.formleft {
-    width: 350px;
-}
-
-.formleft label, .formright label {
-    font-weight: bold;
-    font-size: 15px;
-    padding-bottom: 30px;
-    padding-top: 20px;
-}
-
-.preinput {
-    margin-top: 0px; 
-    margin-bottom: 1px;
-    font-size: 11px;
-}
-
-.helper {
- margin-top: 0px;
- font-size: 11px;
-}
-
-.timeexp {
- margin-top: 0px;
-}
-
-ol#tilbud {
- list-style: none;
-}
-
-ol#tilbud label {
-font-weight: normal;
-}
-ol#tilbud .title {
- font-weight: bold;
- width: 180px;
-}
-ol#tilbud li div {
- float: left;
- width: 40px;
-}
-ol#tilbud > li {
- clear: both;
+.row-fluid {
+ margin-bottom: 25px;
 }

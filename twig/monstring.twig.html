@@ -1,4 +1,4 @@
-<h1>Registrer mønstring</h1>
+<h2>Registrer mønstring</h2>
 
 <fieldset class="new-missing pull-left" style="margin-right: 2em;">
 	<legend>Tid og sted</legend>
@@ -12,6 +12,39 @@
 	    </div>
 	    <div class="span6">
 			<label for="m_name">Hvor skal mønstringen være?</label>
+			<input class="input-block-level" type="text" id="m_name" name="m_name" value="">
+			F.eks. kulturhuset, ungdomsklubben osv.
+	    </div>
+	</div>
+
+
+	<div class="row-fluid">
+	    <div class="span6">
+			<label for="m_name">Når starter mønstringen?</label>
+			<input class="datepicker" type="text" id="m_name" name="m_name" value="">
+			{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
+
+	    </div>
+	    <div class="span6">
+			<label for="m_name">Når slutter mønstringen?</label>
+			<input class="datepicker" type="text" id="m_name" name="m_name" value="">
+			{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
+	    </div>
+	</div>
+</fieldset>
+
+
+
+<fieldset class="new-missing pull-left" style="margin-right: 2em;">
+	<legend>Påmeldingsfrist(er) og tilbud</legend>
+	<div class="row-fluid">
+	    <div class="span6">
+			<label for="m_name">Påmeldingsfrist 1</label>
+			<input class="input-block-level" type="text" id="m_name" name="m_name" value="" autofocus>
+			Gjelder
+	    </div>
+	    <div class="span6">
+			<label for="m_name">Påmeldingsfrist 2</label>
 			<input class="input-block-level" type="text" id="m_name" name="m_name" value="">
 			F.eks. kulturhuset, ungdomsklubben osv.
 	    </div>
