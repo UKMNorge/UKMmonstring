@@ -6,6 +6,22 @@ div.datetime input.datepicker {
 	width: 55%;
 }
 
+
+
+#kontaktpersoner li div {
+ float: left;
+ width: 33%;
+}
+#kontaktpersoner li {
+clear: both;
+}
+#kontaktpersoner .image {
+ width: 80px;
+}
+#kontaktpersoner .image img {
+ height: 70px;
+}
+
 div.datetime div.hourmin {
 	width: 40%;
 	float: right;
