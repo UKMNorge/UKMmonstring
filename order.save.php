@@ -1,5 +1,6 @@
 <?php
 require_once('UKM/inc/twig-admin.inc.php');
+require_once('UKM/monstring.class.php');
 
 $pl_id = get_option('pl_id');
 
@@ -18,7 +19,7 @@ foreach($_POST['order'] as $contact) {
 	$res = $qry->run();
 }
 
-
+$pl = new monstring(get_option('pl_id'));
 $contacts = $pl->kontakter_pamelding();
 foreach($contacts as $kommune => $c)
 	$hovedkontakter[] = array('kommune' => $kommune,
