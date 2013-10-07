@@ -40,7 +40,7 @@ jQuery(document).ready(function(){
 			{'action': 'UKMmonstring_save_kontaktpersoner',
 			 'order': jQuery('#kontaktpersoner').sortable('toArray') },
 			function(response) {
-				alert('response' + response);
+				jQuery('#hovedkontakter').html(response);
 		});
 	}});
 	jQuery( "#kontaktpersoner" ).disableSelection();
