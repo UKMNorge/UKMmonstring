@@ -13,29 +13,33 @@
 		<div class="formright">
 			<div style="margin-top: 2px; margin-bottom: 0px;">
 				<label for="date_from">N&aring;r starter m&oslash;nstringen?</label>
-				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="date_from_datepicker" value="01.01.1970"/> kl. 
-				{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
-				{% embed "hourhelper.twig.html" %}{% endembed %}
+				<div class="datetime">
+					<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="date_from_datepicker" value="01.01.1970"/> kl. 
+					{% embed "select_hourmin.twig.html" with {'name': 'date_from', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
+					{% embed "hourhelper.twig.html" %}{% endembed %}
+				</div>
 			</div>
 			<div style="margin-top: 2px; margin-bottom: 0px;">
 				<label for="date_to">N&aring;r slutter m&oslash;nstringen?</label>
-				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="date_to_datepicker" value="01.01.1970"/> kl. 
-				{% embed "select_hourmin.twig.html" with {'name': 'date_to', 'selected_hour': pl_stop_hour, 'selected_min': pl_stop_min} %}{% endembed %}
-				{% embed "hourhelper.twig.html" %}{% endembed %}
+				<div class="datetime">
+					<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="date_to_datepicker" value="01.01.1970"/> kl. 
+					{% embed "select_hourmin.twig.html" with {'name': 'date_to', 'selected_hour': pl_stop_hour, 'selected_min': pl_stop_min} %}{% endembed %}
+					{% embed "hourhelper.twig.html" %}{% endembed %}
+				</div>
 			</div>
 		</div>
 	
 		<div class="formleft">
-			<div style="margin-top: 2px; margin-bottom: 0px;">
+			<div>
 				<label for="pl_name">Mønstringsnavn</label>
+				<p class="preinput">Skal være kommune-/bydelsnavnet. Fellesmønstringer kan ha kallenavn.</p>
 				<input name="pl_name" id="pl_name" type="text" value="Andeby" size="40" aria-required="true" />
 				<p class="helper">
-					<strong>Skal som regel være kommune-/bydelsnavnet. Fellesmønstringer kan ha kallenavn.</strong><br />
-					For eksempel: Volda, Nordre Land, Halden, Valdres o.l.<br />
 					<strong>OBS:</strong> Skriv <strong>ALDRI</strong> skriv "UKM i Trondheim", men kun mønstringsnavnet.<br />
+					For eksempel: Volda, Nordre Land, Halden, Valdres o.l.
 				</p>
 			</div>
-			<div style="margin-top: 2px; margin-bottom: 0px;">
+			<div>
 				<label for="pl_place">Hvor skal m&oslash;nstringen v&aelig;re?</label>
 				<input name="pl_place" id="pl_place" type="text" value="Disneyhuset på torget" size="40" aria-required="true" />
 				<p class="helper">Det fysiske stedet hvor m&oslash;nstringen skal v&aelig;re, for eksempel Volda idrettshall, eller Bjugn Kulturhus</p>
@@ -103,16 +107,20 @@
 			<div>
 				<label for="date_from"><strong>Påmeldingsfrist 1</strong></label>
 				<p class="gjelder">Gjelder scene, video, utstilling, matkultur</p>
-				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline_datepicker" value="01.01.1970" /> kl. 
-				{% embed "select_hourmin.twig.html" with {'name': 'deadline', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
-				{% embed "hourhelper.twig.html" %}{% endembed %}
+				<div class="datetime">
+					<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline_datepicker" value="01.01.1970" /> kl. 
+					{% embed "select_hourmin.twig.html" with {'name': 'deadline', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
+					{% embed "hourhelper.twig.html" %}{% endembed %}
+				</div>
 			</div>
 			<div>
 				<label for="date_from"><strong>Påmeldingsfrist 2</strong></label>
 				<p class="gjelder">Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk</p>
-				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline2_datepicker" value="01.01.1970"/> kl. 
-				{% embed "select_hourmin.twig.html" with {'name': 'deadline2', 'selected_hour': pl_stop_hour, 'selected_min': pl_stop_min} %}{% endembed %}
-				{% embed "hourhelper.twig.html" %}{% endembed %}
+				<div class="datetime">
+					<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline2_datepicker" value="01.01.1970"/> kl. 
+					{% embed "select_hourmin.twig.html" with {'name': 'deadline2', 'selected_hour': pl_stop_hour, 'selected_min': pl_stop_min} %}{% endembed %}
+					{% embed "hourhelper.twig.html" %}{% endembed %}
+				</div>
 			</div>
 		</div>	
 		
