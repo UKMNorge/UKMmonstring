@@ -7,12 +7,10 @@
 	<div id="hugesubmit_monstring">
 		<div id="lagre">Lagre</div>
 	</div>
-	<fieldset class="widefat" style="margin: 10px; margin-top: 18px; width: 750px;; background: #f1f1f1; padding: 8px;">
-		<legend style="border: none; margin-left: 10px; font-weight: bold; font-size: 16px;">
-			Tid og sted
-		</legend>
+	<fieldset class="widefat ukmfieldset">
+		<legend>Tid og sted</legend>
 	
-		<div style="width: 45%; float: right;">
+		<div class="formright">
 			<div style="margin-top: 2px; margin-bottom: 0px;">
 				<label for="date_from">N&aring;r starter m&oslash;nstringen?</label>
 				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="date_from_datepicker" value="01.01.1970"/> kl. 
@@ -27,21 +25,20 @@
 			</div>
 		</div>
 	
-		<div style="width: 45%; float: left;">
+		<div class="formleft">
 			<div style="margin-top: 2px; margin-bottom: 0px;">
 				<label for="pl_name">Mønstringsnavn</label>
 				<input name="pl_name" id="pl_name" type="text" value="Andeby" size="40" aria-required="true" />
-				<p style="margin-bottom: 0px;">
-					<strong>Skal som regel være kommune-/bydelsnavnet, og i fellesmønstringer kan man ha kallenavn.</strong>
-					For eksempel: Volda, Nordre Land, Halden, Valdres o.l.
-					<br />
-					<strong>OBS: ALDRI</strong> skriv "UKM i Bjugn", men kun mønstringsnavnet.
+				<p class="helper">
+					<strong>Skal som regel være kommune-/bydelsnavnet. Fellesmønstringer kan ha kallenavn.</strong><br />
+					For eksempel: Volda, Nordre Land, Halden, Valdres o.l.<br />
+					<strong>OBS:</strong> Skriv <strong>ALDRI</strong> skriv "UKM i Trondheim", men kun mønstringsnavnet.<br />
 				</p>
 			</div>
 			<div style="margin-top: 2px; margin-bottom: 0px;">
 				<label for="pl_place">Hvor skal m&oslash;nstringen v&aelig;re?</label>
 				<input name="pl_place" id="pl_place" type="text" value="Disneyhuset på torget" size="40" aria-required="true" />
-				<p style="margin-bottom: 0px;">Det fysiske stedet hvor m&oslash;nstringen skal v&aelig;re, for eksempel Volda idrettshall, eller Bjugn Kulturhus</p>
+				<p class="helper">Det fysiske stedet hvor m&oslash;nstringen skal v&aelig;re, for eksempel Volda idrettshall, eller Bjugn Kulturhus</p>
 			</div>
 		</div>
 		
@@ -49,29 +46,27 @@
 	
 	
 
-	<fieldset class="widefat" style="margin: 10px; margin-top: 18px; width: 750px;; background: #f1f1f1; padding: 8px;">
-		<legend style="border: none; margin-left: 10px; font-weight: bold; font-size: 16px;">
-			Påmeldingsfrist(er) og mønstringstilbud
-		</legend>
+	<fieldset class="widefat ukmfieldset">
+		<legend>Påmeldingsfrist(er) og mønstringstilbud</legend>
 
-		<div style="width: 45%; float: left;">
-			<div style="margin-top: 2px; margin-bottom: 0px;">
+		<div class="formright">
+			<div>
 				<label for="date_from"><strong>Påmeldingsfrist 1</strong></label>
-				<p style="margin-bottom: 0px;">Gjelder scene, video, utstilling, matkultur</p>
+				<p class="gjelder">Gjelder scene, video, utstilling, matkultur</p>
 				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline_datepicker" value="01.01.1970" /> kl. 
 				{% embed "select_hourmin.twig.html" with {'name': 'deadline', 'selected_hour': pl_start_hour, 'selected_min': pl_start_min} %}{% endembed %}
 				{% embed "hourhelper.twig.html" %}{% endembed %}
 			</div>
-			<div style="margin-top: 2px; margin-bottom: 0px;">
+			<div>
 				<label for="date_from"><strong>Påmeldingsfrist 2</strong></label>
-				<p style="margin-bottom: 0px;">Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk</p>
+				<p class="gjelder">Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk</p>
 				<input class="datepicker" type="text" style="width: 25%;margin-right: 3%;" name="deadline2_datepicker" value="01.01.1970"/> kl. 
 				{% embed "select_hourmin.twig.html" with {'name': 'deadline2', 'selected_hour': pl_stop_hour, 'selected_min': pl_stop_min} %}{% endembed %}
 				{% embed "hourhelper.twig.html" %}{% endembed %}
 			</div>
 		</div>	
 		
-		<div style="width: 45%; float: left;">
+		<div class="formleft" id="tilbud">
 			<ol class="unstyled">
 				<li>
 					<div class="title">Konferansier</div>
