@@ -51,6 +51,7 @@ function UKMMonstring() {
 				   'kommuner' => $pl->get('kommuner'),
 				   'site_type' => get_option('site_type'),
 				   'season' => get_option('season'),
+				   'kontaktpersoner' => $pl->kontakter(),
 				  );
 
 	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
