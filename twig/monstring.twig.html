@@ -114,6 +114,9 @@
 				<label><input type="radio" value="false" name="tilbud_6" {{ tilbud_matkultur ? '' : 'checked="checked"' }}/> nei</label>
 			</div>
 		</li>
+		<li>
+			<div class="clearfix"></div>
+		</li>
 	</ol>		
 
 	<div class="alert alert-info">
@@ -124,6 +127,7 @@
 </fieldset>
 
 
+{% if site_type == 'kommune' %}
 <fieldset class="ukmfieldset">
 	<legend>Hvilke kommuner er del av denne mønstringen?</legend>
 	{% for kommune in kommuner %}
@@ -133,5 +137,5 @@
 	<div class="alert alert-info">
 		Kun UKM Norge kan endre hvilke kommuner som er er med i mønstringen.
 	</div>
-
 </fieldset>
+{% endif %}

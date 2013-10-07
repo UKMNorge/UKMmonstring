@@ -48,6 +48,8 @@ function UKMMonstring() {
 				   'tilbud_arrangor' => true,
 				   'tilbud_sceneteknikk' => true,
 				   'tilbud_matkultur' => true,
+				   'kommuner' => $pl->get('kommuner'),
+				   'site_type' => get_option('site_type'),
 				  );
 
 	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
