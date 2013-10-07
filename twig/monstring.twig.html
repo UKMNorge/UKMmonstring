@@ -71,10 +71,22 @@
 	<fieldset class="ukmfieldset">
 		<legend>Hvem er kontaktpersoner for mønstringen?</legend>
 		
-		<ol class="unstyled">
+		<ol class="unstyled" id="kontaktpersoner">
 			{% for kontakt in kontaktpersoner %}
 			<li>
-				{{kontakt.name}}
+				<div class="image">
+					<img src="{{kontakt.image}}" class="img-circle" />
+				</div>
+				<div class="name">
+					<strong>{{kontakt.name}}</strong>
+					<br />
+					{{kontakt.title}}
+				</div>
+				<div class="data">
+					{{kontakt.kommune}}<br />
+					<span class="UKMSMS">{{kontakt.phone}}</span>
+					<a href="mailto:{{kontakt.email}}">{{kontakt.email}}</a>
+				</div>
 			</li>
 			{% endfor %}
 		</ol>
