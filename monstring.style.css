@@ -43,7 +43,11 @@ div.ui-datepicker, div.ui-datepicker table{
 }
 
 .timeexp {
- margin: 0px;
+ margin-top: 0px;
+}
+
+ol#tilbud {
+ list-style: none;
 }
 
 ol#tilbud label {
@@ -51,9 +55,11 @@ font-weight: normal;
 }
 ol#tilbud .title {
  font-weight: bold;
+ width: 180px;
 }
 ol#tilbud li div {
  float: left;
+ width: 40px;
 }
 ol#tilbud > li {
  clear: both;

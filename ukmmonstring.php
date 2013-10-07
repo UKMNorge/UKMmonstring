@@ -29,6 +29,9 @@ function UKMMonstring_menu() {
 function UKMMonstring_script() {
 	wp_enqueue_script('UKMMonstring_script',  plugin_dir_url( __FILE__ )  . 'monstring.script.js' );
 	wp_enqueue_style( 'UKMMonstring_style', plugin_dir_url( __FILE__ ) .'monstring.style.css');
+	
+	wp_enqueue_script('bootstrap_js');
+	wp_enqueue_style('bootstrap_css');
 }
 
 ## SHOW STATS OF PLACES
