@@ -23,8 +23,8 @@
 				Dette bør være mobiltelefon, spesielt hos hovedkontakt
 		    </div>
 		    <div class="span6">
-				<label for="mail">E-post</label>
-				<input class="input-block-level" type="email" id="mail" name="mail" value="{{mail}}">
+				<label for="email">E-post</label>
+				<input class="input-block-level" type="email" id="email" name="email" value="{{email}}">
 		    </div>
 		</div>
 
@@ -49,6 +49,7 @@
 	<fieldset class="ukmfieldset">
 		<legend>Bilde</legend>
 		Ungdommene setter stor pris å se hvem de kontakter, og du bør derfor laste opp et bilde
+		<div class="clearfix"></div>
 		<img src="{{image}}" class="thumbnail pull-left" width="250" />
 		<div class="actions pull-left">
 			<div class="action">
@@ -62,6 +63,7 @@
 				</a>
 			</div>
 		</div>
+		<div class="clearfix"></div>
 	</fieldset>
 	
 	{% if is_fellesmonstring %}
