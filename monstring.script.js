@@ -56,9 +56,9 @@ jQuery(document).ready(function(){
 	    e.preventDefault();
 	
 	    var custom_uploader = wp.media({
-	        title: 'Custom Title',
+	        title: 'Velg nytt bilde for kontaktperson',
 	        button: {
-	            text: 'Custom Button Text'
+	            text: 'Bruk dette bildet'
 	        },
 	        multiple: false  // Set this to true to allow multiple files to be selected
 	    })
