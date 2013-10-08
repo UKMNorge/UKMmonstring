@@ -64,9 +64,9 @@ jQuery(document).ready(function(){
 	    })
 	    .on('select', function() {
 	        var attachment = custom_uploader.state().get('selection').first().toJSON();
-	        $('#custom_media_image').attr('src', attachment.url);
-	        $('#custom_media_url').val(attachment.url);
-	        $('#custom_media_id').val(attachment.id);
+	        jQuery('#custom_media_image').attr('src', attachment.url);
+	        jQuery('#custom_media_url').val(attachment.url);
+	        jQuery('#custom_media_id').val(attachment.id);
 	    })
 	    .open();
 	});
