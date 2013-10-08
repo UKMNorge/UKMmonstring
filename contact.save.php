@@ -21,7 +21,6 @@
 	$sql->add('picture', $_POST['image']);
 	$sql->add('facebook', $_POST['facebook']);
 		
-	echo $sql->debug();
 	$res = $sql->run();
 		
 	if($res && $_POST['c_id']=='new') {
