@@ -3,10 +3,6 @@
 </script>
 <h2>{% if id == 'new' %}Legg til ny kontaktperson{% else %}Rediger {{firstname}} {% endif %}</h2>
 <form method="POST">
-<img id="custom_media_image" src="" />
-<input id="custom_media_url" type="text" name="attachment_url" value="">
-<input id="custom_media_id" type="text" name="attachment_id" value="">
-
 	<div id="hugesubmit"><div id="lagre">Lagre</div></div>
 
 	<fieldset class="ukmfieldset">
@@ -57,7 +53,8 @@
 		<legend>Bilde</legend>
 		Ungdommene setter stor pris å se hvem de kontakter, og du bør derfor laste opp et bilde
 		<div class="clearfix"></div>
-		<img src="{{image}}" class="thumbnail pull-left" width="250" />
+		<img src="{{image}}" class="thumbnail pull-left" id="contact_image" width="250" />
+		<input type="hidden" value="{{image}}" name="image" id="contact_image_input" />
 		<div class="actions pull-left">
 			<div class="action">
 				<a href="#" id="imageedit">

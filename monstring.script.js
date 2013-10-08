@@ -51,8 +51,6 @@ jQuery(document).ready(function(){
 
 
 	jQuery('#imageedit').click(function(e) {
-		console.log('Bytt bilde');
-	
 	    e.preventDefault();
 	
 	    var custom_uploader = wp.media({
@@ -64,9 +62,8 @@ jQuery(document).ready(function(){
 	    })
 	    .on('select', function() {
 	        var attachment = custom_uploader.state().get('selection').first().toJSON();
-	        jQuery('#custom_media_image').attr('src', attachment.url);
-	        jQuery('#custom_media_url').val(attachment.url);
-	        jQuery('#custom_media_id').val(attachment.id);
+	        jQuery('#contact_image').attr('src', attachment.url);
+	        jQuery('#contact_image_input').val(attachment.url);
 	    })
 	    .open();
 	});
