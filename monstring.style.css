@@ -44,6 +44,7 @@ clear: both;
 }
 #kontaktpersoner .image img {
  height: 70px;
+ max-width: 77px;
 }
 
 div.datetime div.hourmin {
