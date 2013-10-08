@@ -43,7 +43,7 @@ clear: both;
  float: left;
 }
 #kontaktpersoner .image img {
- height: 70px;
+ max-height: 70px;
  max-width: 77px;
 }
 
