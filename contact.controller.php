@@ -13,7 +13,7 @@ if(is_numeric($_GET['contact'])) {
 				   'kommune' => $contact->get('kommune'),
 				   'address' => $contact->get('address'),
 				   'postal' => $contact->get('postalcode'),
-				   )
+				   );
 } else {
 	$infos['id'] = 'new';
 }
