@@ -4,6 +4,11 @@ jQuery(document).ready(function(){
 		jQuery('#takemeto').val('contact='+jQuery(this).parents('li').attr('id'));
 		jQuery('#hugesubmit').click();
 	});
+	
+	jQuery('#contact_new').click(function(){
+		jQuery('#takemeto').val('contact=new');
+		jQuery('#hugesubmit').click();		
+	});
 
 	jQuery('#kontaktpersoner a.delete').click(function(){
 		jQuery('#takemeto').val('delete='+jQuery(this).parents('li').attr('id'));
