@@ -38,15 +38,22 @@ function UKMMonstring_script() {
 
 ## SHOW STATS OF PLACES
 function UKMMonstring() {
+	$_CONTROLLER = 'form';
+	
 	if($_SERVER['REQUEST_METHOD']==='POST')
 		require_once('form.save.php');
 
-	require_once('form.controller.php');
+	if($_CONTROLLER == 'form') {
+//		require_once('contact.controller.php');
+		echo TWIG('contact.twig.html', $infos, dirname(__FILE__));
+	} else {
+		require_once('form.controller.php');
 	
-	if(isset($_MESSAGE))
-		$infos['message'] = $_MESSAGE;
-	
-	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
+		if(isset($_MESSAGE))
+			$infos['message'] = $_MESSAGE;
+		
+		echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
+	}
 }
 
 function UKMmonstring_save_kontaktpersoner() {

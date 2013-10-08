@@ -72,8 +72,9 @@ if($_POST['takemeto'] != 'home') {
 	$to = explode('=', $_POST['takemeto']);
 	if($to[0] == 'contact') {
 		$newURL = $_SERVER['REDIRECT_URL']. '?page=UKMMonstring&contact='. $to[1];
-		header("Location: $newURL");
-		exit();
+		
+		$_CONTROLLER = 'contact';
+		$_GET['contact'] = $to[1];
 	}
 	
 	elseif($to[0] == 'delete') {
