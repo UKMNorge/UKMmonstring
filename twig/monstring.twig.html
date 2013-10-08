@@ -139,7 +139,7 @@
 	{% endif %}
 	
 	<fieldset class="ukmfieldset">
-		<legend>Hva kan deltakerne melde på?</legend>
+		<legend>{% if site_type == 'kommune' %}Hva kan deltakerne melde på?{% else %}Hva kan kommunene videresende?{% endif %}</legend>
 	
 		<ol class="unstyled" id="tilbud">
 			<li>
