@@ -19,6 +19,7 @@ if(is_numeric($_GET['contact'])) {
 				   );
 } else {
 	$infos['id'] = 'new';
+	$infos['image'] = '//grafikk.ukm.no/placeholder/person.jpg';
 }
 
 $pl = new monstring(get_option('pl_id'));
