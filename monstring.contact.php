@@ -1,5 +1,6 @@
 <?php
 function contactForm() {
+	require_once('UKM/kontakt.class.php');
 	$c = new kontakt((int)$_GET['contact']);
 	$m = new monstring(get_option('pl_id'));
 	
