@@ -61,7 +61,7 @@ $infos = array('name' => $pl->get('pl_name'),
 			   'site_type' => get_option('site_type'),
 			   'season' => get_option('season'),
 			   'kontaktpersoner' => $kontaktpersoner,
-			   'hovedkontakter' => $kontaktpersoner,
+			   'hovedkontakter' => $hovedkontakter,
 			   'plugin_path' => plugin_dir_url( __FILE__ ),
 			  );
 ?>
