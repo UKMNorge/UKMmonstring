@@ -45,9 +45,6 @@ if(!$pl->registered()) {
 	}
 }
 
-
-var_dump($pl->get('kommuner'));
-
 $infos = array('name' => $pl->get('pl_name'),
 			   'place' => $pl->get('pl_place'),
 			   'start' => $pl->get('pl_start'),

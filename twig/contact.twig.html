@@ -82,7 +82,7 @@
 		<legend>Kommune-tilhørighet</legend>
 		<select name="kommune" class="pull-right">
 			{% for komm in kommuner %}
-			<option value="{{kommune.id}}" {% if komm.id == kommune %}selected="selected"{% endif %}>{{komm.name}}</option>
+			<option value="{{komm.id}}" {% if komm.id == kommune %}selected="selected"{% endif %}>{{komm.name}}</option>
 			{% endfor %}
 		</select>
 		<p>
