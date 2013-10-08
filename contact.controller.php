@@ -18,6 +18,7 @@ if(is_numeric($_GET['contact'])) {
 				   'address' => $contact->get('address'),
 				   'postal' => $contact->get('postalcode'),
 				   'image' => $contact->get('image'),
+				   'season' => get_option('season'),
 				   );
 } else {
 	$infos['id'] = 'new';
