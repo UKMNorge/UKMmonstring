@@ -71,9 +71,9 @@ foreach($offers as $offer) {
 if($_POST['takemeto'] != 'home') {
 	$to = explode('=', $_POST['takemeto']);
 	if($to[0] == 'contact') {
-		var_dump($_SERVER);
-		die();
-		header("Location ");
+		$newURL = $_SERVER['REDIRECT_URL']. '?page=UKMMonstring&contact='. $to[1];
+		header("Location: $newURL");
+		exit();
 	}
 	
 	elseif($to[0] == 'delete') {
