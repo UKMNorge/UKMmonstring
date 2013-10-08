@@ -1,16 +1,15 @@
-function UKMMonstring_cSave(the_array) {
-	var pl_id = document.getElementById('this_place_id').value;
-	UKMN_AJAX('UKMMonstring/monstring.ajax.php', 'action|contactOrder||pl_id|'+pl_id+'||order|'+the_array);
-	UKMN_AJAX('UKMMonstring/monstring.ajax.php', 'action|listMainContacts||pl_id|'+pl_id, 'eval');
-	//alert('Hei ' + the_array);
-}
-
 jQuery(document).ready(function(){
 
-	jQuery('#hugesubmit_monstring').click(function(){
-		jQuery(this).find('#lagre').html('Lagrer...');
-		jQuery('#place_submit').click();
+	jQuery('#kontaktpersoner a.edit').click(function(){
+		jQuery('#takemeto').val('contactp='+jQuery(this).parents('li').attr('id'));
+		jQuery('#hugesubmit').click();
 	});
+
+	jQuery('#kontaktpersoner a.delete').click(function(){
+		jQuery('#takemeto').val('delete='+jQuery(this).parents('li').attr('id'));
+		jQuery('#hugesubmit').click();
+	});
+
 /* DATEPICKER */
 	jQuery( ".datepicker" ).datepicker( {minDate: new Date(UKMSEASON,0,1), maxDate: new Date(UKMSEASON, 2, 31), dateFormat: 'dd.mm.yy'});
 

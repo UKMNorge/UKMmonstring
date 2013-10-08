@@ -68,46 +68,22 @@ foreach($offers as $offer) {
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-// SAVE OFFERS HERE
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if($_POST['takemeto'] != 'home') {
+	$to = explode('_', $_POST['takemeto']);
+	if($to[0] == 'contact') {
+		var_dump($_SERVER);
+		die();
+		header("Location ");
+	}
+	
+	elseif($to[0] == 'delete') {
+		$id = (int) $to[1];
+		if($id > 0) {
+			$del = new SQLdel('smartukm_rel_pl_ab', array('pl_id'=>get_option('pl_id'), 'pl_ab_id'=>$id));
+			echo $del->debug();
+		}
+	}
+}
 
 #######################################################################
 ## HENTER INN ET DATEPICKER-TIDSPUNKT								 ##
