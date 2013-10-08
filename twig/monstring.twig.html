@@ -5,6 +5,9 @@
 
 {% if message is defined %}
 	<div class="alert alert-{{message.success ? 'success':'error'}} span6">
+		{% if message.title is defined %}
+		<strong>{{message.title}}</strong><br />
+		{% endif %}
 		{{message.body}}
 	</div>
 {% endif %}

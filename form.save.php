@@ -84,6 +84,18 @@ if($_POST['takemeto'] != 'home') {
 		} else
 			$_MESSAGE = array('success' => false, 'body' => 'En feil oppsto. Kontakt UKM Norge hvis du ikke får slettet kontaktpersonen');
 	}
+} else {
+	if($place->get('pl_start') > $place->get('pl_stop')) {
+		$_MESSAGE = array('successs' => false,
+						  'title' => 'Dette blir vel feil?',
+						  'body' => 'Alle endringene dine er lagret, MEN vi ser at mønstringen slutter før den starter. Rett opp dette i skjemaet og lagre på nytt'
+						  );
+	} elseif ($place->get('pl_deadline') > $place->get('pl_start') || $place->get('pl_deadline2') > $place->get('pl_start')) {
+		$_MESSAGE = array('successs' => false,
+						  'title' => 'Dette blir vel feil?',
+						  'body' => 'Alle endringene dine er lagret, MEN vi ser at påmeldingsfrist er satt etter mønstringen starter. Sjekk datoer i skjemaet nedenfor.'
+						  );
+	}
 }
 
 #######################################################################
