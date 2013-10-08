@@ -1,5 +1,5 @@
 <?php 
-
+require_once('UKM/kontakt.class.php');
 if(is_numeric($_GET['contact'])) {
 	$contact = new kontakt($_GET['contact']);
 	
