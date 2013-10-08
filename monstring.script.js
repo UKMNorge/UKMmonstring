@@ -55,7 +55,7 @@ jQuery(document).ready(function(){
 
 
 jQuery('#imageedit').click(function() {
-
+	alert('fix bilde');
     var send_attachment_bkp = wp.media.editor.send.attachment;
 
     wp.media.editor.send.attachment = function(props, attachment) {
