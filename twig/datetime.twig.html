@@ -1,2 +1,2 @@
 {% embed "select_hourautomin.twig.html" %}{% endembed %}
-<input class="datepicker" type="text" id="{{name}}_datepicker" name="{{name}}_datepicker" value="{{selected|date('d.m.Y')}}">
+<input class="datepicker_{{site_type}}" type="text" id="{{name}}_datepicker" name="{{name}}_datepicker" value="{{selected|date('d.m.Y')}}">
