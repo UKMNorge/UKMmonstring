@@ -42,8 +42,12 @@ function UKMMonstring_script() {
 function UKMMonstring() {
 	$_CONTROLLER = 'form';
 	
-	if($_SERVER['REQUEST_METHOD']==='POST')
-		require_once('form.save.php');
+	if($_SERVER['REQUEST_METHOD']==='POST') {
+		if(isset($_POST['c_id']))
+			require_once('contact.save.php');
+		else
+			require_once('form.save.php');
+	}
 
 	if($_CONTROLLER == 'contact') {
 		require_once('contact.controller.php');
