@@ -20,7 +20,7 @@ if(is_numeric($_GET['contact'])) {
 
 $pl = new monstring(get_option('pl_id'));
 
-$infos['kommuner'] = $pl->kommuner();
+$infos['kommuner'] = $pl->get('kommuner');
 $infos['is_fellesmonstring'] = $pl->fellesmonstring();
 $infos['site_type']	= get_option('site_type');
 
