@@ -80,8 +80,9 @@ if($_POST['takemeto'] != 'home') {
 		$id = (int) $to[1];
 		if($id > 0) {
 			$del = new SQLdel('smartukm_rel_pl_ab', array('pl_id'=>get_option('pl_id'), 'pl_ab_id'=>$id));
-			echo $del->debug();
+			$res = $del->run();
 		}
+		$_MESSAGE = array('success' => $res ? true : false, 'body' => 'Kontaktpersonen ble slettet fra din mønstring');
 	}
 }
 

@@ -1,7 +1,7 @@
 jQuery(document).ready(function(){
 
 	jQuery('#kontaktpersoner a.edit').click(function(){
-		jQuery('#takemeto').val('contactp='+jQuery(this).parents('li').attr('id'));
+		jQuery('#takemeto').val('contact='+jQuery(this).parents('li').attr('id'));
 		jQuery('#hugesubmit').click();
 	});
 

@@ -42,6 +42,10 @@ function UKMMonstring() {
 		require_once('form.save.php');
 
 	require_once('form.controller.php');
+	
+	if(isset($_MESSAGE))
+		$infos['message'] = $_MESSAGE;
+	
 	echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
 }
 

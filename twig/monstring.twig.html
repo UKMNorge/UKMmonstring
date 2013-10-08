@@ -3,6 +3,12 @@
 </script>
 <h2>Registrer mønstring</h2>
 
+{% if message is defined %}
+	<div class="alert alert-{{message.success ? 'success':'error'}}">
+		{{message.body}}
+	</div>
+{% endif %}
+
 <form method="POST">
 	<div id="hugesubmit"><div id="lagre">Lagre</div></div>
 
