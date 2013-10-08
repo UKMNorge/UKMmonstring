@@ -13,8 +13,6 @@ foreach($kontakter as $kontakt) {
 							   );
 }
 
-
-
 $contacts = $pl->kontakter_pamelding();
 foreach($contacts as $kommune => $c)
 	$hovedkontakter[] = array('kommune' => $kommune,
