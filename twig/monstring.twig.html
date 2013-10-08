@@ -26,9 +26,13 @@
 		<div class="row-fluid">
 		    <div class="span6">
 				<label for="pl_name">Mønstringsnavn</label>
-				<input class="input-block-level" type="text" id="pl_name" name="pl_name" value="{{name}}" autofocus>
-				Skal <b>kun</b> inneholde kommune-/bydelsnavn, og <b>aldri</b> "UKM i" o.l.<br />
-				Fellesmønstringer kan bruke kallenavn som Valdres, Odalen osv
+				{% if site_type == 'kommune' %}
+					<input class="input-block-level" type="text" id="pl_name" name="pl_name" value="{{name}}" autofocus>
+					Skal <b>kun</b> inneholde kommune-/bydelsnavn, og <b>aldri</b> "UKM i" o.l.<br />
+					Fellesmønstringer kan bruke kallenavn som Valdres, Odalen osv
+				{% else %}
+					{{name}}
+				{% endif %}
 		    </div>
 		    <div class="span6">
 				<label for="pl_place">Hvor skal mønstringen være?</label>
@@ -56,15 +60,17 @@
 	
 		<div class="row-fluid">
 		    <div class="span6 datetime">
-				<label for="pl_deadline_date">Påmeldingsfrist 1</label>
+				<label for="pl_deadline_date">{% if site_type == 'kommune' %}Påmeldingsfrist 1{% else %}Frist for videresending til {{name}}{% endif %}</label>
 				{% embed "datetime.twig.html" with {'name': 'deadline', 'selected': deadline1} %}{% endembed %}
 				Gjelder scene, video, utstilling, matkultur 
 		    </div>
+		    {% if site_type == 'kommune' %}
 		    <div class="span6 datetime">
 				<label for="pl_deadline2_date">Påmeldingsfrist 2</label>
 				{% embed "datetime.twig.html" with {'name': 'deadline2', 'selected': deadline2} %}{% endembed %}
 				Gjelder konferansier, nettredaksjon, arrang&oslash;r, sceneteknikk
 		    </div>
+		    {% endif %}
 		</div>
 		
 		<div class="alert alert-warning">
