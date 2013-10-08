@@ -75,15 +75,14 @@ if($_POST['takemeto'] != 'home') {
 		
 		$_CONTROLLER = 'contact';
 		$_GET['contact'] = $to[1];
-	}
-	
-	elseif($to[0] == 'delete') {
+	} elseif($to[0] == 'delete') {
 		$id = (int) $to[1];
 		if($id > 0) {
 			$del = new SQLdel('smartukm_rel_pl_ab', array('pl_id'=>get_option('pl_id'), 'pl_ab_id'=>$id));
 			$res = $del->run();
-		}
-		$_MESSAGE = array('success' => $res ? true : false, 'body' => 'Kontaktpersonen ble slettet fra din mønstring');
+			$_MESSAGE = array('success' => $res ? true : false, 'body' => 'Kontaktpersonen ble '. (!$res ? 'IKKE' : '').' slettet fra din mønstring');
+		} else
+			$_MESSAGE = array('success' => false, 'body' => 'En feil oppsto. Kontakt UKM Norge hvis du ikke får slettet kontaktpersonen');
 	}
 }
 
