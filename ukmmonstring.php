@@ -48,7 +48,7 @@ function UKMMonstring() {
 //		echo TWIG('contact.twig.html', $infos, dirname(__FILE__));
 
 		require_once('monstring.contact.php');
-		echo UKMMonstring_form($_GET['contact']);
+		echo contactForm();
 	} else {
 		require_once('form.controller.php');
 	
