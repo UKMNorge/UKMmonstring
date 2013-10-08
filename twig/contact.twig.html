@@ -1,1 +1,94 @@
-<h2>Rediger kontaktperson</h2>
+<h2>{% if id == 'new' %}Legg til ny kontaktperson{% else %}Rediger {{name}} {% endif %}</h2>
+<form method="POST">
+	<div id="hugesubmit"><div id="lagre">Lagre</div></div>
+
+	<fieldset>
+		<legend>Basisinformasjon</legend>
+	
+		<div class="row-fluid">
+		    <div class="span6">
+				<label for="firstname">Fornavn</label>
+				<input class="input-block-level" type="text" id="firstname" name="firstname" value="{{firstname}}" autofocus>
+		    </div>
+		    <div class="span6">
+				<label for="lastname">Etternavn</label>
+				<input class="input-block-level" type="text" id="lastname" name="lastname" value="{{lastname}}">
+		    </div>
+		</div>
+
+		<div class="row-fluid">
+		    <div class="span6">
+				<label for="phone">Telefon (mobil)</label>
+				<input class="input-block-level" type="tel" id="phone" name="phone" value="{{phone}}">
+				Dette bør være mobiltelefon, spesielt hos hovedkontakt
+		    </div>
+		    <div class="span6">
+				<label for="mail">E-post</label>
+				<input class="input-block-level" type="email" id="mail" name="mail" value="{{mail}}">
+		    </div>
+		</div>
+
+		<div class="row-fluid">
+		    <div class="span6">
+				<label for="title">Tittel</label>
+				<input class="input-block-level" type="text" id="title" name="title" value="{{title}}">
+		    </div>
+		    <div class="span6">
+				<label for="facebook">Facebook</label>
+				<input class="input-block-level" type="text" id="facebook" name="facebook" value="{{facebook}}">
+				Full adresse til din facebook-profil. 
+				Kopier adressen ved å høyreklikke på ditt eget navn, og velge "kopier lenkeadresse"
+				Adressen skal se ca slik ut:<br />
+				http://facebook.com/UKMNorge
+		    </div>
+		</div>
+
+	</fieldset>
+
+
+	<fieldset>
+		<legend>Bilde</legend>
+		Ungdommene setter stor pris å se hvem de kontakter, og du bør derfor laste opp et bilde
+		<img src="{{image}}" class="thumbnail pull-left" width="250" />
+		<div class="actions pull-left">
+			<div class="action">
+				<a href="#" class="edit">
+					<img src="//ico.ukm.no/pencil-32.png" /> Bytt bilde
+				</a>
+			</div>
+			<div class="action">
+				<a href="#" class="delete">
+					<img src="//ico.ukm.no/trash-32.png" /> Slett bilde
+				</a>
+			</div>
+		</div>
+	</fieldset>
+	
+	{% if is_fellesmonstring %}
+	<fieldset>
+		<legend>Kommune-tilhørighet</legend>
+		Ved påmelding vises kun 1 kontakt for den kommunen deltakerne melder seg på.
+		Oppgi kommune her, og sorter listen på "mønstring" for å angi hvem som vises som kontakt for hvilken kommune.
+		<select name="kommune">
+			{% for kommune in kommuner %}
+			<option value="{{kommune.id}}">{{kommune.name}}</option>
+		</select>
+	</fieldset>
+	
+	
+	<fieldset>
+		<legend>Adresse-informasjon</legend>
+		Oppgi adresse hvor deltakerne ta kontakt, f.eks. kontoradresse e.l.
+	
+		<div class="row-fluid">
+		    <div class="span6">
+				<label for="address">Adresse</label>
+				<input class="input-block-level" type="text" id="address" name="address" value="{{address}}">
+		    </div>
+		    <div class="span6">
+				<label for="postal">Postnummer</label>
+				<input class="input-block-level" type="text" maxlength="4" id="postal" name="postal" value="{{postal}}">
+		    </div>
+		</div>
+	</fieldset>
+</form>
