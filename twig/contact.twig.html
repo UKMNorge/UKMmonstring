@@ -5,17 +5,17 @@
 <form method="POST">
 	<div id="hugesubmit"><div id="lagre">Lagre</div></div>
 
-	<input type="text" name="c_id" value="{{ id == 'new' ? 'new' : id }}" />
-	<input type="text" name="log_current_value_firstname" value="{{firstname}}" />
-	<input type="text" name="log_current_value_lastname" value="{{lastname}}" />
-	<input type="text" name="log_current_value_phone" value="{{phone}}" />
-	<input type="text" name="log_current_value_email" value="{{email}}" />
-	<input type="text" name="log_current_value_title" value="{{title}}" />
-	<input type="text" name="log_current_value_facebook" value="{{facebook}}" />
-	<input type="text" name="log_current_value_image" value="{{image}}" />
-	<input type="text" name="log_current_value_kommune" value="{{kommune}}" />
-	<input type="text" name="log_current_value_address" value="{{address}}" />
-	<input type="text" name="log_current_value_postal" value="{{postal}}" />
+	<input type="hidden" name="c_id" value="{{ id == 'new' ? 'new' : id }}" />
+	<input type="hidden" name="log_current_value_firstname" value="{{firstname}}" />
+	<input type="hidden" name="log_current_value_lastname" value="{{lastname}}" />
+	<input type="hidden" name="log_current_value_phone" value="{{phone}}" />
+	<input type="hidden" name="log_current_value_email" value="{{email}}" />
+	<input type="hidden" name="log_current_value_title" value="{{title}}" />
+	<input type="hidden" name="log_current_value_facebook" value="{{facebook}}" />
+	<input type="hidden" name="log_current_value_image" value="{{image}}" />
+	<input type="hidden" name="log_current_value_kommune" value="{{kommune}}" />
+	<input type="hidden" name="log_current_value_address" value="{{address}}" />
+	<input type="hidden" name="log_current_value_postal" value="{{postal}}" />
 
 	<fieldset class="ukmfieldset">
 		<legend>Basisinformasjon</legend>
