@@ -23,7 +23,7 @@
 		
 	$res = $sql->run();
 		
-	if($res && $_POST['c_id']=='new')) {
+	if($res && $_POST['c_id']=='new') {
 		$rel = new SQLins('smartukm_rel_pl_ab');
 		$rel->add('pl_id', get_option('pl_id'));
 		$rel->add('ab_id', $sql->insid());
