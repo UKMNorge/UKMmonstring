@@ -68,6 +68,7 @@ foreach($offers as $offer) {
 	}
 }
 
+var_dump($_POST);
 if($_POST['takemeto'] != 'home') {
 	$to = explode('_', $_POST['takemeto']);
 	if($to[0] == 'contact') {
