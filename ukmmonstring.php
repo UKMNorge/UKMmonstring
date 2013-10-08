@@ -29,6 +29,8 @@ function UKMMonstring_menu() {
 
 ## INCLUDE SCRIPTS
 function UKMMonstring_script() {
+	wp_enqueue_media();
+	
 	wp_enqueue_script('UKMMonstring_script',  plugin_dir_url( __FILE__ )  . 'monstring.script.js' );
 	wp_enqueue_style( 'UKMMonstring_style', plugin_dir_url( __FILE__ ) .'monstring.style.css');
 	

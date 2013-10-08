@@ -50,24 +50,26 @@ jQuery(document).ready(function(){
 	jQuery( "#kontaktpersoner" ).disableSelection();
 
 
-	jQuery('#imageedit').click(function() {
+	jQuery('#imageedit').click(function(e) {
 		console.log('Bytt bilde');
-	    var send_attachment_bkp = wp.media.editor.send.attachment;
 	
-	    wp.media.editor.send.attachment = function(props, attachment) {
+	    e.preventDefault();
 	
-	        jQuery('#custom_media_image').attr('src', attachment.url);
-	        jQuery('#custom_media_url').val(attachment.url);
-	        jQuery('#custom_media_id').val(attachment.id);
-	
-	        wp.media.editor.send.attachment = send_attachment_bkp;
-	    }
-	
-	    wp.media.editor.open();
-	
-	    return false;       
+	    var custom_uploader = wp.media({
+	        title: 'Custom Title',
+	        button: {
+	            text: 'Custom Button Text'
+	        },
+	        multiple: false  // Set this to true to allow multiple files to be selected
+	    })
+	    .on('select', function() {
+	        var attachment = custom_uploader.state().get('selection').first().toJSON();
+	        $('#custom_media_image').attr('src', attachment.url);
+	        $('#custom_media_url').val(attachment.url);
+	        $('#custom_media_id').val(attachment.id);
+	    })
+	    .open();
 	});
-
 
 
 });
