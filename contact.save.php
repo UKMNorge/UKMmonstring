@@ -1,5 +1,5 @@
 <?php
-	if($_POST['id']=='new') {
+	if($_POST['id']=='new')
 		$sql = new SQLins('smartukm_contacts');
 	else
 		$sql = new SQLins('smartukm_contacts', array('id'=>$_POST['c_id']));
