@@ -1,5 +1,9 @@
 <?php 
 require_once('UKM/kontakt.class.php');
+
+wp_enqueue_media();
+
+
 if(is_numeric($_GET['contact'])) {
 	$contact = new kontakt($_GET['contact']);
 	
