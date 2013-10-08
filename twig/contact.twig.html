@@ -70,8 +70,9 @@
 		Ved påmelding vises kun 1 kontakt for den kommunen deltakerne melder seg på.
 		Oppgi kommune her, og sorter listen på "mønstring" for å angi hvem som vises som kontakt for hvilken kommune.
 		<select name="kommune">
-			{% for kommune in kommuner %}
-			<option value="{{kommune.id}}">{{kommune.name}}</option>
+			{% for komm in kommuner %}
+			<option value="{{kommune.id}}" {% if komm.id == kommune %}selected="selected"{% endif %}>{{komm.name}}</option>
+			{% endfor %}
 		</select>
 	</fieldset>
 	
