@@ -43,7 +43,7 @@ function UKMMonstring() {
 	if($_SERVER['REQUEST_METHOD']==='POST')
 		require_once('form.save.php');
 
-	if($_CONTROLLER == 'form') {
+	if($_CONTROLLER == 'contact') {
 //		require_once('contact.controller.php');
 		echo TWIG('contact.twig.html', $infos, dirname(__FILE__));
 	} else {
