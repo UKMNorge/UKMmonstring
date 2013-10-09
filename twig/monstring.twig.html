@@ -153,7 +153,11 @@
 
 	<fieldset class="ukmfieldset">
 		<legend>{% if site_type == 'kommune' %}Hva kan deltakerne melde på?{% else %}Hva kan kommunene videresende?{% endif %}</legend>
-	
+		
+		<p>Alle UKM-mønstringer er automatisk åpne for påmelding innen musikk, dans, teater, litteratur, annet på scenen, film og utstilling</p>
+
+		<h4>UKM Norge anbefaler at dere også tillater deltakelse på disse områdene:</h4>
+		
 		<ol class="unstyled" id="tilbud">
 			<li>
 				<div class="title">Konferansier</div>
@@ -205,9 +209,6 @@
 			</li>
 		</ol>		
 	
-		<div class="alert alert-info">
-			<strong>Mønstringen tillater automatisk:</strong> Musikk, dans, teater, litteratur, annet på scenen, film og utstilling
-		</div>
 	</fieldset>
 	
 	{% if site_type == 'kommune' %}
