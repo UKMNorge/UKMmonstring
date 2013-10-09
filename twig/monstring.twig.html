@@ -212,7 +212,7 @@
 	
 	{% if site_type == 'kommune' %}
 	<fieldset class="ukmfieldset">
-		<legend>Hvilke kommuner er del av denne mønstringen?</legend>
+		<legend>Følgende kommuner deltar i denne mønstringen</legend>
 		{% for kommune in kommuner %}
 			{{kommune.name}}
 			{% if loop.last == false %}, {% endif %}
