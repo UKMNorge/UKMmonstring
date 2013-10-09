@@ -1,5 +1,4 @@
 <select name="{{name}}_time">
-	<option value="0"{{ i == 0 ? 'selected="selected"' : '' }}>00</option>
 	{% for i in range(8,23) %}
 		<option value="{{ i }}"{{ i == selected|date('H') ? 'selected="selected"' : '' }}>
 			{% if i < 10 %}
