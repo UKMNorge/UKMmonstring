@@ -63,7 +63,7 @@
 	
 		<div class="row-fluid">
 		    <div class="span6 datetime">
-				<label for="pl_deadline_date">{% if site_type == 'kommune' %}Påmeldingsfrist 1{% else %}Frist for videresending til {{name}}{% endif %}</label>
+				<label for="pl_deadline_date">{% if site_type == 'kommune' %}Påmeldingsfrist 1{% else %}Hva er siste frist for videresending{% endif %}</label>
 				{% embed "datetime.twig.html" with {'name': 'deadline', 'selected': deadline1} %}{% endembed %}
 				Gjelder scene, video, utstilling, matkultur 
 		    </div>
