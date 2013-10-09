@@ -93,12 +93,6 @@
 		<br />
 		Dra og slipp for å endre rekkefølge
 		</p>
-		<div style="margin-top: 10px;">
-			<label>Hovedkontakter for din mønstring</label>
-			<ol id="hovedkontakter" class="unstyled">
-			{% embed "hovedkontakter.twig.html" %}{% endembed %}
-			</ol>
-		</div>
 	{% else %}
 		<p>Ved påmelding vil deltakeren se kun én kontaktperson. Dette er den som står øverst i listen. (dra og slipp for å endre rekkefølge)</p>
 	{% endif %}	
@@ -144,6 +138,16 @@
 			{% endfor %}
 		</ol>
 		<button type="button" class="pull-right btn btn-success" id="contact_new">Legg til ny kontaktperson</button>
+		
+		
+	{% if kommuner|length > 1 %}
+		<div style="margin-top: 10px;">
+			<label>Hovedkontakter for din mønstring</label>
+			<ol id="hovedkontakter" class="unstyled">
+			{% embed "hovedkontakter.twig.html" %}{% endembed %}
+			</ol>
+		</div>
+	{% endif %}
 	</fieldset>
 
 
