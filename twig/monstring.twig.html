@@ -85,22 +85,23 @@
 	
 	<fieldset class="ukmfieldset">
 		<legend>Hvem er kontaktpersoner for mønstringen?</legend>
-		Ved påmelding vil deltakeren se kun én kontaktperson. 
-
-
 	{% if kommuner|length > 1 %}
-		Ved påmelding må deltakere velge én av kommunene og vil da få se kun den kontaktpersonen som er knyttet til den valgte kommunen.<br />
-		Hvis flere kontaktpersoner er registrert på samme kommune vil kun den som er øverst av disse i listen være synlig.<br />
-		Hvis ingen kontaktpersoner er registrert på den valgte kommunen, vil den aller øverste kontaktpersonen i listen være synlig, uavhengig av hvilken kommune denne representerer.<br />
-		<label>Hovedkontakter for din mønstring</label>
-		<ol id="hovedkontakter" class="unstyled">
-		{% embed "hovedkontakter.twig.html" %}{% endembed %}
-		</ol>
+		<p>
+		Ved påmelding må deltakere velge én av kommunene, og vil da kun se den kontaktpersonen som er knyttet til den valgte kommunen.<br />
+		Hvis flere kontaktpersoner er registrert på samme kommune vil den som er øverst av disse i listen være synlig.<br />
+		Hvis ingen kontaktpersoner er registrert på den valgte kommunen, vil den aller øverste i listen være synlig (uavhengig av hvilken kommune denne representerer).
+		<br />
+		Dra og slipp for å endre rekkefølge
+		</p>
+		<div style="margin-top: 10px;">
+			<label>Hovedkontakter for din mønstring</label>
+			<ol id="hovedkontakter" class="unstyled">
+			{% embed "hovedkontakter.twig.html" %}{% endembed %}
+			</ol>
+		</div>
 	{% else %}
-		Dette er den som står øverst i listen
+		<p>Ved påmelding vil deltakeren se kun én kontaktperson. Dette er den som står øverst i listen. (dra og slipp for å endre rekkefølge)</p>
 	{% endif %}	
-	(dra og slipp for å endre rekkefølge).
-	<br />
 
 
 		<ol class="unstyled" id="kontaktpersoner">
