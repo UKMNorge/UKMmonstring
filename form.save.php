@@ -85,6 +85,7 @@ if($_POST['takemeto'] != 'home') {
 			$_MESSAGE = array('success' => false, 'body' => 'En feil oppsto. Kontakt UKM Norge hvis du ikke får slettet kontaktpersonen');
 	}
 } else {
+	$place = new monstring($place->get('pl_id'));
 	if($place->get('pl_start') > $place->get('pl_stop')) {
 		$_MESSAGE = array('successs' => false,
 						  'title' => 'Dette blir vel feil?',
