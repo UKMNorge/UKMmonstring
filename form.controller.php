@@ -2,16 +2,21 @@
 $pl = new monstring(get_option('pl_id'));
 
 $kontakter = $pl->kontakter();
-foreach($kontakter as $kontakt) {
-	$kontaktpersoner[] = array('id' => $kontakt->get('id'),
-							   'name' => $kontakt->get('name'),
-							   'kommune' => $kontakt->get('kommunenavn'),
-							   'image' => $kontakt->get('picture'),
-							   'email' => $kontakt->get('email'),
-							   'phone' => $kontakt->get('tlf'),
-							   'title' => $kontakt->get('title'),
-							   );
-}
+if(!is_array($kontakter) && $pl->registered()) {
+	$_MESSAGE = array('success' => false,
+					  'title' => 'Kontaktperson mangler',
+					  'body' => 'Legg til kontaktperson nedenfor');
+} elseif(!is_array($kontakter))
+	foreach($kontakter as $kontakt) {
+		$kontaktpersoner[] = array('id' => $kontakt->get('id'),
+								   'name' => $kontakt->get('name'),
+								   'kommune' => $kontakt->get('kommunenavn'),
+								   'image' => $kontakt->get('picture'),
+								   'email' => $kontakt->get('email'),
+								   'phone' => $kontakt->get('tlf'),
+								   'title' => $kontakt->get('title'),
+								   );
+	}
 
 $contacts = $pl->kontakter_pamelding();
 foreach($contacts as $kommune => $c)
