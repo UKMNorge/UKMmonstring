@@ -85,7 +85,8 @@
 	
 	<fieldset class="ukmfieldset">
 		<legend>Hvem er kontaktpersoner for mønstringen?</legend>
-		
+		Ved påmelding vil deltakeren se kun én kontaktperson. Dette er den som står øverst i listen (dra og slipp for å endre rekkefølge).
+
 		<ol class="unstyled" id="kontaktpersoner">
 			{% for kontakt in kontaktpersoner %}
 			<li class="well well-mini" id="{{kontakt.id}}">
@@ -128,9 +129,9 @@
 		<button type="button" class="pull-right btn btn-success" id="contact_new">Legg til ny kontaktperson</button>
 	</fieldset>
 	
+	{% if kommuner|length > 1 %}
 	<fieldset class="ukmfieldset">
 		<legend>Hovedkontakter ved påmelding</legend>
-		{% if kommuner|length > 1 %}
 			Ved påmelding vil deltakeren se kun én kontaktperson. Dette er den som står øverst i listen ovenfor (dra og slipp for å endre rekkefølge).
 			Ettersom dette er en fellesmønstring kan du tilpasse hvilken kontakt som skal vises ved påmelding.<br /><br />
 			Kontaktperson som vises i påmelding er den øverste (i listen over) med den gitte kommunen. Hvis du ikke oppgir kommune på dine kontaktpersoner vil den øverste kontakten vises for alle kommuner.
@@ -138,11 +139,9 @@
 			<ol id="hovedkontakter" class="unstyled">
 			{% embed "hovedkontakter.twig.html" %}{% endembed %}
 			</ol>
-		{% else %}
-			Ved påmelding vil deltakeren se kun én kontaktperson. Dette er den som står øverst i listen ovenfor (dra og slipp for å endre rekkefølge).
-		{% endif %}
 	</fieldset>
-	
+	{% endif %}	
+
 	<fieldset class="ukmfieldset">
 		<legend>{% if site_type == 'kommune' %}Hva kan deltakerne melde på?{% else %}Hva kan kommunene videresende?{% endif %}</legend>
 	
