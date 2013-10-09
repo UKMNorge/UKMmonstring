@@ -59,7 +59,7 @@
 	
 	
 	<fieldset class="ukmfieldset">
-		<legend>Påmeldingsfrist(er)</legend>
+		<legend>{% if site_type == 'kommune' %}Påmeldingsfrist(er){% else %}Videresendingsfrist{% endif %}</legend>
 	
 		<div class="row-fluid">
 		    <div class="span6 datetime">
