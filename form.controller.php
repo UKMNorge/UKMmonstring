@@ -6,7 +6,7 @@ if(!is_array($kontakter) && $pl->registered()) {
 	$_MESSAGE = array('success' => false,
 					  'title' => 'Kontaktperson mangler',
 					  'body' => 'Legg til kontaktperson nedenfor');
-} elseif(!is_array($kontakter))
+} elseif(is_array($kontakter))
 	foreach($kontakter as $kontakt) {
 		$kontaktpersoner[] = array('id' => $kontakt->get('id'),
 								   'name' => $kontakt->get('name'),
