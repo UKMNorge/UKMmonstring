@@ -19,7 +19,6 @@ if(!is_array($kontakter) && $pl->registered()) {
 	}
 
 $contacts = $pl->kontakter_pamelding();
-var_dump($contacts);
 foreach($contacts as $kommune => $c)
 	$hovedkontakter[] = array('kommune' => $kommune,
 							  'name' => $c->get('name')
