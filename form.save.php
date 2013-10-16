@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Oslo');
 $place = new monstring(get_option('pl_id'));
 switch(get_option('site_type')) {
 	case 'land':
