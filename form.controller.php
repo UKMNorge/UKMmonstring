@@ -19,7 +19,7 @@ if(!is_array($kontakter) && $pl->registered()) {
 								   'email' => $kontakt->get('email'),
 								   'phone' => $kontakt->get('tlf'),
 								   'title' => $kontakt->get('title'),
-								   'deleteable' => $deletable,
+								   'deleteable' => $deleteable,
 								   );
 	}
 
