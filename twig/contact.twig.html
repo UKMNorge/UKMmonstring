@@ -39,14 +39,24 @@
 		    </div>
 		    <div class="span6">
 				<label for="email">E-post</label>
-				<input class="input-block-level" type="email" id="email" name="email" value="{{email}}">
+				{% if maillock %}
+					{{email}}
+					<input class="input-block-level" type="hidden" id="email" name="email" value="{{email}}">
+				{% else %}
+					<input class="input-block-level" type="email" id="email" name="email" value="{{email}}">
+				{% endif %}
 		    </div>
 		</div>
 
 		<div class="row-fluid">
 		    <div class="span6">
 				<label for="title">Tittel</label>
-				<input class="input-block-level" type="text" id="title" name="title" value="{{title}}">
+				{% if titlelock %}
+					{{title}}
+					<input class="input-block-level" type="hidden" id="title" name="title" value="{{title}}">
+				{% else %}
+					<input class="input-block-level" type="text" id="title" name="title" value="{{title}}">
+				{% endif %}
 				F.eks. lokalkontakt, URG-representant, produsent e.l.
 		    </div>
 		    <div class="span6">
