@@ -28,8 +28,18 @@ $infos['kommuner'] = $pl->get('kommuner');
 $infos['is_fellesmonstring'] = $pl->fellesmonstring();
 $infos['site_type']	= get_option('site_type');
 
-$urgadresse = 'hedmark@urg.ukm.no';
-if($infos['email'] == $urgadresse)
+$urgadresse = $pl->get('url').'@urg.ukm.no';
+if($infos['email'] == $urgadresse) {
 	$infos['maillock'] = true;
+	$infos['titlelock'] = true;
+	$infos['title'] = 'URG-representant';
+}
+
+$ukmadresse = $pl->get('url').'@ukm.no';
+if($infos['email'] == $ukmadresse) {
+	$infos['maillock'] = true;
+	$infos['titlelock'] = true;
+	$infos['title'] = 'Fylkeskontakt';
+}
 
 ?>
