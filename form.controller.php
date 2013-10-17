@@ -7,7 +7,11 @@ if(!is_array($kontakter) && $pl->registered()) {
 					  'title' => 'Kontaktperson mangler',
 					  'body' => 'Legg til kontaktperson nedenfor');
 } elseif(is_array($kontakter))
+	$fylkemail = $pl->get('url').'@ukm.no';
+	$urgmail = $pl->get('url').'@urg.ukm.no';
+
 	foreach($kontakter as $kontakt) {
+		$deleteable =  $fylkemail != $kontakt->get('email') && $urgmail != $kontakt->get('email');
 		$kontaktpersoner[] = array('id' => $kontakt->get('id'),
 								   'name' => $kontakt->get('name'),
 								   'kommune' => $kontakt->get('kommunenavn'),
@@ -15,6 +19,7 @@ if(!is_array($kontakter) && $pl->registered()) {
 								   'email' => $kontakt->get('email'),
 								   'phone' => $kontakt->get('tlf'),
 								   'title' => $kontakt->get('title'),
+								   'deleteable' => $deletable,
 								   );
 	}
 

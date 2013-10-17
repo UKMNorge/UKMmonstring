@@ -125,11 +125,13 @@
 							<img src="//ico.ukm.no/pencil-32.png" /> Endre
 						</a>
 					</div>
+					{% if kontakt.deleteable %}
 					<div class="action">
 						<a href="#" class="delete">
 							<img src="//ico.ukm.no/trash-32.png" /> Slett
 						</a>
 					</div>
+					{% endif %}
 				</div>
 				<div class="clearfix"></div>
 			</li>
