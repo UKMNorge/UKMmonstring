@@ -31,28 +31,7 @@
 		$relres = $rel->run();
 	}
 
-	if( isset($_POST['c_id']) && is_numeric( $_POST['c_id'] ) ) {
-		require_once('UKM/kontakt.class.php');
-		
-		$kontakt = new kontakt( $_POST['c_id'] );
-		$locked = $kontakt->g('system_locked');
-		
-		if($locked == 'true') {
-			$email = $kontakt->g('email');
-			require_once(plugin_dir_path(__FILE__).'../UKMkart/config.php');
-			require_once(plugin_dir_path(__FILE__).'../UKMkart/functions.inc.php');
-			$UKMkart_GD_LOG = array();
-			$UKMkart_GD_LOG_GROUP = '';
-
-			// Re-gen URG-kart (UKMkart-module)
-			if(strpos( $email, '@urg.ukm.no') ) {
-				require_once(plugin_dir_path(__FILE__).'../UKMkart/controller_urg.inc.php');
-			} elseif ( strpos( $email , '@ukm.no') ) {
-				require_once(plugin_dir_path(__FILE__).'../UKMkart/controller_ukm.inc.php');
-			}
-		}
-	}
-
+	do_action('UKMmonstring_save_contact', $_POST['c_id']);
 
 	if($res!==false&&$res!=-1)
 		$_MESSAGE = array('success' => true, 'body' => 'Kontaktperson lagret');
