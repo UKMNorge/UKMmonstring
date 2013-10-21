@@ -39,19 +39,16 @@
 		
 		if($locked == 'true') {
 			$email = $kontakt->g('email');
+			require_once(plugin_dir_path(__FILE__).'../UKMkart/config.php');
+			require_once(plugin_dir_path(__FILE__).'../UKMkart/functions.inc.php');
+			$UKMkart_GD_LOG = array();
+			$UKMkart_GD_LOG_GROUP = '';
+
 			// Re-gen URG-kart (UKMkart-module)
 			if(strpos( $email, '@urg.ukm.no') ) {
-				require_once(wp_plugin_path(__FILE__).'../UKMkart/config.php');
-				require_once(wp_plugin_path(__FILE__).'../UKMkart/functions.inc.php');
-				require_once(wp_plugin_path(__FILE__).'../UKMkart/controller_urg.inc.php');
-				$UKMkart_GD_LOG = array();
-				$UKMkart_GD_LOG_GROUP = '';
+				require_once(plugin_dir_path(__FILE__).'../UKMkart/controller_urg.inc.php');
 			} elseif ( strpos( $email , '@ukm.no') ) {
-				require_once(wp_plugin_path(__FILE__).'../UKMkart/config.php');
-				require_once(wp_plugin_path(__FILE__).'../UKMkart/functions.inc.php');
-				require_once(wp_plugin_path(__FILE__).'../UKMkart/controller_ukm.inc.php');
-				$UKMkart_GD_LOG = array();
-				$UKMkart_GD_LOG_GROUP = '';
+				require_once(plugin_dir_path(__FILE__).'../UKMkart/controller_ukm.inc.php');
 			}
 		}
 	}
