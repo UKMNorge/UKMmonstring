@@ -22,7 +22,7 @@ if(is_admin()) {
 ## CREATE A MENU
 function UKMMonstring_menu() {
 	global $UKMN;
-	$name = get_option('site_type') == 'fylke') ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
+	$name = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
 	$page = add_menu_page($name, $name, 'editor', 'UKMMonstring', 'UKMMonstring', 'http://ico.ukm.no/hus-menu.png',199);
 	add_action( 'admin_print_styles-' . $page, 'UKMMonstring_script' );
 
