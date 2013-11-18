@@ -1,6 +1,6 @@
 <?php
 $pl = new monstring(get_option('pl_id'));
-
+$kontaktpersoner = array();
 $kontakter = $pl->kontakter();
 if(!is_array($kontakter) && $pl->registered()) {
 	$_MESSAGE = array('success' => false,
@@ -10,6 +10,7 @@ if(!is_array($kontakter) && $pl->registered()) {
 	$fylkemail = $pl->get('url').'@ukm.no';
 	$urgmail = $pl->get('url').'@urg.ukm.no';
 
+	if(is_array($kontakter))
 	foreach($kontakter as $kontakt) {
 		$deleteable =  $fylkemail != $kontakt->get('email') && $urgmail != $kontakt->get('email');
 		$kontaktpersoner[] = array('id' => $kontakt->get('id'),
