@@ -14,7 +14,7 @@ require_once('UKM/monstring.class.php');
 if(is_admin()) {
 	global $blog_id;
 	if($blog_id != 1)
-		add_action('admin_menu', 'UKMMonstring_menu',200);
+		add_action('UKM_admin_menu', 'UKMMonstring_menu');
 
 	add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
 }
@@ -23,8 +23,8 @@ if(is_admin()) {
 function UKMMonstring_menu() {
 	global $UKMN;
 	$name = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
-	$page = add_menu_page($name, $name, 'editor', 'UKMMonstring', 'UKMMonstring', 'http://ico.ukm.no/hus-menu.png',199);
-	add_action( 'admin_print_styles-' . $page, 'UKMMonstring_script' );
+	UKM_add_menu_page('monstring', $name, $name, 'editor', 'UKMMonstring', 'UKMMonstring', 'http://ico.ukm.no/hus-menu.png',1);
+	UKM_add_scripts_and_styles( 'UKMMonstring', 'UKMMonstring_script' );
 
 }
 
