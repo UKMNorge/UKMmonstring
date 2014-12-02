@@ -17,6 +17,9 @@ switch(get_option('site_type')) {
 	default:
 		$place->update('pl_name', 'pl_name');
 		$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline2'));
+		if( !$_POST['pl_deadline2'] || $_POST['pl_deadline2'] == 0 ) {
+			$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline'));
+		}
 		$place->update('pl_deadline2');
 	break;
 }
@@ -118,7 +121,7 @@ function getDatePickerTime($postname) {
 			   'h'=>$_POST[$postname.'_time'],
 			   'i'=>$_POST[$postname.'_min']
 				 );
-	return mktime($v['h'],$v['i'],0,$v['m'],$v['d'],$v['y']);
+	return @mktime($v['h'],$v['i'],0,$v['m'],$v['d'],$v['y']);
 }
 
 #######################################################################
