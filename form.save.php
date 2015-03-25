@@ -16,6 +16,8 @@ switch(get_option('site_type')) {
 	break;
 	default:
 		$_POST['pl_name'] = str_replace(array('UKM i ', 'UKM i', 'UKM ','UKM', ' kommuner',' kommune'), '', $_POST['pl_name']);
+		update_option('blogname', $_POST['pl_name']);
+		update_option('blogdescription', 'UKM i '. $_POST['pl_name']);
 		$place->update('pl_name', 'pl_name');
 		$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline2'));
 		if( !$_POST['pl_deadline2'] || $_POST['pl_deadline2'] == 0 ) {
