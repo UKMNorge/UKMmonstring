@@ -78,4 +78,6 @@ $infos = array('name' => $pl->get('pl_name'),
 $infos['UKMFvideresending_info1'] = get_site_option('UKMFvideresending_info1');
 $infos['UKMFvideresending_nominasjon_ua'] = get_site_option('UKMFvideresending_nominasjon_ua');
 $infos['UKMFvideresending_nominasjon_ukmmedia'] = get_site_option('UKMFvideresending_nominasjon_ukmmedia');
+$infos['UKMFvideresending_nominasjon_frister'] = get_site_option('UKMFvideresending_nominasjon_frister');
+
 ?>

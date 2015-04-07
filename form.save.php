@@ -6,6 +6,7 @@ switch(get_option('site_type')) {
 		update_site_option('UKMFvideresending_info1', $_POST['UKMFvideresending_info1']);
 		update_site_option('UKMFvideresending_nominasjon_ukmmedia', $_POST['UKMFvideresending_nominasjon_ukmmedia']);
 		update_site_option('UKMFvideresending_nominasjon_ua', $_POST['UKMFvideresending_nominasjon_ua']);
+		update_site_option('UKMFvideresending_nominasjon_frister', $_POST['UKMFvideresending_nominasjon_frister']);
 	break;
 	case 'fylke':
 /*
