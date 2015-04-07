@@ -3,6 +3,9 @@ date_default_timezone_set('Europe/Oslo');
 $place = new monstring(get_option('pl_id'));
 switch(get_option('site_type')) {
 	case 'land':
+		update_site_option('UKMFvideresending_info1', $_POST['UKMFvideresending_info1']);
+		update_site_option('UKMFvideresending_nominasjon_ukmmedia', $_POST['UKMFvideresending_nominasjon_ukmmedia']);
+		update_site_option('UKMFvideresending_nominasjon_ua', $_POST['UKMFvideresending_nominasjon_ua']);
 	break;
 	case 'fylke':
 /*

@@ -74,4 +74,8 @@ $infos = array('name' => $pl->get('pl_name'),
 			   'hovedkontakter' => $hovedkontakter,
 			   'plugin_path' => plugin_dir_url( __FILE__ ),
 			  );
+			  
+$infos['UKMFvideresending_info1'] = get_site_option('UKMFvideresending_info1');
+$infos['UKMFvideresending_nominasjon_ua'] = get_site_option('UKMFvideresending_nominasjon_ua');
+$infos['UKMFvideresending_nominasjon_ukmmedia'] = get_site_option('UKMFvideresending_nominasjon_ukmmedia');
 ?>

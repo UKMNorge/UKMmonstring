@@ -94,9 +94,11 @@
 		{% else %}
 			<p>Ved påmelding vil deltakeren se kun én kontaktperson. Dette er den som står øverst i listen. (dra og slipp for å endre rekkefølge)</p>
 		{% endif %}
-	{% else %}
+	{% elseif site_type == 'fylke' %}
 		<p>Husk at fylkeskontakten må ligge øverst i listen fordi denne informasjonen brukes i mange sammenhenger.<br />
 		Dra og slipp for å endre rekkefølge</p>
+	{% else %}
+		<p>Dra og slipp for å endre rekkefølge</p>
 	{% endif %}
 
 		<ol class="unstyled" id="kontaktpersoner">
@@ -152,10 +154,40 @@
 		</div>
 	{% endif %}
 	</fieldset>
+	
+	{% if site_type == 'land' %}
+		<fieldset class="ukmfieldset">
+			<legend>Videresendingsinformasjon</legend>
+			<p>Legg inn URL til videresendingsdokumenter. Disse kan du laste opp under menyvalget media, og kopiere vedleggs-adressen</p>
+		    <div class="span6">
+				<label for="UKMFvideresending_info1">Info 1</label>
+				<input class="input-block-level" type="text" id="UKMFvideresending_info1" name="UKMFvideresending_info1" value="{{UKMFvideresending_info1}}">
+		    </div>
+
+		    <div class="span6">
+				<label for="UKMFvideresending_nominasjon_ua">Skjema nominasjon UA</label>
+				<input class="input-block-level" type="text" id="UKMFvideresending_nominasjon_ua" name="UKMFvideresending_nominasjon_ua" value="{{UKMFvideresending_nominasjon_ua}}">
+		    </div>
+
+		    <div class="span6">
+				<label for="UKMFvideresending_nominasjon_ukmmedia">Skjema nominasjon UKM Media</label>
+				<input class="input-block-level" type="text" id="UKMFvideresending_nominasjon_ukmmedia" name="UKMFvideresending_nominasjon_ukmmedia" value="{{UKMFvideresending_nominasjon_ukmmedia}}">
+		    </div>
+
+		</fieldset>
+	{% endif %}
 
 
 	<fieldset class="ukmfieldset">
-		<legend>{% if site_type == 'kommune' %}Hva kan deltakerne melde på?{% else %}Hva kan kommunene videresende?{% endif %}</legend>
+		<legend>
+			{% if site_type == 'kommune' %}
+				Hva kan deltakerne melde på?
+			{% elseif site_type == 'fylke' %}
+				Hva kan kommunene videresende?
+			{% else %}
+				Hva kan fylkene videresende?
+			{% endif %}
+		</legend>
 		
 		<p>Alle UKM-mønstringer er automatisk åpne for påmelding innen musikk, dans, teater, litteratur, annet på scenen, film og utstilling</p>
 
