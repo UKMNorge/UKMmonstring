@@ -19,7 +19,7 @@ switch(get_option('site_type')) {
 */
 	break;
 	default:
-		$_POST['pl_name'] = str_replace(array('UKM i ', 'UKM i', 'UKM ','UKM', ' kommuner',' kommune'), '', $_POST['pl_name']);
+		$_POST['pl_name'] = str_replace(array('UKM i ', 'UKM i', 'UKM ','UKM', ' kommuner',' kommune', 'mønstring','lokal','lokalmønstring'), '', $_POST['pl_name']);
 		update_option('blogname', $_POST['pl_name']);
 		update_option('blogdescription', 'UKM i '. $_POST['pl_name']);
 		$place->update('pl_name', 'pl_name');
