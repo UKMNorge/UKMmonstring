@@ -76,6 +76,28 @@ foreach($offers as $offer) {
 		$ins->add('pl_id', $plid);
 		$ins->add('bt_id', $offer);
 		$ins = $ins->run();
+	
+		// LOGG
+		$log_action = 'smartukm_rel_pl_bt|bt'. $offer;
+		$actionQ = new SQL("SELECT `log_action_id`
+							FROM `log_actions` 
+							WHERE `log_action_identifier` = '#identifier'",
+							array('identifier'=>$log_action));
+		$actionID = $actionQ->run('field','log_action_id');
+	
+		// Current user
+		global $current_user;
+	    get_currentuserinfo();   
+	    $user_id = $current_user->ID;
+		
+		$qry = new SQLins('log_log');
+	    $qry->add('log_u_id', $user_id);
+	    $qry->add('log_system_id', 'wordpress');
+	    $qry->add('log_action', $actionID);
+	    $qry->add('log_object', 2);
+	    $qry->add('log_the_object_id', $plid);
+	    $qry->add('log_pl_id', $plid);
+		$res = $qry->run();
 	}
 }
 
@@ -136,7 +158,7 @@ function getDatePickerTime($postname) {
 #######################################################################
 function autocorrectDeadline($deadline) {
 	#return $deadline;
-	$season = UKMN_config('smartukm_season');
+	$season = get_option('season');#UKMN_config('smartukm_season');
 	
 	$month	= date("m", $deadline);
 	$year	= date("Y", $deadline);
