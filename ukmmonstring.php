@@ -23,7 +23,7 @@ if(is_admin()) {
 
 function UKMmonstring_dash_shortcut( $shortcuts ) {	
 	$shortcut = new stdClass();
-	$shortcut->url = 'admin.php?UKMMonstring';
+	$shortcut->url = 'admin.php?page=UKMMonstring';
 	$shortcut->title = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
 	$shortcut->icon = 'http://ico.ukm.no/hus-menu.png';
 	$shortcuts[] = $shortcut;
