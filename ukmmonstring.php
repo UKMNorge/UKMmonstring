@@ -17,7 +17,7 @@ if(is_admin()) {
 		add_action('UKM_admin_menu', 'UKMMonstring_menu');
 
 	add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
-	add_action('UKMWPDASH_shortcuts', 'UKMMonstring_dash_shortcut');
+	add_action('UKMWPDASH_shortcuts', 'UKMMonstring_dash_shortcut', 10);
 }
 
 function UKMmonstring_dash_shortcut( $shortcuts ) {	
