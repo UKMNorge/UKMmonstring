@@ -17,8 +17,18 @@ if(is_admin()) {
 		add_action('UKM_admin_menu', 'UKMMonstring_menu');
 
 	add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
+	add_action('UKMWPDASH_shortcuts', 'UKMMonstring_dash_shortcut');
 }
 
+function UKMmonstring_dash_shortcut( $shortcuts ) {	
+	$shortcut = new stdClass();
+	$shortcut->url = 'admin.php?UKMMonstring';
+	$shortcut->title = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
+	$shortcut->icon = 'http://ico.ukm.no/hus-menu.png';
+	$shortcuts[] = $shortcut;
+	
+	return $shortcuts;
+}
 ## CREATE A MENU
 function UKMMonstring_menu() {
 	global $UKMN;
