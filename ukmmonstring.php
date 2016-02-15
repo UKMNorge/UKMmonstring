@@ -13,11 +13,12 @@ require_once('UKM/monstring.class.php');
 ## HOOK MENU AND SCRIPTS
 if(is_admin()) {
 	global $blog_id;
-	if($blog_id != 1)
+	if( in_array( get_option('site_type'), array('kommune','fylke','land')) ) {
 		add_action('UKM_admin_menu', 'UKMMonstring_menu');
+		add_action('UKMWPDASH_shortcuts', 'UKMMonstring_dash_shortcut', 10);
+	}
 
 	add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
-	add_action('UKMWPDASH_shortcuts', 'UKMMonstring_dash_shortcut', 10);
 }
 
 function UKMmonstring_dash_shortcut( $shortcuts ) {	
