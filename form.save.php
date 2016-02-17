@@ -16,7 +16,15 @@ switch(get_option('site_type')) {
 		$_POST['pl_name'] = utf8_encode($fylke);
 		$place->update('pl_name', 'pl_name');
 		$place->update('pl_fylke', 'pl_fylke');
-*/
+*/	
+		// Hent dato for åpning av videresending
+		$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline2'));
+		
+		if (!$_POST['pl_deadline2'] || ($_POST['pl_deadline2'] == 0) ) { 
+			// Sett dato til å matche stenging av videresending hvis den ikke er satt
+			$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline'));	
+		}
+		$place->update('pl_deadline2');
 	break;
 	default:
 		$_POST['pl_name'] = str_replace(array('UKM i ', 'UKM i', 'UKM ','UKM', ' kommuner',' kommune', 'mønstring','lokal','lokalmønstring'), '', $_POST['pl_name']);

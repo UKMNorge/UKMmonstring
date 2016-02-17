@@ -63,10 +63,16 @@
 		<legend>{% if site_type == 'kommune' %}Påmeldingsfrist(er){% else %}Videresendingsfrist{% endif %}</legend>
 	
 		<div class="row-fluid">
+			{% if site_type == 'fylke' %}
+				<div class="span6 datetime">
+					<label for="pl_deadline2_date">Når åpner videresendingen?</label>
+					{% embed "datetime.twig.html" with {'name': 'deadline2', 'selected': deadline2 } %}{% endembed %}
+					Gjelder scene, video, utstilling, matkultur
+				</div>
+			{% endif %}
 		    <div class="span6 datetime">
-				<label for="pl_deadline_date">{% if site_type == 'kommune' %}Påmeldingsfrist 1{% else %}Hva er siste frist for videresending{% endif %}</label>
+				<label for="pl_deadline_date">{% if site_type == 'kommune' %}Påmeldingsfrist 1{% else %}Hva er siste frist for videresending?{% endif %}</label>
 				{% embed "datetime.twig.html" with {'name': 'deadline', 'selected': deadline1} %}{% endembed %}
-				Gjelder scene, video, utstilling, matkultur 
 		    </div>
 		    {% if site_type == 'kommune' %}
 		    <div class="span6 datetime">
