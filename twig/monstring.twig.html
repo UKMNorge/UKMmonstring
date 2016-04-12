@@ -185,6 +185,33 @@
 				<textarea class="span6" name="UKMFvideresending_nominasjon_frister" rows="5">{{ UKMFvideresending_nominasjon_frister }}</textarea>
 		    </div>
 		</fieldset>
+		
+		
+		<fieldset class="ukmfieldset">
+			<legend>Økonomi-beregninger</legend>
+			<p>Brukes til spørsmål og beregninger for fylkenes videresending</p>
+
+		    <div class="span6">
+				<label for="UKMFvideresending_info1">Lederkvote</label>
+				<input class="input-block-level" type="text" id="kvote_ledere" name="kvote_ledere" value="{{kvote_ledere}}">
+		    </div>
+
+		    <div class="span6">
+				<label for="UKMFvideresending_info1">Deltakerkvote</label>
+				<input class="input-block-level" type="text" id="kvote_deltakere" name="kvote_deltakere" value="{{kvote_deltakere}}">
+		    </div>
+		    
+		    <div class="span6">
+				<label for="UKMFvideresending_info1">Pris per døgn på Hotell UKM Norge</label>
+				<input class="input-block-level" type="text" id="hotelldogn_pris" name="hotelldogn_pris" value="{{hotelldogn_pris}}">
+		    </div>
+
+		    <div class="span6">
+				<label for="UKMFvideresending_info1">Avgift ledermiddag</label>
+				<input class="input-block-level" type="text" id="ledermiddag_avgift" name="ledermiddag_avgift" value="{{ledermiddag_avgift}}">
+		    </div>
+
+		</fieldset>
 	{% endif %}
 
 
