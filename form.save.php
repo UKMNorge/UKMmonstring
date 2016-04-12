@@ -3,7 +3,7 @@ date_default_timezone_set('Europe/Oslo');
 $place = new monstring(get_option('pl_id'));
 switch(get_option('site_type')) {
 	case 'land':
-		$season = ($month > 7) ? date('Y')+1 : date('Y');	
+		$season = get_option('season');#($month > 7) ? date('Y')+1 : date('Y');	
 		update_site_option('UKMFvideresending_info1_'.$season, $_POST['UKMFvideresending_info1']);
 		update_site_option('UKMFvideresending_nominasjon_ukmmedia_'.$season, $_POST['UKMFvideresending_nominasjon_ukmmedia']);
 		update_site_option('UKMFvideresending_nominasjon_ua_'.$season, $_POST['UKMFvideresending_nominasjon_ua']);
@@ -12,7 +12,7 @@ switch(get_option('site_type')) {
 		$videresendingsfelter = array('hotelldogn_pris', 'kvote_ledere', 'kvote_deltakere', 'ledermiddag_avgift');
 		foreach( $videresendingsfelter as $key ) {
 			if( isset( $_POST[$key] ) ) {
-				update_ukm_option($key, $_POST[$key]);
+				update_site_option('UKMFvideresending_'.$key.'_'.$season, $_POST[$key]);
 			}
 		}
 	break;

@@ -75,7 +75,7 @@ $infos = array('name' => $pl->get('pl_name'),
 			   'plugin_path' => plugin_dir_url( __FILE__ ),
 			  );
 
-$season = ($month > 7) ? date('Y')+1 : date('Y');	
+$season = get_option('season');#($month > 7) ? date('Y')+1 : date('Y');	
 $infos['UKMFvideresending_info1'] = get_site_option('UKMFvideresending_info1_'.$season);
 $infos['UKMFvideresending_nominasjon_ua'] = get_site_option('UKMFvideresending_nominasjon_ua_'.$season);
 $infos['UKMFvideresending_nominasjon_ukmmedia'] = get_site_option('UKMFvideresending_nominasjon_ukmmedia_'.$season);
@@ -83,7 +83,7 @@ $infos['UKMFvideresending_nominasjon_frister'] = get_site_option('UKMFvideresend
 
 $videresendingsfelter = array('hotelldogn_pris', 'kvote_ledere', 'kvote_deltakere', 'ledermiddag_avgift');
 foreach( $videresendingsfelter as $key ) {
-	$infos[ $key ] = get_ukm_option($key, $_POST[$key]);
+	$infos[ $key ] = get_site_option('UKMFvideresending_'.$key.'_'.$season, $_POST[$key]);
 }
 
 ?>
