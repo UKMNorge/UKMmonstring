@@ -18,7 +18,7 @@ jQuery(document).ready(function(){
 /* DATEPICKER */
 	jQuery( ".datepicker_kommune" ).datepicker( {minDate: new Date(UKMSEASON,0,1), maxDate: new Date(UKMSEASON, 2, 31), dateFormat: 'dd.mm.yy'});
 	jQuery( ".datepicker_fylke" ).datepicker( {minDate: new Date(UKMSEASON,2,1), maxDate: new Date(UKMSEASON, 3, 30), dateFormat: 'dd.mm.yy'});
-	jQuery( ".datepicker_land" ).datepicker( {minDate: new Date(UKMSEASON,5,1), maxDate: new Date(UKMSEASON, 6, 31), dateFormat: 'dd.mm.yy'});
+	jQuery( ".datepicker_land" ).datepicker( {minDate: new Date(UKMSEASON,4,1), maxDate: new Date(UKMSEASON, 6, 31), dateFormat: 'dd.mm.yy'});
 
     jQuery.datepicker.regional['no'] = {
 		closeText: 'Lukk',
