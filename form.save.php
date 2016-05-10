@@ -9,7 +9,7 @@ switch(get_option('site_type')) {
 		update_site_option('UKMFvideresending_nominasjon_ua_'.$season, $_POST['UKMFvideresending_nominasjon_ua']);
 		update_site_option('UKMFvideresending_nominasjon_frister', $_POST['UKMFvideresending_nominasjon_frister']);
 		
-		$videresendingsfelter = array('hotelldogn_pris', 'kvote_ledere', 'kvote_deltakere', 'ledermiddag_avgift');
+		$videresendingsfelter = array('hotelldogn_pris', 'kvote_ledere', 'kvote_deltakere', 'ledermiddag_avgift', 'ledermiddag_dag','ledermiddag_tid','ledermiddag_sted');
 		foreach( $videresendingsfelter as $key ) {
 			if( isset( $_POST[$key] ) ) {
 				update_site_option('UKMFvideresending_'.$key.'_'.$season, $_POST[$key]);

@@ -81,7 +81,7 @@ $infos['UKMFvideresending_nominasjon_ua'] = get_site_option('UKMFvideresending_n
 $infos['UKMFvideresending_nominasjon_ukmmedia'] = get_site_option('UKMFvideresending_nominasjon_ukmmedia_'.$season);
 $infos['UKMFvideresending_nominasjon_frister'] = get_site_option('UKMFvideresending_nominasjon_frister');
 
-$videresendingsfelter = array('hotelldogn_pris', 'kvote_ledere', 'kvote_deltakere', 'ledermiddag_avgift');
+$videresendingsfelter = array('hotelldogn_pris', 'kvote_ledere', 'kvote_deltakere', 'ledermiddag_avgift', 'ledermiddag_dag','ledermiddag_tid','ledermiddag_sted');
 foreach( $videresendingsfelter as $key ) {
 	$infos[ $key ] = get_site_option('UKMFvideresending_'.$key.'_'.$season, $_POST[$key]);
 }
