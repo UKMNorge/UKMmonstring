@@ -12,7 +12,8 @@ if(!is_array($kontakter) && $pl->registered()) {
 
 	if(is_array($kontakter))
 	foreach($kontakter as $kontakt) {
-		$deleteable =  $fylkemail != $kontakt->get('email') && $urgmail != $kontakt->get('email');
+		#$deleteable =  $fylkemail != $kontakt->get('email') && $urgmail != $kontakt->get('email');
+		$deleteable = 'true' == $kontakt->get('system_locked');
 		$kontaktpersoner[] = array('id' => $kontakt->get('id'),
 								   'name' => $kontakt->get('name'),
 								   'kommune' => $kontakt->get('kommunenavn'),
