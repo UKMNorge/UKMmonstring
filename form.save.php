@@ -175,7 +175,13 @@ function getDatePickerTime($postname) {
 			   'h'=>$_POST[$postname.'_time'],
 			   'i'=>$_POST[$postname.'_min']
 				 );
-	return @mktime($v['h'],$v['i'],0,$v['m'],$v['d'],$v['y']);
+	$timestamp =  @mktime($v['h'],$v['i'],0,$v['m'],$v['d'],$v['y']);
+	
+	// If could not compute timestamp, or timestamp is less than 1971: 0 it is
+	if( false == $timestamp or 31536000 > $timestamp ) {
+		return 0;
+	}
+	return $timestamp;
 }
 
 #######################################################################
