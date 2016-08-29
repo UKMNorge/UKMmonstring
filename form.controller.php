@@ -86,4 +86,7 @@ foreach( $videresendingsfelter as $key ) {
 	$infos[ $key ] = get_site_option('UKMFvideresending_'.$key.'_'.$season, $_POST[$key]);
 }
 
+$infos['infotekst_url'] = menu_page_url('UKMmonstring_videresending_info', false);
+#$infos['infotekst_url'] = 'admin.php?page=UKMmonstring_videresending_info';
+
 ?>

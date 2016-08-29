@@ -314,5 +314,14 @@
 		</div>
 	</fieldset>
 	{% endif %}
+
+	{% if site_type == 'fylke' %}
+		<fieldset class="ukmfieldset">
+			<legend>Informasjon om videresending</legend>
+			<a href="{{ infotekst_url }}">Klikk her for å åpne skjemaet.</a>
+			<p>Hvis du vil angi generell informasjon til lokalkontaktene dine om videresendingen, som for eksempel kvoter, kan du gjøre det her. Dette er i tillegg til infoskjemaet du kan be de fylle inn.</p>
+		</fieldset>
+		<br>
+	{% endif %}
 	<input type="submit" name="submit" class="btn btn-small btn-primary" value="Lagre" />
 </form>

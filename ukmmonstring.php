@@ -35,6 +35,16 @@ function UKMMonstring_menu() {
 	global $UKMN;
 	$name = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
 	UKM_add_menu_page('monstring', $name, $name, 'editor', 'UKMMonstring', 'UKMMonstring', 'http://ico.ukm.no/hus-menu.png',1);
+	#add_submenu_page('UKMMonstring', 'Videresendingsinformasjon', 'Infotekst om videresending', 'editor', 'UKMvideresending_info', 'UKMmonstring_videresending_info');
+	if(get_option('site_type') == 'fylke') {
+		UKM_add_submenu_page(	'UKMMonstring', 
+								'Infotekst om videresending', 
+								'Infotekst om videresending', 
+								'editor', 
+								'UKMmonstring_videresending_info',
+								'UKMmonstring_videresending_info'
+							);
+	}
 	UKM_add_scripts_and_styles( 'UKMMonstring', 'UKMMonstring_script' );
 
 }
@@ -72,6 +82,17 @@ function UKMMonstring() {
 		
 		echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
 	}
+}
+
+function UKMmonstring_videresending_info() {
+	$option_name = 'videresending_info_pl'.get_option('pl_id');
+	if( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
+		$TWIG['saved'] = update_site_option($option_name, $_POST['videresending_editor'] );
+	}
+	$TWIGdata = array('UKM_HOSTNAME' => UKM_HOSTNAME);
+	echo TWIG('videresending_pre_editor.html.twig', $TWIGdata, dirname(__FILE__) );
+	wp_editor( stripslashes(get_site_option($option_name)), 'videresending_editor', $settings = array() );
+	echo TWIG('videresending_post_editor.html.twig', $TWIGdata, dirname(__FILE__) );
 }
 
 function UKMmonstring_save_kontaktpersoner() {
