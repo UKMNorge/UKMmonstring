@@ -15,6 +15,15 @@ switch(get_option('site_type')) {
 				update_site_option('UKMFvideresending_'.$key.'_'.$season, $_POST[$key]);
 			}
 		}
+		// Hent dato for åpning av videresending
+		$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline2'));
+		
+		if (!$_POST['pl_deadline2'] || ($_POST['pl_deadline2'] == 0) ) { 
+			// Sett dato til å matche stenging av videresending hvis den ikke er satt
+			$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline'));	
+		}
+		$place->update('pl_deadline2');
+		
 	break;
 	case 'fylke':
 /*

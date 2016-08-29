@@ -63,7 +63,7 @@
 		<legend>{% if site_type == 'kommune' %}Påmeldingsfrist(er){% else %}Videresendingsfrist{% endif %}</legend>
 	
 		<div class="row-fluid">
-			{% if site_type == 'fylke' %}
+			{% if site_type == 'fylke' or site_type == 'land' %}
 				<div class="span6 datetime">
 					<label for="pl_deadline2_date">Når åpner videresendingen?</label>
 					{% embed "datetime.twig.html" with {'name': 'deadline2', 'selected': deadline2 } %}{% endembed %}
