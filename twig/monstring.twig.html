@@ -94,7 +94,7 @@
 			Ved påmelding må deltakere velge én av kommunene, og vil da kun se den kontaktpersonen som er knyttet til den valgte kommunen.<br />
 			Hvis flere kontaktpersoner er registrert på samme kommune vil den som er øverst av disse i listen være synlig.<br />
 			Hvis ingen kontaktpersoner er registrert på den valgte kommunen, vil den aller øverste i listen være synlig.
-			<br />
+			<br /><br />
 			Dra og slipp for å endre rekkefølge
 			</p>
 		{% else %}
@@ -148,7 +148,11 @@
 			<li>Det er ikke lagt til noen kontaktpersoner enda</li>
 			{% endfor %}
 		</ol>
+		{% if site_type == 'kommune' and kommuner|length > 1 %}
+			<p><b>OBS: Skal en kommune ut av fellesmønstringen? I så fall - ikke fjern kontaktpersonen herfra, kontakt <a href="mailto:support@ukm.no">support</a> i stedet.</b></p>
+		{% endif %}
 		<button type="button" class="pull-right btn btn-success" id="contact_new">Legg til ny kontaktperson</button>
+		<div class="clearfix"></div>
 		
 		
 	{% if kommuner|length > 1 %}
