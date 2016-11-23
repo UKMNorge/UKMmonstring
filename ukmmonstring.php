@@ -18,6 +18,11 @@ if(is_admin()) {
 		add_action('UKMWPDASH_shortcuts', 'UKMMonstring_dash_shortcut', 10);
 	}
 
+	// Kun gjør dette dersom vi er i november, slutt ved nyttår
+	if( 'kommune' == get_option('site_type') && ( (int)date('m') > 10 ) ) {
+		add_filter('UKMWPDASH_messages', 'UKMmonstring_messages');
+	}
+
 	add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
 }
 
@@ -30,6 +35,22 @@ function UKMmonstring_dash_shortcut( $shortcuts ) {
 	
 	return $shortcuts;
 }
+
+## Legg til varsel på forsiden dersom mønstringen mangler noe data.
+function UKMmonstring_messages( $MESSAGES ) {
+	$monstring = new monstring( get_option('pl_id') );
+
+	if(!$monstring->registered()) {
+		$MESSAGES[] = array('level' 	=> 'alert-error',
+							'header' 	=> 'Du har ikke registrert mønstringen din!',
+							'link' 		=> 'admin.php?page=UKMMonstring',
+							'body' 	=> 'Velg "Mønstring" i menyen til venstre for å legge til informasjonen som mangler'
+							);
+	}
+
+	return $MESSAGES;
+}
+
 ## CREATE A MENU
 function UKMMonstring_menu() {
 	global $UKMN;
