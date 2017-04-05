@@ -80,6 +80,7 @@ $season = get_option('season');#($month > 7) ? date('Y')+1 : date('Y');
 $infos['UKMFvideresending_info1'] = get_site_option('UKMFvideresending_info1_'.$season);
 $infos['UKMFvideresending_nominasjon_ua'] = get_site_option('UKMFvideresending_nominasjon_ua_'.$season);
 $infos['UKMFvideresending_nominasjon_ukmmedia'] = get_site_option('UKMFvideresending_nominasjon_ukmmedia_'.$season);
+$infos['UKMFvideresending_nominasjon_konf'] = get_site_option('UKMFvideresending_nominasjon_konf_'.$season);
 $infos['UKMFvideresending_nominasjon_frister'] = get_site_option('UKMFvideresending_nominasjon_frister');
 
 $videresendingsfelter = array('hotelldogn_pris', 'kvote_ledere', 'kvote_deltakere', 'ledermiddag_avgift', 'ledermiddag_dag','ledermiddag_tid','ledermiddag_sted');
