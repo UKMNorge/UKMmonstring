@@ -57,6 +57,19 @@ function UKMMonstring_menu() {
 	$name = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
 	UKM_add_menu_page('monstring', $name, $name, 'editor', 'UKMMonstring', 'UKMMonstring', 'http://ico.ukm.no/hus-menu.png',1);
 	#add_submenu_page('UKMMonstring', 'Videresendingsinformasjon', 'Infotekst om videresending', 'editor', 'UKMvideresending_info', 'UKMmonstring_videresending_info');
+
+	// Legg til side for å redigere forsideinformasjonen.
+	if(get_option('site_type') == 'fylke' || get_option('site_type') == 'kommune') {
+		UKM_add_submenu_page(
+			'UKMMonstring', 
+			"Din forside", 
+			"Din forside", 
+			'editor', 
+			'UKMMonstring_forside', 
+			'UKMMonstring_forside'
+		);
+	}
+
 	if(get_option('site_type') == 'fylke') {
 		UKM_add_submenu_page(	'UKMMonstring', 
 								'Infotekst om videresending', 
@@ -66,6 +79,7 @@ function UKMMonstring_menu() {
 								'UKMmonstring_videresending_info'
 							);
 	}
+	
 	UKM_add_scripts_and_styles( 'UKMMonstring', 'UKMMonstring_script' );
 
 }
@@ -103,6 +117,26 @@ function UKMMonstring() {
 		
 		echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
 	}
+}
+
+/**
+ * Oppretter forside-editor-siden. 
+ * Noted issues:
+ * - For å starte å skrive må man trykke på den ene tomme linjen, ikke det andre blanket området  - uten at det finnes en blinkende karet som hjelper deg med å se den.
+ * 
+ */
+function UKMmonstring_forside() {
+	UKMMonstring_script();
+	$option_name = 'forsidetekst_pl'.get_option('pl_id');
+	if( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
+		$TWIG['saved'] = update_site_option($option_name, $_POST['forside_editor'] );
+	}
+
+	$monstring = new monstring_v2(get_option('pl_id'));
+	$TWIGdata = array('UKM_HOSTNAME' => UKM_HOSTNAME, 'monstringsLink' => $monstring->getLink());
+	echo TWIG('forside_pre_editor.html.twig', $TWIGdata, dirname(__FILE__) );
+	wp_editor( stripslashes(get_site_option($option_name)), 'forside_editor', $settings = array() );
+	echo TWIG('forside_post_editor.html.twig', $TWIGdata, dirname(__FILE__) );
 }
 
 function UKMmonstring_videresending_info() {
