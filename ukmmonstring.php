@@ -119,24 +119,10 @@ function UKMMonstring() {
 	}
 }
 
-/**
- * Oppretter forside-editor-siden. 
- * Noted issues:
- * - For å starte å skrive må man trykke på den ene tomme linjen, ikke det andre blanket området  - uten at det finnes en blinkende karet som hjelper deg med å se den.
- * 
- */
+## Move front-page stuff to separate file.
 function UKMmonstring_forside() {
-	UKMMonstring_script();
-	$option_name = 'forsidetekst_pl'.get_option('pl_id');
-	if( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
-		$TWIG['saved'] = update_site_option($option_name, $_POST['forside_editor'] );
-	}
-
-	$monstring = new monstring_v2(get_option('pl_id'));
-	$TWIGdata = array('UKM_HOSTNAME' => UKM_HOSTNAME, 'monstringsLink' => $monstring->getLink());
-	echo TWIG('forside_pre_editor.html.twig', $TWIGdata, dirname(__FILE__) );
-	wp_editor( stripslashes(get_site_option($option_name)), 'forside_editor', $settings = array() );
-	echo TWIG('forside_post_editor.html.twig', $TWIGdata, dirname(__FILE__) );
+	require_once('forside.controller.php');
+	UKMmonstring_forside_main();
 }
 
 function UKMmonstring_videresending_info() {
