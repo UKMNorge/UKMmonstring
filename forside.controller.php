@@ -10,7 +10,7 @@ function UKMmonstring_forside_main() {
 
 	$monstring = new monstring_v2(get_option('pl_id'));
 	$TWIGdata = array('UKM_HOSTNAME' => UKM_HOSTNAME, 'monstringsLink' => $monstring->getLink());
-	$forside = get_page_by_title("Forside");
+	$forside = get_page_by_path('info');
 
 	$content = null;
 	if( null != $forside ) {
@@ -23,7 +23,8 @@ function UKMmonstring_forside_main() {
 		$content = $_POST['forside_editor'];
 		$new_content = array
 			(
-				'post_title' => "Forside",
+				'post_title' => "Forside", # Tittel på siden
+				'post_name' => 'info', # SLUG
 				'post_type' => 'page',
 				'post_content' =>  $_POST['forside_editor'],
 				'post_status' => 'publish'
@@ -47,21 +48,9 @@ function UKMmonstring_forside_main() {
 			}
 		}
 
-		// Dersom vi ikke har en nyhetsside, opprett den
-		$nyheter = opprettNyhetsside("Alle nyheter");
-		if( !is_numeric($nyheter) ) {
-			$TWIGdata['errors'][] = $nyheter;
-		}
-		// Oppdater innstillingene
-		if(is_numeric($front) && is_numeric($nyheter)) 
-			updateWPFrontPageSettings($front, $nyheter);
-		else {
-			$TWIGdata['errors'][] = "Kan ikke oppdatere forsideinnstillingene - feil med forside eller nyhetsside.";
-		}
-
 		// Last inn innholdet på nytt dersom lagring funka - for å laste inn bilder skikkelig.
 		if ( empty($TWIGdata['errors']) ) {
-			$forside = get_page_by_title("Forside");
+			$forside = get_page_by_path('info');
 			$content = $forside->post_content;
 		}
 	}
@@ -71,38 +60,6 @@ function UKMmonstring_forside_main() {
 	echo TWIG('forside_pre_editor.html.twig', $TWIGdata, dirname(__FILE__) );
 	wp_editor($content, 'forside_editor', $settings = array() );
 	echo TWIG('forside_post_editor.html.twig', $TWIGdata, dirname(__FILE__) );
-}
-
-// Oppretter nyhetsside dersom denne ikke allerede eksisterer
-// Returns the ID if successful, or a String with an error message if not.
-function opprettNyhetsside($name) {
-	$nyhetsside = get_page_by_title($name);
-	
-	// Hvis siden finnes er det OK.
-	if( null != $nyhetsside ) 
-		return $nyhetsside->ID;
-	
-	$new_content = array
-			(
-				'post_title' => $name,
-				'post_type' => 'page',
-				'post_content' =>  '',
-				'post_status' => 'publish'
-			);
-	$postID = wp_insert_post($new_content, true);
-	if( is_wp_error($postID) ){
-		$error = is_wp_error($postID) ? "Klarte ikke å lagre innhold som ny side! Feilmelding: ". $postID->get_error_message($code): "Klarte ikke å lagre innhold som ny side!";
-		return $error;
-	}
-	return $postID;
-}
-
-// Oppdaterer Wordpress-innstillingene for forside og nyhetsside.
-function updateWPFrontPageSettings($frontID, $postsID) {
-	update_option( 'page_on_front', $frontID );
-	update_option( 'show_on_front', 'page' );
-
-	update_option( 'page_for_posts', $postsID );
 }
 
 ?>
