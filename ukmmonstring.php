@@ -57,6 +57,19 @@ function UKMMonstring_menu() {
 	$name = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
 	UKM_add_menu_page('monstring', $name, $name, 'editor', 'UKMMonstring', 'UKMMonstring', 'http://ico.ukm.no/hus-menu.png',1);
 	#add_submenu_page('UKMMonstring', 'Videresendingsinformasjon', 'Infotekst om videresending', 'editor', 'UKMvideresending_info', 'UKMmonstring_videresending_info');
+
+	// Legg til side for å redigere forsideinformasjonen.
+	if(get_option('site_type') == 'fylke' || get_option('site_type') == 'kommune') {
+		UKM_add_submenu_page(
+			'UKMMonstring', 
+			"Din forside", 
+			"Din forside", 
+			'editor', 
+			'UKMMonstring_forside', 
+			'UKMMonstring_forside'
+		);
+	}
+
 	if(get_option('site_type') == 'fylke') {
 		UKM_add_submenu_page(	'UKMMonstring', 
 								'Infotekst om videresending', 
@@ -66,6 +79,7 @@ function UKMMonstring_menu() {
 								'UKMmonstring_videresending_info'
 							);
 	}
+	
 	UKM_add_scripts_and_styles( 'UKMMonstring', 'UKMMonstring_script' );
 
 }
@@ -103,6 +117,12 @@ function UKMMonstring() {
 		
 		echo TWIG('monstring.twig.html', $infos, dirname(__FILE__));
 	}
+}
+
+## Move front-page stuff to separate file.
+function UKMmonstring_forside() {
+	require_once('forside.controller.php');
+	UKMmonstring_forside_main();
 }
 
 function UKMmonstring_videresending_info() {
