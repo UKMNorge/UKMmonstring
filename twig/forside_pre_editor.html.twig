@@ -1,8 +1,10 @@
 <h1>Din forside</h1>
 {% if saved is defined %}
-	<div class="alert alert-success">
-		{{ saved }}
-	</div>
+	{% for save in saved %}
+		<div class="alert alert-success">
+			{{ save }}
+		</div>
+	{% endfor %}
 {% endif %}
 {% if errors is defined %}
 	{% for error in errors %}
