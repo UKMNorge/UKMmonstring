@@ -37,7 +37,7 @@ function contactForm() {
 			.'<br />'
 			.'Adressen skal se ca slik ut:'
 			.'<br />'
-			.' &nbsp;  &nbsp; <u>http://facebook.com/UKMNorge</u>');
+			.' &nbsp;  &nbsp; <u>https://facebook.com/UKMNorge</u>');
 	$h->bilde('Bilde', 'picture', $c->get('image'), 'HUSK: Klikk &quot;Sett inn i innlegg&quot;', $c->defaultImage());
 	
 

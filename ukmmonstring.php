@@ -30,7 +30,7 @@ function UKMmonstring_dash_shortcut( $shortcuts ) {
 	$shortcut = new stdClass();
 	$shortcut->url = 'admin.php?page=UKMMonstring';
 	$shortcut->title = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
-	$shortcut->icon = 'http://ico.ukm.no/hus-menu.png';
+	$shortcut->icon = '//ico.ukm.no/hus-menu.png';
 	$shortcuts[] = $shortcut;
 	
 	return $shortcuts;
@@ -55,7 +55,7 @@ function UKMmonstring_messages( $MESSAGES ) {
 function UKMMonstring_menu() {
 	global $UKMN;
 	$name = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
-	UKM_add_menu_page('monstring', $name, $name, 'editor', 'UKMMonstring', 'UKMMonstring', 'http://ico.ukm.no/hus-menu.png',1);
+	UKM_add_menu_page('monstring', $name, $name, 'editor', 'UKMMonstring', 'UKMMonstring', '//ico.ukm.no/hus-menu.png',1);
 	#add_submenu_page('UKMMonstring', 'Videresendingsinformasjon', 'Infotekst om videresending', 'editor', 'UKMvideresending_info', 'UKMmonstring_videresending_info');
 
 	// Legg til side for å redigere forsideinformasjonen.
