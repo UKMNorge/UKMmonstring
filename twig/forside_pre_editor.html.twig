@@ -1,8 +1,10 @@
 <h1>Din forside</h1>
 {% if saved is defined %}
-	<div class="alert alert-success">
-		{{ saved }}
-	</div>
+	{% for save in saved %}
+		<div class="alert alert-success">
+			{{ save }}
+		</div>
+	{% endfor %}
 {% endif %}
 {% if errors is defined %}
 	{% for error in errors %}
@@ -18,7 +20,7 @@
 	For å gi tydeligere informasjon til deltakerne dine kan du nå redigere forsiden din selv. Denne siden kan brukes til å gi deltakerne dine mer konkret informasjon om ditt lokale UKM-miljø uten å bruke nyhetssaker - som gjerne begraves i arkivet.
 </p>
 <p>
-	Det du lager her finner du igjen på forsiden din: <a href="http:{{ monstringsLink }}" target="_blank">http:{{ monstringsLink }}</a>.
+	Det du lager her finner du igjen på forsiden din: <a href="http:{{ monstringsLink }}" target="_blank">http:{{ monstringsLink }}</a>. Om tekstfeltet under er tomt vil forsiden din i stedet bestå av nyhetssaker og det systemet vet om mønstringen din.
 </p>
 
 <form method="POST">
