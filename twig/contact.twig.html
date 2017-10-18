@@ -76,7 +76,7 @@
 		<legend>Bilde</legend>
 		Ungdommene setter stor pris å se hvem de kontakter, og du bør derfor laste opp et bilde
 		<div class="clearfix"></div>
-		<img src="{{image}}" class="thumbnail pull-left" id="contact_image" width="250" />
+		<img src="{{image|replace({'http:':'https:'})}}" class="thumbnail pull-left" id="contact_image" width="250" />
 		<input type="hidden" value="{{image}}" name="image" id="contact_image_input" />
 		<div class="actions pull-left">
 			<div class="action">
