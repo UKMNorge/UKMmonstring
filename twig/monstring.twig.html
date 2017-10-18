@@ -113,7 +113,7 @@
 				<img src="{{plugin_path}}img/draogslipp.png" height="50" />
 				<div class="image">
 					{% if kontakt.image %}
-					<img src="{{kontakt.image}}" class="img-circle" />
+					<img src="{{kontakt.image|replace({'http:':'https:'})}}" class="img-circle" />
 					{% endif %}
 					&nbsp;
 				</div>
