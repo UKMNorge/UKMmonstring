@@ -8,10 +8,8 @@ global $wpdb;
 $brukere = [];
 $brukertyper = array('' => '@ukm.no', 'urg-' => '@urg.ukm.no');
 
-foreach( write_wp_blog::getFylkesbrukere() as $brukernavn ) {
-	foreach( $brukertyper as $prefix => $domain ) {
-		$brukernavn = $prefix . $brukernavn;
-
+foreach( write_wp_blog::getFylkesbrukere() as $fylkeId => $fylkedata ) {
+	foreach( $fylkedata as $brukernavn => $epost ) {
 		$rapport = new stdClass();
 		$rapport->success = true;
 		$rapport->brukernavn = $brukernavn;
@@ -29,7 +27,7 @@ foreach( write_wp_blog::getFylkesbrukere() as $brukernavn ) {
 				**/
 				$bruker = write_wp_UKM_user::create( 
 												$brukernavn, 								// Username
-												$brukernavn . $domain,						// Email
+												$epost,										// Email
 												UKM_ordpass(),								// Password
 												fylker::getByLink( $brukernavn )->getId(),	// Fylke
 												0,											// Kommune
