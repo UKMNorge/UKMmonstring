@@ -1,0 +1,49 @@
+<tr class="alert-{{ success ? 'success' : 'danger' }}">
+	<th>
+		{{ monstring.getNavn() }}
+		<br />
+		<label class="small">{{ monstring.getType() }}</label>
+	</th>
+
+	{% if success %}
+		<td>
+			ALT OK!
+			<br />
+			<label class="small">{{ monstring.getId() }}</label>
+		</td>
+		<td>
+			{% if monstring.getType() == 'kommune' %}
+				{{ monstring.getKommuner().getAntall() }}
+				<br />
+				<small>
+					{% for kommune in monstring.getKommuner().getAll() %}
+						{{ kommune.getNavn() }},
+					{% endfor %}
+				</small>
+			{% else %}
+				{{ monstring.getType() }}
+			{% endif %}
+		</td>
+		<td>
+			{{ monstring.getKontaktpersoner().getAntall() }}
+			<br />
+			<small>
+				{% for kontakt in monstring.getKontaktpersoner().getAll() %}
+					{{ kontakt.getNavn() }},
+				{% endfor %}
+			</small>
+		</td>
+	{% else %}
+		<td>
+			{% if error == 'mangler_kommuner' %}
+				Kunne ikke opprette mønstringen fordi den ikke har noen tilknyttede kommuner!
+			{% endif %}
+		</td>
+		<td>
+			N/A
+		</td>
+		<td>
+			N/A
+		</td>
+	{% endif %}
+</tr>

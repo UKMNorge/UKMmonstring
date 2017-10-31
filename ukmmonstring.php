@@ -24,6 +24,9 @@ if(is_admin()) {
 	}
 
 	add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
+	
+	add_action('network_admin_menu', 'UKMmonstring_network_menu');
+	add_filter('UKMWPNETWDASH_messages', 'UKMmonstring_network_messages');
 }
 
 function UKMmonstring_dash_shortcut( $shortcuts ) {	
@@ -139,4 +142,65 @@ function UKMmonstring_videresending_info() {
 function UKMmonstring_save_kontaktpersoner() {
 	require_once('order.save.php');
 	die();
+}
+
+/**
+	NETWORK ADMIN FUNCTIONS
+**/
+
+function UKMmonstring_network_admin_ny_sesong() {
+	return UKMmonstring_network_admin( 'ny_sesong' );
+}
+
+function UKMmonstring_network_admin( $page='' ) {
+	define('PLUGIN_DIR', dirname( __FILE__ ).'/' );
+	$TWIGdata = [];
+
+	$folder = '/network/'. ( !empty( $page ) ? basename($page) .'/' : '' );
+
+	$action = isset($_GET['action']) ? $_GET['action'] : 'home';
+	$VIEW = $action;
+	require_once('controller/'. $folder . $action .'.controller.php');
+
+	echo TWIG( $folder . $VIEW .'.html.twig', $TWIGdata, dirname(__FILE__), true);
+}
+
+function UKMmonstring_network_messages( $messages ) {
+	// Etter juli må ny sesong settes opp
+	if( 7 < (int)date('m') && get_site_option('season') == date('Y') ) {
+		$messages[] = array(
+			'level' 	=> 'alert-danger',
+			'module'	=> 'System',
+			'header'	=> 'NY SESONG MÅ SETTES OPP!',
+			'link'		=> 'admin.php?page=UKMsystemtools_ny_sesong'
+		);
+	}
+	// I sesong, sjekk antall uregistrerte mønstringer
+	if( in_array( (int)date('m'), array(11,12,1,2) ) ) {
+		require_once('UKM/monstringer.class.php');
+		$monstringer = new monstringer( get_site_option('season') );
+		if( 15 < $monstringer->antall_uregistrerte() ) {
+			$messages[] = array(
+				'level' 	=> 'alert-warning',
+				'module'	=> 'System',
+				'header'	=> 'Det er '.$monstringer->antall_uregistrerte() .' uregistrerte mønstringer ',
+				'link'		=> 'admin.php?page=UKMrapport_admin&network=monstringer_uregistrert'
+			);
+		}
+	}
+	return $messages;
+}
+
+function UKMmonstring_network_menu() {
+	$page = add_menu_page('Mønstringer', 'Mønstringer', 'superadmin', 'UKMmonstring_network_admin','UKMmonstring_network_admin', '//ico.ukm.no/hus-menu.png',23);
+	$subpage = add_submenu_page( 'UKMmonstring_network_admin', 'Opprett sesong', 'Opprett sesong', 'superadmin', 'UKMmonstring_network_admin_ny_sesong', 'UKMmonstring_network_admin_ny_sesong' );
+
+
+	add_action( 'admin_print_styles-' . $page, 	'UKMmonstring_network_script' );
+	add_action( 'admin_print_styles-' . $subpage, 'UKMmonstring_network_script' );
+}
+
+function UKMmonstring_network_script() {
+	wp_enqueue_script('WPbootstrap3_js');
+	wp_enqueue_style('WPbootstrap3_css');
 }
