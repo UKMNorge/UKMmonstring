@@ -1,0 +1,59 @@
+<h1>Wordpress-blogger</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>
+				Mønstring
+			</th>
+			<th>
+				Blogg
+			</th>
+			<th>
+				Brukere
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for blogg in rapport %}
+			<tr class="alert-{{ blogg.success ? 'success': 'danger' }}">
+				<th>
+					{{ blogg.monstring.getNavn() }}
+					<br />
+					<small>
+						<b>PL_ID:</b> {{ blogg.monstring.getId() }}
+						<br />
+						<b>BLOG ID:</b> {{ blogg.blog_id }}
+						<br />
+						<b>PATH: </b> /{{ blogg.monstring.getPath() }}/
+						<br />
+						<b>TYPE: </b> {{ blogg.monstring.getType() }}
+					</small>
+				</th>
+				<td>
+					Blogg {{ blogg.eksisterer ? 'oppdatert' : 'opprettet' }}
+				</td>
+				<td>
+					<table class="table table-striped" style="margin-top:-9px;">
+					{% for bruker in blogg.brukere %}
+						<tr class="alert-{{ bruker.success ? 'success':'danger' }}">
+							<th width="33%">{{ bruker.brukernavn }}</th>
+							<td>
+								{% if bruker.success %}
+									{{ bruker.rolle }}
+								{% else %}
+									{{ bruker.error }}
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+					</table>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<a href="?page={{ GET('page') }}&action={{ GET('action') }}&start={{ the_loop.next.start }}" class="btn btn-success">
+	Oppdater de {{ the_loop.blogger_per_load }} neste bloggene
+</a>
