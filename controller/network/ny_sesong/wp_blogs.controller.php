@@ -81,37 +81,7 @@ if( isset( $_GET['start'] ) && is_numeric( $_GET['start'] ) ) {
 			}
 		}
 		
-		/**
-		 * Noen fylker skal vi ikke jobbe så mye med
-		 * (jukse-fylker brukt av systemet)
-		**/
-		try {
-			$fylke_urlname = $monstring->getFylke()->getURLsafe();
-			if( !isset( $fylkesbrukere[ $fylke_urlname ] ) ) {
-				$fylke_urlname = false;
-			}
-		} catch( Exception $e ) {
-			$fylke_urlname = false;
-		}
-		
-		/**
-		 *
-		 * Legg til fylkesbrukere til bloggen
-		 *
-		**/
-		if( $fylke_urlname ) {
-			$rapport->brukere = write_wp_blog::addUsersToBlog( 
-					$fylkesbrukere[ $fylke_urlname ],
-					$blog_id,
-					'administrator'
-			);
-		} else {
-			$rapport->brukere[] = array(
-									'success' 		=> false,
-									'brukernavn' 	=> $monstring->getNavn(),
-									'error'			=> 'Fylket har ingen fylkesbrukere'
-								);
-		}
+		$rapport->brukere = write_wp_blog::leggTilFylkesbrukereTilBlogg( $monstring, $blog_id );
 		
 		/**
 		 * 
@@ -119,40 +89,16 @@ if( isset( $_GET['start'] ) && is_numeric( $_GET['start'] ) ) {
 		 *
 		**/
 		if( $monstring->getType() == 'kommune' ) {
-			$kommuner_brukernavn = [];
-			$kommuner_brukere = [];
-			/**
-			 * 
-			 * Opprett kommunebrukere hvis de ikke eksisterer
-			 * Lag en liste over brukere
-			 *
-			**/
 			foreach( $monstring->getKommuner()->getAll() as $kommune ) {
-				try {
-					$user = write_wp_UKM_user::finnEllerOpprettKommuneBruker( $kommune );
-					$kommuner_brukernavn[ $user->getNavn() ] = $user->getEpost();
-					$kommuner_brukere[] = $user;
-				} catch( Exception $e ) {
-					$rapport->brukere[] = array(
-						'success'	=> false,
-						'error'		=> 'Kunne ikke opprette bruker ('. $e->getMessage() .')',
-						'brukernavn'=> $kommune->getURLsafe(),
-					);
-				}
+				$kommuner_brukere = write_wp_blog::leggTilKommunebrukerTilBlogg( $kommune, $blog_id, 'userObjects' );
 			}
-			
-			/**
-			 * 
-			 * Legg kommunebrukerne til i bloggen
-			 *
-			**/
-			$rapport_kommunebrukere = write_wp_blog::addUsersToBlog(
-				$kommuner_brukernavn,
-				$blog_id,
-				'editor'
-			);
-			if( is_array( $rapport_kommunebrukere ) ) {
-				$rapport->brukere = array_merge( $rapport->brukere, $rapport_kommunebrukere );
+
+			if( is_array( $kommuner_brukere ) ) {
+				if( is_array( $rapport->brukere ) ) {
+					$rapport->brukere = array_merge( $rapport->brukere, $rapport_kommunebrukere );
+				} else {
+					$rapport->brukere = $rapport_kommunebrukere;
+				}
 			}
 			
 			/**
@@ -160,8 +106,10 @@ if( isset( $_GET['start'] ) && is_numeric( $_GET['start'] ) ) {
 			 * Sett nye passord på alle kommunebrukere
 			 *
 			**/
-			foreach( $kommuner_brukere as $bruker ) {
+			foreach( $kommuner_brukere as $brukerRapport ) {
+				$bruker = $brukerRapport['object'];
 				$bruker->setPassord( UKM_ordpass() );
+				$kommuner_brukernavn[ $suer->getNavn() ] = $user->getEpost();
 			}
 		}
 		
