@@ -26,10 +26,17 @@ function getSeasonsData() {
 	// NY SESONG
 	$seasons->new->year			= ( $seasons->active->year )+ 1;
 	# Påmeldingsfrist lokalmønstring
-	$fristLokal 				= '01.01.'. $seasons->new->year;
-	$seasons->new->frist->lokal	= DateTime::createFromFormat('d.n.Y H:i:s', $fristLokal.'23:59:59');
+	$seasons->new->frist->lokal = getSeasonsDataFristLokal( $seasons->new->year );
 	# Videresendingsfrist fylkesmønstring
-	$fristFylke 				= '01.03.'. $seasons->new->year;
-	$seasons->new->frist->fylke	= DateTime::createFromFormat('d.n.Y H:i:s', $fristFylke.'23:59:59');
+	$seasons->new->frist->fylke	= getSeasonsDataFristFylke( $seasons->new->year );
 	return $seasons;
+}
+
+function getSeasonsDataFristLokal( $season ) {
+	$fristLokal 				= '01.01.'. $season;
+	return DateTime::createFromFormat('d.n.Y H:i:s', $fristLokal.'23:59:59');
+}
+function getSeasonsDataFristFylke( $season ) {
+	$fristLokal 				= '01.03.'. $season;
+	return DateTime::createFromFormat('d.n.Y H:i:s', $fristLokal.'23:59:59');
 }
