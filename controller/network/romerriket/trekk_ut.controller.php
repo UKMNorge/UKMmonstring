@@ -16,7 +16,7 @@ if( isset( $_GET['pl_id'] ) && isset( $_GET['k_id'] ) ) {
 	
 	// Kalkuler innslag som mister mønstringen sin
 	try {
-		$pavirkede = sizeof( $monstring->getInnslag()->getAllByKommune( $kommune ) ) + 1;
+		$pavirkede = sizeof( $monstring->getInnslag()->getAllByKommune( $kommune ) );
 		$TWIGdata['pavirkede'] = $pavirkede;
 		$init = true;
 	} catch( Exception $e ) {
