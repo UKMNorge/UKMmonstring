@@ -192,6 +192,7 @@ function UKMmonstring_network_messages( $messages ) {
 			'link'		=> 'admin.php?page=UKMsystemtools_ny_sesong'
 		);
 	}
+	
 	// I sesong, sjekk antall uregistrerte mønstringer
 	if( in_array( (int)date('m'), array(11,12,1,2) ) ) {
 		require_once('UKM/monstringer.class.php');
