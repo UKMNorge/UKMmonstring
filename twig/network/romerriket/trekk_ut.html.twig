@@ -1,0 +1,33 @@
+<h1>Trekk ut en kommune/bydel fra en fellesmønstring</h1>
+
+<p class="lead">
+	Når du trekker ut en kommune fristilles den slik at du kan opprette en egen mønstring, 
+	eller legge den til i en annen fellesmønstring.
+	Legger du den ikke til i en annen mønstring vil det ikke finnes noe info om kommunen / bydelen
+	på nettsiden.
+</p>
+
+<div class="col-xs-12 col-sm-8">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Fellesmønstring</th>
+				<th>Trekk ut</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for monstring in monstringer if monstring.erFellesmonstring() %}
+				<tr>
+					<td>{{ monstring.getNavn() }}</td>
+					<td>
+						{% for kommune in monstring.getKommuner().getAll() %}
+							<a href="?page=UKMmonstring_network_admin_rome_trekk_ut&pl_id={{ monstring.getId() }}&k_id={{ kommune.getId() }}" class="btn btn-block btn-danger">
+								{{ kommune.getNavn()}}
+							</a>
+						{% endfor %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

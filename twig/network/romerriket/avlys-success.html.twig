@@ -1,0 +1,48 @@
+<h1>Mønstringen er avlyst!</h1>
+
+<p class="lead">
+	{% if rapport.viaConfirmation %}
+		Mønstringen er avlyst, selv om den hadde påmeldte deltakere.
+		Disse har nå ikke et sted å delta.
+	{% else %}
+		Mønstringen hadde ingen påmeldte, og er nå avlyst.
+	{% endif %}
+</p>
+
+<p>
+	Nettsiden
+	<a href="//{{ UKM_HOSTNAME ~ rapport.path }}" target="_blank">
+		//{{ UKM_HOSTNAME ~ rapport.path }}
+	</a>
+	viser en beskjed om mønstringen er avlyst.
+</p>
+
+<p>
+	{% if rapport.bruker.success %}
+		<p class="text-success">
+			{{ rapport.bruker.message }}
+		</p>
+	{% else %}
+		<p class="text-danger">
+			{{ rapport.bruker.error }}
+		</p>
+	{% endif %}
+</p>
+
+{% for fylkesbruker in rapport.fylkesbrukere %}
+	<p>
+		{% if fylkesbruker.success %}
+			<p class="text-success">
+				{{ fylkesbruker.message }}
+			</p>
+		{% else %}
+			<p class="text-danger">
+				{{ fylkesbruker.error }}
+			</p>
+		{% endif %}
+	</p>
+{% endfor %}
+
+<p>
+	<a href="?page=UKMmonstring_network_admin" class="btn btn-success">Alt OK!</a>
+</p>

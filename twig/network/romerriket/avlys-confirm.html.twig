@@ -1,0 +1,38 @@
+<div class="col-xs-12 col-sm-8">
+	<h1>Er du sikker på at du vil avlyse {{ monstring.getNavn() }}?</h1>
+	<p class="lead">Mønstringen har {{ pavirkede }} påmeldte innslag!</p>
+	
+	<p>
+		Alle innslag påmeldt denne mønstringen vil nå stå uten et sted å delta.
+		<br />
+		De får heller ikke noe varsel om at mønstringen er avlyst.
+	</p>
+	
+	<h2>Før du avlyser</h2>
+	<ol class="col-xs-12">
+		<li>
+			Forsikre deg om at lokalkontakten har varslet sine deltakere om avlysningen
+		</li>
+		<li>
+			Sjekk med lokalkontakten / fylkeskontakten om deltakerne kan delta i en annen kommune. 
+			<br />
+			I tilfelle må du først avlyse denne mønstringen, 
+			og deretter legge kommunen til i en annen mønstring
+		</li>
+	</ol>
+	
+	<p>
+		&nbsp;
+	</p>
+	
+	<p style="margin-bottom: 2em;">
+		<a href="?page={{ GET('page') }}&avlys={{ GET('avlys') }}&confirmed=true" class="btn btn-danger">
+			Ja, avlys mønstringen
+		</a>
+	</p>
+	<p>
+		<a href="?page={{ GET('page') }}" class="btn btn-success">
+			Nei, ikke avlys mønstringen!
+		</a>
+	</p>
+</div>

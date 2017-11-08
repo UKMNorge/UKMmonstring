@@ -152,9 +152,26 @@ function UKMmonstring_network_admin_ny_sesong() {
 	return UKMmonstring_network_admin( 'ny_sesong' );
 }
 
+function UKMmonstring_network_admin_rome_opprett() {
+	$_GET['action'] = 'opprett';
+	return UKMmonstring_network_admin( 'romerriket' );
+}
+function UKMmonstring_network_admin_rome_avlys() {
+	$_GET['action'] = 'avlys';
+	return UKMmonstring_network_admin( 'romerriket' );
+}
+function UKMmonstring_network_admin_rome_legg_til() {
+	$_GET['action'] = 'legg_til';
+	return UKMmonstring_network_admin( 'romerriket' );
+}
+function UKMmonstring_network_admin_rome_trekk_ut() {	
+	$_GET['action'] = 'trekk_ut';
+	return UKMmonstring_network_admin( 'romerriket' );
+}
+
 function UKMmonstring_network_admin( $page='' ) {
 	define('PLUGIN_DIR', dirname( __FILE__ ).'/' );
-	$TWIGdata = [];
+	$TWIGdata = ['UKM_HOSTNAME' => UKM_HOSTNAME];
 
 	$folder = '/network/'. ( !empty( $page ) ? basename($page) .'/' : '' );
 
@@ -193,11 +210,18 @@ function UKMmonstring_network_messages( $messages ) {
 
 function UKMmonstring_network_menu() {
 	$page = add_menu_page('Mønstringer', 'Mønstringer', 'superadmin', 'UKMmonstring_network_admin','UKMmonstring_network_admin', '//ico.ukm.no/hus-menu.png',23);
-	$subpage = add_submenu_page( 'UKMmonstring_network_admin', 'Opprett sesong', 'Opprett sesong', 'superadmin', 'UKMmonstring_network_admin_ny_sesong', 'UKMmonstring_network_admin_ny_sesong' );
+	$subpage1 = add_submenu_page( 'UKMmonstring_network_admin', 'Opprett mønstring', 'Opprett mønstring', 'superadmin', 'UKMmonstring_network_admin_rome_opprett', 'UKMmonstring_network_admin_rome_opprett' );
+	$subpage2 = add_submenu_page( 'UKMmonstring_network_admin', 'Avlys mønstring', 'Avlys mønstring', 'superadmin', 'UKMmonstring_network_admin_rome_avlys', 'UKMmonstring_network_admin_rome_avlys' );
+	$subpage3 = add_submenu_page( 'UKMmonstring_network_admin', 'Legg til kommune', 'Legg til kommune', 'superadmin', 'UKMmonstring_network_admin_rome_legg_til', 'UKMmonstring_network_admin_rome_legg_til' );
+	$subpage4 = add_submenu_page( 'UKMmonstring_network_admin', 'Trekk ut kommune', 'Trekk ut kommune', 'superadmin', 'UKMmonstring_network_admin_rome_trekk_ut', 'UKMmonstring_network_admin_rome_trekk_ut' );
+	$subpage5 = add_submenu_page( 'UKMmonstring_network_admin', 'Opprett sesong', 'Opprett sesong', 'superadmin', 'UKMmonstring_network_admin_ny_sesong', 'UKMmonstring_network_admin_ny_sesong' );
 
 
 	add_action( 'admin_print_styles-' . $page, 	'UKMmonstring_network_script' );
-	add_action( 'admin_print_styles-' . $subpage, 'UKMmonstring_network_script' );
+	for($i=0;$i<5;$i++) {
+		$var = 'subpage'.$i;
+		add_action( 'admin_print_styles-' . $$var, 'UKMmonstring_network_script' );
+	}
 }
 
 function UKMmonstring_network_script() {

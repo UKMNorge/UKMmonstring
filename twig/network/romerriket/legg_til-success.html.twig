@@ -1,0 +1,80 @@
+<div class="col-xs-12 col-sm-8">
+	<h1>{{ kommune.getNavn() }} er lagt til fellesmønstringen!</h1>
+	
+	<h3>
+		Flyttet-siden
+		<small>
+			som overtar den gamle URL'en
+		</small>
+	</h3>
+	<p>
+		<b>Path:</b> {{ rapport.from.path }}
+		<br />
+		<b>BlogId:</b> {{ rapport.temp.blog_id }}
+	</p>
+	<p class="{{ rapport.flipp.move_temp.success ? 'success':'danger'}}">
+		{% if rapport.flipp.move_temp.success %}
+			Ble flyttet til den gamle URL'en ({{ rapport.flipp.move_temp.domain ~ rapport.flipp.move_temp.to }})
+		{% else %}
+			Ble ikke flyttet til den gamle URL'en med følgende feilbeskjed:
+			{{ rapport.flipp.move_temp.error }}
+		{% endif %}
+	</p>
+
+	<table class="table table-striped">
+		{% if rapport.flytt.brukere|length > 0 %}
+			<thead>
+				<tr>
+					<th>Brukernavn</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+		{% endif %}
+		<tbody>
+			{% for bruker in rapport.flytt.brukere %}
+				<tr class="alert-{{ bruker.success ? 'success' : 'danger' }}">
+					<td>{{ bruker.name }}</td>
+					<td>{{ bruker.message }}</td>
+				</tr>
+			{% else %}
+				<tr class="alert-success">
+					<td>
+						Den midlertidige siden hadde ingen brukere. Dette er normalt
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+	
+	<h3>
+		Den nye nettsiden 
+		<small>
+			som {{ kommune.getNavn() }} nå er med i
+		</small>
+	</h3>
+	<p>
+		<b>Path:</b> {{ rapport.to.path }}
+		<br />
+		<b>BlogId:</b> {{ rapport.flipp.move_from.blog_id }}
+	</p>
+	<p class="{{ rapport.flipp.move_from.success ? 'success':'danger'}}">
+		{% if rapport.flipp.move_from.success %}
+			Ble flyttet til den gamle URL'en ({{ rapport.flipp.move_from.domain ~ rapport.flipp.move_from.to }})
+		{% else %}
+			Ble ikke flyttet til den gamle URL'en med følgende feilbeskjed:
+			{{ rapport.flipp.move_from.error }}
+		{% endif %}
+	</p>
+		
+	<div class="alert alert-{{ rapport.from.bruker.success ? 'success':'danger' }}">
+		Brukeren {{ rapport.from.bruker.name }} er 
+		{{ not rapport.from.bruker.success ? ' ikke ' }} lagt til bloggen!
+	</div>
+
+	<p>&nbsp;</p>
+
+	<p>
+		<a href="?page=UKMmonstring_network_admin" class="btn btn-success">Alt OK!</a>
+	</p>

@@ -1,0 +1,51 @@
+<h1>Mønstring opprettet</h1>
+
+<p>
+	<label>NAVN</label>
+	{{ rapport.monstring.getNavn() }}
+</p>
+
+<p>
+	<label>PL_ID</label>
+	{{ rapport.monstring.getId() }}
+</p>
+
+<p>
+	<label>PATH</label>
+	{{ rapport.path }}
+	<br />
+	Gå til: 
+	<a href="//{{ UKM_HOSTNAME }}{{ rapport.path }}">nettsiden</a>
+	|
+	<a href="//{{ UKM_HOSTNAME }}{{ rapport.path }}wp-admin/">kontrollpanelet</a>
+</p>
+
+<p>
+	<label>NETTSIDE</label>
+	{% if rapport.eksisterer %}
+		Nettsiden eksisterte fra før, og er nå oppdatert til å matche mønstringen
+	{% else %}
+		Nettsiden eksisterte ikke fra før, og er nå opprettet
+	{% endif %}
+</p>
+
+<p>
+	<label>BRUKERE</label>
+</p>
+<table class="table table-striped" style="margin-top:-9px;">
+	{% for bruker in rapport.brukere %}
+		<tr class="alert-{{ bruker.success ? 'success':'danger' }}">
+			<th width="33%">{{ bruker.brukernavn }}</th>
+			<td>
+				{% if bruker.success %}
+					{{ bruker.rolle }}
+				{% else %}
+					{{ bruker.error }}
+				{% endif %}
+			</td>
+		</tr>
+	{% endfor %}
+</table>
+<p>
+	<a href="?page={{ GET('page') }}" class="btn btn-success">Alt OK!</a>
+</p>
