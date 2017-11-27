@@ -35,7 +35,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for monstring in monstringer %}
+				{% for monstring in monstringer if monstring.getType() == 'kommune' %}
 					<tr>
 						<td>{{ monstring.getNavn() }}</td>
 						<td>
