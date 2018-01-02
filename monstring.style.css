@@ -1,3 +1,6 @@
+#wpfooter {
+	position: relative !important;
+}
 div.ui-datepicker, div.ui-datepicker table{
 }
 

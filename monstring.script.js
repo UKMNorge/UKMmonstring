@@ -71,10 +71,4 @@ jQuery(document).ready(function(){
 	    .open();
 	});
 
-
 });
-
-
-
-
-
