@@ -80,3 +80,53 @@ ol#tilbud li div {
 ol#tilbud > li {
  clear: both;
 }
+
+.UKMmonstringer .container_width {
+	width: 790px;
+}
+
+.UKMmonstringer #buttoncontainer {
+ margin-bottom: 10px;
+}
+.UKMmonstringer #buttoncontainer a {
+ margin-left: 10px;
+}
+.UKMmonstringer .monstring {
+ padding: 5px 5px 5px 10px;
+}
+.UKMmonstringer .starts {
+ font-weight: bold;
+font-size: 14px;
+padding-top: 15px;
+}
+.UKMmonstringer .monstring .actions div {
+width: 60px;
+text-align: center;
+margin: 0px 10px 0px -5px;
+line-height: 10px;
+}
+.UKMmonstringer .monstring .actions div img {
+ width: 20px;
+ margin-bottom: 3px;
+}
+
+.UKMmonstringer .monstring h2 {
+ font-size: 24px;
+ margin: 3px 0px 0px 140px;
+}
+.UKMmonstringer .monstring h3 {
+ font-size: 18px;
+ margin: 3px;
+}
+
+.UKMmonstringer .details {
+ margin-left: 130px;
+}
+.UKMmonstringer .details table img {
+ width: 35px;
+}
+
+
+.clickable {
+	cursor: pointer;
+}

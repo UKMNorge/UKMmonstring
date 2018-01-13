@@ -18,12 +18,17 @@ if(is_admin()) {
 		add_action('UKM_admin_menu', 'UKMMonstring_menu');
 		add_action('UKMWPDASH_shortcuts', 'UKMMonstring_dash_shortcut', 10);
 	}
-
+	
 	// Kun gjør dette dersom vi er i november, slutt ved nyttår
 	if( 'kommune' == get_option('site_type') && ( (int)date('m') > 10 ) ) {
 		add_filter('UKMWPDASH_messages', 'UKMmonstring_messages');
 	}
 
+	if(get_option('site_type') == 'fylke') {
+		add_action('UKM_admin_menu', 'UKMmonstringer_menu',100);
+		add_filter('UKMWPDASH_messages', 'UKMmonstringer_dash');
+	}
+	
 	add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
 	
 	add_action('network_admin_menu', 'UKMmonstring_network_menu');
@@ -227,4 +232,76 @@ function UKMmonstring_network_menu() {
 function UKMmonstring_network_script() {
 	wp_enqueue_script('WPbootstrap3_js');
 	wp_enqueue_style('WPbootstrap3_css');
+}
+
+function UKMmonstringer_script() {
+	UKMmonstring_network_script();
+	wp_enqueue_script('UKMMonstring_script',  plugin_dir_url( __FILE__ )  . 'monstring.script.js' );
+	wp_enqueue_style( 'UKMMonstring_style', plugin_dir_url( __FILE__ ) .'monstring.style.css');
+}
+
+
+
+
+function UKMmonstringer_menu() {
+	UKM_add_menu_page('resources','Lokal-mønstringer', 'Lokal-mønstringer', 'editor', 'UKMmonstringer', 'UKMmonstringer', '//ico.ukm.no/mapmarker-bubble-blue-menu.png',20);
+	UKM_add_scripts_and_styles('UKMmonstringer', 'UKMmonstringer_script' );
+}
+
+function UKMmonstringer_dash( $MESSAGES ) {
+	if( get_option('site_type') != 'fylke' ) {
+		return $MESSAGES;
+	}
+
+	$unregistered = 0;
+	
+	if( ((int) date('Y') == (int) (get_option('season')-1)) && ((int) date('m') > 10 ) ) {
+		$monstring = new monstring( get_option('pl_id') );
+		
+		$monstringer = $monstring->hent_lokalmonstringer();
+		$monstringer = array_unique( $monstringer );
+		
+		foreach( $monstringer as $plid ) {
+			$pl = new monstring( $plid );
+			if( !$pl->registered() && $pl->g('pl_name') != 'Gjester' )
+				$unregistered++;
+		}	
+	}
+	
+	if($unregistered > 0)
+		$MESSAGES[] = array(
+			'link'		=> '?page=UKMmonstringer',
+			'level' 	=> 'alert-error',
+			'header' 	=> $unregistered . ' av dine lokalmønstringer er ikke registrert!',
+			'body' 	=> 'Velg "lokalmønstringer" i menyen til venstre for å se hvilke'
+		);
+	elseif($is_showtime) {
+		$MESSAGES[] = array('level' 	=> 'alert-success',
+							'header' 	=> 'Alle dine lokalmønstringer registrert!',
+							'body' 	=> 'Det liker vi!'
+							);
+	}
+	return $MESSAGES;
+}
+
+function UKMmonstringer() {
+	require_once('UKM/monstringer.class.php');
+	$TWIGdata = [];
+	$monstring = new monstring_v2( get_option('pl_id') );
+	$monstringer = stat_monstringer_v2::getAllByFylke( $monstring->getFylke(), get_option('season') );
+	
+	$emails = '';
+	foreach( $monstringer as $lokalmonstring ) {
+		foreach( $lokalmonstring->getKontaktpersoner()->getAll() as $kontakt ) {
+			$epost = $kontakt->getEpost();
+			if( !empty( $epost ) ) {
+				$emails .= $epost .';';
+			}
+		}
+	}
+	
+	$TWIGdata['monstring'] = $monstring;
+	$TWIGdata['lokalmonstringer'] = $monstringer;
+	$TWIGdata['mailtoall'] = $emails;
+	echo TWIG('monstringer.twig.html', $TWIGdata , dirname(__FILE__));
 }
