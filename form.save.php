@@ -5,9 +5,6 @@ switch(get_option('site_type')) {
 	case 'land':
 		$season = get_option('season');#($month > 7) ? date('Y')+1 : date('Y');	
 		update_site_option('UKMFvideresending_info1_'.$season, $_POST['UKMFvideresending_info1']);
-		update_site_option('UKMFvideresending_nominasjon_ukmmedia_'.$season, $_POST['UKMFvideresending_nominasjon_ukmmedia']);
-		update_site_option('UKMFvideresending_nominasjon_ua_'.$season, $_POST['UKMFvideresending_nominasjon_ua']);
-		update_site_option('UKMFvideresending_nominasjon_konf_'.$season, $_POST['UKMFvideresending_nominasjon_konf']);
 		update_site_option('UKMFvideresending_nominasjon_frister', $_POST['UKMFvideresending_nominasjon_frister']);
 
 		
