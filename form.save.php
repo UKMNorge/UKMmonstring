@@ -85,7 +85,7 @@ for($id=1; $id<4; $id++) {
 
 
 
-$offers = array(4,5,6,8,9);
+$offers = array(4,5,6,8,9,10);
 
 foreach($offers as $offer) {
 	if(!isset($_POST['tilbud_'. $offer]))

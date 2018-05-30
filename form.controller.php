@@ -53,6 +53,10 @@ if(!$pl->registered()) {
 			case '9':
 				$sceneteknikk = true;
 				break;
+			case '10':
+				$ressurs = true;
+				break;
+
 		}
 	}
 }
@@ -68,6 +72,7 @@ $infos = array('name' => $pl->get('pl_name'),
 			   'tilbud_arrangor' => $arrangor,
 			   'tilbud_sceneteknikk' => $sceneteknikk,
 			   'tilbud_matkultur' => $matkultur,
+			   'tilbud_ressurs' => $ressurs,
 			   'kommuner' => $pl->get('kommuner'),
 			   'site_type' => get_option('site_type'),
 			   'season' => get_option('season'),
