@@ -81,6 +81,11 @@ $infos = array('name' => $pl->get('pl_name'),
 			   'plugin_path' => plugin_dir_url( __FILE__ ),
 			  );
 
+if( $infos['site_type'] == 'kommune' ) {
+	$infos['fellesmonstring'] = $pl->fellesmonstring();
+} else {
+	$infos['fellesmonstring'] = false;
+}
 $season = get_option('season');#($month > 7) ? date('Y')+1 : date('Y');	
 $infos['UKMFvideresending_info1'] = get_site_option('UKMFvideresending_info1_'.$season);
 $infos['UKMFvideresending_nominasjon_ua'] = get_site_option('UKMFvideresending_nominasjon_ua_'.$season);

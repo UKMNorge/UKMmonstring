@@ -30,10 +30,13 @@
 		<div class="row-fluid">
 		    <div class="span6">
 				<label for="pl_name">Mønstringsnavn</label>
-				{% if site_type == 'kommune' %}
+				{% if site_type == 'kommune' and not fellesmonstring %}
 					<input class="input-block-level" type="text" id="pl_name" name="pl_name" value="{{name}}" autofocus>
 					Skal <b>kun</b> inneholde kommune-/bydelsnavn, og <b>aldri</b> "UKM i" o.l.<br />
-					Fellesmønstringer kan bruke kallenavn som Valdres, Odalen osv
+				{% elseif fellesmonstring %}
+					{{name}}
+					<br />
+					<small>Kontakt UKM Norge for å endre navn på mønstringen</small>
 				{% else %}
 					{{name}}
 				{% endif %}
