@@ -25,11 +25,12 @@ foreach( write_wp_blog::getFylkesbrukere() as $fylkeId => $fylkedata ) {
 				 * finnes i wordpress med gitt brukernavn, og deretter
 				 * opprette / koble objektene
 				**/
+				$fylke_id = fylker::getByLink( str_replace('urg-','',$brukernavn) )->getId();
 				$bruker = write_wp_UKM_user::create( 
 												$brukernavn, 								// Username
 												$epost,										// Email
 												UKM_ordpass(),								// Password
-												fylker::getByLink( $brukernavn )->getId(),	// Fylke
+												$fylke_id,									// Fylke
 												0,											// Kommune
 												false										// WP_ID
 											);

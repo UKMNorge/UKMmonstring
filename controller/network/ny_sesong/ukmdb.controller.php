@@ -62,8 +62,6 @@ elseif( isset($_GET['init']) && $_GET['init'] == 'do' ) {
 					$renderData['success'] = false;
 					$renderData['error'] = 'mangler_kommune';
 					echo TWIG( 'network/ny_sesong/ukmdb-do-status.html.twig', $renderData, PLUGIN_DIR, true);
-			break;
-
 					continue;
 				}
 				break;
@@ -85,7 +83,7 @@ elseif( isset($_GET['init']) && $_GET['init'] == 'do' ) {
 						);
 
 		foreach( $monstring_active->getKontaktpersoner()->getAll() as $kontakt ) {
-			$monstring_new->addKontaktperson( $kontakt );
+			$monstring_new->getKontaktpersoner()->leggTil( $kontakt );
 		}
 		
 		/**
@@ -96,7 +94,7 @@ elseif( isset($_GET['init']) && $_GET['init'] == 'do' ) {
 			$monstring_new->setSkjema( $monstring_active->getSkjema() );
 		}
 		$monstring_new->setSted( $monstring_active->getSted() );
-		$monstring_new->save();
+		write_monstring::save( $monstring_new );
 		
 		/**
 		 * Lagre relasjon mellom gammel og ny mønstring

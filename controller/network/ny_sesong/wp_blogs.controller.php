@@ -89,16 +89,18 @@ if( isset( $_GET['start'] ) && is_numeric( $_GET['start'] ) ) {
 		 *
 		**/
 		if( $monstring->getType() == 'kommune' ) {
+			$kommuner_brukere = [];
 			foreach( $monstring->getKommuner()->getAll() as $kommune ) {
-				$kommuner_brukere = write_wp_blog::leggTilKommunebrukerTilBlogg( $kommune, $blog_id, 'userObjects' );
+				$kommuner_brukere[] = write_wp_blog::leggTilKommunebrukerTilBlogg( $kommune, $blog_id, 'userObjects' );
 			}
 
-			if( is_array( $kommuner_brukere ) ) {
-				if( is_array( $rapport->brukere ) ) {
-					$rapport->brukere = array_merge( $rapport->brukere, $rapport_kommunebrukere );
-				} else {
-					$rapport->brukere = $rapport_kommunebrukere;
-				}
+			// Oppdater listen over alle brukere
+			// Hvis fylkesbrukere ikke er lagt til (har noen ganger skjedd)
+			// brukes kommune-brukere alene
+			if( is_array( $kommuner_brukere ) && is_array( $rapport->brukere ) ) {
+				$rapport->brukere = array_merge( $rapport->brukere, $kommuner_brukere );
+			} elseif( is_array( $kommuner_brukere ) ) {
+				$rapport->brukere = $kommuner_brukere;
 			}
 			
 			/**
@@ -109,7 +111,7 @@ if( isset( $_GET['start'] ) && is_numeric( $_GET['start'] ) ) {
 			foreach( $kommuner_brukere as $brukerRapport ) {
 				$bruker = $brukerRapport['object'];
 				$bruker->setPassord( UKM_ordpass() );
-				$kommuner_brukernavn[ $suer->getNavn() ] = $user->getEpost();
+				$kommuner_brukernavn[ $bruker->getNavn() ] = $bruker->getEpost();
 			}
 		}
 		
@@ -119,6 +121,16 @@ if( isset( $_GET['start'] ) && is_numeric( $_GET['start'] ) ) {
 		 *
 		**/
 		if( $monstring->getType() == 'fylke' ) {
+			// Noen fylker skal vi ikke jobbe så mye med (jukse-fylker brukt av systemet)
+			try {
+				$fylke_urlname = $monstring->getFylke()->getURLsafe();
+				if( !isset( $fylkesbrukere[ $fylke_urlname ] ) ) {
+					$fylke_urlname = false;
+				}
+			} catch( Exception $e ) {
+				$fylke_urlname = false;
+			}
+
 			if( $fylke_urlname ) {
 				foreach( $fylkesbrukere[ $fylke_urlname ] as $username => $email ) {
 					$bruker = wp_UKM_user::getWPUser( $username, 'username' );
