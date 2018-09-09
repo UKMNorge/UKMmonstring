@@ -18,7 +18,7 @@ function createUsers_gui() {
 	}
 	
 	echo '<table width="600px" border="0"><tr><th>Navn</th><th>Brukernavn</th><th>Passord</th></tr>';
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = SQL::fetch($result)) {
 		echo '<tr><td>'.utf8_encode($row['lastname']).', '.utf8_encode($row['firstname']).'</td>
 				<td>'.utf8_encode($row['username']).'</td>
 				<td>'.utf8_encode($row['password']).'</td></tr>';
