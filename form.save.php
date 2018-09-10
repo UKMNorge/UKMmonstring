@@ -25,6 +25,14 @@ switch(get_option('site_type')) {
 		
 	break;
 	case 'fylke':
+/*
+		$fylke = new SQL("SELECT `name` FROM `smartukm_fylke` WHERE `id` = '#fylke'",
+						array('fylke'=>$_POST['pl_fylke']));
+		$fylke = $fylke->run('field', 'name');
+		$_POST['pl_name'] = utf8_encode($fylke);
+		$place->update('pl_name', 'pl_name');
+		$place->update('pl_fylke', 'pl_fylke');
+*/	
 		// Hent dato for åpning av videresending
 		$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline2'));
 		
@@ -35,12 +43,10 @@ switch(get_option('site_type')) {
 		$place->update('pl_deadline2');
 	break;
 	default:
-		if( isset( $_POST['pl_name'] ) ) {
-			$_POST['pl_name'] = str_replace(array('UKM i ', 'UKM i', 'UKM ','UKM', ' kommuner',' kommune', 'mønstring','lokal','lokalmønstring'), '', $_POST['pl_name']);
-			update_option('blogname', $_POST['pl_name']);
-			update_option('blogdescription', 'UKM i '. $_POST['pl_name']);
-			$place->update('pl_name', 'pl_name');
-		}
+		$_POST['pl_name'] = str_replace(array('UKM i ', 'UKM i', 'UKM ','UKM', ' kommuner',' kommune', 'mønstring','lokal','lokalmønstring'), '', $_POST['pl_name']);
+		update_option('blogname', $_POST['pl_name']);
+		update_option('blogdescription', 'UKM i '. $_POST['pl_name']);
+		$place->update('pl_name', 'pl_name');
 		$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline2'));
 		if( !$_POST['pl_deadline2'] || $_POST['pl_deadline2'] == 0 ) {
 			$_POST['pl_deadline2'] = autocorrectDeadline(getDatePickerTime('deadline'));

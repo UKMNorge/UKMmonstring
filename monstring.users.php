@@ -19,9 +19,9 @@ function createUsers_gui() {
 	
 	echo '<table width="600px" border="0"><tr><th>Navn</th><th>Brukernavn</th><th>Passord</th></tr>';
 	while ($row = SQL::fetch($result)) {
-		echo '<tr><td>'.$row['lastname'].', '.$row['firstname'].'</td>
-				<td>'.$row['username'].'</td>
-				<td>'.$row['password'].'</td></tr>';
+		echo '<tr><td>'.utf8_encode($row['lastname']).', '.utf8_encode($row['firstname']).'</td>
+				<td>'.utf8_encode($row['username']).'</td>
+				<td>'.utf8_encode($row['password']).'</td></tr>';
 	}
 	echo '</table><br /><br />';
 	echo SQL::numRows($result).' brukere';
