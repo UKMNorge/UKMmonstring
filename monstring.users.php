@@ -12,7 +12,7 @@ function createUsers_gui() {
 	$statement = new SQL($query);
 	$result = $statement->run();
 	
-	if (mysql_num_rows($result) == 0) {
+	if (SQL::numRows($result) == 0) {
 		echo 'Sleng på &generateUsers i adresselinjen for å opprette brukere.<br /><br />';
 		return;
 	}
@@ -24,7 +24,7 @@ function createUsers_gui() {
 				<td>'.utf8_encode($row['password']).'</td></tr>';
 	}
 	echo '</table><br /><br />';
-	echo mysql_num_rows($result).' brukere';
+	echo SQL::numRows($result).' brukere';
 }
 
 
