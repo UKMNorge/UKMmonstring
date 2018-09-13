@@ -1,0 +1,5 @@
+{% for value in 8..23 %}
+    {% set time = value < 10 ? '0' ~ value : value %}
+    <option value="{{ time }}:00" {{ current|date('H:i') == time~':00' ? 'selected' }}>{{ time }}:00</option>
+    <option value="{{ time }}:30" {{ current|date('H:i') == time~':30' ? 'selected' }}>{{ time }}:30</option>
+{% endfor %}
