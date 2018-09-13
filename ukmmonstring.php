@@ -93,7 +93,7 @@ function UKMMonstring() {
     require_once('UKM/monstring.class.php');
     $monstring = new monstring_v2( get_option('pl_id') );
 
-	if( false ){# date('y') > 6 && (int)$monstring->getSesong() <= (int)date('Y') ) {
+	if( date('y') > 6 && (int)$monstring->getSesong() <= (int)date('Y') ) {
 		echo TWIG('vent-til-ny-sesong.html.twig', [], dirname(__FILE__));
 		return;
 	}
