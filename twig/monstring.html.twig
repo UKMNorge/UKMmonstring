@@ -73,10 +73,21 @@
                     <h3>Videresending</h3>
                     {% if monstring.getType() == 'fylke' %}
                         <p>
-                            Før {{ monstring.getFylke().erOslo() ? 'bydelene' : 'kommunene' }} skal begynne med videreending,
-                            bør du også legge inn informasjon om dine kvoter osv. Alt du legger inn under menyvalget 
+                            Før {{ monstring.getFylke().erOslo() ? 'bydelene' : 'kommunene' }} skal begynne med videresending,
+                            bør du legge inn informasjon om dine kvoter osv. Alt du skriver inn under menyvalget 
                             "<a href="?page=UKMmonstring_videresending_info">Infotekst om videresending</a>" vises på 
                             {{ monstring.getFylke().erOslo() ? 'bydelenes' : 'kommunenes' }} videresendings-forside.
+                        </p>
+
+                        <p>
+                            {% if monstring.harSkjema() %}
+                                Husk å 
+                                <a href="?page=UKMVideresendingsskjema">oppdatere videresendingsskjemaet</a>
+                                du ber dine lokalkontakter om å fylle ut før videresendingen åpner.
+                            {% else %}
+                                <a href="?page=UKMVideresendingsskjema">Du kan opprette et spørreskjema</a>
+                                som lokalkontakene dine må fylle ut ved videresending.
+                            {% endif %}
                         </p>
                     {% endif %}
                 </div>
