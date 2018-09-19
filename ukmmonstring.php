@@ -191,7 +191,7 @@ function UKMmonstringer() {
 	$TWIGdata['monstring'] = $monstring;
 	$TWIGdata['lokalmonstringer'] = $monstringer;
 	$TWIGdata['mailtoall'] = $emails;
-	echo TWIG('monstringer.twig.html', $TWIGdata , dirname(__FILE__));
+	echo TWIG('monstringer.html.twig', $TWIGdata , dirname(__FILE__));
 }
 
 // SCRIPTS AND STYLES
