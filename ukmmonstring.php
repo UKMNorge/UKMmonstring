@@ -20,9 +20,7 @@ if(is_admin()) {
 	}
 	
 	// Kun gjør dette dersom vi er i november, slutt ved nyttår
-	if( in_array( get_option('site_type'), ['kommune','fylke'] ) && (int)date('m') > 10 && (int)date('m')<2 ) {
-		add_filter('UKMWPDASH_messages', 'UKMmonstring_messages');
-	}
+	add_filter('UKMWPDASH_messages', 'UKMmonstring_messages');
 		
 	add_action('network_admin_menu', 'UKMmonstring_network_menu');
 	add_filter('UKMWPNETWDASH_messages', 'UKMmonstring_network_messages');
@@ -113,9 +111,9 @@ function UKMmonstring_messages( $MESSAGES ) {
 
 	if(!$monstring->erRegistrert()) {
 		$MESSAGES[] = array('level' 	=> 'alert-error',
-							'header' 	=> 'Du har ikke registrert mønstringen din!',
+							'header' 	=> 'Du må registrere mønstringen din',
 							'link' 		=> 'admin.php?page=UKMMonstring',
-							'body' 	=> 'Velg "Mønstring" i menyen til venstre for å legge til informasjonen som mangler'
+							'body' 		=> 'Velg "Mønstring" i menyen til venstre for å legge til informasjonen som mangler'
 							);
 	}
 
