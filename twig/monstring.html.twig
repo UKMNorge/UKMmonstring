@@ -35,7 +35,7 @@
             <div class="col-12 col-sm-6">
                 <div class="form-group">
                     <label>Når starter {{ monstringen }}?</label>
-                    <input class="datepicker_kommune form-control" type="text" name="start" value="{{ monstring.getStart()|dato('d.m.Y') }}">
+                    <input class="datepicker_{{ monstring.getType() }} form-control" type="text" name="start" value="{{ monstring.getStart()|dato('d.m.Y') }}">
                 </div>
             </div>
             <div class="col-12 col-sm-6">
@@ -53,7 +53,7 @@
             <div class="col-12 col-sm-6">
                 <div class="form-group">
                     <label>Når slutter {{ monstringen }}?</label>
-                    <input class="datepicker_kommune form-control" type="text" name="stop" value="{{ monstring.getStop()|dato('d.m.Y') }}">
+                    <input class="datepicker_{{ monstring.getType() }} form-control" type="text" name="stop" value="{{ monstring.getStop()|dato('d.m.Y') }}">
                 </div>
             </div>
             <div class="col-12 col-sm-6">
@@ -95,7 +95,7 @@
                 <div class="col-12 col-sm-6">
                     <label>Når åpner videresendingen?</label>
                     <div class="input-group" style="margin-bottom: 1em;">
-                        <input class="datepicker_kommune form-control" type="text" name="frist_2" value="{{ monstring.getFrist2()|dato('d.m.Y') }}" />
+                        <input class="datepicker_{{ monstring.getType() == 'fylke' ? 'fylke_forward' : 'land' }} form-control" type="text" name="frist_2" value="{{ monstring.getFrist2()|dato('d.m.Y') }}" />
                         <span class="input-group-addon">kl. 08:00</span>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                 <div class="col-12 col-sm-6">
                     <label>Når stenger videresendingen?</label>
                     <div class="input-group" style="margin-bottom: 1em;">
-                        <input class="datepicker_kommune form-control" type="text" name="frist_1" value="{{ monstring.getFrist1()|dato('d.m.Y') }}" />
+                        <input class="datepicker_{{ monstring.getType() }} form-control" type="text" name="frist_1" value="{{ monstring.getFrist1()|dato('d.m.Y') }}" />
                         <span class="input-group-addon">kl. 23:59</span>
                     </div>
                 </div>
