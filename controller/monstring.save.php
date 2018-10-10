@@ -73,7 +73,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'monstring' ) {
         $response->text = 'Endringene er lagret!';
     } catch( Exception $e ) {
         $response->success = false;
-        $response->text = 'Kunne ikke lagre. Systemet sa da: '. $e->getMessage();
+        $response->text = 'Kunne ikke lagre. Systemet sa: '. $e->getMessage();
     }
     $TWIGdata['melding'] = $response;
 
