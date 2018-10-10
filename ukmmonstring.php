@@ -90,13 +90,19 @@ function UKMMonstring() {
 	require_once('UKM/innslag_typer.class.php');
     require_once('UKM/monstring.class.php');
     $monstring = new monstring_v2( get_option('pl_id') );
+	$TWIGdata = [];
 
-	if( date('y') > 6 && (int)$monstring->getSesong() <= (int)date('Y') ) {
-		echo TWIG('vent-til-ny-sesong.html.twig', [], dirname(__FILE__));
+	if( !is_super_admin() && date('y') > 6 && (int)$monstring->getSesong() <= (int)date('Y') ) {
+		echo TWIG('vent-til-ny-sesong.html.twig', $TWIGdata, dirname(__FILE__));
 		return;
+	} elseif( date('y') > 6 && (int)$monstring->getSesong() <= (int)date('Y') ) {
+		$TWIGdata['melding'] = new stdClass();
+		$TWIGdata['melding']->success = false;
+		$TWIGdata['melding']->text = 
+			'Redigering er kun mulig fordi du er logget inn som superadmin. '.
+			'Vanlige brukere får ikke opp skjema, da de venter på at ny sesong skal settes opp.';
 	}
 
-	$TWIGdata = [];
 	$CONTROLLER = isset( $_GET['kontakt'] ) ? 'kontakt' : 'monstring';	
 	// Might modify $CONTROLLER
 	require_once('controller/monstring.save.php');

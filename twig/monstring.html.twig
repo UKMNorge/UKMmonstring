@@ -2,21 +2,29 @@
     var UKMSEASON = {{ monstring.getSesong() }}
 </script>
 
-{% if melding is defined %}
-    <div class="alert alert-{{ melding.success ? 'success' : 'danger' }}" style="margin-top: 1em;">
-        {{ melding.text }}
-    </div>
-{% endif %}
-
 {% set monstringen = monstring.getType() == 'kommune' ? 'mønstringen' : 'festivalen' %}
 
 <form method="POST">
     <input type="hidden" name="goTo" id="goTo" value="monstring" />
     <input type="hidden" name="type" value="monstring" />
     <div style="margin-left: .2em; margin-right: 1em; max-width: 768px;">
+
+    {% if melding is defined %}
+        <div class="alert alert-{{ melding.success ? 'success' : 'danger' }}" style="margin-top: 1em;">
+            {{ melding.text }}
+        </div>
+    {% endif %}
+
         <div class="row">
             <div class="col-12 col-sm-12">
-                <h2>{{ monstring.getType() == 'kommune' ? 'UKM '}}{{ monstring.getNavn() }}</h2>
+                <h2>
+                    {{ monstring.getType() == 'kommune' ? 'UKM '}}{{ monstring.getNavn() }}
+                    {% if overrideWait %}
+                        <small class="text-alert">
+                            Redigering er kun mulig fordi du er logget inn som superadmin.
+                        </small>
+                    {% endif %}
+                </h2>
                 <p class="small muted">
                     Ønsker du å endre navn på {{ monstringen }}
                     kan du 
