@@ -1,10 +1,17 @@
 <script type="text/javascript">
 	UKMSEASON = {{season}};
 </script>
-<h2>Registrer mønstring er ikke klart </h2>
 
-<p class="lead">
-	Systemet er ikke gjort klart for registrering av {{season+1}}-sesongen enda. Så fort systemet er klart, sender UKM Norge ut nye passord til alle.
-</p>
+<div style="margin-left: .2em; margin-right: 1em; max-width: 768px;">
+	<div class="row">
+		<div class="col-12">
+			<h2>Registrer mønstring er ikke klar</h2>
 
-<div class="clearfix"></div>
+			<p class="lead">
+				Systemet er ikke gjort klart for registrering av {{ now|date('Y')+1}}-sesongen enda. Så fort systemet er klart, sender UKM Norge ut nye passord til alle.
+			</p>
+
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>

@@ -10,7 +10,7 @@ $TWIGdata['season'] = $season;
 
 if( isset( $_GET['avlys'] ) && is_numeric( $_GET['avlys'] ) ) {
 	// Kalkuler innslag som mister mønstringen sin
-	$monstring = new write_monstring( $_GET['avlys'] );	
+	$monstring = new monstring_v2( $_GET['avlys'] );	
 	$init = false;
 	try {
 		$pavirkede = $monstring->getInnslag()->getAntall();

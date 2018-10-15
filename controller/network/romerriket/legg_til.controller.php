@@ -10,7 +10,7 @@ require_once('UKM/write_wp_blog.class.php');
 **/
 if( isset( $_GET['pl_id'] ) && isset( $_GET['k_id'] ) ) {
 	$kommune = new kommune( $_GET['k_id'] );
-	$monstring = new write_monstring( $_GET['pl_id'] );	
+	$monstring = new monstring_v2( $_GET['pl_id'] );	
 	$rapport = new stdClass();
 
 	try {
@@ -127,12 +127,12 @@ if( isset( $_GET['pl_id'] ) && isset( $_GET['k_id'] ) ) {
 				$rapport->from->bruker = write_wp_blog::leggTilKommunebrukerTilBlogg( $kommune, $rapport->from->blog_id );
 				
 				// Fjern kommunen fra mønstringen
-				$monstring->leggTilKommune( $kommune );
+				$monstring->getKommuner()->leggTil( $kommune );
 				
 				// Oppdater mønstringens navn og path
 				$monstring->setNavn( $rapport->to->navn );
 				$monstring->setPath( $rapport->to->path );
-				$monstring->save();
+				write_monstring::save( $monstring );
 				// Oppdater fra-bloggen (fellesmønstringen) så den stemmer med mønstringsobjektet kommunen forlater
 				write_wp_blog::updateBlogFromMonstring( $monstring, $rapport->from->path );
 
