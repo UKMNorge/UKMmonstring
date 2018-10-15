@@ -113,7 +113,12 @@ function UKMMonstring() {
 
 // DASHBOARD MESSAGE Legg til varsel på forsiden dersom mønstringen ikke er registrert.
 function UKMmonstring_messages( $MESSAGES ) {
-	$monstring = new monstring_v2( get_option('pl_id') );
+	$pl_id = get_option('pl_id');
+	if( !is_numeric( $pl_id ) ) {
+		return $MESSAGES;
+	}
+
+	$monstring = new monstring_v2( $pl_id );
 
 	if(!$monstring->erRegistrert()) {
 		$MESSAGES[] = array('level' 	=> 'alert-error',
