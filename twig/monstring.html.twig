@@ -28,8 +28,17 @@
                 <p class="small muted">
                     Ønsker du å endre navn på {{ monstringen }}
                     kan du 
-                    <a href="mailto:support@ukm.no?subject=Nytt navn PL{{ monstring.getID() }}">sende en e-post til support@ukm.no</a>
+                    <a href="mailto:support@ukm.no?subject=Nytt navn på {{ monstring.getLink() }}">sende en e-post til support@ukm.no</a>
                 </p>
+
+                {% if is_superadmin %}
+                    <div class="form-group">
+                        <label>Navn på mønstringen</label>
+                        <input type="text" class="form-control form-control-lg" name="navn" value="{{ monstring.getNavn() }}" />
+                        <p class="help text muted">OBS: er kun tilgjengelig for superadmin</p>
+                    </div>
+                {% endif %}
+
 
                 <div class="form-group">
                     <label>Hvor skal {{ monstringen }} være?</label>

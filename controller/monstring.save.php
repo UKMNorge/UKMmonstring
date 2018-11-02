@@ -47,6 +47,13 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'monstring' ) {
         $frist2 = DateTime::createFromFormat('d.m.Y-H:i:s', $_POST['frist_2'].'-08:00:00');
     }
 
+    if( isset($_POST['navn'] ) ) {
+        $monstring->setNavn( $_POST['navn'] );
+        global $blog_id;
+        update_option( 'blogname', $_POST['navn']);
+        update_option('blogdescription', ($monstring->getType() == 'fylke' ? '' : 'UKM ') . $_POST['navn']);
+    }
+
     $monstring->setSted( $_POST['sted'] );
     $monstring->setStart( $start->getTimestamp() );
     $monstring->setStop( $stop->getTimestamp() );

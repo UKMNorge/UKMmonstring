@@ -9,6 +9,8 @@ $monstring = new monstring_v2( get_option('pl_id') );
 $TWIGdata['monstring'] = $monstring;
 $TWIGdata['innslag_typer'] = innslag_typer::getAllTyper();
 
+$TWIGdata['is_superadmin'] = is_super_admin();
+
 if( $monstring->getType() == 'land' ) {
     foreach( UKMMonstring_sitemeta_storage() as $key ) {
         $TWIGdata[ $key ] = get_site_option( 'UKMFvideresending_'.$key.'_'.$monstring->getSesong() );
