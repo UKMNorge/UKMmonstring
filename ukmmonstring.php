@@ -237,6 +237,11 @@ function UKMmonstring_network_admin_rome_trekk_ut() {
 	return UKMmonstring_network_admin( 'romerriket' );
 }
 
+function UKMmonstring_network_admin_undersider() {
+	$_GET['action'] = isset($_GET['action']) ? $_GET['action'] : 'undersider';
+	return UKMmonstring_network_admin('wordpress');
+}
+
 function UKMmonstring_network_admin( $page='' ) {
 	define('PLUGIN_DIR', dirname( __FILE__ ).'/' );
 	$TWIGdata = ['UKM_HOSTNAME' => UKM_HOSTNAME];
@@ -284,6 +289,7 @@ function UKMmonstring_network_menu() {
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Legg til kommune', 'Legg til kommune', 'superadmin', 'UKMmonstring_network_admin_rome_legg_til', 'UKMmonstring_network_admin_rome_legg_til' );
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Trekk ut kommune', 'Trekk ut kommune', 'superadmin', 'UKMmonstring_network_admin_rome_trekk_ut', 'UKMmonstring_network_admin_rome_trekk_ut' );
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Opprett sesong', 'Opprett sesong', 'superadmin', 'UKMmonstring_network_admin_ny_sesong', 'UKMmonstring_network_admin_ny_sesong' );
+	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Kontroller undersider', 'Kontroller undersider', 'superadmin', 'UKMmonstring_network_admin_undersider', 'UKMmonstring_network_admin_undersider' );
 
 
 	add_action( 'admin_print_styles-' . $page, 	'UKMmonstring_network_script' );
