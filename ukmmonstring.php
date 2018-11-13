@@ -266,19 +266,6 @@ function UKMmonstring_network_messages( $messages ) {
 		);
 	}
 	
-	// I sesong, sjekk antall uregistrerte mønstringer
-	if( in_array( (int)date('m'), array(11,12,1,2) ) ) {
-		require_once('UKM/monstringer.class.php');
-		$monstringer = new monstringer( get_site_option('season') );
-		if( 15 < $monstringer->antall_uregistrerte() ) {
-			$messages[] = array(
-				'level' 	=> 'alert-warning',
-				'module'	=> 'System',
-				'header'	=> 'Det er '.$monstringer->antall_uregistrerte() .' uregistrerte mønstringer ',
-				'link'		=> 'admin.php?page=UKMrapport_admin&network=monstringer_uregistrert'
-			);
-		}
-	}
 	return $messages;
 }
 
