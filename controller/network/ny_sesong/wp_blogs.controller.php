@@ -134,7 +134,7 @@ if( isset( $_GET['start'] ) && is_numeric( $_GET['start'] ) ) {
 			if( $fylke_urlname ) {
 				foreach( $fylkesbrukere[ $fylke_urlname ] as $username => $email ) {
 					$bruker = wp_UKM_user::getWPUser( $username, 'username' );
-					if( $bruker->exists() ) {
+					if( $bruker !== false && $bruker->exists() ) {
 						update_user_meta( $bruker->ID, 'primary_blog', $blog_id);
 						$rapport->brukere[] = array(
 							'success'	=> true,
