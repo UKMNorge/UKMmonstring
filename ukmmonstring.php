@@ -92,10 +92,10 @@ function UKMMonstring() {
     $monstring = new monstring_v2( get_option('pl_id') );
 	$TWIGdata = [];
 
-	if( !is_super_admin() && date('y') > 6 && (int)$monstring->getSesong() <= (int)date('Y') ) {
+	if( !is_super_admin() && date('m') > 6 && (int)$monstring->getSesong() <= (int)date('Y') ) {
 		echo TWIG('vent-til-ny-sesong.html.twig', $TWIGdata, dirname(__FILE__));
 		return;
-	} elseif( date('y') > 6 && (int)$monstring->getSesong() <= (int)date('Y') ) {
+	} elseif( date('m') > 6 && (int)$monstring->getSesong() <= (int)date('Y') ) {
 		$TWIGdata['melding'] = new stdClass();
 		$TWIGdata['melding']->success = false;
 		$TWIGdata['melding']->text = 
