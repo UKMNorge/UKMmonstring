@@ -26,6 +26,22 @@ jQuery(document).ready(function(){
     jQuery.datepicker.setDefaults(jQuery.datepicker.regional['no']);
 });
 
+jQuery(document).ready( function(){
+    jQuery( "#kontaktpersoner" ).sortable(
+        {
+            update: function(event, ui) { 
+                jQuery.post(ajaxurl,
+                    {
+                        'action': 'UKMmonstring_save_kontaktpersoner',
+                        'order': jQuery('#kontaktpersoner').sortable('toArray')
+                    }
+                );
+            }
+        }
+    );
+});
+//jQuery( "#kontaktpersoner" ).disableSelection();
+
 jQuery(document).on('click', ".kontaktperson a.delete", function(e){
 	e.preventDefault();
 	var result = confirm('Sikker på at du vil slette denne kontaktpersonen?');
@@ -35,11 +51,12 @@ jQuery(document).on('click', ".kontaktperson a.delete", function(e){
 	return false;
 });
 
+/*
 jQuery(document).on('click', ".kontaktperson:not(a.delete)", function(){
 	jQuery('#goTo').val( jQuery(this).attr('data-goTo') );
 	jQuery('#formSubmit').click();
 });
-
+*/
 
 jQuery(document).on('click', '#formSubmit', function(){
 	jQuery('#formSubmit').removeClass('btn-success').addClass('btn-primary').html('Lagrer...');

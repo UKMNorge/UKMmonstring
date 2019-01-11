@@ -234,9 +234,9 @@
             <div class="col-12 col-sm-12">
                 <h3>Kontaktpersoner</h3>
 
-                <ol class="list-group">
+                <ol class="list-group" id="kontaktpersoner">
                     {% for kontakt in monstring.getKontaktpersoner() %}
-                        <li class="list-group-item kontaktperson" data-goTo="{{ kontakt.getId() }}">
+                        <li class="list-group-item kontaktperson" data-goTo="{{ kontakt.getId() }}" id="{{ kontakt.getId() }}">
                             <div class="float-right pull-right">
                                 <a href="?page={{GET('page')}}&kontakt={{ kontakt.getId() }}" class="btn btn-xs btn-primary">rediger</a>
                                 {% if not kontakt.erLast() %}

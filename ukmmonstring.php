@@ -13,7 +13,8 @@ Author URI: http://www.ukm-norge.no
  */
 if(is_admin()) {
 	if( in_array( get_option('site_type'), array('kommune','fylke','land')) ) {
-		add_action('UKM_admin_menu', 'UKMMonstring_menu');
+        add_action('UKM_admin_menu', 'UKMMonstring_menu');
+        add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
 	}
 	if(get_option('site_type') == 'fylke') {
 		add_action('UKM_admin_menu', 'UKMmonstringer_menu',100);
@@ -131,7 +132,10 @@ function UKMmonstring_messages( $MESSAGES ) {
 	return $MESSAGES;
 }
 
-
+function UKMmonstring_save_kontaktpersoner() {
+    require_once('ajax/order.save.php');
+	die();
+}
 
 
 /**
