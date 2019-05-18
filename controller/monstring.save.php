@@ -61,7 +61,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'monstring' ) {
     $monstring->setFrist2( $frist2->getTimestamp() );
 
     $monstring->getInnslagtyper()->getAll(); // laster de inn
-    foreach( ['konferansier','nettredaksjon','arrangor','matkultur'] as $tilbud ) {
+    foreach( ['konferansier','nettredaksjon','arrangor','matkultur','ressurs'] as $tilbud ) {
         if( !isset( $_POST['tilbud_'. $tilbud] ) ) {
             try {
                 $monstring->getInnslagtyper()->fjern( innslag_typer::getByName($tilbud) );
