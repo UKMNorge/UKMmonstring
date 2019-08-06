@@ -13,11 +13,11 @@ Author URI: http://www.ukm-norge.no
  */
 if(is_admin()) {
 	if( in_array( get_option('site_type'), array('kommune','fylke','land')) ) {
-        add_action('UKM_admin_menu', 'UKMMonstring_menu');
+        add_action('admin_menu', 'UKMMonstring_menu');
         add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
 	}
 	if(get_option('site_type') == 'fylke') {
-		add_action('UKM_admin_menu', 'UKMmonstringer_menu',100);
+		add_action('admin_menu', 'UKMmonstringer_menu',100);
 	}
 	
 	// Kun gjør dette dersom vi er i november, slutt ved nyttår
@@ -34,31 +34,16 @@ if(is_admin()) {
 
 // MENY
 function UKMMonstring_menu() {
-	global $UKMN;
-	$name = get_option('site_type') == 'fylke' ? 'Min m&oslash;nstring' : 'M&oslash;nstring';
-	UKM_add_menu_page(
-		'monstring', 
-		$name,
-		$name, 
+	$page = add_menu_page(
+		'Arrangmentet',
+		'Arrangementet', 
 		'editor', 
+		'UKMmonstring', 
 		'UKMMonstring', 
-		'UKMMonstring', 
-		'//ico.ukm.no/hus-menu.png'
-		,1
+		'//ico.ukm.no/settings-menu.png',
+		4
 	);
-	
-	if(get_option('site_type') == 'fylke' || get_option('site_type') == 'kommune') {
-		UKM_add_submenu_page(
-			'UKMMonstring', 
-			"Din forside", 
-			"Din forside", 
-			'editor', 
-			'UKMnettside_info', 
-			'UKMnettside_info'
-		);
-	}
-	
-	UKM_add_scripts_and_styles( 'UKMMonstring', 'UKMMonstring_script' );
+	add_action( 'admin_print_styles-' . $page, 'UKMMonstring_script' );
 }
 
 // SCRIPTS AND STYLES
@@ -86,7 +71,7 @@ function UKMMonstring_sitemeta_storage() {
 	];
 }
 
-// GUI MØNSTRING
+// GUI MØNSTRING 
 function UKMMonstring() {
 	require_once('UKM/innslag_typer.class.php');
     require_once('UKM/monstring.class.php');
