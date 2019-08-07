@@ -40,7 +40,7 @@ function UKMMonstring_menu() {
 		'editor', 
 		'UKMmonstring', 
 		'UKMMonstring', 
-		'//ico.ukm.no/settings-menu.png',
+		'dashicons-buddicons-groups',#'//ico.ukm.no/settings-menu.png',
 		4
 	);
 	add_action( 'admin_print_styles-' . $page, 'UKMMonstring_script' );
@@ -259,7 +259,15 @@ function UKMmonstring_network_messages( $messages ) {
 }
 
 function UKMmonstring_network_menu() {
-	$page = add_menu_page('Mønstringer', 'Mønstringer', 'superadmin', 'UKMmonstring_network_admin','UKMmonstring_network_admin', '//ico.ukm.no/hus-menu.png',23);
+	$page = add_menu_page(
+		'Mønstringer',
+		'Mønstringer',
+		'superadmin',
+		'UKMmonstring_network_admin',
+		'UKMmonstring_network_admin',
+		'dashicons-buddicons-groups',#//ico.ukm.no/hus-menu.png',
+		23
+	);
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Opprett mønstring', 'Opprett mønstring', 'superadmin', 'UKMmonstring_network_admin_rome_opprett', 'UKMmonstring_network_admin_rome_opprett' );
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Avlys mønstring', 'Avlys mønstring', 'superadmin', 'UKMmonstring_network_admin_rome_avlys', 'UKMmonstring_network_admin_rome_avlys' );
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Legg til kommune', 'Legg til kommune', 'superadmin', 'UKMmonstring_network_admin_rome_legg_til', 'UKMmonstring_network_admin_rome_legg_til' );
@@ -267,6 +275,7 @@ function UKMmonstring_network_menu() {
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Opprett sesong', 'Opprett sesong', 'superadmin', 'UKMmonstring_network_admin_ny_sesong', 'UKMmonstring_network_admin_ny_sesong' );
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Kontroller undersider', 'Kontroller undersider', 'superadmin', 'UKMmonstring_network_admin_undersider', 'UKMmonstring_network_admin_undersider' );
 
+	$subpages[] = add_submenu_page( 'index.php', 'Administratorer', 'Administratorer', 'superadmin', 'UKMmonstring_admins');
 
 	add_action( 'admin_print_styles-' . $page, 	'UKMmonstring_network_script' );
 	foreach( $subpages as $page ) {
