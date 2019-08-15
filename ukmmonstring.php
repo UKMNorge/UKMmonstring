@@ -275,8 +275,6 @@ function UKMmonstring_network_menu() {
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Opprett sesong', 'Opprett sesong', 'superadmin', 'UKMmonstring_network_admin_ny_sesong', 'UKMmonstring_network_admin_ny_sesong' );
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Kontroller undersider', 'Kontroller undersider', 'superadmin', 'UKMmonstring_network_admin_undersider', 'UKMmonstring_network_admin_undersider' );
 
-	$subpages[] = add_submenu_page( 'index.php', 'Administratorer', 'Administratorer', 'superadmin', 'UKMmonstring_admins');
-
 	add_action( 'admin_print_styles-' . $page, 	'UKMmonstring_network_script' );
 	foreach( $subpages as $page ) {
 		add_action( 'admin_print_styles-' . $page, 'UKMmonstring_network_script' );
