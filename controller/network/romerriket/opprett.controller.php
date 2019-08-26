@@ -27,7 +27,8 @@ if( isset( $_GET['create'] ) && is_numeric( $_GET['create'] ) ) {
 		 *
 		**/
 		$monstring = write_monstring::create(
-								'kommune',				// type
+                                'kommune',				// type
+                                $kommune->getId(),      // eier-ID
 								$season,				// sesong
 								$kommune->getNavn(),	// navn
 								$datoer,				// datoer

@@ -55,7 +55,11 @@ elseif( isset($_GET['init']) && $_GET['init'] == 'do' ) {
 		$datoer 	= new stdClass();
 		$geografi 	= new stdClass();
 		switch( $monstring_active->getType() ) {
-			case 'kommune':
+            case 'kommune':
+                $eier           = $monstring_active->getEierKommune();
+                if( empty($eier) ) {
+                    $eier = $monstring_active->getKommuner()->first()->getId();
+                }
 				$datoer->frist 	= $seasons->new->frist->lokal;
 				$geografi		= $monstring_active->getKommuner()->getAll();
 				if( !is_array( $geografi ) ) {
@@ -65,17 +69,20 @@ elseif( isset($_GET['init']) && $_GET['init'] == 'do' ) {
 					continue;
 				}
 				break;
-			case 'fylke':
+            case 'fylke':
+                $eier               = $monstring_active->getFylke()->getId();
 				$datoer->frist 		= $seasons->new->frist->fylke;
 				$geografi			= $monstring_active->getFylke();
 				break;
-			case 'land':
+            case 'land':
+                $eier               = 0;
 				$datoer->frist		= $seasons->new->frist->fylke;
 				break;
 		}
 
 		$monstring_new = write_monstring::create(
-							$monstring_active->getType(),	// type
+                            $monstring_active->getType(),	// type
+                            $eier,                          // Eier-ID
 							$seasons->new->year,			// sesong
 							$monstring_active->getNavn(),	// navn
 							$datoer,						// datoer
