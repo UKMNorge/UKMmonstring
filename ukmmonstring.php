@@ -16,9 +16,6 @@ if(is_admin()) {
         add_action('admin_menu', 'UKMMonstring_menu');
         add_action('wp_ajax_UKMmonstring_save_kontaktpersoner', 'UKMmonstring_save_kontaktpersoner');
 	}
-	if(get_option('site_type') == 'fylke') {
-		add_action('admin_menu', 'UKMmonstringer_menu',100);
-	}
 	
 	// Kun gjør dette dersom vi er i november, slutt ved nyttår
 	add_filter('UKMWPDASH_messages', 'UKMmonstring_messages');
@@ -122,16 +119,6 @@ function UKMmonstring_save_kontaktpersoner() {
 	die();
 }
 
-
-/**
- * MØNSTRINGER
- * Fylkenes oversikt over sine lokalmønstringer
- */
-function UKMmonstringer_menu() {
-	UKM_add_menu_page('resources','Lokal-mønstringer', 'Lokal-mønstringer', 'editor', 'UKMmonstringer', 'UKMmonstringer', '//ico.ukm.no/mapmarker-bubble-blue-menu.png',20);
-	UKM_add_scripts_and_styles('UKMmonstringer', 'UKMmonstringer_script' );
-}
-
 // DASHBOARD MESSAGE for fylkeskontakten. Oversikt antall uregistrerte
 function UKMmonstringer_dash( $MESSAGES ) {
 	if( get_option('site_type') != 'fylke' ) {
@@ -155,7 +142,6 @@ function UKMmonstringer_dash( $MESSAGES ) {
 	
 	if($unregistered > 0)
 		$MESSAGES[] = array(
-			'link'		=> '?page=UKMmonstringer',
 			'level' 	=> 'alert-error',
 			'header' 	=> $unregistered . ' av dine lokalmønstringer er ikke registrert!',
 			'body' 	=> 'Velg "lokalmønstringer" i menyen til venstre for å se hvilke'
@@ -168,38 +154,6 @@ function UKMmonstringer_dash( $MESSAGES ) {
 	}
 	return $MESSAGES;
 }
-
-// GUI MØNSTRINGER i fylket
-function UKMmonstringer() {
-	require_once('UKM/monstringer.class.php');
-	$TWIGdata = [];
-	$monstring = new monstring_v2( get_option('pl_id') );
-	$monstringer = stat_monstringer_v2::getAllByFylke( $monstring->getFylke(), get_option('season') );
-	
-	$emails = '';
-	foreach( $monstringer as $lokalmonstring ) {
-		foreach( $lokalmonstring->getKontaktpersoner()->getAll() as $kontakt ) {
-			$epost = $kontakt->getEpost();
-			if( !empty( $epost ) ) {
-				$emails .= $epost .';';
-			}
-		}
-	}
-	
-	$TWIGdata['monstring'] = $monstring;
-	$TWIGdata['lokalmonstringer'] = $monstringer;
-	$TWIGdata['mailtoall'] = $emails;
-	echo TWIG('monstringer.html.twig', $TWIGdata , dirname(__FILE__));
-}
-
-// SCRIPTS AND STYLES
-function UKMmonstringer_script() {
-	UKMmonstring_network_script();
-	wp_enqueue_script('UKMMonstring_script',  plugin_dir_url( __FILE__ )  . 'monstring.script.js' );
-	wp_enqueue_style( 'UKMMonstring_style', plugin_dir_url( __FILE__ ) .'monstring.style.css');
-}
-
-
 
 
 /**
