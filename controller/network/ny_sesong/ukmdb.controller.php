@@ -52,7 +52,6 @@ elseif( isset($_GET['init']) && $_GET['init'] == 'do' ) {
 						'success' => false,
 						'monstring' => $monstring_active,
 					];
-		$datoer 	= new stdClass();
 		$geografi 	= new stdClass();
 		switch( $monstring_active->getType() ) {
             case 'kommune':
@@ -60,7 +59,7 @@ elseif( isset($_GET['init']) && $_GET['init'] == 'do' ) {
                 if( empty($eier) ) {
                     $eier = $monstring_active->getKommuner()->first()->getId();
                 }
-				$datoer->frist 	= $seasons->new->frist->lokal;
+				$frist 	        = $seasons->new->frist->lokal;
 				$geografi		= $monstring_active->getKommuner()->getAll();
 				if( !is_array( $geografi ) ) {
 					$renderData['success'] = false;
@@ -71,22 +70,31 @@ elseif( isset($_GET['init']) && $_GET['init'] == 'do' ) {
 				break;
             case 'fylke':
                 $eier               = $monstring_active->getFylke()->getId();
-				$datoer->frist 		= $seasons->new->frist->fylke;
+				$frist 		        = $seasons->new->frist->fylke;
 				$geografi			= $monstring_active->getFylke();
 				break;
             case 'land':
                 $eier               = 0;
-				$datoer->frist		= $seasons->new->frist->fylke;
+				$frist      		= $seasons->new->frist->fylke;
 				break;
 		}
 
+        $path = write_monstring::generatePath(
+            $monstring_active->getType(),
+            $geografi,
+            $seasons->new->year
+        );
 		$monstring_new = write_monstring::create(
-                            $monstring_active->getType(),	// type
-                            $eier,                          // Eier-ID
-							$seasons->new->year,			// sesong
-							$monstring_active->getNavn(),	// navn
-							$datoer,						// datoer
-							$geografi						// geografi
+                            $monstring_active->getType(),	        // Type
+                            $eier,                                  // Eier-ID
+							(int) $seasons->new->year,		        // Sesong
+							$monstring_active->getNavn(),	        // Navn
+							write_monstring::getStandardFrist(      // Påmeldingsfrist
+                                (int) $seasons->new->year, 
+                                $monstring_active->getType()
+                            ),
+                            $geografi,						        // Geografi
+                            $path
 						);
 
 		foreach( $monstring_active->getKontaktpersoner()->getAll() as $kontakt ) {

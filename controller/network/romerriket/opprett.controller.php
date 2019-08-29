@@ -18,21 +18,28 @@ if( isset( $_GET['create'] ) && is_numeric( $_GET['create'] ) ) {
 
 		// Forbered data
 		$kommune = new kommune( $_GET['create'] );
-		$datoer = new stdClass();
-		$datoer->frist = getSeasonsDataFristLokal( $season );
-	
+
 		/**
 		 *
 		 * MØNSTRING: OPPRETT OG LAGRE I DATABASE
 		 *
-		**/
+        **/
+        $path = write_monstring::generatePath(
+            'kommune',
+            [$kommune],
+            $season
+        );
 		$monstring = write_monstring::create(
-                                'kommune',				// type
-                                $kommune->getId(),      // eier-ID
-								$season,				// sesong
-								$kommune->getNavn(),	// navn
-								$datoer,				// datoer
-								array( $kommune )		// geografi
+                                'kommune',	            			// type
+                                $kommune->getId(),                  // eier-ID
+								$season,		    	    	    // sesong
+								$kommune->getNavn(),         	    // navn
+								write_monstring::getStandardFrist(  // Påmeldingsfrist
+                                    (int) $season,
+                                    'kommune'
+                                ),
+                                array( $kommune ),		            // geografi
+                                $path
 							);
 		$rapport->monstring = $monstring;
 		// Dobbeltsjekk at vi har gyldig mønstringsobjekt
