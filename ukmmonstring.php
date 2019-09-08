@@ -21,7 +21,6 @@ if(is_admin()) {
 	add_filter('UKMWPDASH_messages', 'UKMmonstring_messages');
 		
 	add_action('network_admin_menu', 'UKMmonstring_network_menu');
-	add_filter('UKMWPNETWDASH_messages', 'UKMmonstring_network_messages');
 }
 
 /**
@@ -159,10 +158,6 @@ function UKMmonstringer_dash( $MESSAGES ) {
 /**
  *	NETWORK ADMIN FUNCTIONS
 **/
-function UKMmonstring_network_admin_ny_sesong() {
-	return UKMmonstring_network_admin( 'ny_sesong' );
-}
-
 function UKMmonstring_network_admin_rome_opprett() {
 	$_GET['action'] = 'opprett';
 	return UKMmonstring_network_admin( 'romerriket' );
@@ -198,19 +193,6 @@ function UKMmonstring_network_admin( $page='' ) {
 	echo TWIG( $folder . $VIEW .'.html.twig', $TWIGdata, dirname(__FILE__), true);
 }
 
-function UKMmonstring_network_messages( $messages ) {
-	// Etter juli må ny sesong settes opp
-	if( 7 < (int)date('m') && get_site_option('season') == date('Y') ) {
-		$messages[] = array(
-			'level' 	=> 'alert-danger',
-			'module'	=> 'System',
-			'header'	=> 'NY SESONG MÅ SETTES OPP!',
-			'link'		=> 'admin.php?page=UKMsystemtools_ny_sesong'
-		);
-	}
-	
-	return $messages;
-}
 
 function UKMmonstring_network_menu() {
 	$page = add_menu_page(
@@ -226,7 +208,6 @@ function UKMmonstring_network_menu() {
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Avlys mønstring', 'Avlys mønstring', 'superadmin', 'UKMmonstring_network_admin_rome_avlys', 'UKMmonstring_network_admin_rome_avlys' );
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Legg til kommune', 'Legg til kommune', 'superadmin', 'UKMmonstring_network_admin_rome_legg_til', 'UKMmonstring_network_admin_rome_legg_til' );
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Trekk ut kommune', 'Trekk ut kommune', 'superadmin', 'UKMmonstring_network_admin_rome_trekk_ut', 'UKMmonstring_network_admin_rome_trekk_ut' );
-	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Opprett sesong', 'Opprett sesong', 'superadmin', 'UKMmonstring_network_admin_ny_sesong', 'UKMmonstring_network_admin_ny_sesong' );
 	$subpages[] = add_submenu_page( 'UKMmonstring_network_admin', 'Kontroller undersider', 'Kontroller undersider', 'superadmin', 'UKMmonstring_network_admin_undersider', 'UKMmonstring_network_admin_undersider' );
 
 	add_action( 'admin_print_styles-' . $page, 	'UKMmonstring_network_script' );

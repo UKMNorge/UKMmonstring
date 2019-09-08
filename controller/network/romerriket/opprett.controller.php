@@ -34,10 +34,6 @@ if( isset( $_GET['create'] ) && is_numeric( $_GET['create'] ) ) {
                                 $kommune->getId(),                  // eier-ID
 								$season,		    	    	    // sesong
 								$kommune->getNavn(),         	    // navn
-								write_monstring::getStandardFrist(  // Påmeldingsfrist
-                                    (int) $season,
-                                    'kommune'
-                                ),
                                 array( $kommune ),		            // geografi
                                 $path
 							);
