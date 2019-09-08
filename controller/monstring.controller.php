@@ -16,3 +16,5 @@ if( $monstring->getType() == 'land' ) {
         $TWIGdata[ $key ] = get_site_option( 'UKMFvideresending_'.$key.'_'.$monstring->getSesong() );
     }
 }
+
+$TWIGdata['GOOGLE_API_KEY'] = GOOGLE_API_KEY;

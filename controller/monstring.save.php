@@ -1,5 +1,8 @@
 
 <?php
+
+use UKMNorge\Google\StaticMap;
+
 date_default_timezone_set('Europe/Oslo');
 
 require_once('UKM/logger.class.php');
@@ -53,6 +56,10 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'monstring' ) {
         update_option( 'blogname', $_POST['navn']);
         update_option('blogdescription', ($monstring->getType() == 'fylke' ? '' : 'UKM ') . $_POST['navn']);
     }
+
+    // Google-map
+    $map = StaticMap::fromPOST('location');
+    $monstring->setGoogleMapData( $map->toJSON() );
 
     $monstring->setSted( $_POST['sted'] );
     $monstring->setStart( $start->getTimestamp() );

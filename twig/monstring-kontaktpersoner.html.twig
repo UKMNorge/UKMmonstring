@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <h4>Kontaktpersoner</h4>
+
+        <ol class="list-group" id="kontaktpersoner">
+            {% for kontakt in monstring.getKontaktpersoner() %}
+                <li class="list-group-item kontaktperson" data-goto="{{ kontakt.getId() }}" id="{{ kontakt.getId() }}">
+                    <div class="float-right pull-right">
+                        <a href="?page={{GET('page')}}&kontakt={{ kontakt.getId() }}" class="btn btn-xs btn-primary">rediger</a>
+                        {% if not kontakt.erLast() %}
+                            <a href="?page={{GET('page')}}&slett_kontakt={{ kontakt.getId() }}" class="btn btn-xs btn-danger delete">fjern</a>
+                        {% endif %}
+                    </div>
+                    <img src="{{ kontakt.getBilde() }}" width="50" style="margin-right: 1em; min-height: 50px;" class="img img-circle pull-left"/>
+                    <b>{{ kontakt.getNavn() }}</b>
+                    {{ kontakt.getTittel() }}
+                    <br/>
+                    <small>
+                        <a href="mailto:{{ kontakt.getEpost() }}">{{ kontakt.getEpost() }}</a>
+                        <br/>
+                        <span class="UKMSMS">{{ kontakt.getTelefon() }}</span>
+                    </small>
+                    <div class="clearfix"></div>
+                </li>
+            {% endfor %}
+
+
+            <li class="list-group-item kontaktperson" data-goto="new">
+                {% if monstring.getKontaktpersoner().getAntall() == 0 %}
+                    Du har ingen kontaktpersoner.
+                    <a href="?page={{GET('page')}}&kontakt=new">
+                        Start med å legge til den første
+                    </a>
+                {% else %}
+                    <a href="?page={{GET('page')}}&kontakt=new">
+                        Legg til en ny kontaktperson
+                    </a>
+                {% endif %}
+            </li>
+        </ol>
+    </div>
+</div>

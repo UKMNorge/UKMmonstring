@@ -1,0 +1,112 @@
+<div class="row mt-5">
+    <div class="col-12 col-sm-12">
+        <h4>Videresending</h4>
+    </div>
+
+    <div class="col-12 col-sm-6">
+        <label>Når åpner videresendingen?</label>
+        <div class="input-group" style="margin-bottom: 1em;">
+            <input class="datepicker_{{ monstring.getType() == 'fylke' ? 'fylke_forward' : 'land' }} form-control" type="text" name="frist_2" value="{{ monstring.getFrist2()|dato('d.m.Y') }}"/>
+            <span class="input-group-addon">kl. 08:00</span>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6">
+        <label>Når stenger videresendingen?</label>
+        <div class="input-group" style="margin-bottom: 1em;">
+            <input class="datepicker_{{ monstring.getType() }} form-control" type="text" name="frist_1" value="{{ monstring.getFrist1()|dato('d.m.Y') }}"/>
+            <span class="input-group-addon">kl. 23:59</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <label>Informasjonstekst som vises til de som videresender</label>
+
+        <ol class="list-group">
+            <li class="list-group-item">
+                {% if infotekst is not defined %}
+                    Her kan du skrive inn kvoter, eller andre viktige regler for videresending til dette arrangementet.
+                {#% else %#}
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                {% endif %}
+                <br/>
+                <a href="https://codepen.io/valerie-roske/pen/MyZoGx">Collapsible</a>
+            </li>
+        </ol>
+
+        <p style="margin-top: -1em;" class="pull-right">
+            <a href="?page={{GET('page')}}" class="btn btn-xs btn-primary">rediger informasjonstekst</a>
+        </p>
+    </div>
+
+
+    <div class="col-12 col-sm-12">
+        <label>Skal de som videresender også fylle ut informasjonsskjema?</label>
+
+        <div>
+            <div class="btn-group radioButtons" data-name="sammen">
+                <button type="button" class="btn btn-default" value="yes">
+                    &nbsp; Ja &nbsp;</button>
+                <button type="button" class="btn btn-default selected" value="no">
+                    &nbsp; Nei &nbsp;</button>
+            </div>
+        </div>
+        <p>
+            {% if monstring.harSkjema() %}
+                Husk å
+                <a href="?page=UKMVideresendingsskjema">oppdatere videresendingsskjemaet</a>
+                du ber dine lokalkontakter om å fylle ut før videresendingen åpner.
+            {% else %}
+                <a href="?page=UKMVideresendingsskjema">Du kan opprette et spørreskjema</a>
+                som lokalkontakene dine må fylle ut ved videresending.
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-12 col-sm-8">
+        {% if monstring.getVideresending().getAvsendere()|length > 0 %}
+            <label>
+                Arrangement som kan videresende til dette arrangementet
+            </label>
+        {% endif %}
+        <ol class="list-group">
+            {% for avsender in monstring.getVideresending().getAvsendere() %}
+                <li class="list-group-item">
+                    <div class="pull-right">
+                        <a href="?page={{GET('page')}}" class="btn btn-xs btn-danger delete">fjern tillatelse</a>
+                    </div>
+                    {{ avsender.getNavn()}}
+                    <br/>
+                    <small>
+                        {% if avsender.erRegistrert() %}
+                            {{ avsender.getStart()|dato('j. M y') }}
+                        {% else %}
+                            dato ikke satt
+                        {% endif %}
+                        |
+                        {{ avsender.getEier().getNavn() }}
+                        |
+                                                0 innslag
+                                                |
+                                                0 personer
+                    </small>
+                </li>
+            {% else %}
+                <li class="list-group-item text-danger">
+                    Det er ingen som kan videresende til dette arrangementet,
+                                        som betyr at det per nå ikke kan få påmeldte.
+                </li>
+            {% endfor %}
+            <li class="list-group-item">
+                <a href="#">Gi arrangement tillatelse til å sende innslag hit</a>
+            </li>
+        </ol>
+    </div>
+</div>
