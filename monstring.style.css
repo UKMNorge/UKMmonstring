@@ -1,132 +1,35 @@
-#wpfooter {
-	position: relative !important;
-}
-div.ui-datepicker, div.ui-datepicker table{
-}
+/* BASICS */
 
-div.datetime input.datepicker {
-	height: 28px;
-	width: 55%;
-}
-
-#kontaktpersoner li > img {
- float: right;
- margin-right: 25px;
-}
-
-#kontaktpersoner li div.name {
- width: 200px;
- float: left;
-}
-#kontaktpersoner li div.data {
- width: 230px;
- float: left;
-}
-#kontaktpersoner li div.actions {
- width: 80px;
- float: left;
-}
-#kontaktpersoner li div.actions div.action {
-width: 40px;
-font-size: 11px;
-height: 40px;
-text-align:center;
- float: left;
-}
-#kontaktpersoner li div.actions div.action img{
- width: 20px;
+@media(min-width: 768px) {
+    #mapContainer {
+        float: right;
+    }
 }
 
 
-#kontaktpersoner li {
-clear: both;
-}
-#kontaktpersoner .image {
- width: 80px;
- float: left;
-}
-#kontaktpersoner .image img {
- max-height: 70px;
- max-width: 77px;
+/* KONTAKTPERSON */
+
+#kontaktpersoner_compact .kontaktperson>img,
+#kontaktpersoner_compact .kontaktperson>.dashicons {
+    margin-bottom: 0.4rem;
 }
 
-div.datetime div.hourmin {
-	width: 40%;
-	float: right;
-}
-div.datetime div.hourmin select {
- width: 40%;
-}
-
-.row-fluid {
-	margin-bottom: 25px;
+.kontaktperson>.dashicons {
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    border-radius: 50%;
+    line-height: 1.5;
+    font-size: 2.5em;
+    color: #868686;
 }
 
-fieldset.ukmfieldset {
-	width: 750px;
+#kontaktpersoner_compact .kontaktperson {
+    text-align: center;
+    margin-bottom: 1.5em;
 }
 
-
-ol#tilbud label {
-font-weight: normal;
-}
-ol#tilbud .title {
- width: 180px;
-}
-ol#tilbud li div {
- float: left;
- width: 40px;
-}
-ol#tilbud > li {
- clear: both;
-}
-
-.UKMmonstringer .container_width {
-	width: 790px;
-}
-
-.UKMmonstringer #buttoncontainer {
- margin-bottom: 10px;
-}
-.UKMmonstringer #buttoncontainer a {
- margin-left: 10px;
-}
-.UKMmonstringer .monstring {
- padding: 5px 5px 5px 10px;
-}
-.UKMmonstringer .starts {
- font-weight: bold;
-font-size: 14px;
-padding-top: 15px;
-}
-.UKMmonstringer .monstring .actions div {
-width: 60px;
-text-align: center;
-margin: 0px 10px 0px -5px;
-line-height: 10px;
-}
-.UKMmonstringer .monstring .actions div img {
- width: 20px;
- margin-bottom: 3px;
-}
-
-.UKMmonstringer .monstring h2 {
- font-size: 24px;
- margin: 3px 0px 0px 140px;
-}
-.UKMmonstringer .monstring h3 {
- font-size: 18px;
- margin: 3px;
-}
-
-.UKMmonstringer .details {
- margin-left: 130px;
-}
-.UKMmonstringer .details table img {
- width: 35px;
-}
-
-
-.clickable {
-	cursor: pointer;
+#kontaktpersoner_edit .dashicons {
+    float: left;
+    margin-right: .5em;
 }

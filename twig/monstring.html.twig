@@ -1,150 +1,37 @@
-<style>
-    .form-control.input-lg {
-        height: 46px;
-        padding: 10px 16px;
-        font-size: 18px;
-        line-height: 1.33;
-        border-radius: 6px;
-        font-weight: bold;
-        font-size: 2em;
-    }
-
-    @media(min-width: 768px) {
-        #mapContainer {
-            float: right;
-        }
-    }
-
-    .form-control {
-        margin-bottom: 1em;
-    }
-
-    .mt-5 {
-        margin-top: 3em;
-    }
-</style>
-
-
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key={{ GOOGLE_API_KEY }}" async defer></script>
+
+{% set monstringen = arrangement.getType() == 'kommune' ? 'mønstringen' : 'festivalen' %}
+
 <script>
-    function initMap() {
-        var autocomplete = new google.maps.places.Autocomplete(document.getElementById('searchMapInput'));
-
-        autocomplete.addListener('place_changed', function () {
-            var place = autocomplete.getPlace();
-
-            var map = 'https://maps.googleapis.com/maps/api/staticmap?center=' + place.name + ',' + place.formatted_address + '&zoom=15&size=400x300&scale=1' + '&markers=' + encodeURIComponent('icon:https://grafikk.ukm.no/profil/bobla/UKM-bobla_bla_0064.png|' + 'label:U|' + place.formatted_address);
-
-            $('#location-name').val(place.name);
-            $('#location-address').val(place.formatted_address);
-            $('#location-lat').val(place.geometry.location.lat());
-            $('#location-lon').val(place.geometry.location.lng());
-            $('#location-map').val(map);
-            $('#location-link').val(place.url);
-
-            $('#mapLink').attr('href', place.url);
-            $('#map').attr('src', map + '&key=  {{ GOOGLE_API_KEY }}');
-        });
-    }
+    $(document).on('click','a.goTo',(e)=>{
+        e.preventDefault();
+        $('#goTo').val(
+            $(e.target).attr('data-action')
+        );
+        $('#goToId').val(
+            $(e.target).attr('data-id')
+        );
+        $('#arrangementForm').submit();
+    });
 </script>
-
-{% set monstringen = monstring.getType() == 'kommune' ? 'mønstringen' : 'festivalen' %}
-
-<form method="POST">
+<div id="status"></div>
+<form method="POST" id="arrangementForm">
     <input type="hidden" name="goTo" id="goTo" value="monstring"/>
+    <input type="hidden" name="goToId" id="goToId" value="" />
     <input type="hidden" name="type" value="monstring"/>
     <div style="margin-left: .2em; margin-right: 1em; max-width: 868px;">
 
-        {% if melding is defined %}
-            <div class="alert alert-{{ melding.success ? 'success' : 'danger' }}" style="margin-top: 1em;">
-                {{ melding.text }}
-            </div>
-        {% endif %}
-
+        {% include "wp_modul.flashbag.html.twig" %}
 
         {% include "monstring-basics.html.twig" %}
         {% include "monstring-pamelding.html.twig" %}
         {% include "monstring-kontaktpersoner.html.twig" %}
         {% include "monstring-videresending.html.twig" %}
 
-
-        <div class="row">
-            {% if monstring.getType() == 'land' %}
-                <div class="col-12 col-sm-6">
-                    <div class="form-group">
-                        <label>Ordinærkvote ledere</label>
-                        <input class="form-control" type="number" name="kvote_ledere" value="{{kvote_ledere}}" placeholder="Har vanligvis vært 3"/>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6">
-                    <div class="form-group">
-                        <label>Ordinærkvote deltakere</label>
-                        <input class="form-control" type="number" name="kvote_deltakere" value="{{kvote_deltakere}}" placeholder="Har vanligvis vært 30"/>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-12">
-                    <div class="form-group">
-                        <label>URL til informasjonsbrev 1</label>
-                        <input class="form-control" type="text" name="info1" value="{{ info1 }}"/>
-                        <p class="help text-muted">
-                            Tips: du laste opp dette under menyvalget media, og kopiere vedleggs-adressen derfra.
-                        </p>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Frister for nominasjon</label>
-                        <textarea class="form-control" name="nominasjon_frister" rows="5">{{ nominasjon_frister }}</textarea>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
+        {# TA INN MØNSTRING LAND #}
 
 
-        {% if monstring.getType() == 'land' %}
-            <div class="row">
-                <div class="col-12 col-sm-12">
-                    <h3>Økonomi</h3>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-sm-4">
-                    <label>Subsidiert deltakeravgift</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">kr.</span>
-                        <input class="form-control" type="number" name="avgift_subsidiert" value="{{avgift_subsidiert}}"/>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-4">
-                    <label>Ordinær deltakeravgift</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">kr.</span>
-                        <input class="form-control" type="number" name="avgift_ordinar" value="{{avgift_ordinar}}"/>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-4">
-                    <label>Egenandel reise</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">kr.</span>
-                        <input class="form-control" type="number" name="avgift_reise" value="{{avgift_reise}}"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" style="margin-top: 1em; margin-bottom: 2em;">
-                <div class="col-12 col-sm-4">
-                    <label>Pris per døgn på Hotell UKM Norge</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">kr.</span>
-                        <input class="form-control" type="number" name="hotelldogn_pris" value="{{hotelldogn_pris}}"/>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-
-
-        <div class="row">
+        <div class="row" style="margin-top: 4em;">
             <div class="col-xs-12 col-sm-12">
                 <button type="submit" class="btn btn-success" id="formSubmit">Lagre</button>
             </div>
