@@ -33,3 +33,88 @@
     float: left;
     margin-right: .5em;
 }
+
+
+/* AVSENDER-MØNSTRINGER */
+
+#visAvsenderArrangement .label a,
+#visAvsenderArrangement .label a:hover,
+#visAvsenderArrangement .label a:visited {
+    text-decoration: none;
+}
+
+#visAvsenderArrangement .label {
+    margin-right: 0.7em;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: normal;
+    margin-bottom: .5em;
+}
+
+#visAvsenderArrangement .label .dashicons {
+    color: #fff;
+    margin-left: 0.2em;
+    margin-right: -0.20em;
+    height: 0.5em;
+    width: 1em;
+    font-size: 1.3em;
+    margin-top: 0;
+}
+
+#redigerAvsenderArrangement {
+    min-height: 60vh;
+}
+
+.avsenderListe {
+    max-height: 40vh;
+    overflow: scroll;
+}
+
+#avsendere .list-header {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.35);
+    margin-left: 3px;
+}
+
+#avsendere .form-control.input-sm {
+    height: 2.3em;
+}
+
+#avsendere .form-control.input-group-btn {
+    height: 2.3em;
+    background: #ccc;
+}
+
+
+/* SPØRRESKJEMA */
+
+.sporsmal.overskrift {
+    background: #428bca;
+    color: #fff;
+}
+
+#skjema .sporsmal.overskrift {
+    background: #f1f1f1;
+    color: #000;
+}
+
+#skjema .dashicons.action {
+    margin-top: 0.1em;
+    font-size: 2.5em;
+    height: 1em;
+    width: 1em;
+    color: #0073aa;
+    cursor: pointer;
+}
+
+#skjema .form-group {
+    margin-bottom: 0;
+}
+
+@media(min-width:768px) {
+    #skjema .form-control {
+        margin-bottom: 0;
+        min-height: 2em;
+    }
+}

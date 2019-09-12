@@ -49,7 +49,7 @@ class UKMmonstring extends Modul
     public static function meny()
     {
         $page = add_menu_page(
-            'Arrangment',
+            'Arrangement',
             'Arrangement',
             'editor',
             'UKMmonstring',
@@ -71,6 +71,7 @@ class UKMmonstring extends Modul
     public static function scripts_and_styles()
     {
         wp_enqueue_media();
+        wp_enqueue_script('TwigJS');
 
         wp_enqueue_script(
             'UKMMonstring_script',
@@ -81,6 +82,7 @@ class UKMmonstring extends Modul
             plugin_dir_url(__FILE__) . 'monstring.style.css'
         );
 
+        wp_enqueue_script('jQuery_autogrow');
         wp_enqueue_script('WPbootstrap3_js');
         wp_enqueue_style('WPbootstrap3_css');
     }

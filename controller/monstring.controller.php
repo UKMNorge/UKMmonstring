@@ -1,11 +1,15 @@
 <?php
 
 use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Arrangement\Arrangementer;
 use UKMNorge\Google\StaticMap;
+use UKMNorge\Arrangement\Load as LoadArrangement;
 
 date_default_timezone_set('Europe/Oslo');
 
+require_once('UKM/Arrangement/Load.php');
 require_once('UKM/Arrangement/Arrangement.php');
+require_once('UKM/Arrangement/Arrangementer.php');
 $arrangement = new Arrangement( get_option('pl_id') );
 
 /* LAGRE ENDRINGER */
@@ -41,10 +45,20 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                 UKMmonstring::includeActionController();
                 die();
                 break;
+            case 'skjema':
+                UKMmonstring::setAction('skjema');
+                UKMmonstring::includeActionController();
+                break;
         }
     }
 }
 
+/* DEVELOPMENT */
+/*
+echo '<pre>';var_dump($_POST);echo '</pre>';
+UKMmonstring::setAction('skjema');
+UKMmonstring::includeActionController();
+*/
 
 /* HENT INN VIEW-DATA */
 
@@ -72,4 +86,33 @@ if (!is_super_admin() && date('m') > 6 && (int) $arrangement->getSesong() <= (in
     );
 }
 
+switch( $arrangement->getType() ) {
+    case 'kommune':
+        UKMmonstring::addViewData(
+            'arrangementer_av_kommunen',
+            LoadArrangement::byEier(
+                $arrangement->getSesong(),
+                $arrangement->getKommune()
+            )->getAll()
+        );
+    case 'fylke':
+        UKMmonstring::addViewData(
+            'arrangementer_av_fylket',
+            LoadArrangement::byEier(
+                $arrangement->getSesong(),
+                $arrangement->getFylke()
+            )->getAll()
+        );
 
+        UKMmonstring::addViewData(
+            'arrangementer_i_fylket',
+            Arrangementer::filterSkipEier(
+                $arrangement->getEier(),
+                LoadArrangement::iFylke(
+                    $arrangement->getSesong(),
+                    $arrangement->getFylke()
+                )->getAll()
+            )
+        );
+    break;
+}

@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-12 col-sm-12">
                 <h2>{{ kontakt is defined ? 'Rediger '~ kontakt.getNavn() : 'Legg til kontakt' }}</h2>
+                {% include "wp_modul.flashbag.html.twig" %}
             </div>
         </div>
 

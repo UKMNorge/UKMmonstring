@@ -2,26 +2,30 @@
     <div class="col-12 col-sm-12">
         <h4 style="margin-top: 2em;">Kontaktpersoner</h4>
 
-        <div id="kontaktpersoner_compact" style="margin-top: 2em;">
-            {% for kontakt in arrangement.getKontaktpersoner() %}
-                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 kontaktperson">
-                    {% if kontakt.getBilde() is empty %}
-                        <span class="dashicons dashicons-admin-users"></span>
-                    {% else %}
-                        <img src="{{ kontakt.getBilde() }}" width="50" style="min-height: 50px;" class="img img-circle"/>
-                    {% endif %}
-                    <br/>
-                        <a href="#" class="goTo" data-action="kontakt" data-id="{{ kontakt.getId() }}">
-                        {{ kontakt.getNavn() }}
-                    </a>
-                    <br/>
-                    <small>{{ kontakt.getTelefon() }}</small>
-                </div>
-            {% endfor %}
-            <div class="clearfix"></div>
-            <p style="margin-top: 1em;" class="pull-right">
-                <a href="#" class="btn btn-xs btn-primary" id="redigerKontaktpersoner">rediger / legg til kontaktpersoner</a>
-            </p>
+        <div style="margin-top: 2em; {{ arrangement.getKontaktpersoner()|length == 0 ? 'display:none;'}}">
+            <ol class="list-group">
+                <li class="list-group-item" id="kontaktpersoner_compact">
+                    {% for kontakt in arrangement.getKontaktpersoner() %}
+                        <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 kontaktperson" id="visKontakt_{{ kontakt.getId()}}">
+                            {% if kontakt.getBilde() is empty %}
+                                <span class="dashicons dashicons-admin-users"></span>
+                            {% else %}
+                                <img src="{{ kontakt.getBilde() }}" width="50" style="min-height: 50px;" class="img img-circle"/>
+                            {% endif %}
+                            <br/>
+                            <a href="#" class="goTo" data-action="kontakt" data-id="{{ kontakt.getId() }}">
+                                {{ kontakt.getNavn() }}
+                            </a>
+                            <br/>
+                            <small>{{ kontakt.getTelefon() }}</small>
+                        </div>
+                    {% endfor %}
+                    <div class="clearfix"></div>
+                    <p style="margin-top: 1em;" class="pull-right">
+                        <a href="#" class="btn btn-xs btn-primary" id="redigerKontaktpersoner">rediger / legg til kontaktpersoner</a>
+                    </p>
+                </li>
+            </ol>
         </div>
 
         <div id="kontaktpersoner_edit" style="{{ arrangement.getKontaktpersoner().getAntall() > 0 ? 'display: none;' }}">
@@ -69,7 +73,7 @@
             <div class="clearfix"></div>
             {% if arrangement.getKontaktpersoner().getAntall() > 0 %}
                 <p class="pull-right">
-                    <a href="#" class="btn btn-xs btn-primary" id="skjulKontaktpersoner">komprimér listen</a>
+                    <a href="#" class="btn btn-xs btn-primary" id="skjulKontaktpersoner">lukk listen</a>
                 </p>
             {% endif %}
         </div>

@@ -1,11 +1,14 @@
 <?php
 
+use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Google\StaticMap;
 
 require_once('UKM/kontakt.class.php');
 require_once('UKM/write_kontakt.class.php');
 require_once('UKM/write_monstring.class.php');
 require_once('UKM/Google/StaticMap.php');
+require_once('UKM/Arrangement/Videresending/Avsender.php');
 
 $start = DateTime::createFromFormat(
     'd.m.Y-H:i',
@@ -46,10 +49,46 @@ $map = StaticMap::fromPOST('location');
 $arrangement->setGoogleMapData($map->toJSON());
 
 $arrangement->setSted($_POST['sted']);
-$arrangement->setStart($start->getTimestamp());
-$arrangement->setStop($stop->getTimestamp());
-$arrangement->setFrist1($frist1->getTimestamp());
-$arrangement->setFrist2($frist2->getTimestamp());
+// START
+if( is_bool( $start ) ) {
+    UKMmonstring::getFlashbag()->add(
+        'danger',
+        'Ugyldig starttidspunkt ble dessverre ikke lagret. Prøv igjen.'
+    );
+} else {
+    $arrangement->setStart($start->getTimestamp());
+}
+// STOP
+if( is_bool( $stop ) ) {
+    UKMmonstring::getFlashbag()->add(
+        'danger',
+        'Ugyldig stopptidspunkt ble dessverre ikke lagret. Prøv igjen.'
+    );
+} else {
+    $arrangement->setStop($stop->getTimestamp());
+}
+// FRIST 1
+if( is_bool( $frist1 ) ) {
+    UKMmonstring::getFlashbag()->add(
+        'danger',
+        $arrangement->harPamelding() ? 
+            'Ugyldig påmeldingsfrist for å vise frem noe ble dessverre ikke lagret. Prøv igjen.' :
+            'Ugyldig dato for åpning av videresending ble dessverre ikke lagret. Prøv igjen.'
+    );
+} else {
+    $arrangement->setFrist1($frist1->getTimestamp());
+}
+// FRIST 2
+if( is_bool( $frist2 ) ) {
+    UKMmonstring::getFlashbag()->add(
+        'danger',
+        $arrangement->harPamelding() ? 
+        'Ugyldig påmeldingsfrist for å bidra som noe ble dessverre ikke lagret. Prøv igjen.' :
+        'Ugyldig frist for videresending ble dessverre ikke lagret. Prøv igjen.'
+    );
+} else {
+    $arrangement->setFrist2($frist2->getTimestamp());
+}
 
 $arrangement->getInnslagtyper()->getAll(); // laster de inn
 foreach (['konferansier', 'nettredaksjon', 'arrangor', 'matkultur', 'ressurs'] as $tilbud) {
@@ -63,6 +102,19 @@ foreach (['konferansier', 'nettredaksjon', 'arrangor', 'matkultur', 'ressurs'] a
         }
     } else {
         $arrangement->getInnslagtyper()->leggTil(innslag_typer::getByName($tilbud));
+    }
+}
+
+$arrangement->setHarVideresending( $_POST['tillatVideresending'] == 'true' );
+$arrangement->setHarSkjema( $_POST['vilHaSkjema'] == 'true' );
+
+// Hvis arrangementet tar i mot videresending, lagre hvem fra
+if( $arrangement->harVideresending() ) {
+    if( isset( $_POST['avsender'] ) && is_array( $_POST['avsender'] ) ) {
+        foreach( $_POST['avsender'] as $pl_id ) {
+            $avsender = new Avsender( (Int) $pl_id, $arrangement->getId() );
+            $arrangement->getVideresending()->leggTilAvsender( $avsender );
+        }
     }
 }
 

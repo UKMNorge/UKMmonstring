@@ -19,15 +19,17 @@
 
         {% if arrangement.getType() == 'kommune' %}
             <p>
-                Mønstringen tar i mot påmelding for
+                Arrangementet tar i mot påmelding for
                 {% for kommune in arrangement.getKommuner() %}
+                    {{ kommune.getFylke().erOslo() ? ' bydel ' }}
                     {{ kommune }}
+                    {{ not kommune.getFylke().erOslo() ? ' kommune ' }}
                     {% if loop.index == arrangement.getKommuner().getAntall() - 1 %}
                         og
                         {% elseif loop.index < arrangement.getKommuner().getAntall() %},
                     {% endif %}
                 {% endfor %}.
-                                                                                                                                        Skal du legge til eller fjerne en
+                Skal du legge til eller fjerne en
                 {{ arrangement.getFylke().erOslo() ? 'bydel' : 'kommune' }}, må du
                 <a href="mailto:support@ukm.no?subject=Endre fellesmønstring">sende en e-post til support@ukm.no</a>
             </p>
@@ -35,9 +37,8 @@
     </div>
 
     <div class="col-12 col-sm-6">
-        {% if arrangement.getType() == 'kommune' %}
-            <h4>Vise frem noe</h4>
-            <label>Påmeldingsfrist</label>
+        {% if arrangement.harPamelding() %}
+            <label>Påmeldingsfrist for de som vil vise frem noe</label>
             <div class="input-group" style="margin-bottom: 1em;">
                 <input class="datepicker_kommune form-control" type="text" name="frist_1" value="{{ arrangement.getFrist1()|dato('d.m.Y') }}"/>
                 <span class="input-group-addon">kl. 23:59</span>
@@ -66,9 +67,8 @@
 
 
     <div class="col-12 col-sm-6">
-        {% if arrangement.getType() == 'kommune' %}
-            <h4>Bidra som noe</h4>
-            <label>Påmeldingsfrist</label>
+        {% if arrangement.harPamelding() %}
+            <label>Påmeldingsfrist for de som vil bidra som noe</label>
             <div class="input-group" style="margin-bottom: 1em;">
                 <input class="datepicker_kommune form-control" type="text" name="frist_2" value="{{ arrangement.getFrist2()|dato('d.m.Y') }}"/>
                 <span class="input-group-addon">kl. 23:59</span>

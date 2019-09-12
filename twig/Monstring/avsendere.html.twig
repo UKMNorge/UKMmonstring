@@ -1,0 +1,69 @@
+<div class="row" id="avsendere">
+    <div class="col-12 col-sm-12">
+        <label>
+            Arrangement som kan videresende til dette arrangementet
+        </label>
+    </div>
+    <div class="col-12 col-sm-12">
+        <ol class="list-group">
+            <li class="list-group-item" id="visAvsenderArrangement">
+                {% for avsender in arrangement.getVideresending().getAvsendere() %}
+                    <span class="avsender label label-primary" id="visAvsenderArrangement_{{ avsender.getId() }}">
+                        {{ avsender.getNavn() }}
+                    </span>
+                {% else %}
+                    <div id="ingenAvsendere">
+                        Det er ingen arrangement som kan videresende til dette arrangementet.
+                        {% if not arrangement.harPamelding() %}
+                            Før du har det er det ikke mulig å få påmeldte til dette arrangementet, 
+                                                da det kun tar i mot videresendinger, og ikke påmeldinger.
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </li>
+        </ol>
+        <p style="margin-top: -1em;" class="pull-right">
+            <a href="#" class="btn btn-xs btn-primary" id="visRedigerAvsenderArrangement" data-skjul="lukk listen">rediger / legg til arrangement</a>
+        </p>
+    </div>
+
+    <div id="redigerAvsenderArrangement" style="display:none;">
+        <div class="col-12 col-sm-12" style="margin-top: .4em; margin-bottom: 1.4em;">
+            <div class="input-group">
+                <input type="text" class="form-control input-sm" placeholder="Søk etter arrangement..." id="filterArrangement">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-sm" type="button">
+                        <span class="dashicons dashicons-search"></span>
+                    </button>
+                </span>
+            </div>
+            <p class="text-muted">
+                Det kan være at du må scrolle i listene for å finne arrangementet du letter etter. Vi anbefaler at du søker, da det er mye raskere.
+            </p>
+        </div>
+
+        {% if arrangement.getEierType() == 'kommune' %}
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="list-header">I
+                    {{ arrangement.getFylke().erOslo ? 'bydelen' : 'kommunen' }}</div>
+                {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_av_kommunen } %}{% endembed %}
+            </div>
+        {% endif %}
+
+        <div class="col-12 col-sm-6 col-md-4">
+            <div class="list-header">Andre
+                {{ arrangement.getFylke().erOslo ? 'bydeler' : 'kommuner' }}
+                i
+                {{ arrangement.getFylke().getNavn() }}</div>
+            {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_i_fylket } %}{% endembed %}
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+            <div class="list-header">Av
+                {{ arrangement.getFylke().getNavn() }}
+                fylke</div>
+            {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_av_fylket } %}{% endembed %}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
