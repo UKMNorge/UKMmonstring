@@ -2,11 +2,13 @@
 
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Arrangementer;
+use UKMNorge\Arrangement\Eier;
 use UKMNorge\Google\StaticMap;
 use UKMNorge\Arrangement\Load as LoadArrangement;
 
 date_default_timezone_set('Europe/Oslo');
 
+require_once('UKM/Arrangement/Eier.php');
 require_once('UKM/Arrangement/Load.php');
 require_once('UKM/Arrangement/Arrangement.php');
 require_once('UKM/Arrangement/Arrangementer.php');
@@ -27,9 +29,14 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         require_once('kontakt.save.php');
     } 
 
-    // LAGRE ENDRINGER I KONTAKTPERSON
+    // LAGRE ENDRINGER I INFOTEKST
     if( isset($_POST['type']) && $_POST['type'] == 'infotekst' ) {
         require_once('infotekst.save.php');
+    }  
+
+    // LAGRE ENDRINGER I SKJEMA
+    if( isset($_POST['type']) && $_POST['type'] == 'skjema' ) {
+        require_once('skjema.save.php');
     }  
 
     // "REDIRECT" TIL KONTAKT ETTER SAVE
@@ -92,7 +99,7 @@ switch( $arrangement->getType() ) {
             'arrangementer_av_kommunen',
             LoadArrangement::byEier(
                 $arrangement->getSesong(),
-                $arrangement->getKommune()
+                $arrangement->getEier()
             )->getAll()
         );
     case 'fylke':

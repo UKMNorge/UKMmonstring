@@ -1,7 +1,10 @@
 <div class="row" style="margin-top: 3em;">
     <div class="col-12 col-sm-12">
         <h4>Videresending</h4>
-        <p style="margin-top: 0.8em;">I tillegg til direkte påmelding, kan du også ta i mot videresendte fra andre arrangementer. 
+        <p style="margin-top: 0.8em;">
+            {% if arrangement.harPamelding() %}
+                I tillegg til direkte påmelding, kan du også ta i mot videresendte fra andre arrangementer. 
+            {% endif %}
             Du velger selv hvem som får videresende til ditt arrangement, og kan definere kvoter og ordninger selv.
             Fristen for å videresende er den samme som påmeldingsfristene.
         </p>

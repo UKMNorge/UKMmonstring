@@ -1,7 +1,13 @@
 <div class="row">
-    <input type="hidden" name="sporsmal_id[{{sporsmal.id}}]" value="{{sporsmal.id}}" class="sporsmal_id" />
+    <input type="hidden" name="sporsmal_id[{{sporsmal.id}}]" value="{{sporsmal.id}}" class="sporsmal_id"/>
     <div class="col-xs-12 col-sm-3">
-        <div class="form-group">
+        <div
+            class="form-group">
+            {#% if sporsmal.id == 'new' %}
+                            <img src="/wp-content/plugins/UKMresources/icons/grip-vertical.svg" style="height: 1em; float:left;" />
+                        {% else %}
+                            <div style="float:left;margin-right:20px;"></div>
+                        {% endif %#}
             <select name="sporsmal_type[{{sporsmal.id}}]" class="form-control sporsmal_type">
                 <option value="false" {{sporsmal.id=='new'?'disabled selected':''}}>Velg type spørsmål</option>
                 <option value="overskrift" {{sporsmal.getType()=='overskrift'?'selected':''}}>Overskrift</option>
@@ -15,7 +21,7 @@
 
     <div class="col-xs-12 col-sm-4">
         <div class="form-group">
-            <input name="sporsmal_tittel[{{sporsmal.id}}]" type="text" class="form-control sporsmal_tittel" placeholder="Skriv inn spørsmålet ditt..." value="{{sporsmal.getTittel()}}" />
+            <input name="sporsmal_tittel[{{sporsmal.id}}]" type="text" class="form-control sporsmal_tittel" placeholder="Skriv inn spørsmålet ditt..." value="{{sporsmal.getTittel()}}"/>
         </div>
     </div>
 
