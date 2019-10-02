@@ -17,7 +17,7 @@
         {% endif %}
 
 
-        {% if arrangement.getType() == 'kommune' %}
+        {% if arrangement.harPamelding() %}
             <p>
                 Arrangementet tar i mot påmelding for
                 {% for kommune in arrangement.getKommuner() %}
@@ -26,7 +26,7 @@
                     {{ not kommune.getFylke().erOslo() ? ' kommune ' }}
                     {% if loop.index == arrangement.getKommuner().getAntall() - 1 %}
                         og
-                        {% elseif loop.index < arrangement.getKommuner().getAntall() %},
+                    {% elseif loop.index < arrangement.getKommuner().getAntall() %},
                     {% endif %}
                 {% endfor %}.
                 Skal du legge til eller fjerne en
