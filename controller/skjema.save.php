@@ -6,10 +6,7 @@ use UKMNorge\Arrangement\Skjema\Skjema;
 use UKMNorge\Arrangement\Skjema\Sporsmal;
 use UKMNorge\Arrangement\Skjema\Write as WriteSkjema;
 
-require_once('UKM/Arrangement/Arrangement.php');
-require_once('UKM/Arrangement/Skjema/Skjema.php');
-require_once('UKM/Arrangement/Skjema/Sporsmal.php');
-require_once('UKM/Arrangement/Skjema/Write.php');
+require_once('UKM/Autoloader.php');
 
 if( !isset($arrangement)) {
     $arrangement = new Arrangement( get_option('pl_id') );

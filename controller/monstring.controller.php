@@ -5,13 +5,11 @@ use UKMNorge\Arrangement\Arrangementer;
 use UKMNorge\Arrangement\Eier;
 use UKMNorge\Google\StaticMap;
 use UKMNorge\Arrangement\Load as LoadArrangement;
+use UKMNorge\Innslag\Typer;
 
 date_default_timezone_set('Europe/Oslo');
 
-require_once('UKM/Arrangement/Eier.php');
-require_once('UKM/Arrangement/Load.php');
-require_once('UKM/Arrangement/Arrangement.php');
-require_once('UKM/Arrangement/Arrangementer.php');
+require_once('UKM/Autoloader.php');
 $arrangement = new Arrangement( get_option('pl_id') );
 
 /* LAGRE ENDRINGER */
@@ -73,7 +71,6 @@ UKMmonstring::includeActionController();
 if (!is_super_admin() && date('m') > 6 && (int) $arrangement->getSesong() <= (int) date('Y')) {
     UKMmonstring::setAction('vent-til-ny-sesong');
 } else {
-    require_once('UKM/innslag_typer.class.php');
 
     if( date('m') > 6 && (int) $arrangement->getSesong() <= (int) date('Y') ) {
         UKMmonstring::getFlashbag()->add(
@@ -86,7 +83,7 @@ if (!is_super_admin() && date('m') > 6 && (int) $arrangement->getSesong() <= (in
     UKMmonstring::addViewData(
         [
             'arrangement' => $arrangement,
-            'innslag_typer' => innslag_typer::getAllTyper(),
+            'innslag_typer' => Typer::getAllTyper(),
             'is_superadmin' => is_super_admin(),
             'GOOGLE_API_KEY' => GOOGLE_API_KEY
         ]

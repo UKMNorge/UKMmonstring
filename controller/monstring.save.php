@@ -3,12 +3,11 @@
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Google\StaticMap;
+use UKMNorge\Innslag\Typer;
 
 require_once('UKM/kontakt.class.php');
 require_once('UKM/write_kontakt.class.php');
-require_once('UKM/write_monstring.class.php');
-require_once('UKM/Google/StaticMap.php');
-require_once('UKM/Arrangement/Videresending/Avsender.php');
+require_once('UKM/Autoloader.php');
 
 // ENDRE SYNLIGHET
 if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig' ) {
@@ -124,14 +123,14 @@ $arrangement->getInnslagtyper()->getAll(); // laster de inn
 foreach (['konferansier', 'nettredaksjon', 'arrangor', 'matkultur', 'ressurs'] as $tilbud) {
     if (!isset($_POST['tilbud_' . $tilbud])) {
         try {
-            $arrangement->getInnslagtyper()->fjern(innslag_typer::getByName($tilbud));
+            $arrangement->getInnslagtyper()->fjern(Typer::getByName($tilbud));
         } catch (Exception $e) {
             if ($e->getCode() != 110001) {
                 throw $e;
             }
         }
     } else {
-        $arrangement->getInnslagtyper()->leggTil(innslag_typer::getByName($tilbud));
+        $arrangement->getInnslagtyper()->leggTil(Typer::getByName($tilbud));
     }
 }
 

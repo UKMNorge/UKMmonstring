@@ -1,7 +1,6 @@
 <?php
 
-require_once('UKM/Arrangement/Arrangement.php');
-require_once('UKM/Meta/Write.php');
+require_once('UKM/Autoloader.php');
 
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Meta\Write as WriteMeta;

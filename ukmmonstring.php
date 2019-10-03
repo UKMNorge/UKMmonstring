@@ -10,7 +10,7 @@ Author URI: http://www.ukm-norge.no
 
 use UKMNorge\Wordpress\Modul;
 
-require_once('UKM/Wordpress/Modul.class.php');
+require_once('UKM/Autoloader.php');
 
 class UKMmonstring extends Modul
 {
@@ -143,9 +143,15 @@ class UKMmonstring extends Modul
             'UKMmonstring_network_admin_undersider'
         );
     
-        add_action('admin_print_styles-' . $page,     'UKMmonstring_network_script');
+        add_action(
+            'admin_print_styles-' . $page,
+            ['UKMMonstring', 'network_script']
+        );
         foreach ($subpages as $page) {
-            add_action('admin_print_styles-' . $page, 'UKMmonstring_network_script');
+            add_action(
+                'admin_print_styles-' . $page,
+                ['UKMMonstring', 'network_script']
+            );
         }
     }
     
@@ -154,7 +160,7 @@ class UKMmonstring extends Modul
      *
      * @return void
      */
-    function UKMmonstring_network_script()
+    function network_script()
     {
         wp_enqueue_script('WPbootstrap3_js');
         wp_enqueue_style('WPbootstrap3_css');

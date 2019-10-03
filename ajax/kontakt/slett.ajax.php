@@ -7,7 +7,7 @@ use UKMNorge\Arrangement\Arrangement;
 
 require_once('UKM/kontakt.class.php');
 require_once('UKM/write_kontakt.class.php');
-require_once('UKM/Arrangement/Arrangement.php');
+require_once('UKM/Autoloader.php');
 require_once('UKM/write_monstring.class.php');
 
 try {
