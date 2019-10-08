@@ -1,12 +1,10 @@
 <?php
 
-use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Videresending\Avsender;
+use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
 use UKMNorge\Innslag\Typer;
 
-require_once('UKM/kontakt.class.php');
-require_once('UKM/write_kontakt.class.php');
 require_once('UKM/Autoloader.php');
 
 // ENDRE SYNLIGHET
@@ -153,7 +151,7 @@ if ($arrangement->harVideresending()) {
 }
 
 try {
-    write_monstring::save($arrangement);
+    Write::save($arrangement);
     UKMmonstring::getFlashbag()->add(
         'success',
         'Arrangement-info er lagret!'
@@ -161,7 +159,7 @@ try {
 } catch (Exception $e) {
     UKMmonstring::getFlashbag()->add(
         'danger',
-        'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage()
+        'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage() .' ('.$e->getCode().')'
     );
 }
 
