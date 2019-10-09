@@ -4,17 +4,20 @@
  * LAGRE ENDRINGER ELLER OPPRETT KONTAKTPERSON
  */
 
-require_once('UKM/write_kontakt.class.php');
-require_once('UKM/write_monstring.class.php');
+use UKMNorge\Arrangement\Kontaktperson\Kontaktperson;
+use UKMNorge\Arrangement\Kontaktperson\Write;
+use UKMNorge\Arrangement\Write as ArrangementWrite;
+
+require_once('UKM/Autoloader.php');
 
 if ($_POST['id'] == 'new') {
-    $kontakt = write_kontakt::create(
+    $kontakt = Write::create(
         $_POST['fornavn'],
         $_POST['etternavn'],
         $_POST['telefon']
     );
 } else {
-    $kontakt = new kontakt_v2($_POST['id']);
+    $kontakt = new Kontaktperson((int)$_POST['id']);
     $kontakt->setFornavn($_POST['fornavn']);
     $kontakt->setEtternavn($_POST['etternavn']);
     $kontakt->setTelefon($_POST['telefon']);
@@ -27,17 +30,18 @@ $kontakt->setFacebook($_POST['facebook']);
 
 // Lagre kontaktpersonen i databasen
 try {
-    write_kontakt::save($kontakt);
+    Write::save($kontakt);
 
     if ($_POST['id'] == 'new') {
         $arrangement->getKontaktpersoner()->leggTil($kontakt);
-        write_monstring::save($arrangement);
+        ArrangementWrite::save($arrangement);
         UKMmonstring::getFlashbag()->add(
             'success',
             'Kontaktpersonen er lagret!'
         );
     }
 } catch (Exception $e) {
+    $arrangement->getKontaktpersoner()->fjern($kontakt);
     UKMmonstring::getFlashbag()->add(
         'danger',
         'Kunne ikke lagre kontaktperson. Systemet sa: ' .
