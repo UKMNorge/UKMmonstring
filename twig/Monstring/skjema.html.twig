@@ -1,0 +1,47 @@
+<div class="row" style="margin-top: 2em;">
+    <div class="col-12 col-sm-12">
+        <label>Skal de som videresender også fylle ut spørreskjema?</label>
+        <p>
+            Her kan du lage et skjema for å innhente informasjon om allergier, ledere, overnatting osv. Hvert avsender-arrangement fyller ut ett skjema. Ingen deltakere får se, eller fylle ut skjemaet.
+            {% if arrangement.harSkjema() %}
+                <a href="?page=UKMrapport_admin&rapport=videresendingsskjema&kat=monstring" target="_blank">Svarene kan du se under menyvalget "rapporter".</a>
+            {% endif %}
+        </p>
+        <div>
+            <div class="btn-group radioButtons" data-name="vilHaSkjema">
+                <button type="button" class="btn btn-default {{ arrangement.harSkjema() ? 'selected' }}" value="true">
+                    &nbsp; Ja &nbsp;</button>
+                <button type="button" class="btn btn-default {{ not arrangement.harSkjema() ? 'selected' }}" value="false">
+                    &nbsp; Nei &nbsp;</button>
+            </div>
+        </div>
+
+
+        <div id="previewForm" style="margin-top: 2em; {{ not arrangement.harSkjema() ? 'display:none;' }}">
+            <ol class="list-group">
+                <li class="list-group-item">
+                    <div class="fade-collapsible">
+                        <div class="content">
+                            {% if not arrangement.harSkjema() %}
+                                <p>
+                                    Du har ikke laget et skjema enda.
+                                </p>
+                            {% else %}
+                                <p class="bold">
+                                    Sånn ser spørreskjemaet ut for de som videresender til ditt arrangement.
+                                </p>
+                                {% include "Skjema/innhold.html.twig" with {'readonly':true,'arrangement': arrangement} %}
+                            {% endif %}
+                        </div>
+                        <div class="actions">
+                            <span class="icon dashicons dashicons-arrow-down-alt2"></span>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+            <p style="margin-top: -1em;" class="pull-right">
+                <a href="#" class="goTo btn btn-xs btn-primary" data-action="skjema">rediger skjema</a>
+            </p>
+        </div>
+    </div>
+</div>

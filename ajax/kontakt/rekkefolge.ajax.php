@@ -1,5 +1,6 @@
 <?php
 
+
 $pl_id = get_option('pl_id');
 
 $i = 0;
@@ -14,10 +15,11 @@ foreach( $_POST['order'] as $contact_id ) {
         'smartukm_rel_pl_ab',
         [
             'pl_id' => $pl_id,
-            'ab_id' => $contact_id
+            'ab_id' => str_replace('kontakt_','', $contact_id)
         ]
     );
     $qry->add('order', $i);
-    echo $qry->debug();
 	$res = $qry->run();
 }
+
+UKMmonstring::addResponseData('success',true);

@@ -1,142 +1,176 @@
-
 <?php
-date_default_timezone_set('Europe/Oslo');
 
-require_once('UKM/logger.class.php');
-require_once('UKM/kontakt.class.php');
-require_once('UKM/write_kontakt.class.php');
-require_once('UKM/write_monstring.class.php');
+use UKMNorge\Arrangement\Videresending\Avsender;
+use UKMNorge\Arrangement\Write;
+use UKMNorge\Google\StaticMap;
+use UKMNorge\Innslag\Typer;
 
-global $current_user;
-UKMlogger::setId( 'wordpress', $current_user->ID, get_option('pl_id') );
+require_once('UKM/Autoloader.php');
 
-$response = new stdClass();
-$response->success = true;
+// ENDRE SYNLIGHET
+if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig' ) {
+    $arrangement->setSynlig($_POST['goToId'] == 'true');
 
-/**
- * SLETT EN KONTAKTPERSON
- */
-if( isset( $_GET['slett_kontakt'] ) ) {    
-    try {
-        $kontakt = new kontakt_v2( $_GET['slett_kontakt'] );
-        $monstring->getKontaktpersoner()->fjern( $kontakt );
-        write_monstring::save( $monstring );
-        write_kontakt::delete( $kontakt );
-        $response->text = 'Kontaktpersonen er slettet!';
-    } catch( Exception $e ) {
-        $response->success = false;
-        $response->text = 'Kunne ikke slette kontaktperson. Systemet sa: '. $e->getMessage();
-    }
-    $TWIGdata['melding'] = $response;
+
+    UKMmonstring::getFlashbag()->add(
+        'info',
+        'Arrangementet er nå '. ($_POST['goToId'] == 'true' ? 'synlig på' : 'skjult fra') .' UKM.no. '.
+        '<a href="?page='. $_GET['page'] .'" class="goTo" data-action="synlig" data-id="'.($_POST['goToId'] == 'true' ? 'false':'true').'">Angre</a>'
+    );
 }
 
-/**
- * LAGRE ENDRINGER I MØNSTRING
- */
-if( $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'monstring' ) {
-    $start = DateTime::createFromFormat('d.m.Y-H:i', $_POST['start'].'-'.$_POST['start_time']);
-    $stop = DateTime::createFromFormat('d.m.Y-H:i', $_POST['stop'].'-'.$_POST['stop_time']);
-    $frist1 = DateTime::createFromFormat('d.m.Y-H:i:s', $_POST['frist_1'].'-23:59:59');
-    
-    // For kommuner er frist 2 påmeldingsfrist for "bidra med noe-innslag"
-    if( $monstring->getType() == 'kommune' ) {
-        $frist2 = DateTime::createFromFormat('d.m.Y-H:i:s', $_POST['frist_2'].'-23:59:59');
-    }
-    // For fylker og nasjonalt er frist 2 dato for videresendingsåpning
-    else {
-        $frist2 = DateTime::createFromFormat('d.m.Y-H:i:s', $_POST['frist_2'].'-08:00:00');
-    }
 
-    if( isset($_POST['navn'] ) ) {
-        $monstring->setNavn( $_POST['navn'] );
-        global $blog_id;
-        update_option( 'blogname', $_POST['navn']);
-        update_option('blogdescription', ($monstring->getType() == 'fylke' ? '' : 'UKM ') . $_POST['navn']);
-    }
-
-    $monstring->setSted( $_POST['sted'] );
-    $monstring->setStart( $start->getTimestamp() );
-    $monstring->setStop( $stop->getTimestamp() );
-    $monstring->setFrist1( $frist1->getTimestamp() );
-    $monstring->setFrist2( $frist2->getTimestamp() );
-
-    $monstring->getInnslagtyper()->getAll(); // laster de inn
-    foreach( ['konferansier','nettredaksjon','arrangor','matkultur','ressurs'] as $tilbud ) {
-        if( !isset( $_POST['tilbud_'. $tilbud] ) ) {
-            try {
-                $monstring->getInnslagtyper()->fjern( innslag_typer::getByName($tilbud) );
-            } catch( Exception $e ) {
-                if( $e->getCode() != 110001 ) {
-                    throw $e;
-                }
-            }
-        } else {
-            $monstring->getInnslagtyper()->leggTil( innslag_typer::getByName($tilbud) );
-        }
-    }
-
-    try {
-        write_monstring::save( $monstring );
-        $response->text = 'Endringene er lagret!';
-    } catch( Exception $e ) {
-        $response->success = false;
-        $response->text = 'Kunne ikke lagre. Systemet sa: '. $e->getMessage();
-    }
-    $TWIGdata['melding'] = $response;
-
-    if( $_POST['goTo'] != 'monstring' ) {
-        $CONTROLLER = 'kontakt';
-        $_GET['kontakt'] = $_POST['goTo'];
-    }
-
-
-    if( $monstring->getType() == 'land' ) {
-        foreach( UKMMonstring_sitemeta_storage() as $key ) {
-			if( isset( $_POST[$key] ) ) {
-				update_site_option('UKMFvideresending_'.$key.'_'.$monstring->getSesong(), $_POST[$key]);
-			}
-		}
-    }
-}
-
-/**
- * LAGRE ENDRINGER ELLER OPPRETT KONTAKTPERSON
- */
-if( $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['type'] == 'kontakt' ) {
-    if( $_POST['id'] == 'new' ) {
-        $kontakt = write_kontakt::create( $_POST['fornavn'], $_POST['etternavn'], $_POST['telefon'] );
+// START
+if (isset($_POST['start'])) {
+    $start = DateTime::createFromFormat(
+        'd.m.Y-H:i',
+        $_POST['start'] . '-' . $_POST['start_time']
+    );
+    if (is_bool($start)) {
+        UKMmonstring::getFlashbag()->add(
+            'danger',
+            'Ugyldig starttidspunkt ble dessverre ikke lagret. Prøv igjen.'
+        );
     } else {
-        $kontakt = new kontakt_v2( $_POST['id'] );
-        $kontakt->setFornavn( $_POST['fornavn'] );
-        $kontakt->setEtternavn( $_POST['etternavn'] );
-        $kontakt->setTelefon( $_POST['telefon'] );
+        $arrangement->setStart($start->getTimestamp());
     }
+}
 
-    $kontakt->setTittel( $_POST['tittel'] );
-    $kontakt->setEpost( $_POST['epost'] );
-    $kontakt->setBilde( $_POST['image'] );
-    $kontakt->setFacebook( $_POST['facebook'] );
-    
-    // Lagre kontaktpersonen i databasen
-    try {
-        write_kontakt::save( $kontakt );
-    } catch( Exception $e ) {
-        $response->success = false;
-        $response->text = 'Kunne ikke lagre kontaktperson. Systemet sa: '. $e->getMessage() .' ('. $e->getCode() .')';
+// STOP
+if (isset($_POST['stop'])) {
+    $stop = DateTime::createFromFormat(
+        'd.m.Y-H:i',
+        $_POST['stop'] . '-' . $_POST['stop_time']
+    );
+    if (is_bool($stop)) {
+        UKMmonstring::getFlashbag()->add(
+            'danger',
+            'Ugyldig stopptidspunkt ble dessverre ikke lagret. Prøv igjen.'
+        );
+    } else {
+        $arrangement->setStop($stop->getTimestamp());
     }
+}
 
-    // Relater kontaktpersonen til mønstringen
-    if( $response->success ) {
+// FRIST 1
+if (isset($_POST['frist_1'])) {
+    $frist1 = DateTime::createFromFormat(
+        'd.m.Y-H:i:s',
+        $_POST['frist_1'] . '-23:59:59'
+    );
+    if (is_bool($frist1)) {
+        UKMmonstring::getFlashbag()->add(
+            'danger',
+            $arrangement->harPamelding() ?
+                'Ugyldig påmeldingsfrist for å vise frem noe ble dessverre ikke lagret. Prøv igjen.' : 'Ugyldig dato for åpning av videresending ble dessverre ikke lagret. Prøv igjen.'
+        );
+    } else {
+        $arrangement->setFrist1($frist1->getTimestamp());
+    }
+}
+
+// FRIST 2
+// For kommuner er frist 2 påmeldingsfrist for "bidra med noe-innslag"
+if (isset($_POST['frist_2'])) {
+    $frist2_time = $arrangement->getType() == 'kommune' ? '23:59:59' : '08:00:00';
+    $frist2 = DateTime::createFromFormat(
+        'd.m.Y-H:i:s',
+        $_POST['frist_2'] . '-' . $frist2_time
+    );
+    if (is_bool($frist2)) {
+        UKMmonstring::getFlashbag()->add(
+            'danger',
+            $arrangement->harPamelding() ?
+                'Ugyldig påmeldingsfrist for å bidra som noe ble dessverre ikke lagret. Prøv igjen.' : 'Ugyldig frist for videresending ble dessverre ikke lagret. Prøv igjen.'
+        );
+    } else {
+        $arrangement->setFrist2($frist2->getTimestamp());
+    }
+}
+
+// NAVN
+if (isset($_POST['navn'])) {
+    $arrangement->setNavn($_POST['navn']);
+    global $blog_id;
+    update_option(
+        'blogname',
+        $_POST['navn']
+    );
+    update_option(
+        'blogdescription',
+        ($arrangement->getType() == 'fylke' ? '' : 'UKM ') .
+            $_POST['navn']
+    );
+}
+
+// STED
+if( isset($_POST['sted'])) {
+    $arrangement->setSted($_POST['sted']);
+}
+
+
+// GOOGLE-MAP
+if( isset($_POST['location_name'])){
+    $map = StaticMap::fromPOST('location');
+    $arrangement->setGoogleMapData($map->toJSON());
+}
+
+
+// TYPER INNSLAG SOM TILLATES
+$arrangement->getInnslagtyper()->getAll(); // laster de inn
+foreach (['konferansier', 'nettredaksjon', 'arrangor', 'matkultur', 'ressurs'] as $tilbud) {
+    if (!isset($_POST['tilbud_' . $tilbud])) {
         try {
-            $monstring->getKontaktpersoner()->leggTil( $kontakt );
-            write_monstring::save( $monstring );
-            $response->text = 'Kontaktpersonen er lagret!';
-            $response->success = true;
-        } catch( Exception $e ) {
-            $response->success = false;
-            $response->text = 'Kunne ikke legge til kontaktperson. Systemet sa: '. $e->getMessage() .' ('. $e->getCode() .')';
+            $arrangement->getInnslagtyper()->fjern(Typer::getByName($tilbud));
+        } catch (Exception $e) {
+            if ($e->getCode() != 110001) {
+                throw $e;
+            }
+        }
+    } else {
+        $arrangement->getInnslagtyper()->leggTil(Typer::getByName($tilbud));
+    }
+}
+
+// VIDERESENDING
+if( isset($_POST['tillatVideresending'] ) ) {
+    $arrangement->setHarVideresending($_POST['tillatVideresending'] == 'true');
+}
+
+// VIDERESENDING: Skjema
+$arrangement->setHarSkjema($_POST['vilHaSkjema'] == 'true');
+
+// Hvis arrangementet tar i mot videresending, lagre hvem fra
+if ($arrangement->harVideresending()) {
+    if (isset($_POST['avsender']) && is_array($_POST['avsender'])) {
+        foreach ($_POST['avsender'] as $pl_id) {
+            $avsender = new Avsender((int) $pl_id, $arrangement->getId());
+            $arrangement->getVideresending()->leggTilAvsender($avsender);
         }
     }
+}
 
-    $TWIGdata['melding'] = $response;
+try {
+    Write::save($arrangement);
+    UKMmonstring::getFlashbag()->add(
+        'success',
+        'Arrangement-info er lagret!'
+    );
+} catch (Exception $e) {
+    UKMmonstring::getFlashbag()->add(
+        'danger',
+        'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage() .' ('.$e->getCode().')'
+    );
+}
+
+if ($arrangement->getType() == 'land') {
+    throw new Exception('Flytt meta-data!');
+    foreach (UKMMonstring_sitemeta_storage() as $key) {
+        if (isset($_POST[$key])) {
+            update_site_option(
+                'UKMFvideresending_' . $key . '_' . $arrangement->getSesong(),
+                $_POST[$key]
+            );
+        }
+    }
 }

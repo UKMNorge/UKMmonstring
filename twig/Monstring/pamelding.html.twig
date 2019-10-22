@@ -1,0 +1,91 @@
+<div class="row mt-5">
+    <div class="col-12 col-sm-12">
+        {% if arrangement.harPamelding() %}
+            <h4>Hva kan deltakere melde på?</h4>
+        {% else %}
+            <h4>Hva kan videresendes til dette arrangementet?</h4>
+        {% endif %}
+
+    
+        {% if arrangement.erMonstring() %}
+            <p>
+                Fordi dette er en mønstring, kan du velge hvilke
+                typer innslag du tar i mot påmelding for.
+                Skal du ha et arrangementet hvor de deltar som seg selv, 
+                altså ikke som et innslag, må du opprette et arrangement som ikke er en mønstring.
+            </p>
+        {% endif %}
+
+
+        {% if arrangement.harPamelding() %}
+            <p>
+                Arrangementet tar i mot påmelding for
+                {% for kommune in arrangement.getKommuner() %}
+                    {{ kommune.getFylke().erOslo() ? ' bydel ' }}
+                    {{ kommune }}
+                    {{ not kommune.getFylke().erOslo() ? ' kommune ' }}
+                    {% if loop.index == arrangement.getKommuner().getAntall() - 1 %}
+                        og
+                    {% elseif loop.index < arrangement.getKommuner().getAntall() %},
+                    {% endif %}
+                {% endfor %}.
+                Skal du legge til eller fjerne en
+                {{ arrangement.getFylke().erOslo() ? 'bydel' : 'kommune' }}, må du
+                <a href="mailto:support@ukm.no?subject=Endre fellesmønstring">sende en e-post til support@ukm.no</a>
+            </p>
+        {% endif %}
+    </div>
+
+    <div class="col-12 col-sm-6">
+        {% if arrangement.harPamelding() %}
+            <label>Påmeldingsfrist for de som vil vise frem noe</label>
+            <div class="input-group" style="margin-bottom: 1em;">
+                <input class="datepicker_kommune form-control" type="text" name="frist_1" value="{{ arrangement.getFrist1()|dato('d.m.Y') }}"/>
+                <span class="input-group-addon">kl. 23:59</span>
+            </div>
+        {% endif %}
+
+
+        <ol class="list-group">
+            {% for innslag_type in innslag_typer if innslag_type.harTitler() %}
+                <li class="list-group-item">
+                    <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+                        <label>
+                            {% if innslag_type.getKey() == 'matkultur' %}
+                                <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
+                                {{ innslag_type.getNavn() }}
+                            {% else %}
+                                <input type="checkbox" checked disabled title="Alltid tillatt" alt="Alltid tillatt"/>
+                                {{ innslag_type.getNavn() }}
+                            {% endif %}
+                        </label>
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+
+
+    <div class="col-12 col-sm-6">
+        {% if arrangement.harPamelding() %}
+            <label>Påmeldingsfrist for de som vil bidra som noe</label>
+            <div class="input-group" style="margin-bottom: 1em;">
+                <input class="datepicker_kommune form-control" type="text" name="frist_2" value="{{ arrangement.getFrist2()|dato('d.m.Y') }}"/>
+                <span class="input-group-addon">kl. 23:59</span>
+            </div>
+        {% endif %}
+
+        <ol class="list-group">
+            {% for innslag_type in innslag_typer if not innslag_type.harTitler() and (innslag_type.getKey() != 'ressurs' or arrangement.getType() == 'land') %}
+                <li class="list-group-item">
+                    <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+                        <label>
+                            <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
+                            {{ innslag_type.getNavn() }}
+                        </label>
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>

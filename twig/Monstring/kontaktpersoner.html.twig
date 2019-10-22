@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <h4 style="margin-top: 2em;">Kontaktpersoner</h4>
+
+        <div style="margin-top: 2em; {{ arrangement.getKontaktpersoner()|length == 0 ? 'display:none;'}}">
+            <ol class="list-group">
+                <li class="list-group-item" id="kontaktpersoner_compact">
+                    {% for kontakt in arrangement.getKontaktpersoner() %}
+                        <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 kontaktperson" id="visKontakt_{{ kontakt.getId()}}">
+                            {% if kontakt.getBilde() is empty %}
+                                <span class="dashicons dashicons-admin-users"></span>
+                            {% else %}
+                                <img src="{{ kontakt.getBilde() }}" width="50" style="min-height: 50px;" class="img img-circle"/>
+                            {% endif %}
+                            <br/>
+                            <a href="#" class="goTo" data-action="kontakt" data-id="{{ kontakt.getId() }}">
+                                {{ kontakt.getNavn() }}
+                            </a>
+                            <br/>
+                            <small>{{ kontakt.getTelefon() }}</small>
+                        </div>
+                    {% endfor %}
+                    <div class="clearfix"></div>
+                    <p style="margin-top: 1em;" class="pull-right">
+                        <a href="#" class="btn btn-xs btn-primary" id="redigerKontaktpersoner">rediger / legg til kontaktpersoner</a>
+                    </p>
+                </li>
+            </ol>
+        </div>
+
+        <div id="kontaktpersoner_edit" style="{{ arrangement.getKontaktpersoner().getAntall() > 0 ? 'display: none;' }}">
+            <ol class="list-group">
+                {% for kontakt in arrangement.getKontaktpersoner() %}
+                    <li class="list-group-item kontaktperson" data-id="{{ kontakt.getId() }}" id="kontakt_{{ kontakt.getId()}}">
+                        <div class="float-right pull-right">
+                            <a href="#" data-action="kontakt" data-id="{{ kontakt.getId() }}" class="goTo btn btn-xs btn-primary">rediger</a>
+                            {% if not kontakt.erLast() %}
+                                <a href="#" class="btn btn-xs btn-danger slettKontaktperson">fjern</a>
+                            {% endif %}
+                        </div>
+                        {% if kontakt.getBilde() is empty %}
+                            <span class="dashicons dashicons-admin-users"></span>
+                        {% else %}
+                            <img src="{{ kontakt.getBilde() }}" width="50" style="margin-right: 1em; min-height: 50px;" class="img img-circle pull-left"/>
+                        {% endif %}
+                        <b>{{ kontakt.getNavn() }}</b>
+                        {{ kontakt.getTittel() }}
+                        <br/>
+                        <small>
+                            <a href="mailto:{{ kontakt.getEpost() }}">{{ kontakt.getEpost() }}</a>
+                            <br/>
+                            <span class="UKMSMS">{{ kontakt.getTelefon() }}</span>
+                        </small>
+                        <div class="clearfix"></div>
+                    </li>
+                {% endfor %}
+
+
+                <li class="list-group-item kontaktperson">
+                    {% if arrangement.getKontaktpersoner().getAntall() == 0 %}
+                        Du har ingen kontaktpersoner.
+                        <a href="#" class="goTo" data-action="kontakt" data-id="new">
+                            Start med å legge til den første
+                        </a>
+                    {% else %}
+                        <a href="#" class="goTo" data-action="kontakt" data-id="new">
+                            Legg til en ny kontaktperson
+                        </a>
+                    {% endif %}
+                </li>
+            </ol>
+
+            <div class="clearfix"></div>
+            {% if arrangement.getKontaktpersoner().getAntall() > 0 %}
+                <p class="pull-right">
+                    <a href="#" class="btn btn-xs btn-primary" id="skjulKontaktpersoner">lukk listen</a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+</div>

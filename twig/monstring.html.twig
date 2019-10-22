@@ -1,322 +1,38 @@
+{% set monstringen = arrangement.getType() == 'kommune' ? 'mønstringen' : 'festivalen' %}
+
 <script>
-    var UKMSEASON = {{ monstring.getSesong() }}
+    $(document).on('click','a.goTo',(e)=>{
+        e.preventDefault();
+        $('#goTo').val(
+            $(e.target).attr('data-action')
+        );
+        $('#goToId').val(
+            $(e.target).attr('data-id')
+        );
+        $('#arrangementForm').submit();
+    });
 </script>
+<div id="status"></div>
+<form method="POST" id="arrangementForm">
+    <input type="hidden" name="goTo" id="goTo" value="monstring"/>
+    <input type="hidden" name="goToId" id="goToId" value="" />
+    <input type="hidden" name="type" value="monstring"/>
+    <div style="margin-left: .2em; margin-right: 1em; max-width: 868px;">
 
-{% set monstringen = monstring.getType() == 'kommune' ? 'mønstringen' : 'festivalen' %}
+        {% include "wp_modul.flashbag.html.twig" %}
 
-<form method="POST">
-    <input type="hidden" name="goTo" id="goTo" value="monstring" />
-    <input type="hidden" name="type" value="monstring" />
-    <div style="margin-left: .2em; margin-right: 1em; max-width: 768px;">
-
-    {% if melding is defined %}
-        <div class="alert alert-{{ melding.success ? 'success' : 'danger' }}" style="margin-top: 1em;">
-            {{ melding.text }}
-        </div>
-    {% endif %}
-
-        <div class="row">
-            <div class="col-12 col-sm-12">
-                <h2>
-                    {{ monstring.getType() == 'kommune' ? 'UKM '}}{{ monstring.getNavn() }}
-                    {% if overrideWait %}
-                        <small class="text-alert">
-                            Redigering er kun mulig fordi du er logget inn som superadmin.
-                        </small>
-                    {% endif %}
-                </h2>
-                <p class="small muted">
-                    Ønsker du å endre navn på {{ monstringen }}
-                    kan du 
-                    <a href="mailto:support@ukm.no?subject=Nytt navn på {{ monstring.getLink() }}">sende en e-post til support@ukm.no</a>
-                </p>
-
-                {% if is_superadmin %}
-                    <div class="form-group">
-                        <label>Navn på mønstringen</label>
-                        <input type="text" class="form-control form-control-lg" name="navn" value="{{ monstring.getNavn() }}" />
-                        <p class="help text muted">OBS: er kun tilgjengelig for superadmin</p>
-                    </div>
-                {% endif %}
-
-
-                <div class="form-group">
-                    <label>Hvor skal {{ monstringen }} være?</label>
-                    <input type="text" class="form-control form-control-lg" name="sted" value="{{ monstring.getSted() }}" />
-                    <p class="help text muted">F.eks. kulturhuset, ungdomsklubben osv.</p>
-                </div>
-            </div>
-        </div>
+        {% include "Monstring/basics.html.twig" %}
+        {% include "Monstring/pamelding.html.twig" %}
+        {% if arrangement.erSynlig() %}
+            {% include "Monstring/kontaktpersoner.html.twig" %}
+        {% endif %}
         
-        <div class="row">
-            <div class="col-12 col-sm-6">
-                <div class="form-group">
-                    <label>Når starter {{ monstringen }}?</label>
-                    <input class="datepicker_{{ monstring.getType() }} form-control" type="text" name="start" value="{{ monstring.getStart()|dato('d.m.Y') }}">
-                </div>
-            </div>
-            <div class="col-12 col-sm-6">
-                <label>&nbsp;</label>
-                <div class="input-group">
-                    <span class="input-group-addon">kl. </span>
-                    <select class="form-control" name="start_time">
-                        {% include "hourPicker.html.twig" with { current: monstring.getStart() } %}
-                    </select>
-                </div>
-            </div>
-        </div>
+        {% include "Monstring/videresending.html.twig" %}
 
-        <div class="row">
-            <div class="col-12 col-sm-6">
-                <div class="form-group">
-                    <label>Når slutter {{ monstringen }}?</label>
-                    <input class="datepicker_{{ monstring.getType() }} form-control" type="text" name="stop" value="{{ monstring.getStop()|dato('d.m.Y') }}">
-                </div>
-            </div>
-            <div class="col-12 col-sm-6">
-                <label>&nbsp;</label>
-                <div class="input-group">
-                    <span class="input-group-addon">kl. </span>
-                    <select class="form-control" name="stop_time">
-                        {% include "hourPicker.html.twig" with { current: monstring.getStop() } %}
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        {% if monstring.getType() != 'kommune' %}
-            <div class="row">
-                <div class="col-12 col-sm-12">
-                    <h3>Videresending</h3>
-                    {% if monstring.getType() == 'fylke' %}
-                        <p>
-                            Før {{ monstring.getFylke().erOslo() ? 'bydelene' : 'kommunene' }} skal begynne med videresending,
-                            bør du legge inn informasjon om dine kvoter osv. Alt du skriver inn under menyvalget 
-                            "<a href="?page=UKMmonstring_videresending_info">Infotekst om videresending</a>" vises på 
-                            {{ monstring.getFylke().erOslo() ? 'bydelenes' : 'kommunenes' }} videresendings-forside.
-                        </p>
-
-                        <p>
-                            {% if monstring.harSkjema() %}
-                                Husk å 
-                                <a href="?page=UKMVideresendingsskjema">oppdatere videresendingsskjemaet</a>
-                                du ber dine lokalkontakter om å fylle ut før videresendingen åpner.
-                            {% else %}
-                                <a href="?page=UKMVideresendingsskjema">Du kan opprette et spørreskjema</a>
-                                som lokalkontakene dine må fylle ut ved videresending.
-                            {% endif %}
-                        </p>
-                    {% endif %}
-                </div>
-
-                <div class="col-12 col-sm-6">
-                    <label>Når åpner videresendingen?</label>
-                    <div class="input-group" style="margin-bottom: 1em;">
-                        <input class="datepicker_{{ monstring.getType() == 'fylke' ? 'fylke_forward' : 'land' }} form-control" type="text" name="frist_2" value="{{ monstring.getFrist2()|dato('d.m.Y') }}" />
-                        <span class="input-group-addon">kl. 08:00</span>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6">
-                    <label>Når stenger videresendingen?</label>
-                    <div class="input-group" style="margin-bottom: 1em;">
-                        <input class="datepicker_{{ monstring.getType() }} form-control" type="text" name="frist_1" value="{{ monstring.getFrist1()|dato('d.m.Y') }}" />
-                        <span class="input-group-addon">kl. 23:59</span>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-
-        <div class="row">
-            {% if monstring.getType() == 'land' %}
-                <div class="col-12 col-sm-6">  
-                    <div class="form-group">
-                        <label>Ordinærkvote ledere</label>
-                        <input class="form-control" type="number" name="kvote_ledere" value="{{kvote_ledere}}" placeholder="Har vanligvis vært 3" />
-                    </div> 
-                </div>
-
-                <div class="col-12 col-sm-6">  
-                    <div class="form-group">
-                        <label>Ordinærkvote deltakere</label>
-                        <input class="form-control" type="number" name="kvote_deltakere" value="{{kvote_deltakere}}" placeholder="Har vanligvis vært 30" />
-                    </div>
-                </div>
-                <div class="col-12 col-sm-12">
-                    <div class="form-group">
-                        <label>URL til informasjonsbrev 1</label>
-                        <input class="form-control" type="text" name="info1" value="{{ info1 }}" />
-                        <p class="help text-muted">
-                            Tips: du laste opp dette under menyvalget media, og kopiere vedleggs-adressen derfra.
-                        </p>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Frister for nominasjon</label>
-				        <textarea class="form-control" name="nominasjon_frister" rows="5">{{ nominasjon_frister }}</textarea>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="row">
-            <div class="col-12 col-sm-12">
-                {% if monstring.getType() == 'kommune' %}
-                    <h3>Hva kan deltakere melde på?</h3>
-                    <p>
-                        Mønstringen tar i mot påmelding for 
-                        {% for kommune in monstring.getKommuner() %}{{ kommune }}{% if loop.index == monstring.getKommuner().getAntall() - 1 %} og {% elseif loop.index < monstring.getKommuner().getAntall() %}, {% endif %}{% endfor %}.
-                        Skal du legge til eller fjerne en {{ monstring.getFylke().erOslo() ? 'bydel' : 'kommune' }}, må du 
-                        <a href="mailto:support@ukm.no?subject=Endre fellesmønstring">sende en e-post til support@ukm.no</a>
-                    </p>
-                {% elseif monstring.getType() == 'fylke' %}
-                    <h4>Hva kan videresendes til din festival?</h4>
-                {% else %}
-                    <b>Hva kan videresendes til din festival?</b>
-                {% endif %}
-            </div>
-
-            <div class="col-12 col-sm-6">
-                {% if monstring.getType() == 'kommune' %}
-                    <h4>Vise frem noe</h4>
-                    <label>Påmeldingsfrist</label>
-                    <div class="input-group" style="margin-bottom: 1em;">
-                        <input class="datepicker_kommune form-control" type="text" name="frist_1" value="{{ monstring.getFrist1()|dato('d.m.Y') }}" />
-                        <span class="input-group-addon">kl. 23:59</span>
-                    </div>
-                {% endif %}
-            
-
-                <ol class="list-group">
-                    {% for innslag_type in innslag_typer if innslag_type.harTitler() %}
-                        <li class="list-group-item">
-                            <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
-                                <label>
-                                    {% if innslag_type.getKey() == 'matkultur' %}
-                                        <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ monstring.getInnslagTyper().har( innslag_type ) ? 'checked' }} /> {{ innslag_type.getNavn() }}
-                                    {% else %}
-                                        <input type="checkbox" checked disabled title="Alltid tillatt" alt="Alltid tillatt" /> {{ innslag_type.getNavn() }}
-                                    {% endif %}
-                                </label>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ol>
-            </div>
+        {# TA INN MØNSTRING LAND #}
 
 
-            <div class="col-12 col-sm-6">
-                {% if monstring.getType() == 'kommune' %}
-                    <h4>Bidra som noe</h4>
-                    <label>Påmeldingsfrist</label>
-                    <div class="input-group" style="margin-bottom: 1em;">
-                        <input class="datepicker_kommune form-control" type="text" name="frist_2" value="{{ monstring.getFrist2()|dato('d.m.Y') }}" />
-                        <span class="input-group-addon">kl. 23:59</span>
-                    </div>
-                {% endif %}
-            
-                <ol class="list-group">
-                    {% for innslag_type in innslag_typer if not innslag_type.harTitler() and (innslag_type.getKey() != 'ressurs' or monstring.getType() == 'land') %}
-                        <li class="list-group-item">
-                            <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
-                                <label>
-                                    <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ monstring.getInnslagTyper().har( innslag_type ) ? 'checked' }} /> {{ innslag_type.getNavn() }}
-                                </label>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ol>
-            </div>
-        </div>
-
-
-       <div class="row">
-            <div class="col-12 col-sm-12">
-                <h3>Kontaktpersoner</h3>
-
-                <ol class="list-group" id="kontaktpersoner">
-                    {% for kontakt in monstring.getKontaktpersoner() %}
-                        <li class="list-group-item kontaktperson" data-goTo="{{ kontakt.getId() }}" id="{{ kontakt.getId() }}">
-                            <div class="float-right pull-right">
-                                <a href="?page={{GET('page')}}&kontakt={{ kontakt.getId() }}" class="btn btn-xs btn-primary">rediger</a>
-                                {% if not kontakt.erLast() %}
-                                    <a href="?page={{GET('page')}}&slett_kontakt={{ kontakt.getId() }}" class="btn btn-xs btn-danger delete">slett</a>
-                                {% endif %}
-                            </div>
-                            <img src="{{ kontakt.getBilde() }}" width="50" style="margin-right: 1em; min-height: 50px;" class="img img-circle pull-left" />
-                            <b>{{ kontakt.getNavn() }}</b> {{ kontakt.getTittel() }}
-                            <br />
-                            <small>
-                                <a href="mailto:{{ kontakt.getEpost() }}">{{ kontakt.getEpost() }}</a>
-                                <br />
-                                <span class="UKMSMS">{{ kontakt.getTelefon() }}</span>
-                            </small>
-                            <div class="clearfix"></div>
-                        </li>
-                    {% endfor %}
-
-                    
-                    <li class="list-group-item kontaktperson" data-goTo="new">
-                        {% if monstring.getKontaktpersoner().getAntall() == 0 %}
-                            Du har ingen kontaktpersoner. 
-                            <a href="?page={{GET('page')}}&kontakt=new">
-                                Start med å legge til den første
-                            </a>
-                        {% else %}
-                            <a href="?page={{GET('page')}}&kontakt=new">
-                                Legg til en ny kontaktperson
-                            </a>
-                        {% endif %}
-                    </li>
-                </ol>
-            </div>
-        </div>
-
-        {% if monstring.getType() == 'land' %}
-            <div class="row">
-                <div class="col-12 col-sm-12">
-                    <h3>Økonomi</h3>
-                </div>                
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-sm-4">
-                    <label>Subsidiert deltakeravgift</label>  
-                    <div class="input-group">
-                        <span class="input-group-addon">kr.</span>
-                        <input class="form-control" type="number" name="avgift_subsidiert" value="{{avgift_subsidiert}}" />
-                    </div>
-                </div>
-                <div class="col-12 col-sm-4">  
-                    <label>Ordinær deltakeravgift</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">kr.</span>
-                        <input class="form-control" type="number" name="avgift_ordinar" value="{{avgift_ordinar}}" />
-                    </div>
-                </div>
-                <div class="col-12 col-sm-4">  
-                    <label>Egenandel reise</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">kr.</span>
-                        <input class="form-control" type="number" name="avgift_reise" value="{{avgift_reise}}" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" style="margin-top: 1em; margin-bottom: 2em;">
-                <div class="col-12 col-sm-4">  
-                    <label>Pris per døgn på Hotell UKM Norge</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">kr.</span>
-                        <input class="form-control" type="number" name="hotelldogn_pris" value="{{hotelldogn_pris}}" />
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-
-
-
-        <div class="row">
+        <div class="row" style="margin-top: 4em;">
             <div class="col-xs-12 col-sm-12">
                 <button type="submit" class="btn btn-success" id="formSubmit">Lagre</button>
             </div>

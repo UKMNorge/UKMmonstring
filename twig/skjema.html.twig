@@ -1,0 +1,42 @@
+{% include "wp_modul.flashbag.html.twig" %}
+<h2>Spørreskjema for de som videresender til {{ arrangement.getNavn() }}</h2>
+
+<p class="lead">
+    Skjemaet du lager her må fylles ut av alle som videresender til ditt arrangement.
+    <br/>
+    Du kan legge til så mange spørsmål du vil, og endre rekkefølgen ved å dra og slippe etterpå.
+</p>
+
+<div class="col-12 col-sm-12">
+    <div class="col-xs-12 col-sm-3">
+        <label>Type</label>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+        <label>Tittel/spørsmål</label>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+        <label>Hjelpetekst</label>
+    </div>
+    <div class="col-xs-12 col-sm-1"></div>
+    <div class="clearfix"></div>
+    <form action="?page={{GET('page')}}" method="POST">
+        <input type="hidden" name="type" value="skjema"/>
+        <ol class="list-group" id="skjema">
+            <li class="list-group-item sporsmal" id="newSporsmalContainer"></li>
+            {% for sporsmal in arrangement.getSkjema().getSporsmal() %}
+                <li class="list-group-item sporsmal {{sporsmal.getType()=='overskrift'?'overskrift'}}">
+                    {% include "js/skjemaRad.html.twig" with{'sporsmal': sporsmal} %}
+                </li>
+            {% else %}
+                <li class="list-group-item muted" id="noSporsmal">
+                    Skjemaet har ingen spørsmål. Start med å legge til det første ovenfor.
+                </li>
+            {% endfor %}
+        </ol>
+
+        <p></p>
+        <button type="submit" class="btn btn-success">Lagre</button>
+        eller
+        <a href="?page={{GET('page')}}">avbryt</a>
+    </form>
+</div>

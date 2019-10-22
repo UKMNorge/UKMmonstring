@@ -1,0 +1,43 @@
+<div class="row">
+    <input type="hidden" name="sporsmal_id[{{sporsmal.id}}]" value="{{sporsmal.id}}" class="sporsmal_id"/>
+    <div class="col-xs-12 col-sm-3">
+        <div
+            class="form-group">
+            {#% if sporsmal.id == 'new' %}
+                            <img src="/wp-content/plugins/UKMresources/icons/grip-vertical.svg" style="height: 1em; float:left;" />
+                        {% else %}
+                            <div style="float:left;margin-right:20px;"></div>
+                        {% endif %#}
+            <select name="sporsmal_type[{{sporsmal.id}}]" class="form-control sporsmal_type">
+                <option value="false" {{sporsmal.id=='new'?'disabled selected':''}}>Velg type spørsmål</option>
+                <option value="overskrift" {{sporsmal.getType()=='overskrift'?'selected':''}}>Overskrift</option>
+                <option value="janei" {{sporsmal.getType()=='janei'?'selected':''}}>Ja / nei-spørsmål</option>
+                <option value="kort_tekst" {{sporsmal.getType()=='kort_tekst'?'selected':''}}>Kort tekst</option>
+                <option value="lang_tekst" {{sporsmal.getType()=='lang_tekst'?'selected':''}}>Lang tekst</option>
+                <option value="kontakt" {{sporsmal.getType()=='kontakt'?'selected':''}}>Kontaktinformasjon (navn, epost, mobil)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-4">
+        <div class="form-group">
+            <input name="sporsmal_tittel[{{sporsmal.id}}]" type="text" class="form-control sporsmal_tittel" placeholder="Skriv inn spørsmålet ditt..." value="{{sporsmal.getTittel()}}"/>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-4">
+        <div class="form-group" style="margin-bottom:0;">
+            <textarea name="sporsmal_tekst[{{sporsmal.id}}]" class="form-control autogrow autogrow-short sporsmal_tekst" style="margin-bottom:0;" rows="1" placeholder="Skriv inn hjelpetekst for spørsmålet (hvis du vil)...">{{sporsmal.getTekst()}}</textarea>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-1 actions" style="text-align: center;">
+        {% if sporsmal.id is empty or sporsmal.id =='new' %}
+            <span class="dashicons dashicons-plus action" id="addSporsmal"></span>
+        {% else %}
+            <span class="dashicons dashicons-trash action delete" id="slettSporsmal"></span>
+        {% endif %}
+    </div>
+
+    <div class="clearfix"></div>
+</div>
