@@ -4,6 +4,7 @@ use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
 use UKMNorge\Innslag\Typer;
+use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
 
@@ -91,16 +92,6 @@ if (isset($_POST['frist_2'])) {
 // NAVN
 if (isset($_POST['navn'])) {
     $arrangement->setNavn($_POST['navn']);
-    global $blog_id;
-    update_option(
-        'blogname',
-        $_POST['navn']
-    );
-    update_option(
-        'blogdescription',
-        ($arrangement->getType() == 'fylke' ? '' : 'UKM ') .
-            $_POST['navn']
-    );
 }
 
 // STED
