@@ -19,6 +19,23 @@ if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig' ) {
         '<a href="?page='. $_GET['page'] .'" class="goTo" data-action="synlig" data-id="'.($_POST['goToId'] == 'true' ? 'false':'true').'">Angre</a>'
     );
 }
+if( isset($_POST['goTo']) && $_POST['goTo'] == 'pamelding') {
+    if( $_POST['goToId'] == 'true' ) {
+        $arrangement->setPamelding('apen');
+        UKMmonstring::getFlashbag()->add(
+            'success',
+            'Arrangementet tar nå i mot påmelding fra deltakere.'
+        );
+    } else {
+        $arrangement->setPamelding('ingen');
+        UKMmonstring::getFlashbag()->add(
+            'warning',
+            'Arrangementet tar ikke lenger i mot påmelding fra deltakere! All påmelding må skje via videresending. '.
+            '<br />'.
+            'Sjekk at du har oppgitt riktig på hvem som kan sende videre til ditt arrangement nederst på denne siden'
+        );
+    }
+}
 
 
 // START
