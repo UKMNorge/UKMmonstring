@@ -2,10 +2,10 @@
     <div class="col-12 col-sm-12">
         <h4 style="margin-top: 2em;">Kontaktpersoner</h4>
 
-        <div style="margin-top: 2em; {{ arrangement.getKontaktpersoner()|length == 0 ? 'display:none;'}}">
+        <div style="margin-top: 2em; {{ arrangement.getKontaktpersoner().getAntall() == 0 ? 'display:none;'}}">
             <ol class="list-group">
                 <li class="list-group-item" id="kontaktpersoner_compact">
-                    {% for kontakt in arrangement.getKontaktpersoner() %}
+                    {% for kontakt in arrangement.getKontaktpersoner().getAll() %}
                         <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 kontaktperson" id="visKontakt_{{ kontakt.getId()}}">
                             {% if kontakt.getBilde() is empty %}
                                 <span class="dashicons dashicons-admin-users"></span>
@@ -30,7 +30,7 @@
 
         <div id="kontaktpersoner_edit" style="{{ arrangement.getKontaktpersoner().getAntall() > 0 ? 'display: none;' }}">
             <ol class="list-group">
-                {% for kontakt in arrangement.getKontaktpersoner() %}
+                {% for kontakt in arrangement.getKontaktpersoner().getAll() %}
                     <li class="list-group-item kontaktperson" data-id="{{ kontakt.getId() }}" id="kontakt_{{ kontakt.getId()}}">
                         <div class="float-right pull-right">
                             <a href="#" data-action="kontakt" data-id="{{ kontakt.getId() }}" class="goTo btn btn-xs btn-primary">rediger</a>
