@@ -98,7 +98,7 @@ class UKMmonstring extends Modul
             'Mønstringer',
             'superadmin',
             'UKMmonstring_network_admin',
-            'UKMmonstring_network_admin',
+            ['UKMmonstring','renderNetworkAdmin'],
             'dashicons-buddicons-groups', #//ico.ukm.no/hus-menu.png',
             23
         );
@@ -160,10 +160,19 @@ class UKMmonstring extends Modul
      *
      * @return void
      */
-    function network_script()
+    public static function network_script()
     {
+        wp_enqueue_script('TwigJS');
         wp_enqueue_script('WPbootstrap3_js');
         wp_enqueue_style('WPbootstrap3_css');
+    }
+
+
+    public static function renderNetworkAdmin() {
+        static::setAction(
+            isset($_GET['action']) ? $_GET['action'] : 'network/dashboard'
+        );
+        static::renderAdmin();
     }
 }
 
