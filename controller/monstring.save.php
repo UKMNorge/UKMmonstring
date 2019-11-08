@@ -3,7 +3,7 @@
 use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
-use UKMNorge\Innslag\Typer;
+use UKMNorge\Innslag\Typer\Typer;
 use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
