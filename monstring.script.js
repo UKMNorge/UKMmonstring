@@ -275,7 +275,9 @@ $(document).on('click', '#addSporsmal', (e) => {
 /* INITIER SKJEMA-FUNKSJONER */
 $(document).ready(function() {
     $("#skjema").sortable({ items: "> li:not(:first)" });
-    $('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
+    if (typeof(elem) !== 'undefined') {
+        $('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
+    }
     $('textarea').autogrow();
 });
 
