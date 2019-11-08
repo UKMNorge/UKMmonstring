@@ -65,13 +65,8 @@
                 <li class="list-group-item">
                     <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
                         <label>
-                            {% if innslag_type.getKey() == 'matkultur' %}
-                                <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
-                                {{ innslag_type.getNavn() }}
-                            {% else %}
-                                <input type="checkbox" checked disabled title="Alltid tillatt" alt="Alltid tillatt"/>
-                                {{ innslag_type.getNavn() }}
-                            {% endif %}
+                            <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
+                            {{ innslag_type.getNavn() }}
                         </label>
                     </div>
                 </li>

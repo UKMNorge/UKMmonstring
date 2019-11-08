@@ -12,7 +12,6 @@ require_once('UKM/Autoloader.php');
 if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig' ) {
     $arrangement->setSynlig($_POST['goToId'] == 'true');
 
-
     UKMmonstring::getFlashbag()->add(
         'info',
         'Arrangementet er nå '. ($_POST['goToId'] == 'true' ? 'synlig på' : 'skjult fra') .' UKM.no. '.
@@ -126,18 +125,24 @@ if( isset($_POST['location_name'])){
 
 // TYPER INNSLAG SOM TILLATES
 $arrangement->getInnslagtyper()->getAll(); // laster de inn
-foreach (['konferansier', 'nettredaksjon', 'arrangor', 'matkultur', 'ressurs'] as $tilbud) {
-    if (!isset($_POST['tilbud_' . $tilbud])) {
+foreach (Typer::getAllTyper() as $tilbud) {
+    if (!isset($_POST['tilbud_' . $tilbud->getKey()])) {
         try {
-            $arrangement->getInnslagtyper()->fjern(Typer::getByName($tilbud));
+            $arrangement->getInnslagtyper()->fjern(Typer::getByName($tilbud->getKey()));
         } catch (Exception $e) {
             if ($e->getCode() != 110001) {
                 throw $e;
             }
         }
     } else {
-        $arrangement->getInnslagtyper()->leggTil(Typer::getByName($tilbud));
+        $arrangement->getInnslagtyper()->leggTil(Typer::getByName($tilbud->getKey()));
     }
+}
+if( $arrangement->getInnslagTyper()->getAntall() == 0 ) {
+    UKMmonstring::getFlashbag()->info(
+        'Det er ikke mulig å ha et arrangement med påmelding uten noen tillatte kategorier. '.
+        'Vi har derfor åpnet for standard-kategoriene, men du må gjerne redigere de.'
+    );
 }
 
 // VIDERESENDING
@@ -170,6 +175,9 @@ try {
         'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage() .' ('.$e->getCode().')'
     );
 }
+
+// reload innslagTyper (i tilfelle man lagrer "blankt")
+$arrangement->resetInnslagTyper();
 
 if ($arrangement->getType() == 'land') {
     throw new Exception('Flytt meta-data!');
