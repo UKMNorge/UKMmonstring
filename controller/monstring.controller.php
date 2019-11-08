@@ -48,6 +48,8 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
             case 'infotekst':
                 UKMmonstring::setAction('infotekst');
                 UKMmonstring::includeActionController();
+                do_action('admin_print_footer_scripts');
+
                 die();
                 break;
             case 'skjema':
@@ -85,7 +87,7 @@ if (!is_super_admin() && date('m') > 6 && (int) $arrangement->getSesong() <= (in
             'arrangement' => $arrangement,
             'innslag_typer' => Typer::getAllTyper(),
             'is_superadmin' => is_super_admin(),
-            'GOOGLE_API_KEY' => GOOGLE_API_KEY
+            'GOOGLE_API_KEY' => defined('GOOGLE_API_KEY') ? GOOGLE_API_KEY : ''
         ]
     );
 }
