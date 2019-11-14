@@ -61,7 +61,7 @@
 
 
         <ol class="list-group">
-            {% for innslag_type in innslag_typer if innslag_type.harTitler() %}
+            {% for innslag_type in innslag_typer if innslag_type.erViseFrem() %}
                 <li class="list-group-item">
                     <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
                         <label>
@@ -85,7 +85,7 @@
         {% endif %}
 
         <ol class="list-group">
-            {% for innslag_type in innslag_typer if not innslag_type.harTitler() and (innslag_type.getKey() != 'ressurs' or arrangement.getType() == 'land') %}
+            {% for innslag_type in innslag_typer if innslag_type.erJobbeMed() and (innslag_type.getKey() != 'ressurs' or arrangement.getType() == 'land') %}
                 <li class="list-group-item">
                     <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
                         <label>
