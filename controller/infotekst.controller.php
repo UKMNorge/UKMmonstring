@@ -3,7 +3,6 @@
 require_once('UKM/Autoloader.php');
 
 use UKMNorge\Arrangement\Arrangement;
-use UKMNorge\Meta\Write as WriteMeta;
 
 $arrangement = new Arrangement( get_option('pl_id') );
 $tekst = $arrangement->getInformasjonstekst();
@@ -19,7 +18,7 @@ echo TWIG(
 );
 wp_editor(
     stripslashes( $tekst ),
-    'videresending_editor'
+    'infotekst'
 );
 echo TWIG(
     'Informasjon/editor_post.html.twig',
