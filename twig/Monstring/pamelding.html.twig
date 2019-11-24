@@ -61,17 +61,12 @@
 
 
         <ol class="list-group">
-            {% for innslag_type in innslag_typer if innslag_type.harTitler() %}
+            {% for innslag_type in innslag_typer if innslag_type.erViseFrem() %}
                 <li class="list-group-item">
                     <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
                         <label>
-                            {% if innslag_type.getKey() == 'matkultur' %}
-                                <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
-                                {{ innslag_type.getNavn() }}
-                            {% else %}
-                                <input type="checkbox" checked disabled title="Alltid tillatt" alt="Alltid tillatt"/>
-                                {{ innslag_type.getNavn() }}
-                            {% endif %}
+                            <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
+                            {{ innslag_type.getNavn() }}
                         </label>
                     </div>
                 </li>
@@ -90,7 +85,7 @@
         {% endif %}
 
         <ol class="list-group">
-            {% for innslag_type in innslag_typer if not innslag_type.harTitler() and (innslag_type.getKey() != 'ressurs' or arrangement.getType() == 'land') %}
+            {% for innslag_type in innslag_typer if innslag_type.erJobbeMed() and (innslag_type.getKey() != 'ressurs' or arrangement.getType() == 'land') %}
                 <li class="list-group-item">
                     <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
                         <label>

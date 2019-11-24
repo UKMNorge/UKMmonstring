@@ -5,7 +5,7 @@ use UKMNorge\Arrangement\Arrangementer;
 use UKMNorge\Arrangement\Eier;
 use UKMNorge\Google\StaticMap;
 use UKMNorge\Arrangement\Load as LoadArrangement;
-use UKMNorge\Innslag\Typer;
+use UKMNorge\Innslag\Typer\Typer;
 
 date_default_timezone_set('Europe/Oslo');
 
