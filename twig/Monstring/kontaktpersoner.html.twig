@@ -49,7 +49,7 @@
                         <small>
                             <a href="mailto:{{ kontakt.getEpost() }}">{{ kontakt.getEpost() }}</a>
                             <br/>
-                            <span class="UKMSMS">{{ kontakt.getTelefon() }}</span>
+                            <span class="UKMSMS" data-to="{{kontakt.getTelefon()}}" data-navn="{{kontakt.getNavn()}}">{{ kontakt.getTelefon() }}</span>
                         </small>
                         <div class="clearfix"></div>
                     </li>
