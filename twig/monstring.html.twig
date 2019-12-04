@@ -1,15 +1,15 @@
 {% set monstringen = arrangement.getType() == 'kommune' ? 'mønstringen' : 'festivalen' %}
 
 <script>
-    $(document).on('click','a.goTo',(e)=>{
+    jQuery(document).on('click','a.goTo',(e)=>{
         e.preventDefault();
-        $('#goTo').val(
-            $(e.target).attr('data-action')
+        jQuery('#goTo').val(
+            jQuery(e.target).attr('data-action')
         );
-        $('#goToId').val(
-            $(e.target).attr('data-id')
+        jQuery('#goToId').val(
+            jQuery(e.target).attr('data-id')
         );
-        $('#arrangementForm').submit();
+        jQuery('#arrangementForm').submit();
     });
 </script>
 <div id="status"></div>

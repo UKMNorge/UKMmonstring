@@ -7,15 +7,15 @@ function initMap() {
 
         var map = 'https://maps.googleapis.com/maps/api/staticmap?center=' + place.name + ',' + place.formatted_address + '&zoom=15&size=400x300&scale=1' + '&markers=' + encodeURIComponent('icon:https://grafikk.ukm.no/profil/bobla/UKM-bobla_bla_0064.png|' + 'label:U|' + place.formatted_address);
 
-        $('#location-name').val(place.name);
-        $('#location-address').val(place.formatted_address);
-        $('#location-lat').val(place.geometry.location.lat());
-        $('#location-lon').val(place.geometry.location.lng());
-        $('#location-map').val(map);
-        $('#location-link').val(place.url);
+        jQuery('#location-name').val(place.name);
+        jQuery('#location-address').val(place.formatted_address);
+        jQuery('#location-lat').val(place.geometry.location.lat());
+        jQuery('#location-lon').val(place.geometry.location.lng());
+        jQuery('#location-map').val(map);
+        jQuery('#location-link').val(place.url);
 
-        $('#mapLink').attr('href', place.url);
-        $('#map').attr('src', map + '&key=' + GOOGLE_API_KEY);
+        jQuery('#mapLink').attr('href', place.url);
+        jQuery('#map').attr('src', map + '&key=' + GOOGLE_API_KEY);
     });
 }
 
@@ -47,17 +47,17 @@ jQuery(document).ready(function() {
 });
 
 /* KONTAKTPERSON: VIS REDIGERINGSLISTE */
-$(document).on('click', '#redigerKontaktpersoner', (e) => {
+jQuery(document).on('click', '#redigerKontaktpersoner', (e) => {
     e.preventDefault();
-    $('#kontaktpersoner_compact').slideUp();
-    $('#kontaktpersoner_edit').slideDown();
+    jQuery('#kontaktpersoner_compact').slideUp();
+    jQuery('#kontaktpersoner_edit').slideDown();
 });
 
 /* KONTAKTPERSON: SKJUL REDIGERINGSLISTE */
-$(document).on('click', '#skjulKontaktpersoner', (e) => {
+jQuery(document).on('click', '#skjulKontaktpersoner', (e) => {
     e.preventDefault();
-    $('#kontaktpersoner_edit').slideUp();
-    $('#kontaktpersoner_compact').slideDown();
+    jQuery('#kontaktpersoner_edit').slideUp();
+    jQuery('#kontaktpersoner_compact').slideDown();
 });
 
 
@@ -67,7 +67,7 @@ jQuery(document).on('click', ".kontaktperson a.slettKontaktperson", function(e) 
     var result = confirm('Sikker på at du vil slette denne kontaktpersonen?');
 
     if (result) {
-        var id = $(this).parents('.kontaktperson').attr('data-id');
+        var id = jQuery(this).parents('.kontaktperson').attr('data-id');
         var DeleteContact = UKMresources.Request({
             action: 'UKMmonstring',
             controller: 'slett',
@@ -77,8 +77,8 @@ jQuery(document).on('click', ".kontaktperson a.slettKontaktperson", function(e) 
                 main: '#arrangementForm'
             },
             handleSuccess: (response) => {
-                $('#kontakt_' + response.POST.id).fadeOut();
-                $('#visKontakt_' + response.POST.id).fadeOut();
+                jQuery('#kontakt_' + response.POST.id).fadeOut();
+                jQuery('#visKontakt_' + response.POST.id).fadeOut();
             },
             handleError: (response) => {
                 emitter.emit('error', response);
@@ -112,20 +112,20 @@ jQuery(document).on('click', '#imageedit', function(e) {
 
 
 /* SKAL ARRANGEMENTET TA I MOT VIDERESENDINGER */
-$(document).on('change', '#radioButtonValue_tillatVideresending', (e) => {
-    if ($(e.target).val() == 'true') {
-        $('#videresending_detaljer').slideDown();
+jQuery(document).on('change', '#radioButtonValue_tillatVideresending', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('#videresending_detaljer').slideDown();
     } else {
-        $('#videresending_detaljer').slideUp();
+        jQuery('#videresending_detaljer').slideUp();
     }
 });
 
 /* FILTRER ARRANGEMENT SOM KAN VIDERESENDE TIL ARRANGEMENTET */
-$(document).on('keyup', '#filterArrangement', function() {
-    var words = $(this).val().toLowerCase().split(' ');
+jQuery(document).on('keyup', '#filterArrangement', function() {
+    var words = jQuery(this).val().toLowerCase().split(' ');
     if (words.length > 1 || (words.length == 1 && words[0].length > 0)) {
-        $('.avsenderListe li').show().filter(function() {
-            var searchIn = $(this).attr('data-filter').toLowerCase();
+        jQuery('.avsenderListe li').show().filter(function() {
+            var searchIn = jQuery(this).attr('data-filter').toLowerCase();
             var found = false;
 
             words.forEach(function(word) {
@@ -138,71 +138,71 @@ $(document).on('keyup', '#filterArrangement', function() {
             return !found;
         }).slideUp({ duration: 100 });
     } else {
-        $('.avsenderListe li').stop().slideDown(200);
+        jQuery('.avsenderListe li').stop().slideDown(200);
     }
 });
 
 /* SKJUL/VIS KOMPAKT LISTE-VISNING OVER ARRANGEMENT SOM KAN VIDERESENDE TIL DETTE ARRANGEMENTET */
-$(document).on('click', '#visRedigerAvsenderArrangement', (e) => {
+jQuery(document).on('click', '#visRedigerAvsenderArrangement', (e) => {
     e.preventDefault();
 
-    if ($('#visAvsenderArrangement').find('.avsender').length == 0) {
-        $('#ingenAvsendere').show();
+    if (jQuery('#visAvsenderArrangement').find('.avsender').length == 0) {
+        jQuery('#ingenAvsendere').show();
     } else {
-        $('#ingenAvsendere').hide();
+        jQuery('#ingenAvsendere').hide();
     }
 
-    if ($('#redigerAvsenderArrangement').is(':visible')) {
-        $('#redigerAvsenderArrangement').slideUp();
-        $('#visRedigerAvsenderArrangement').html($('#visRedigerAvsenderArrangement').attr('data-vis'));
+    if (jQuery('#redigerAvsenderArrangement').is(':visible')) {
+        jQuery('#redigerAvsenderArrangement').slideUp();
+        jQuery('#visRedigerAvsenderArrangement').html(jQuery('#visRedigerAvsenderArrangement').attr('data-vis'));
     } else {
-        $('#redigerAvsenderArrangement').slideDown();
-        $('#visRedigerAvsenderArrangement').html($('#visRedigerAvsenderArrangement').attr('data-skjul'));
+        jQuery('#redigerAvsenderArrangement').slideDown();
+        jQuery('#visRedigerAvsenderArrangement').html(jQuery('#visRedigerAvsenderArrangement').attr('data-skjul'));
 
     }
 });
 
 /* OPDATER KOMPAKT LISTE OVER ARRANGEMENT SOM KAN VIDERESENDE TIL DETTE ARRANGEMENTET */
-$(document).on('change', '.avsenderMonstring input[type="checkbox"]', (e) => {
-    var checkbox = $(e.target);
+jQuery(document).on('change', '.avsenderMonstring input[type="checkbox"]', (e) => {
+    var checkbox = jQuery(e.target);
     var arrangement = checkbox.parents('.avsenderMonstring');
     var id = 'visAvsenderArrangement_' + arrangement.attr('data-id');
 
     if (checkbox.is(':checked')) {
-        $('#visAvsenderArrangement').append(
-            $('<span class="avsender label label-primary" id="' + id + '">' +
+        jQuery('#visAvsenderArrangement').append(
+            jQuery('<span class="avsender label label-primary" id="' + id + '">' +
                 arrangement.attr('data-name') +
                 /*'<a href="#" class="deleteAvsenderArrangement delete"><span class="dashicons dashicons-no-alt"></span></a>' + */
                 ' </span>'));
     } else {
-        $('#' + id).fadeOut().remove();
+        jQuery('#' + id).fadeOut().remove();
     }
 });
 
 
 /* GJØR TEKSTEN TOGGLE-BAR FOR VIS/SKJUL ARRANGEMENTER SOM KAN VIDERESENDE */
-$(document).ready(() => {
-    $('#visRedigerAvsenderArrangement').attr('data-vis', $('#visRedigerAvsenderArrangement').html());
+jQuery(document).ready(() => {
+    jQuery('#visRedigerAvsenderArrangement').attr('data-vis', jQuery('#visRedigerAvsenderArrangement').html());
 });
 
 /* SKAL ARRANGEMENTET BRUKE VIDERESENDINGSSKJEMA */
-$(document).on('change', '#radioButtonValue_vilHaSkjema', (e) => {
-    if ($(e.target).val() == 'true') {
-        $('#previewForm').slideDown();
+jQuery(document).on('change', '#radioButtonValue_vilHaSkjema', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('#previewForm').slideDown();
     } else {
-        $('#previewForm').slideUp();
+        jQuery('#previewForm').slideUp();
     }
 });
 
 /* SPØRRESKJEMA: SLETT SPØRSMÅL */
-$(document).on('click', '.actions > .delete', (e) => {
+jQuery(document).on('click', '.actions > .delete', (e) => {
     e.preventDefault();
 
     var sure = confirm('Er du sikker på at du vil slette dette spørsmålet?');
     if (sure) {
-        var sporsmal = $(e.target).parents('li.sporsmal');
+        var sporsmal = jQuery(e.target).parents('li.sporsmal');
         sporsmal.fadeOut(300, function() {
-            $(this).remove();
+            jQuery(this).remove();
         });
         return true;
     }
@@ -210,17 +210,17 @@ $(document).on('click', '.actions > .delete', (e) => {
 });
 
 /* SPØRRESKJEMA: LEGG TIL / FJERN OVERSKRIFT-KLASSE FOR ØKT SYNLIGHET */
-$(document).on('change', '.sporsmal_type', (e) => {
-    if ($(e.target).val() == 'overskrift') {
-        $(e.target).parents('.sporsmal').addClass('overskrift');
+jQuery(document).on('change', '.sporsmal_type', (e) => {
+    if (jQuery(e.target).val() == 'overskrift') {
+        jQuery(e.target).parents('.sporsmal').addClass('overskrift');
     } else {
-        $(e.target).parents('.sporsmal').removeClass('overskrift');
+        jQuery(e.target).parents('.sporsmal').removeClass('overskrift');
     }
 });
 
 /** SPØRRESKJEMA: LEGG TIL SPØRSMÅLET */
-$(document).on('click', '#addSporsmal', (e) => {
-    var sporsmal = $(e.target).parents('li.sporsmal');
+jQuery(document).on('click', '#addSporsmal', (e) => {
+    var sporsmal = jQuery(e.target).parents('li.sporsmal');
     var type = sporsmal.find('.sporsmal_type');
     var tittel = sporsmal.find('.sporsmal_tittel');
     var tekst = sporsmal.find('.sporsmal_tekst');
@@ -249,10 +249,10 @@ $(document).on('click', '#addSporsmal', (e) => {
     }
 
     // Skjul advarsel om at skjemaet ikke har spørsmål
-    $('#noSporsmal').slideUp(200);
+    jQuery('#noSporsmal').slideUp(200);
 
     // Fjern ID, da denne er #addSporsmal atm
-    var newId = $('#skjema li.sporsmal').length;
+    var newId = jQuery('#skjema li.sporsmal').length;
     sporsmal.attr('id', 'new_' + newId);
     id.attr('name', 'sporsmal_id[new_' + newId + ']');
     type.attr('name', 'sporsmal_type[new_' + newId + ']');
@@ -260,25 +260,25 @@ $(document).on('click', '#addSporsmal', (e) => {
     tekst.attr('name', 'sporsmal_tekst[new_' + newId + ']');
 
     // Bytt legg til med slett-ikon
-    sporsmal.find('.actions').html($('<span class="dashicons dashicons-trash action delete"></span>'));
+    sporsmal.find('.actions').html(jQuery('<span class="dashicons dashicons-trash action delete"></span>'));
 
     // Flytt til bunn av skjema
     sporsmal.appendTo('#skjema');
 
     // Rendre nytt skjema for legg til spørsmål
-    $('#skjema').prepend(
-        $('<li class="list-group-item sporsmal"/>').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }))
+    jQuery('#skjema').prepend(
+        jQuery('<li class="list-group-item sporsmal"/>').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }))
     );
-    $('#newSporsmalContainer textarea').autogrow();
+    jQuery('#newSporsmalContainer textarea').autogrow();
 });
 
 /* INITIER SKJEMA-FUNKSJONER */
-$(document).ready(function() {
-    $("#skjema").sortable({ items: "> li:not(:first)" });
+jQuery(document).ready(function() {
+    jQuery("#skjema").sortable({ items: "> li:not(:first)" });
     if (typeof(elem) !== 'undefined') {
-        $('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
+        jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
     }
-    $('textarea').autogrow();
+    jQuery('textarea').autogrow();
 });
 
 
