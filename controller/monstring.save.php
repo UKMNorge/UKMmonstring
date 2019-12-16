@@ -138,7 +138,9 @@ foreach (Typer::getAllTyper() as $tilbud) {
         $arrangement->getInnslagtyper()->leggTil(Typer::getByName($tilbud->getKey()));
     }
 }
-if( $arrangement->getInnslagTyper()->getAntall() == 0 ) {
+if( $arrangement->erArrangement() ) {
+    $arrangement->getInnslagTyper()->leggTil(Typer::getByName('enkeltperson'));
+} elseif( $arrangement->getInnslagTyper()->getAntall() == 0 ) {
     UKMmonstring::getFlashbag()->info(
         'Det er ikke mulig å ha et arrangement med påmelding uten noen tillatte kategorier. '.
         'Vi har derfor åpnet for standard-kategoriene, men du må gjerne redigere de.'

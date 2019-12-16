@@ -34,7 +34,7 @@
         {% if arrangement.harPamelding() %}
             <p>
                 Arrangementet tar i mot påmelding for
-                {% for kommune in arrangement.getKommuner() %}
+                {% for kommune in arrangement.getKommuner().getAll() %}
                     {{ kommune.getFylke().erOslo() ? ' bydel ' }}
                     {{ kommune }}
                     {{ not kommune.getFylke().erOslo() ? ' kommune ' }}
@@ -50,51 +50,61 @@
         {% endif %}
     </div>
 
-    <div class="col-12 col-sm-6">
-        {% if arrangement.harPamelding() %}
-            <label>Påmeldingsfrist for de som vil vise frem noe</label>
+    {% if arrangement.erMonstring() %}
+        <div class="col-12 col-sm-6">
+            {% if arrangement.harPamelding() %}
+                <label>Påmeldingsfrist for de som vil vise frem noe</label>
+                <div class="input-group" style="margin-bottom: 1em;">
+                    <input class="datepicker_kommune form-control" type="text" name="frist_1" value="{{ arrangement.getFrist1()|dato('d.m.Y') }}"/>
+                    <span class="input-group-addon">kl. 23:59</span>
+                </div>
+            {% endif %}
+
+
+            <ol class="list-group">
+                {% for innslag_type in innslag_typer|filter( innslag_type => innslag_type.erViseFrem()) %}
+                    <li class="list-group-item">
+                        <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+                            <label>
+                                <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
+                                {{ innslag_type.getNavn() }}
+                            </label>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+
+
+        <div class="col-12 col-sm-6">
+            {% if arrangement.harPamelding() %}
+                <label>Påmeldingsfrist for de som vil bidra som noe</label>
+                <div class="input-group" style="margin-bottom: 1em;">
+                    <input class="datepicker_kommune form-control" type="text" name="frist_2" value="{{ arrangement.getFrist2()|dato('d.m.Y') }}"/>
+                    <span class="input-group-addon">kl. 23:59</span>
+                </div>
+            {% endif %}
+
+            <ol class="list-group">
+                {% for innslag_type in innslag_typer|filter( (innslag_type, arrangement) => innslag_type.erJobbeMed() and (innslag_type.getKey() != 'ressurs' or arrangement.getType() == 'land')) %}
+                    <li class="list-group-item">
+                        <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+                            <label>
+                                <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
+                                {{ innslag_type.getNavn() }}
+                            </label>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    {% else %}
+        <div class="col-12 col-sm-6">
+            <label>Når er påmeldingsfristen?</label>
             <div class="input-group" style="margin-bottom: 1em;">
                 <input class="datepicker_kommune form-control" type="text" name="frist_1" value="{{ arrangement.getFrist1()|dato('d.m.Y') }}"/>
                 <span class="input-group-addon">kl. 23:59</span>
             </div>
-        {% endif %}
-
-
-        <ol class="list-group">
-            {% for innslag_type in innslag_typer|filter( innslag_type => innslag_type.erViseFrem()) %}
-                <li class="list-group-item">
-                    <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
-                        <label>
-                            <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
-                            {{ innslag_type.getNavn() }}
-                        </label>
-                    </div>
-                </li>
-            {% endfor %}
-        </ol>
-    </div>
-
-
-    <div class="col-12 col-sm-6">
-        {% if arrangement.harPamelding() %}
-            <label>Påmeldingsfrist for de som vil bidra som noe</label>
-            <div class="input-group" style="margin-bottom: 1em;">
-                <input class="datepicker_kommune form-control" type="text" name="frist_2" value="{{ arrangement.getFrist2()|dato('d.m.Y') }}"/>
-                <span class="input-group-addon">kl. 23:59</span>
-            </div>
-        {% endif %}
-
-        <ol class="list-group">
-            {% for innslag_type in innslag_typer|filter( (innslag_type, arrangement) => innslag_type.erJobbeMed() and (innslag_type.getKey() != 'ressurs' or arrangement.getType() == 'land')) %}
-                <li class="list-group-item">
-                    <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
-                        <label>
-                            <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
-                            {{ innslag_type.getNavn() }}
-                        </label>
-                    </div>
-                </li>
-            {% endfor %}
-        </ol>
-    </div>
+        </div>
+    {% endif %}
 </div>
