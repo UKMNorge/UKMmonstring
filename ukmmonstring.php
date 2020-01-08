@@ -48,7 +48,10 @@ class UKMmonstring extends Modul
      */
     public static function meny()
     {
-        $page = add_menu_page(
+        
+        /*
+        $page = add_submenu_page(
+            'index.php',
             'Arrangement',
             'Arrangement',
             'editor',
@@ -57,9 +60,10 @@ class UKMmonstring extends Modul
             'dashicons-buddicons-groups',
             4
         );
+        */
         
         add_action(
-            'admin_print_styles-' . $page,
+            'admin_print_styles-index.php',
             ['UKMmonstring', 'scripts_and_styles']
         );
     }
@@ -75,13 +79,12 @@ class UKMmonstring extends Modul
 
         wp_enqueue_script(
             'UKMMonstring_script',
-            plugin_dir_url(__FILE__)  . 'monstring.script.js'
+            UKMmonstring::getPluginUrl()  . 'monstring.script.js'
         );
         wp_enqueue_style(
             'UKMMonstring_style',
-            plugin_dir_url(__FILE__) . 'monstring.style.css'
+            UKMmonstring::getPluginUrl() . 'monstring.style.css'
         );
-
         wp_enqueue_script('jQuery_autogrow');
         wp_enqueue_script('WPbootstrap3_js');
         wp_enqueue_style('WPbootstrap3_css');

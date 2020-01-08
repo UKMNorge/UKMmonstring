@@ -19,7 +19,7 @@
     </div>
     <div class="col-xs-12 col-sm-1"></div>
     <div class="clearfix"></div>
-    <form action="?page={{GET('page')}}" method="POST">
+    <form action="index.php" method="POST">
         <input type="hidden" name="type" value="skjema"/>
         <ol class="list-group" id="skjema">
             <li class="list-group-item sporsmal" id="newSporsmalContainer"></li>
@@ -35,8 +35,8 @@
         </ol>
 
         <p></p>
-        <button type="submit" class="btn btn-success">Lagre</button>
+        <button type="submit" class="btn btn-ukm btn-success">Lagre</button>
         eller
-        <a href="?page={{GET('page')}}">avbryt</a>
+        <a href="index.php">avbryt</a>
     </form>
 </div>

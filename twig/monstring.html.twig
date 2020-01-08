@@ -1,41 +1,49 @@
 {% set monstringen = arrangement.getType() == 'kommune' ? 'mønstringen' : 'festivalen' %}
 
 <script>
-    jQuery(document).on('click','a.goTo',(e)=>{
-        e.preventDefault();
-        jQuery('#goTo').val(
-            jQuery(e.target).attr('data-action')
-        );
-        jQuery('#goToId').val(
-            jQuery(e.target).attr('data-id')
-        );
-        jQuery('#arrangementForm').submit();
-    });
+	jQuery(document).on('click', 'a.goTo', (e) => {
+e.preventDefault();
+jQuery('#goTo').val(jQuery(e.target).attr('data-action'));
+jQuery('#goToId').val(jQuery(e.target).attr('data-id'));
+jQuery('#arrangementForm').submit();
+});
 </script>
 <div id="status"></div>
 <form method="POST" id="arrangementForm">
-    <input type="hidden" name="goTo" id="goTo" value="monstring"/>
-    <input type="hidden" name="goToId" id="goToId" value="" />
-    <input type="hidden" name="type" value="monstring"/>
-    <div style="margin-left: .2em; margin-right: 1em; max-width: 868px;">
+	<input type="hidden" name="goTo" id="goTo" value="monstring"/>
+	<input type="hidden" name="goToId" id="goToId" value=""/>
+	<input type="hidden" name="type" value="monstring"/>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12 col-lg-7">
+				{% include "wp_modul.flashbag.html.twig" %}
 
-        {% include "wp_modul.flashbag.html.twig" %}
+				{% include "Monstring/basics.html.twig" %}
+				{% include "Monstring/pamelding.html.twig" %}
+				{% if arrangement.erSynlig() %}
+					{% include "Monstring/kontaktpersoner.html.twig" %}
+				{% endif %}
 
-        {% include "Monstring/basics.html.twig" %}
-        {% include "Monstring/pamelding.html.twig" %}
-        {% if arrangement.erSynlig() %}
-            {% include "Monstring/kontaktpersoner.html.twig" %}
-        {% endif %}
-        
-        {% include "Monstring/videresending.html.twig" %}
+				{% include "Monstring/videresending.html.twig" %}
 
-        {# TA INN MØNSTRING LAND #}
+				{# TA INN MØNSTRING LAND #}
+			</div>
+			<div class="col-12 col-lg-offset-1 col-lg-4">
+                <p>&nbsp;</p>
+				<div>
+					{% embed "Infobokser/meldinger.html.twig" %}{% endembed %}
+				</div>
+				<div>
+					{% embed "Infobokser/pameldte.html.twig" %}{% endembed %}
+				</div>
+			</div>
+		</div>
 
 
-        <div class="row" style="margin-top: 4em;">
-            <div class="col-xs-12 col-sm-12">
-                <button type="submit" class="btn btn-success" id="formSubmit">Lagre</button>
-            </div>
-        </div>
-    </div>
+		<div class="row" style="margin-top: 4em;">
+			<div class="col-xs-12 col-sm-12">
+				<button type="submit" class="btn btn-ukm btn-success" id="formSubmit">Lagre</button>
+			</div>
+		</div>
+	</div>
 </form>

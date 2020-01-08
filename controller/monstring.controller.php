@@ -122,3 +122,5 @@ switch( $arrangement->getType() ) {
         );
     break;
 }
+
+UKMmonstring::include('controller/dashboard.controller.php');

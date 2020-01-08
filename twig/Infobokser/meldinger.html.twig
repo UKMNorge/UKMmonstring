@@ -1,0 +1,25 @@
+<table class="table table-dashboard noborder">
+	<thead>
+		<tr>
+			<th>Meldinger</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for message in messages %}
+		    <tr class="{{message.level}}">
+				<td scope="row">
+					<span class="pull-right"><abbr title="{{message.body}}">i</abbr></span>
+					{% if message.link is defined and message.link is not empty %}
+						<a href="{{message.link}}" {{ message.target is defined ? 'target="'~ message.target ~'"'}}>{{message.header}}</a>
+					{% else %}
+						{{ message.header }}
+					{% endif %}
+				</td>
+			</tr>
+		{% else %}
+			<tr>
+				<td>ingen meldinger</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>

@@ -1,4 +1,4 @@
-<form method="POST" action="?page={{ GET('page') }}">
+<form method="POST" action="index.php">
     <input type="hidden" name="id" value="{{ GET('kontakt') }}"/>
     <input type="hidden" name="type" value="kontakt" />
     <div style="margin-left: .2em; margin-right: 1em; max-width: 768px;">
@@ -40,7 +40,7 @@
                 <img src="{{kontakt.getBilde()|replace({'http:':'https:'})}}" class="thumbnail" id="contact_image" width="250" />
                 <input type="hidden" value="{{kontakt.getBilde()}}" name="image" id="contact_image_input" />
                 <p class="text-muted">Det er sterkt anbefalt å laste opp bilde, <br />da det senker terskelen for å ta kontakt</p>
-                <button class="btn btn-xs btn-primary" id="imageedit">Endre bilde</button>
+                <button class="btn btn-ukm btn-xs btn-primary" id="imageedit">Endre bilde</button>
             </div>
         </div>
         
@@ -60,7 +60,7 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-12">
-                <button type="submit" class="btn btn-success" id="formSubmit">Lagre</button>
+                <button type="submit" class="btn btn-ukm btn-success" id="formSubmit">Lagre</button>
             </div>
         </div>
 

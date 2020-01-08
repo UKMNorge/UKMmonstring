@@ -22,7 +22,7 @@
                     {% endfor %}
                     <div class="clearfix"></div>
                     <p style="margin-top: 1em;" class="pull-right">
-                        <a href="#" class="btn btn-xs btn-primary" id="redigerKontaktpersoner">rediger / legg til kontaktpersoner</a>
+                        <a href="#" class="btn btn-ukm btn-xs btn-primary" id="redigerKontaktpersoner">rediger / legg til kontaktpersoner</a>
                     </p>
                 </li>
             </ol>
@@ -33,9 +33,9 @@
                 {% for kontakt in arrangement.getKontaktpersoner().getAll() %}
                     <li class="list-group-item kontaktperson" data-id="{{ kontakt.getId() }}" id="kontakt_{{ kontakt.getId()}}">
                         <div class="float-right pull-right">
-                            <a href="#" data-action="kontakt" data-id="{{ kontakt.getId() }}" class="goTo btn btn-xs btn-primary">rediger</a>
+                            <a href="#" data-action="kontakt" data-id="{{ kontakt.getId() }}" class="goTo btn btn-ukm btn-xs btn-primary">rediger</a>
                             {% if not kontakt.erLast() %}
-                                <a href="#" class="btn btn-xs btn-danger slettKontaktperson">fjern</a>
+                                <a href="#" class="btn btn-ukm btn-xs btn-danger slettKontaktperson">fjern</a>
                             {% endif %}
                         </div>
                         {% if kontakt.getBilde() is empty %}
@@ -73,7 +73,7 @@
             <div class="clearfix"></div>
             {% if arrangement.getKontaktpersoner().getAntall() > 0 %}
                 <p class="pull-right">
-                    <a href="#" class="btn btn-xs btn-primary" id="skjulKontaktpersoner">lukk listen</a>
+                    <a href="#" class="btn btn-ukm btn-xs btn-primary" id="skjulKontaktpersoner">lukk listen</a>
                 </p>
             {% endif %}
         </div>
