@@ -1,19 +1,39 @@
-<ol class="list-group">
+<ol class="list-group" id="skjema">
+    {% if not readonly %}
+        <li class="list-group-item sporsmal" id="newSporsmalContainer"></li>
+    {% endif %}
     {% for sporsmal in arrangement.getSkjema().getSporsmal() %}
         {% if sporsmal.getType() == 'overskrift' %}
             </ol>
             <ol class="list-group" style="margin-top: .5em;">
             <li class="list-group-item sporsmal overskrift">
-                <h3 style="margin-top: .3em;">{{ sporsmal.getTittel() }}</h3>
+                <div class="col-xs-10 col-sm-6">
+                    <h3 style="margin-top: .3em;">{{ sporsmal.getTittel() }}</h3>
+                </div>
+                {% if not readonly %}
+                    <div class="col-xs-2 col-sm-1 pull-right">
+                        <a href="#" id="slettSporsmal"><span class="dashicons dashicons-trash action delete"></span>Fjern</a>
+                    </div>
+                {% endif %}
+                <div class="clearfix"></div>
+
                 {% if sporsmal.getTekst() is not empty %}
                     <p>{{ sporsmal.getTekst() }}</p>
                 {% endif %}
             </li>
         {% else %}
             <li class="list-group-item sporsmal">
-                <h4>{{ sporsmal.getTittel() }}</h4>
-                <p>{{ sporsmal.getTekst() }}</p>
-
+                <div class="col-xs-12 col-sm-6">
+                    <h4>{{ sporsmal.getTittel() }}</h4>
+                    <p>{{ sporsmal.getTekst() }}</p>
+                </div>
+                {% if not readonly %}
+                    <div class="col-xs-12 col-sm-1 pull-right">
+                        <a href="#" id="slettSporsmal"><span class="dashicons dashicons-trash action delete"></span>Fjern</a>
+                    </div>
+                {% endif %}
+                <div class="clearfix"></div>
+                
                 {% if sporsmal.getType() == 'janei' %}
                     <div class="radio">
                         <input type="radio" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="true" {{ sporsmal.value == 'true' ? 'checked' : '' }} {{ readonly ? 'disabled'}}>Ja
@@ -39,8 +59,6 @@
                         <label for="sporsmal_{{ sporsmal.getId() }}_epost">E-post</label>
                         <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}_epost" name="sporsmal_{{ sporsmal.getId() }}_epost" value="{{ sporsmal.value.epost }}" {{ readonly ? 'readonly'}}>
                     </div>
-                    <p>&nbsp;</p>
-                    <div class="clearfix"></div>
                 {% endif %}
             </li>
         {% endif %}
