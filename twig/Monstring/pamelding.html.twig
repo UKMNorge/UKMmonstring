@@ -24,7 +24,7 @@
                 <a href="#" class="goTo" data-action="pamelding" data-id="false">slå av påmelding</a>.
             </p>
         {% else %}
-            <p class="{{ arrangement.getEier().getType() == 'kommune' ? 'text-danger'}}">
+            <p class="{{ arrangement.getEierType() == 'kommune' ? 'text-danger'}}">
                 Arrangementet har ikke påmelding for deltakere, og vises derfor ikke i påmeldingssystemet.
                 For å få påmeldte er du avhengig av at andre arrangementer videresender deltakere til deg.
                 Hvis dette er feil, kan du

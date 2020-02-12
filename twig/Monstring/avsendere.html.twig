@@ -49,21 +49,24 @@
                 {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_av_kommunen } %}{% endembed %}
             </div>
         {% endif %}
+        {# TODO BYTT UT #}
+        {#{% if arrangement.getEierType() != 'land' %}#}
+        {% if arrangement.getType() != 'land' %}
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="list-header">Andre
+                    {{ arrangement.getFylke().erOslo ? 'bydeler' : 'kommuner' }}
+                    i
+                    {{ arrangement.getFylke().getNavn() }}</div>
+                {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_i_fylket } %}{% endembed %}
+            </div>
 
-        <div class="col-12 col-sm-6 col-md-4">
-            <div class="list-header">Andre
-                {{ arrangement.getFylke().erOslo ? 'bydeler' : 'kommuner' }}
-                i
-                {{ arrangement.getFylke().getNavn() }}</div>
-            {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_i_fylket } %}{% endembed %}
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-4">
-            <div class="list-header">Av
-                {{ arrangement.getFylke().getNavn() }}
-                fylke</div>
-            {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_av_fylket } %}{% endembed %}
-        </div>
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="list-header">Av
+                    {{ arrangement.getFylke().getNavn() }}
+                    fylke</div>
+                {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_av_fylket } %}{% endembed %}
+            </div>
+        {% endif %}
         <div class="clearfix"></div>
     </div>
 </div>
