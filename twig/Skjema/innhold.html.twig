@@ -1,67 +1,65 @@
 <ol class="list-group" id="skjema">
-    {% if not readonly %}
-        <li class="list-group-item sporsmal" id="newSporsmalContainer"></li>
+    {% if not readonly and editmode is defined and editmode %}
+        <li class="list-group-item sporsmal list-group-item-info" id="newSporsmalContainer" style="background-color: rgb(217,218,218);"></li>
     {% endif %}
     {% for sporsmal in arrangement.getSkjema().getSporsmal() %}
-        {% if sporsmal.getType() == 'overskrift' %}
-            </ol>
-            <ol class="list-group" style="margin-top: .5em;">
-            <li class="list-group-item sporsmal overskrift">
-                <div class="col-xs-10 col-sm-6">
-                    <h3 style="margin-top: .3em;">{{ sporsmal.getTittel() }}</h3>
-                </div>
-                {% if not readonly %}
-                    <div class="col-xs-2 col-sm-1 pull-right">
-                        <a href="#" id="slettSporsmal"><span class="dashicons dashicons-trash action delete"></span>Fjern</a>
-                    </div>
-                {% endif %}
-                <div class="clearfix"></div>
-
-                {% if sporsmal.getTekst() is not empty %}
-                    <p>{{ sporsmal.getTekst() }}</p>
-                {% endif %}
+        {% if editmode is defined and editmode %}
+            {# Hvis vi er i edit-mode viser vi skjemaRad.html.twig, ellers viser vi fyll inn-modus. #}
+            <li class="list-group-item sporsmal">
+                {% include 'js/skjemaRad.html.twig' %}
             </li>
         {% else %}
-            <li class="list-group-item sporsmal">
-                <div class="col-xs-12 col-sm-6">
-                    <h4>{{ sporsmal.getTittel() }}</h4>
-                    <p>{{ sporsmal.getTekst() }}</p>
-                </div>
-                {% if not readonly %}
-                    <div class="col-xs-12 col-sm-1 pull-right">
-                        <a href="#" id="slettSporsmal"><span class="dashicons dashicons-trash action delete"></span>Fjern</a>
+            {# Last inn en skjemarad i visningsmodus #}
+            {% if sporsmal.getType() == 'overskrift' %}
+                <li class="list-group-item sporsmal overskrift">
+                    <div class="col-xs-10 col-sm-6">
+                        <h3 style="margin-top: .3em;">{{ sporsmal.getTittel() }}</h3>
                     </div>
-                {% endif %}
-                <div class="clearfix"></div>
-                
-                {% if sporsmal.getType() == 'janei' %}
-                    <div class="radio">
-                        <input type="radio" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="true" {{ sporsmal.value == 'true' ? 'checked' : '' }} {{ readonly ? 'disabled'}}>Ja
+                    <div class="clearfix"></div>
+
+                    {% if sporsmal.getTekst() is not empty %}
+                        <p>{{ sporsmal.getTekst() }}</p>
+                    {% endif %}
+                </li>
+            {% else %}
+                <li class="list-group-item sporsmal">
+                    <div class="col-xs-12 col-sm-6">
+                        <h4>{{ sporsmal.getTittel() }}</h4>
+                        <p>{{ sporsmal.getTekst() }}</p>
                     </div>
-                    <div class="radio">
-                        <input type="radio" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="false" {{ sporsmal.value == 'false' ? 'checked' : '' }} {{ readonly ? 'disabled'}}>Nei
-                    </div>
-                {% elseif sporsmal.getType() == 'kort_tekst' %}
-                    <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="{{ sporsmal.value }}" {{ readonly ? 'readonly'}}>
-                {% elseif sporsmal.getType() == 'lang_tekst' %}
-                    <textarea type="text autogrow" class="form-control" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" {{ readonly ? 'readonly'}}>{{ sporsmal.value }}</textarea>
-                {% elseif sporsmal.getType() == 'kontakt' %}
-                    <div class="col-xs-12 col-sm-4">
-                        <label for="sporsmal_{{ sporsmal.getId() }}_navn">Navn</label>
-                        <input type="text" class="form-control" 
-                        id="sporsmal_{{ sporsmal.getId() }}_navn" name="sporsmal_{{ sporsmal.getId() }}_navn" value="{{ sporsmal.value.navn }}" {{ readonly ? 'readonly'}}>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <label for="sporsmal_{{ sporsmal.getId() }}_mobil">Mobil</label>
-                        <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}_mobil" name="sporsmal_{{ sporsmal.getId() }}_mobil" value="{{ sporsmal.value.mobil }}" {{ readonly ? 'readonly'}}>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <label for="sporsmal_{{ sporsmal.getId() }}_epost">E-post</label>
-                        <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}_epost" name="sporsmal_{{ sporsmal.getId() }}_epost" value="{{ sporsmal.value.epost }}" {{ readonly ? 'readonly'}}>
-                    </div>
-                {% endif %}
-            </li>
+                    <div class="clearfix"></div>
+                    
+                    {% if sporsmal.getType() == 'janei' %}
+                        <div class="radio">
+                            <input type="radio" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="true" {{ sporsmal.value == 'true' ? 'checked' : '' }} {{ readonly ? 'disabled'}}>Ja
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="false" {{ sporsmal.value == 'false' ? 'checked' : '' }} {{ readonly ? 'disabled'}}>Nei
+                        </div>
+                    {% elseif sporsmal.getType() == 'kort_tekst' %}
+                        <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="{{ sporsmal.value }}" {{ readonly ? 'readonly'}}>
+                    {% elseif sporsmal.getType() == 'lang_tekst' %}
+                        <textarea type="text autogrow" class="form-control" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" {{ readonly ? 'readonly'}}>{{ sporsmal.value }}</textarea>
+                    {% elseif sporsmal.getType() == 'kontakt' %}
+                        <div class="col-xs-12 col-sm-4">
+                            <label for="sporsmal_{{ sporsmal.getId() }}_navn">Navn</label>
+                            <input type="text" class="form-control" 
+                            id="sporsmal_{{ sporsmal.getId() }}_navn" name="sporsmal_{{ sporsmal.getId() }}_navn" value="{{ sporsmal.value.navn }}" {{ readonly ? 'readonly'}}>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <label for="sporsmal_{{ sporsmal.getId() }}_mobil">Mobil</label>
+                            <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}_mobil" name="sporsmal_{{ sporsmal.getId() }}_mobil" value="{{ sporsmal.value.mobil }}" {{ readonly ? 'readonly'}}>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <label for="sporsmal_{{ sporsmal.getId() }}_epost">E-post</label>
+                            <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}_epost" name="sporsmal_{{ sporsmal.getId() }}_epost" value="{{ sporsmal.value.epost }}" {{ readonly ? 'readonly'}}>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
         {% endif %}
+        
+        
     {% else %}
         <li class="list-group-item">{{ arrangement.getNavn() }} har ikke laget et spørreskjema, og du trenger derfor ikke fylle inn noe her</li>
     {% endfor %}

@@ -7,40 +7,11 @@
     Du kan legge til så mange spørsmål du vil, og endre rekkefølgen ved å dra og slippe etterpå.
 </p>
 
-
-
-{# <div class="col-12 col-sm-12">
-    <div class="col-xs-12 col-sm-3">
-        <label>Type</label>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <label>Tittel/spørsmål</label>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <label>Hjelpetekst</label>
-    </div>
-    <div class="col-xs-12 col-sm-1"></div>
-    <div class="clearfix"></div>
-</div> #}
-
 <div class="col-12 col-sm-12">
     <form action="index.php" method="POST">
         <input type="hidden" name="type" value="skjema"/>
-        {% include "Skjema/innhold.html.twig" with {'readonly':false,'arrangement': arrangement} %}
-        
-        {# <ol class="list-group" id="skjema">
-            {% for sporsmal in arrangement.getSkjema().getSporsmal() %}
-                <li class="list-group-item sporsmal {{sporsmal.getType()=='overskrift'?'overskrift'}}">
-                    {% include "js/skjemaRad.html.twig" with{'sporsmal': sporsmal} %}
-                </li>
-            {% else %}
-                <li class="list-group-item muted" id="noSporsmal">
-                    Skjemaet har ingen spørsmål. Start med å legge til det første ovenfor.
-                </li>
-            {% endfor %}
-        </ol> #}
-
-        <p></p>
+        {% include "Skjema/innhold.html.twig" with {'readonly':false,'arrangement': arrangement,'editmode':true} %}
+        <p>&nbsp;</p>
         <button type="submit" class="btn btn-ukm btn-success">Lagre</button>
         eller
         <a href="index.php">avbryt</a>

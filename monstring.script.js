@@ -19,7 +19,6 @@ function initMap() {
     });
 }
 
-
 /* KONTAKTPERSONER: SORTERING */
 jQuery(document).ready(function() {
     jQuery("#kontaktpersoner_edit > ol").sortable({
@@ -275,11 +274,8 @@ jQuery(document).on('click', '#addSporsmal', (e) => {
 /* INITIER SKJEMA-FUNKSJONER */
 jQuery(document).ready(function() {
     console.log("Initerer skjema-funksjoner...");
-    //jQuery("#skjema").sortable({ items: "> li:not(:first)" });
-
-    //if (typeof(elem) !== 'undefined') {
-        jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
-    //}
+    jQuery("#skjema").sortable({ items: "> li:not(:first)" });
+    jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
     jQuery('textarea').autogrow();
 });
 
