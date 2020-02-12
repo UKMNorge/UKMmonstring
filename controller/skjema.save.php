@@ -18,6 +18,17 @@ if (!$arrangement->getSkjema()) {
     $skjema = $arrangement->getSkjema();
 }
 
+// For alle slettede spørsmål, fjern de fra databasen også. Gjør dette _før_ vi lagrer ny rekkefølge.
+if( isset($_POST['slettede_sporsmal']) ) {
+    foreach ($_POST['slettede_sporsmal'] as $sporsmal_id) {
+        try {        
+            WriteSkjema::fjernSporsmalFraSkjema($sporsmal_id, $skjema->getId());
+        } catch( Exception $e ) {
+            static::getFlashbag()->error("Klarte ikke å fjerne spørsmål. Systemet sa: ".$e->getMessage().". Kode: ".$e->getCode());
+        }
+    }    
+}
+
 $rekkefolge = 0;
 foreach ($_POST['sporsmal_type'] as $post_id => $type) {
     $rekkefolge++;
