@@ -113,7 +113,7 @@ switch( $arrangement->getType() ) {
         UKMmonstring::addViewData(
             'arrangementer_i_fylket',
             Arrangementer::filterSkipEier(
-                $arrangement->getEier(),
+                $arrangement->getEierObjekt(),
                 LoadArrangement::iFylke(
                     $arrangement->getSesong(),
                     $arrangement->getFylke()
