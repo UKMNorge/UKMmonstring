@@ -22,7 +22,7 @@
                 <li class="list-group-item">
                     <div class="fade-collapsible">
                         <div class="content">
-                            {% if not arrangement.harSkjema() %}
+                            {% if arrangement.getSkjema() is empty or arrangement.getSkjema().getSporsmal()|length == 0 %}
                                 <p>
                                     Du har ikke laget et skjema enda.
                                 </p>

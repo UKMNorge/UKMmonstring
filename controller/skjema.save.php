@@ -8,14 +8,18 @@ use UKMNorge\Arrangement\Skjema\Write as WriteSkjema;
 
 require_once('UKM/Autoloader.php');
 
-if( !isset($arrangement)) {
-    $arrangement = new Arrangement( get_option('pl_id') );
-}
-// Opprett et skjema for mønstringen hvis den ikke har det
-if (!$arrangement->getSkjema()) { 
-    $skjema = WriteSkjema::create( $arrangement );
-} else {
-    $skjema = $arrangement->getSkjema();
+$arrangement = new Arrangement( get_option('pl_id') );
+$skjema = $arrangement->getSkjema();
+
+// For alle slettede spørsmål, fjern de fra databasen også. Gjør dette _før_ vi lagrer ny rekkefølge.
+if( isset($_POST['slettede_sporsmal']) ) {
+    foreach ($_POST['slettede_sporsmal'] as $sporsmal_id) {
+        try {        
+            WriteSkjema::fjernSporsmalFraSkjema($sporsmal_id, $skjema->getId());
+        } catch( Exception $e ) {
+            static::getFlashbag()->error("Klarte ikke å fjerne spørsmål. Systemet sa: ".$e->getMessage().". Kode: ".$e->getCode());
+        }
+    }    
 }
 
 $rekkefolge = 0;

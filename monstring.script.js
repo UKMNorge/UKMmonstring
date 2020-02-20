@@ -19,7 +19,6 @@ function initMap() {
     });
 }
 
-
 /* KONTAKTPERSONER: SORTERING */
 jQuery(document).ready(function() {
     jQuery("#kontaktpersoner_edit > ol").sortable({
@@ -201,9 +200,14 @@ jQuery(document).on('click', '.actions > .delete', (e) => {
     var sure = confirm('Er du sikker på at du vil slette dette spørsmålet?');
     if (sure) {
         var sporsmal = jQuery(e.target).parents('li.sporsmal');
+        var sporsmal_id = jQuery(sporsmal).find('.sporsmal_id').val();
         sporsmal.fadeOut(300, function() {
             jQuery(this).remove();
         });
+        // Sletter kun spørsmål som faktisk er lagret i databasen.
+        if(sporsmal_id != "new") {
+            jQuery("#skjema").append('<input type="hidden" name="slettede_sporsmal[]" value="'+sporsmal_id+'">');
+        }
         return true;
     }
     return false;
@@ -275,17 +279,9 @@ jQuery(document).on('click', '#addSporsmal', (e) => {
 /* INITIER SKJEMA-FUNKSJONER */
 jQuery(document).ready(function() {
     jQuery("#skjema").sortable({ items: "> li:not(:first)" });
-    if (typeof(elem) !== 'undefined') {
-        jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
-    }
+    jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
     jQuery('textarea').autogrow();
 });
-
-
-
-
-
-
 
 /*
  * UKM MØNSTRINGER
