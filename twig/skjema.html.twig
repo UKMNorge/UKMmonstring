@@ -17,3 +17,9 @@
         <a href="index.php">avbryt</a>
     </form>
 </div>
+
+<script>
+jQuery(document).ready(function() {
+    jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
+});
+</script>
