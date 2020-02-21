@@ -1,3 +1,4 @@
+
 <ol class="list-group" id="skjema">
     {% if not readonly and editmode is defined and editmode %}
         <li class="list-group-item sporsmal list-group-item-info" id="newSporsmalContainer" style="background-color: rgb(217,218,218);"></li>
@@ -12,49 +13,53 @@
             {# Last inn en skjemarad i visningsmodus #}
             {% if sporsmal.getType() == 'overskrift' %}
                 <li class="list-group-item sporsmal overskrift">
-                    <div class="col-xs-10 col-sm-6">
+                    <div class="col-xs-12">
                         <h3 style="margin-top: .3em;">{{ sporsmal.getTittel() }}</h3>
+                        {% if sporsmal.getTekst() is not empty %}
+                            <p>{{ sporsmal.getTekst() }}</p>
+                        {% endif %}
                     </div>
                     <div class="clearfix"></div>
-
-                    {% if sporsmal.getTekst() is not empty %}
-                        <p>{{ sporsmal.getTekst() }}</p>
-                    {% endif %}
                 </li>
             {% else %}
                 <li class="list-group-item sporsmal">
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12">
                         <h4>{{ sporsmal.getTittel() }}</h4>
                         <p>{{ sporsmal.getTekst() }}</p>
-                    </div>
-                    <div class="clearfix"></div>
-                    
+                    </div>                    
                     {% if sporsmal.getType() == 'janei' %}
-                        <div class="radio">
-                            <input type="radio" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="true" {{ sporsmal.value == 'true' ? 'checked' : '' }} {{ readonly ? 'disabled'}}>Ja
-                        </div>
-                        <div class="radio">
-                            <input type="radio" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="false" {{ sporsmal.value == 'false' ? 'checked' : '' }} {{ readonly ? 'disabled'}}>Nei
+                        <div class="col-xs-12">
+                            <div class="radio">
+                                <input type="radio" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="true" {{ svarsett is defined and svarsett.getSvar(sporsmal.getId()).getValue() == 'true' ? 'checked' : '' }} {{ readonly ? 'disabled'}}>Ja
+                            </div>
+                            <div class="radio">
+                                <input type="radio" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="false" {{ svarsett is defined and svarsett.getSvar(sporsmal.getId()).getValue() == 'false' ? 'checked' : '' }} {{ readonly ? 'disabled'}}>Nei
+                            </div>
                         </div>
                     {% elseif sporsmal.getType() == 'kort_tekst' %}
-                        <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="{{ sporsmal.value }}" {{ readonly ? 'readonly'}}>
+                        <div class="col-xs-12">
+                            <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" value="{{ svarsett is defined ? svarsett.getSvar(sporsmal.getId()).getValue() }}" {{ readonly ? 'readonly'}}>
+                        </div>
                     {% elseif sporsmal.getType() == 'lang_tekst' %}
-                        <textarea type="text autogrow" class="form-control" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" {{ readonly ? 'readonly'}}>{{ sporsmal.value }}</textarea>
+                        <div class="col-xs-12">
+                            <textarea type="text autogrow" class="form-control" id="sporsmal_{{ sporsmal.getId() }}" name="sporsmal_{{ sporsmal.getId() }}" {{ readonly ? 'readonly'}}>{{ svarsett is defined ? svarsett.getSvar(sporsmal.getId()).getValue() }}</textarea>
+                        </div>
                     {% elseif sporsmal.getType() == 'kontakt' %}
                         <div class="col-xs-12 col-sm-4">
                             <label for="sporsmal_{{ sporsmal.getId() }}_navn">Navn</label>
                             <input type="text" class="form-control" 
-                            id="sporsmal_{{ sporsmal.getId() }}_navn" name="sporsmal_{{ sporsmal.getId() }}_navn" value="{{ sporsmal.value.navn }}" {{ readonly ? 'readonly'}}>
+                            id="sporsmal_{{ sporsmal.getId() }}_navn" name="sporsmal_{{ sporsmal.getId() }}[navn]" value="{{ svarsett is defined ? svarsett.getSvar(sporsmal.getId()).getValue('navn') }}" {{ readonly ? 'readonly'}}>
                         </div>
                         <div class="col-xs-12 col-sm-4">
                             <label for="sporsmal_{{ sporsmal.getId() }}_mobil">Mobil</label>
-                            <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}_mobil" name="sporsmal_{{ sporsmal.getId() }}_mobil" value="{{ sporsmal.value.mobil }}" {{ readonly ? 'readonly'}}>
+                            <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}_mobil" name="sporsmal_{{ sporsmal.getId() }}[mobil]" value="{{ svarsett is defined ? svarsett.getSvar(sporsmal.getId()).getValue('mobil') }}" {{ readonly ? 'readonly'}}>
                         </div>
                         <div class="col-xs-12 col-sm-4">
                             <label for="sporsmal_{{ sporsmal.getId() }}_epost">E-post</label>
-                            <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}_epost" name="sporsmal_{{ sporsmal.getId() }}_epost" value="{{ sporsmal.value.epost }}" {{ readonly ? 'readonly'}}>
+                            <input type="text" class="form-control" id="sporsmal_{{ sporsmal.getId() }}_epost" name="sporsmal_{{ sporsmal.getId() }}[epost]" value="{{ svarsett is defined ? svarsett.getSvar(sporsmal.getId()).getValue('epost') }}" {{ readonly ? 'readonly'}}>
                         </div>
                     {% endif %}
+                        <div class="clearfix"></div>
                 </li>
             {% endif %}
         {% endif %}
