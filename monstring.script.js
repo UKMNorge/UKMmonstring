@@ -205,8 +205,8 @@ jQuery(document).on('click', '.actions > .delete', (e) => {
             jQuery(this).remove();
         });
         // Sletter kun spørsmål som faktisk er lagret i databasen.
-        if(sporsmal_id != "new") {
-            jQuery("#skjema").append('<input type="hidden" name="slettede_sporsmal[]" value="'+sporsmal_id+'">');
+        if (sporsmal_id != "new") {
+            jQuery("#skjema").append('<input type="hidden" name="slettede_sporsmal[]" value="' + sporsmal_id + '">');
         }
         return true;
     }
