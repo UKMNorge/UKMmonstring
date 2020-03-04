@@ -269,9 +269,12 @@ jQuery(document).on('click', '#addSporsmal', (e) => {
     // Flytt til bunn av skjema
     sporsmal.appendTo('#skjema');
 
+    // Fjern grå bakgrunn
+    jQuery(sporsmal).attr('style', "");
+
     // Rendre nytt skjema for legg til spørsmål
     jQuery('#skjema').prepend(
-        jQuery('<li class="list-group-item sporsmal"/>').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }))
+        jQuery('<li class="list-group-item sporsmal" style="background-color: rgb(217,218,218);"/>').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }))
     );
     jQuery('#newSporsmalContainer textarea').autogrow();
 });
