@@ -165,6 +165,23 @@ if ($arrangement->harVideresending()) {
     }
 }
 
+// Skal noen ting nomineres?
+if( isset($_POST['benyttNominasjon'])) {
+    if( $_POST['benyttNominasjon'] == 'true' ) {
+        $arrangement->setHarNominasjon( true );
+        
+        // Lagre alle "nominer_$something"-settings
+        foreach( $_POST as $post_key => $post_value ) {
+            if( strpos( $post_key, 'nominer_') === 0 ) {
+                $type = Typer::getByKey( str_replace('nominer_','',$post_key) );
+                $arrangement->setHarNominasjonFor( $type, $post_value == 'true');
+            }
+        }
+    } else {
+       $arrangement->setHarNominasjon( true );
+    }
+}
+
 try {
     Write::save($arrangement);
     UKMmonstring::getFlashbag()->add(

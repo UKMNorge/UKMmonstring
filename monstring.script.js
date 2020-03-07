@@ -119,6 +119,15 @@ jQuery(document).on('change', '#radioButtonValue_tillatVideresending', (e) => {
     }
 });
 
+/* SKAL ARRANGEMENTET BRUKE NOMINASJON */
+jQuery(document).on('change', '#radioButtonValue_benyttNominasjon', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('#nominasjon_detaljer').slideDown();
+    } else {
+        jQuery('#nominasjon_detaljer').slideUp();
+    }
+});
+
 /* FILTRER ARRANGEMENT SOM KAN VIDERESENDE TIL ARRANGEMENTET */
 jQuery(document).on('keyup', '#filterArrangement', function() {
     var words = jQuery(this).val().toLowerCase().split(' ');
