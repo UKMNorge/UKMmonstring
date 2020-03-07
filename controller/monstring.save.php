@@ -186,7 +186,7 @@ if (isset($_POST['benyttNominasjon'])) {
             $arrangement->setHarNominasjon(false);
         }
     } else {
-        $arrangement->setHarNominasjon(true);
+        $arrangement->setHarNominasjon(false);
     }
 }
 
