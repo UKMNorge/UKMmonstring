@@ -9,17 +9,17 @@ use UKMNorge\Wordpress\Blog;
 require_once('UKM/Autoloader.php');
 
 // ENDRE SYNLIGHET
-if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig' ) {
+if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig') {
     $arrangement->setSynlig($_POST['goToId'] == 'true');
 
     UKMmonstring::getFlashbag()->add(
         'info',
-        'Arrangementet er nå '. ($_POST['goToId'] == 'true' ? 'synlig på' : 'skjult fra') .' UKM.no. '.
-        '<a href="?page='. $_GET['page'] .'" class="goTo" data-action="synlig" data-id="'.($_POST['goToId'] == 'true' ? 'false':'true').'">Angre</a>'
+        'Arrangementet er nå ' . ($_POST['goToId'] == 'true' ? 'synlig på' : 'skjult fra') . ' UKM.no. ' .
+            '<a href="?page=' . $_GET['page'] . '" class="goTo" data-action="synlig" data-id="' . ($_POST['goToId'] == 'true' ? 'false' : 'true') . '">Angre</a>'
     );
 }
-if( isset($_POST['goTo']) && $_POST['goTo'] == 'pamelding') {
-    if( $_POST['goToId'] == 'true' ) {
+if (isset($_POST['goTo']) && $_POST['goTo'] == 'pamelding') {
+    if ($_POST['goToId'] == 'true') {
         $arrangement->setPamelding('apen');
         UKMmonstring::getFlashbag()->add(
             'success',
@@ -29,9 +29,9 @@ if( isset($_POST['goTo']) && $_POST['goTo'] == 'pamelding') {
         $arrangement->setPamelding('ingen');
         UKMmonstring::getFlashbag()->add(
             'warning',
-            'Arrangementet tar ikke lenger i mot påmelding fra deltakere! All påmelding må skje via videresending. '.
-            '<br />'.
-            'Sjekk at du har oppgitt riktig på hvem som kan sende videre til ditt arrangement nederst på denne siden'
+            'Arrangementet tar ikke lenger i mot påmelding fra deltakere! All påmelding må skje via videresending. ' .
+                '<br />' .
+                'Sjekk at du har oppgitt riktig på hvem som kan sende videre til ditt arrangement nederst på denne siden'
         );
     }
 }
@@ -111,13 +111,13 @@ if (isset($_POST['navn'])) {
 }
 
 // STED
-if( isset($_POST['sted'])) {
+if (isset($_POST['sted'])) {
     $arrangement->setSted($_POST['sted']);
 }
 
 
 // GOOGLE-MAP
-if( isset($_POST['location_name'])){
+if (isset($_POST['location_name'])) {
     $map = StaticMap::fromPOST('location');
     $arrangement->setGoogleMapData($map->toJSON());
 }
@@ -138,17 +138,17 @@ foreach (Typer::getAllTyper() as $tilbud) {
         $arrangement->getInnslagtyper()->leggTil(Typer::getByName($tilbud->getKey()));
     }
 }
-if( $arrangement->erArrangement() ) {
+if ($arrangement->erArrangement()) {
     $arrangement->getInnslagTyper()->leggTil(Typer::getByName('enkeltperson'));
-} elseif( $arrangement->getInnslagTyper()->getAntall() == 0 ) {
+} elseif ($arrangement->getInnslagTyper()->getAntall() == 0) {
     UKMmonstring::getFlashbag()->info(
-        'Det er ikke mulig å ha et arrangement med påmelding uten noen tillatte kategorier. '.
-        'Vi har derfor åpnet for standard-kategoriene, men du må gjerne redigere de.'
+        'Det er ikke mulig å ha et arrangement med påmelding uten noen tillatte kategorier. ' .
+            'Vi har derfor åpnet for standard-kategoriene, men du må gjerne redigere de.'
     );
 }
 
 // VIDERESENDING
-if( isset($_POST['tillatVideresending'] ) ) {
+if (isset($_POST['tillatVideresending'])) {
     $arrangement->setHarVideresending($_POST['tillatVideresending'] == 'true');
 }
 
@@ -166,10 +166,10 @@ if ($arrangement->harVideresending()) {
 }
 
 // Skal noen ting nomineres?
-if( isset($_POST['benyttNominasjon'])) {
-    if( $_POST['benyttNominasjon'] == 'true' ) {
-        $arrangement->setHarNominasjon( true );
-        
+if (isset($_POST['benyttNominasjon'])) {
+    if ($_POST['benyttNominasjon'] == 'true') {
+        $arrangement->setHarNominasjon(true);
+
         // Lagre alle "nominer_$something"-settings
         $count = 0;
         foreach ($_POST as $post_key => $post_value) {
@@ -199,7 +199,7 @@ try {
 } catch (Exception $e) {
     UKMmonstring::getFlashbag()->add(
         'danger',
-        'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage() .' ('.$e->getCode().')'
+        'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage() . ' (' . $e->getCode() . ')'
     );
 }
 
