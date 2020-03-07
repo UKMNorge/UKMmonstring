@@ -33,5 +33,9 @@
 				</li>
 			{% endfor %}
 		</ol>
+
+        <label>Beskriv frister og regler for nominasjon</label>
+        <p>Det du skriver her er kun synlig for de voksne som fyller ut skjema / videresender til ditt arrangement, og ikke til deltakerne.</p>
+        <textarea name="nominasjon_informasjon" class="form-control">{{ arrangement.getNominasjonInformasjon() }}</textarea>
 	</div>
 </div>

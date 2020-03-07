@@ -190,6 +190,11 @@ if (isset($_POST['benyttNominasjon'])) {
     }
 }
 
+// Finnes det en nominasjonsinformasjon som skal lagres?
+if( isset($_POST['nominasjon_informasjon'])) {
+    $arrangement->setNominasjonInformasjon( $_POST['nominasjon_informasjon']);
+}
+
 try {
     Write::save($arrangement);
     UKMmonstring::getFlashbag()->add(
