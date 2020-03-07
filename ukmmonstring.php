@@ -29,13 +29,6 @@ class UKMmonstring extends Modul
                 ['UKMmonstring', 'meny']
             );
         }
-
-        add_action(
-            'network_admin_menu',
-            ['UKMmonstring', 'network_menu'],
-            2000
-        );
-
         add_action(
             'wp_ajax_UKMmonstring',
             ['UKMmonstring', 'ajax']
@@ -88,94 +81,6 @@ class UKMmonstring extends Modul
         wp_enqueue_script('jQuery_autogrow');
         wp_enqueue_script('WPbootstrap3_js');
         wp_enqueue_style('WPbootstrap3_css');
-    }
-
-    /**
-     * Nettverksmeny
-     *
-     */
-    public static function network_menu()
-    {
-        $page = add_menu_page(
-            'Mønstringer',
-            'Mønstringer',
-            'superadmin',
-            'UKMmonstring_network_admin',
-            ['UKMmonstring','renderNetworkAdmin'],
-            'dashicons-buddicons-groups', #//ico.ukm.no/hus-menu.png',
-            23
-        );
-        $subpages[] = add_submenu_page(
-            'UKMmonstring_network_admin', 
-            'Opprett', 
-            'Opprett', 
-            'superadmin', 
-            'UKMmonstring_network_admin_rome_opprett', 
-            'UKMmonstring_network_admin_rome_opprett'
-        );
-        $subpages[] = add_submenu_page(
-            'UKMmonstring_network_admin',
-            'Avlys',
-            'Avlys',
-            'superadmin',
-            'UKMmonstring_network_admin_rome_avlys',
-            'UKMmonstring_network_admin_rome_avlys'
-        );
-        $subpages[] = add_submenu_page(
-            'UKMmonstring_network_admin',
-            'Legg til kommune',
-            'Legg til kommune',
-            'superadmin',
-            'UKMmonstring_network_admin_rome_legg_til',
-            'UKMmonstring_network_admin_rome_legg_til'
-        );
-        $subpages[] = add_submenu_page(
-            'UKMmonstring_network_admin',
-            'Trekk ut kommune',
-            'Trekk ut kommune',
-            'superadmin',
-            'UKMmonstring_network_admin_rome_trekk_ut',
-            'UKMmonstring_network_admin_rome_trekk_ut'
-        );
-        $subpages[] = add_submenu_page(
-            'UKMmonstring_network_admin',
-            'Kontroller undersider',
-            'Kontroller undersider',
-            'superadmin',
-            'UKMmonstring_network_admin_undersider',
-            'UKMmonstring_network_admin_undersider'
-        );
-    
-        add_action(
-            'admin_print_styles-' . $page,
-            ['UKMMonstring', 'network_script']
-        );
-        foreach ($subpages as $page) {
-            add_action(
-                'admin_print_styles-' . $page,
-                ['UKMMonstring', 'network_script']
-            );
-        }
-    }
-    
-    /**
-     * Nettverksmeny scripts og styles
-     *
-     * @return void
-     */
-    public static function network_script()
-    {
-        wp_enqueue_script('TwigJS');
-        wp_enqueue_script('WPbootstrap3_js');
-        wp_enqueue_style('WPbootstrap3_css');
-    }
-
-
-    public static function renderNetworkAdmin() {
-        static::setAction(
-            isset($_GET['action']) ? $_GET['action'] : 'network/dashboard'
-        );
-        static::renderAdmin();
     }
 }
 
