@@ -171,14 +171,22 @@ if( isset($_POST['benyttNominasjon'])) {
         $arrangement->setHarNominasjon( true );
         
         // Lagre alle "nominer_$something"-settings
-        foreach( $_POST as $post_key => $post_value ) {
-            if( strpos( $post_key, 'nominer_') === 0 ) {
-                $type = Typer::getByKey( str_replace('nominer_','',$post_key) );
-                $arrangement->setHarNominasjonFor( $type, $post_value == 'true');
+        $count = 0;
+        foreach ($_POST as $post_key => $post_value) {
+            if (strpos($post_key, 'nominer_') === 0) {
+                $har_nominering = $post_value == 'true';
+                if ($har_nominering) {
+                    $count++;
+                }
+                $type = Typer::getByKey(str_replace('nominer_', '', $post_key));
+                $arrangement->setHarNominasjonFor($type, $har_nominering);
             }
         }
+        if ($count == 0) {
+            $arrangement->setHarNominasjon(false);
+        }
     } else {
-       $arrangement->setHarNominasjon( true );
+        $arrangement->setHarNominasjon(true);
     }
 }
 

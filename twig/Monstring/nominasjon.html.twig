@@ -12,7 +12,7 @@
 		</div>
 	</div>
 
-	<div class="col-12 col-sm-12 mt-5" id="nominasjon_detaljer">
+	<div class="col-12 col-sm-12 mt-5" id="nominasjon_detaljer" {{ not arrangement.harNominasjon() ? 'style="display:none;"' }}>
 		<label>Velg hvilke typer innslag som skal nomineres</label>
 		<p class="text-muted">OBS: du må huske å krysse av for om du tar i mot videresending også (se ovenfor)</p>
 		<ol class="list-group">
