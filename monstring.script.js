@@ -143,8 +143,8 @@ jQuery(document).on('change', '#radioButtonValue_harLederskjema', (e) => {
 jQuery(document).on('keyup', '#filterArrangement', function() {
     var words = jQuery(this).val().toLowerCase().split(' ');
     if (words.length > 1 || (words.length == 1 && words[0].length > 0)) {
-        jQuery('.avsenderListe li').show().filter(function() {
-            var searchIn = jQuery(this).attr('data-filter').toLowerCase();
+        jQuery('.avsenderListe li.avsenderMonstring').show().filter(function() {
+            var searchIn = jQuery(this).data('filter').toLowerCase();
             var found = false;
 
             words.forEach(function(word) {

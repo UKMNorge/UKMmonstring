@@ -115,7 +115,24 @@ switch( $arrangement->getType() ) {
                 )->getAll()
             )
         );
-    break;
+    case 'land':
+        $fylke_arrangement = [];
+        $fylke_monstring = [];
+        $andre_arrangement = [];
+        foreach (LoadArrangement::bySesong($arrangement->getSesong())->getAll() as $mottaker) {
+            if ($mottaker->getEierType() == 'fylke' && $mottaker->erMonstring()) {
+                $fylke_monstring[] = $mottaker;
+            } elseif ($mottaker->getEierType() == 'fylke') {
+                $fylke_arrangement[] = $mottaker;
+            } else {
+                $andre_arrangement[] = $mottaker;
+            }
+        }
+
+        UKMmonstring::addViewData('arrangementer', $andre_arrangement);
+        UKMmonstring::addViewData('arrangementer_fylke', $fylke_arrangement);
+        UKMmonstring::addViewData('arrangementer_fylke_monstring', $fylke_monstring);
+        break;
 }
 
 UKMmonstring::include('controller/dashboard.controller.php');
