@@ -122,9 +122,20 @@ jQuery(document).on('change', '#radioButtonValue_tillatVideresending', (e) => {
 /* SKAL ARRANGEMENTET BRUKE NOMINASJON */
 jQuery(document).on('change', '#radioButtonValue_benyttNominasjon', (e) => {
     if (jQuery(e.target).val() == 'true') {
-        jQuery('#nominasjon_detaljer').slideDown();
+        jQuery('.nominasjon_detaljer').slideDown();
     } else {
-        jQuery('#nominasjon_detaljer').slideUp();
+        jQuery('.nominasjon_detaljer').slideUp();
+    }
+});
+
+/* SKAL ARRANGEMENTET BRUKE LEDERSKJEMA */
+jQuery(document).on('change', '#radioButtonValue_harLederskjema', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('#lederskjema_detaljer').slideDown();
+        jQuery('#lederskjema_neitakk').slideUp();
+    } else {
+        jQuery('#lederskjema_detaljer').slideUp();
+        jQuery('#lederskjema_neitakk').slideDown();
     }
 });
 

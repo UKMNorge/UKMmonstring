@@ -1,11 +1,8 @@
 <div class="row" style="margin-top: 2em;">
     <div class="col-12 col-sm-12">
-        <label>Skal de som videresender også fylle ut spørreskjema?</label>
+        <h4>Skal de som videresender også fylle ut spørreskjema?</h4>
         <p>
-            Her kan du lage et skjema for å innhente informasjon om allergier, ledere, overnatting osv. Hvert avsender-arrangement fyller ut ett skjema. Ingen deltakere får se, eller fylle ut skjemaet.
-            {% if arrangement.harSkjema() %}
-                <a href="?page=UKMrapport_admin&rapport=videresendingsskjema&kat=monstring" target="_blank">Svarene kan du se under menyvalget "rapporter".</a>
-            {% endif %}
+            Skjemaet kan du bruke for å innhente informasjon om spesielle behov, reise, ledere, overnatting osv. Hvert avsender-arrangement fyller ut ett skjema. Ingen deltakere får se, eller fylle ut skjemaet.
         </p>
         <div>
             <div class="btn-group radioButtons" data-name="vilHaSkjema">
@@ -40,6 +37,11 @@
                 </li>
             </ol>
             <p style="margin-top: -1em;" class="pull-right">
+                {% if arrangement.harSkjema() %}
+                    <span class="text-muted" style="margin-right: 1em;">
+                        Svarene kan du se under menyvalget "<a href="?page=UKMrapport_admin&rapport=videresendingsskjema&kat=monstring" target="_blank">rapporter</a>"
+                    </span>
+                {% endif %}
                 <a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="skjema">rediger skjema</a>
             </p>
         </div>
