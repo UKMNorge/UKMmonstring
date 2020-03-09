@@ -1,5 +1,6 @@
 <?php
 
+use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
@@ -7,6 +8,8 @@ use UKMNorge\Innslag\Typer\Typer;
 use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
+
+$arrangement = new Arrangement( intval(get_option('pl_id')) );
 
 // ENDRE SYNLIGHET
 if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig') {
@@ -191,9 +194,36 @@ if (isset($_POST['benyttNominasjon'])) {
 }
 
 // Finnes det en nominasjonsinformasjon som skal lagres?
-if( isset($_POST['nominasjon_informasjon'])) {
-    $arrangement->setNominasjonInformasjon( $_POST['nominasjon_informasjon']);
+if (isset($_POST['nominasjon_informasjon'])) {
+    $arrangement->setNominasjonInformasjon($_POST['nominasjon_informasjon']);
 }
+
+// Lagre diverse metadata hvis vi har tilgang på de
+$metadata = [
+    'harLederskjema',
+    'ledere_per_deltakere',
+    'ledere_per_deltakere_deltakere',
+    'kvote_deltakere',
+    'kvote_ledere',
+    'pris_hotelldogn',
+    'avgift_ordinar',
+    'avgift_subsidiert',
+    'avgift_reise',
+    'navn_deltakerovernatting'
+];
+
+foreach ($metadata as $meta_key) {
+    if (isset($_POST[$meta_key])) {
+        $value = $_POST[$meta_key];
+        if ($value == 'false') {
+            $value = false;
+        } elseif ($value == 'true') {
+            $value = true;
+        }
+        $arrangement->getMeta($meta_key)->set($value);
+    }
+}
+
 
 try {
     Write::save($arrangement);
@@ -202,6 +232,7 @@ try {
         'Arrangement-info er lagret!'
     );
 } catch (Exception $e) {
+    debug_print_backtrace();
     UKMmonstring::getFlashbag()->add(
         'danger',
         'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage() . ' (' . $e->getCode() . ')'
@@ -210,15 +241,3 @@ try {
 
 // reload innslagTyper (i tilfelle man lagrer "blankt")
 $arrangement->resetInnslagTyper();
-
-if ($arrangement->getType() == 'land') {
-    throw new Exception('Flytt meta-data!');
-    foreach (UKMMonstring_sitemeta_storage() as $key) {
-        if (isset($_POST[$key])) {
-            update_site_option(
-                'UKMFvideresending_' . $key . '_' . $arrangement->getSesong(),
-                $_POST[$key]
-            );
-        }
-    }
-}

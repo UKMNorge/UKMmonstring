@@ -4,11 +4,13 @@
  * LAGRE ENDRINGER ELLER OPPRETT KONTAKTPERSON
  */
 
+use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Kontaktperson\Kontaktperson;
 use UKMNorge\Arrangement\Kontaktperson\Write;
 use UKMNorge\Arrangement\Write as ArrangementWrite;
 
 require_once('UKM/Autoloader.php');
+$arrangement = new Arrangement( intval(get_option('pl_id')) );
 
 if ($_POST['id'] == 'new') {
     $kontakt = Write::create(

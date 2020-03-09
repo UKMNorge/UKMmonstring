@@ -8,7 +8,7 @@ use UKMNorge\Arrangement\Skjema\Write as WriteSkjema;
 
 require_once('UKM/Autoloader.php');
 
-$arrangement = new Arrangement( get_option('pl_id') );
+$arrangement = new Arrangement( intval(get_option('pl_id')) );
 $skjema = $arrangement->getSkjema();
 
 // For alle slettede spørsmål, fjern de fra databasen også. Gjør dette _før_ vi lagrer ny rekkefølge.

@@ -10,7 +10,7 @@ use UKMNorge\Innslag\Typer\Typer;
 date_default_timezone_set('Europe/Oslo');
 
 require_once('UKM/Autoloader.php');
-$arrangement = new Arrangement( get_option('pl_id') );
+$arrangement = new Arrangement( intval(get_option('pl_id')) );
 
 /* LAGRE ENDRINGER */
 if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
@@ -19,22 +19,22 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
     // LAGRE ENDRINGER I MØNSTRING
     if( isset($_POST['type']) && $_POST['type'] == 'monstring' ) {
-        require_once('monstring.save.php');
+        UKMmonstring::require('save/monstring.save.php');
     }
 
     // LAGRE ENDRINGER I KONTAKTPERSON
     if( isset($_POST['type']) && $_POST['type'] == 'kontakt' ) {
-        require_once('kontakt.save.php');
+        UKMmonstring::require('save/kontakt.save.php');
     } 
 
     // LAGRE ENDRINGER I INFOTEKST
     if( isset($_POST['type']) && $_POST['type'] == 'infotekst' ) {
-        require_once('infotekst.save.php');
+        UKMmonstring::require('save/infotekst.save.php');
     }  
 
     // LAGRE ENDRINGER I SKJEMA
     if( isset($_POST['type']) && $_POST['type'] == 'skjema' ) {
-        require_once('skjema.save.php');
+        UKMmonstring::require('save/skjema.save.php');
     }  
 
     // "REDIRECT" TIL KONTAKT/INFOTEKST/SKJEMA ETTER SAVE
@@ -58,6 +58,8 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                 break;
         }
     }
+    // Reload for å få med alle endringer
+    $arrangement = new Arrangement( intval(get_option('pl_id')) );
 }
 
 /* HENT INN VIEW-DATA */
