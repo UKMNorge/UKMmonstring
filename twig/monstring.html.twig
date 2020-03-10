@@ -29,7 +29,7 @@ jQuery('#arrangementForm').submit();
 				<p>&nbsp;</p>
 				
                 <div>
-                    {% include "Infobokser/avlys.html.twig" %}
+                    {% if is_super_admin %}{% include "Infobokser/avlys.html.twig" %}{% endif %}
                 </div>
                 <div>
 					{% embed "Infobokser/meldinger.html.twig" %}{% endembed %}
