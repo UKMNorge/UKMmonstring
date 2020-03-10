@@ -1,79 +1,104 @@
 <div class="row">
-    <div class="col-12 col-sm-12">
-        <div class="form-group form-group-lg">
-            <label>Navn på arrangementet</label>
-            <input type="text" class="form-control input-lg" name="navn" value="{{ arrangement.getNavn() }}" placeholder="Navn på arrangementet"/>
-        </div>
-    </div>
+	<div class="col-12 col-sm-12">
+		<div class="form-group form-group-lg">
+			<label>Navn på arrangementet</label>
+			<input type="text" class="form-control input-lg" name="navn" value="{{ arrangement.getNavn() }}" placeholder="Navn på arrangementet"/>
+		</div>
+	</div>
+</div>
+{% if arrangement.getMetaValue('avlys') %}
+	<div class="row">
+		<div class="col-12 col-sm-12">
+			<div id="avlyst_banner" style="background: #ff128b;color: #fff; padding: 1em; border-radius: 3px; margin-bottom: 3em;">
+				<a href="?action=avlys" class="btn btn-ukm btn-sm btn-white pull-right">ENDRE VARSEL</a>
+				<small style="font-weight: bold; text-transform: uppercase;">Vises på forsiden:</small>
+				<h1 style="margin-top:0;">
+					{% if arrangement.getMetaValue('avlys') == 'videresending_kanskje' %}
+						Videresendingen kan bli avlyst!
+					{% elseif arrangement.getMetaValue('avlys') == 'videresending_sikkert' %}
+						Ingen blir videresendt
+					{% elseif arrangement.getMetaValue('avlys') == 'avlys' %}
+						Avlyst!
+					{% elseif arrangement.getMetaValue('avlys') == 'gjennomforer_med_info' %}
+						Viktig info!
+					{% endif %}
+				</h1>
+				<p>{{ arrangement.getMetaValue('avlys_status_kort') }}</p>
+			</div>
+		</div>
+	</div>
+{% endif %}
 
-    {% if arrangement.erSynlig() %}
-        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key={{ GOOGLE_API_KEY }}" async defer></script>
-        <div class="col-12 col-sm-6">
-            {% for key, value in arrangement.getGoogleMap().getPOSTValues() %}
-                <input type="hidden" name="location_{{key}}" id="location-{{key}}" value="{{value}}"/>
-            {% endfor %}
-            <div class="form-group">
-                <label>Hvor skal arrangmentet være?</label>
-                <input id="searchMapInput" type="text" class="form-control mapControls" name="sted" value="{{ arrangement.getSted() }}"/>
-                <p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Stedet må være søkbart i google maps, og du kan både bruke navn og adresser.</p>
-            </div>
-        </div>
+<div class="row">
 
-        <div class="col-12 col-sm-6" id="mapContainer">
-            <a href="{{ arrangement.getGoogleMap().getLink() }}" target="_blank" id="mapLink">
-                <img src="{{ arrangement.getGoogleMap().getMap( GOOGLE_API_KEY ) }}" width="100%" id="map"/>
-            </a>
-        </div>
+	{% if arrangement.erSynlig() %}
+		<script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key={{ GOOGLE_API_KEY }}" async defer></script>
+		<div class="col-12 col-sm-6">
+			{% for key, value in arrangement.getGoogleMap().getPOSTValues() %}
+				<input type="hidden" name="location_{{key}}" id="location-{{key}}" value="{{value}}"/>
+			{% endfor %}
+			<div class="form-group">
+				<label>Hvor skal arrangmentet være?</label>
+				<input id="searchMapInput" type="text" class="form-control mapControls" name="sted" value="{{ arrangement.getSted() }}"/>
+				<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Stedet må være søkbart i google maps, og du kan både bruke navn og adresser.</p>
+			</div>
+		</div>
 
-        <div class="col-12 col-sm-4">
-            <div class="form-group">
-                <label>Når starter arrangementet?</label>
-                <input class="datepicker_{{ arrangement.getType() }} form-control" type="text" name="start" value="{{ arrangement.getStart()|dato('d.m.Y') }}">
-            </div>
-        </div>
-        <div class="col-12 col-sm-2">
-            <label class="hidden-xs">&nbsp;</label>
-            <div class="input-group">
-                <span class="input-group-addon">kl.
-                </span>
-                <select class="form-control" name="start_time">
-                    {% include "hourPicker.html.twig" with { current: arrangement.getStart() } %}
-                </select>
-            </div>
-        </div>
+		<div class="col-12 col-sm-6" id="mapContainer">
+			<a href="{{ arrangement.getGoogleMap().getLink() }}" target="_blank" id="mapLink">
+				<img src="{{ arrangement.getGoogleMap().getMap( GOOGLE_API_KEY ) }}" width="100%" id="map"/>
+			</a>
+		</div>
 
-        <div class="col-12 col-sm-4">
-            <div class="form-group">
-                <label>Omtrent når er arrangementet ferdig?</label>
-                <input class="datepicker_{{ arrangement.getType() }} form-control" type="text" name="stop" value="{{ arrangement.getStop()|dato('d.m.Y') }}">
-            </div>
-        </div>
-        <div class="col-12 col-sm-2">
-            <label class="hidden-xs">&nbsp;</label>
-            <div class="input-group">
-                <span class="input-group-addon">kl.
-                </span>
-                <select class="form-control" name="stop_time">
-                    {% include "hourPicker.html.twig" with { current: arrangement.getStop() } %}
-                </select>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-12 col-sm-12 mt-3">
-            <p class="text-muted">
-                Arrangementet vises på UKM.no.
-                <a href="#" class="goTo" data-action="synlig" data-id="false">Trykk her hvis du ønsker å skjule det.</a>
-                {% if arrangement.harPamelding() %}
-                    OBS: Skjulte arrangementer kan ikke ta i mot påmelding fra deltaker
-                {% endif %}
-            </p>
-        </div>
-    {% else %}
-        <div class="col-12 col-sm-12" style="margin-top: -1.5em; margin-left: .4em; margin-right: .4em;">
-            <p class="text-muted">
-                Dette arrangementet vises ikke på UKM.no, og kan derfor ikke ha påmelding eller kontaktpersoner.
-                <a href="#" class="goTo" data-action="synlig" data-id="true">Trykk her for å gjøre arrangementet synlig</a>
-            </p>
-        </div>
-    {% endif %}
+		<div class="col-12 col-sm-4">
+			<div class="form-group">
+				<label>Når starter arrangementet?</label>
+				<input class="datepicker_{{ arrangement.getType() }} form-control" type="text" name="start" value="{{ arrangement.getStart()|dato('d.m.Y') }}">
+			</div>
+		</div>
+		<div class="col-12 col-sm-2">
+			<label class="hidden-xs">&nbsp;</label>
+			<div class="input-group">
+				<span class="input-group-addon">kl.
+				</span>
+				<select class="form-control" name="start_time">
+					{% include "hourPicker.html.twig" with { current: arrangement.getStart() } %}
+				</select>
+			</div>
+		</div>
+
+		<div class="col-12 col-sm-4">
+			<div class="form-group">
+				<label>Omtrent når er arrangementet ferdig?</label>
+				<input class="datepicker_{{ arrangement.getType() }} form-control" type="text" name="stop" value="{{ arrangement.getStop()|dato('d.m.Y') }}">
+			</div>
+		</div>
+		<div class="col-12 col-sm-2">
+			<label class="hidden-xs">&nbsp;</label>
+			<div class="input-group">
+				<span class="input-group-addon">kl.
+				</span>
+				<select class="form-control" name="stop_time">
+					{% include "hourPicker.html.twig" with { current: arrangement.getStop() } %}
+				</select>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-12 col-sm-12 mt-3">
+			<p class="text-muted">
+				Arrangementet vises på UKM.no.
+				<a href="#" class="goTo" data-action="synlig" data-id="false">Trykk her hvis du ønsker å skjule det.</a>
+				{% if arrangement.harPamelding() %}
+					OBS: Skjulte arrangementer kan ikke ta i mot påmelding fra deltaker
+				{% endif %}
+			</p>
+		</div>
+	{% else %}
+		<div class="col-12 col-sm-12" style="margin-top: -1.5em; margin-left: .4em; margin-right: .4em;">
+			<p class="text-muted">
+				Dette arrangementet vises ikke på UKM.no, og kan derfor ikke ha påmelding eller kontaktpersoner.
+				<a href="#" class="goTo" data-action="synlig" data-id="true">Trykk her for å gjøre arrangementet synlig</a>
+			</p>
+		</div>
+	{% endif %}
 </div>
