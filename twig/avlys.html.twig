@@ -1,0 +1,149 @@
+<script>
+    
+    jQuery(document).ready(function() {
+        UKMresources.optionCard.on('status', function(valgt) {
+            jQuery('.detaljer:not("#detaljer_'+valgt+'")').slideUp();
+            jQuery('#detaljer_'+valgt).slideDown();
+        });
+        UKMresources.optionCard.pullStatus('status');
+    });
+</script>
+
+<div class="container-fluid">
+	<form method="POST">
+		<div class="row">
+			<div class="col-12 col-sm-12">
+				<h1>Avlys UKM</h1>
+
+				<p class="lead">Hva er status hos deg nå?</p>
+
+				<div class="row">
+                    {% if arrangement.erFerdig() %}
+                        <div class="col-xs-6 col-sm-4 col-lg-3">
+                            <div class="optionCard card {{ not arrangement.getMetaValue('avlys') ? 'selected' }}" data-group="status" data-value="gjennomforer">
+                                <div class="dashicons dashicons-buddicons-groups"></div>
+                                <div class="header">Videresendingen går som planlagt</div>
+                                <p>
+                                    Inntil videre, operer vi med at videresending blir gjennomført som planlagt.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-lg-3">
+                            <div class="optionCard card {{ arrangement.getMetaValue('avlys') == 'videresending_kanskje' ? 'selected' }}" data-group="status" data-value="avlys_videresending_kanskje">
+                                <div class="dashicons dashicons-warning"></div>
+                                <div class="header">Videresendingen kan bli avlyst</div>
+                                <p>
+                                    Velg denne hvis du tror det er fare for at videresendingen kan bli avlyst.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-lg-3">
+                            <div class="optionCard card {{ arrangement.getMetaValue('avlys') == 'videresending_sikkert' ? 'selected' }}" data-group="status" data-value="avlys_videresending_sikkert">
+                                <div class="dashicons dashicons-trash"></div>
+                                <div class="header">Videresendingen er avlyst</div>
+                                <p>
+                                    Arrangøren har avlyst, eller {{ arrangement.getFylke().erOslo() ? 'bydelen' : 'kommunen' }} 
+                                    sier vi ikke kan sende deltakere.
+                                </p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-xs-6 col-sm-4 col-lg-3">
+                            <div class="optionCard card selected" data-group="status" data-value="gjennomforer">
+                                <div class="dashicons dashicons-buddicons-groups"></div>
+                                <div class="header">Vi gjennomfører som planlagt</div>
+                                <p>
+                                    Inntil videre, operer vi med at arrangementet blir gjennomført som planlagt.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-lg-3">
+                            <div class="optionCard card {{ arrangement.getMetaValue('avlys') == 'avlys' ? 'selected' }}" data-group="status" data-value="avlys">
+                                <div class="dashicons dashicons-trash"></div>
+                                <div class="header">Vi avlyser</div>
+                                <p>
+                                    Velg denne hvis dere har avlyst arrangementet.
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+				</div>
+			</div>
+
+
+
+            {# VIDERESENDING BLIR AVLYST #}
+			<div class="col-12 col-sm-12 mt-5 detaljer" id="detaljer_avlys_videresending_sikkert">
+				<div class="form-group">
+                    <label>Skriv kort oppsummert status</label>
+                    <p class="text-muted">Denne vises på toppen av nettsiden din</p>
+					<input type="text" maxlength="140" class="form-control" name="avlys_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. kommunelegen tillater ikke at vi sender deltakere til UKM {{ arrangement.getFylke().getNavn() }}..." />
+				</div>
+                
+				<div class="form-group">
+    				<label>Beskriv hvorfor det er avlyst.</label>
+                    <p class="text-muted">
+                        Hvis arrangementet du sender videre til gjennomføres, men restriksjoner / tiltak i din 
+                        {{ arrangement.getFylke().erOslo() ? 'bydel' : 'kommune' }} gjør at du ikke kan videresende
+                        deltakere, er det veldig viktig at du beskriver dette tydelig her.
+                    </p>
+
+                    <div class="form-group">
+                        <textarea class="form-control" name="avlys_status_lang" rows="4">{{ arrangement.getMetaValue('avlys_status_lang') }}</textarea>
+                    </div>
+                </div>
+				<p>
+                    I tillegg legger vi til følgende knapper så besøkende kan lese mer.
+                    <br />
+                    Les mer på: 
+                    {% for mottaker in arrangement.getVideresending().getMottakere() %}
+                        <a href="{{ mottaker.getArrangement().getLink(true) }}" class="btn btn-ukm btn-xs btn-primary" target="_blank">{{ mottaker.getNavn() }}</a>
+                    {% else %}
+                        <span class="text-danger">
+                            Vi finner ingen arrangement du kan videresende til, og det virker derfor rart om du velger at videresendingen kan bli avlyst.
+                        </span>
+                    {% endfor %}
+                </p>
+			</div>
+
+            
+            {# VIDERESENDING BLIR KANSKJE AVLYST #}
+            <div class="col-12 col-sm-12 mt-5 detaljer" id="detaljer_avlys_videresending_kanskje">
+				<div class="form-group">
+                    <label>Skriv kort oppsummert status</label>
+                    <p class="text-muted">Denne vises på toppen av nettsiden din</p>
+					<input type="text" maxlength="140" class="form-control" name="avlys_videresending_kanskje_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. UKM {{ arrangement.getFylke().getNavn() }} har varslet at festivalen kan bli avlyst..." />
+				</div>
+                
+				<div class="form-group">
+    				<label>Beskriv hvorfor dere tror det kan bli avlyst.</label>
+
+                    <div class="form-group">
+                        <textarea class="form-control" name="avlys_videresending_kanskje_status_lang" rows="4">{{ arrangement.getMetaValue('avlys_status_lang') }}</textarea>
+                    </div>
+                </div>
+				<p>
+                    I tillegg legger vi til følgende knapper så besøkende kan lese mer.
+                    <br />
+                    Les mer på: 
+                    {% for mottaker in arrangement.getVideresending().getMottakere() %}
+                        <a href="{{ mottaker.getArrangement().getLink(true) }}" class="btn btn-ukm btn-xs btn-primary" target="_blank">{{ mottaker.getNavn() }}</a>
+                    {% else %}
+                        <span class="text-danger">
+                            Vi finner ingen arrangement du kan videresende til, og det virker derfor rart om du velger at videresendingen kan bli avlyst.
+                        </span>
+                    {% endfor %}
+                </p>
+			</div>
+		</div>
+
+
+		<div class="row mt-5">
+			<div class="col-12 col-sm-12">
+				<button type="submit" class="btn btn-ukm btn-success">Lagre</button>
+				eller
+				<a href="index.php">avbryt</a>
+			</div>
+		</div>
+	</form>
+</div>

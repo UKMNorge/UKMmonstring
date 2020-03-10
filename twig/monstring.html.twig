@@ -15,22 +15,23 @@ jQuery('#arrangementForm').submit();
 	<input type="hidden" name="type" value="monstring"/>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-12 col-lg-7">
+			<div class="col-12 col-sm-12 col-lg-7">
 				{% include "wp_modul.flashbag.html.twig" %}
+                {% include "Monstring/basics.html.twig" %}
+                {% include "Monstring/pamelding.html.twig" %}
+                {% if arrangement.erSynlig() %}
+                    {% include "Monstring/kontaktpersoner.html.twig" %}
+                {% endif %}
 
-				{% include "Monstring/basics.html.twig" %}
-				{% include "Monstring/pamelding.html.twig" %}
-				{% if arrangement.erSynlig() %}
-					{% include "Monstring/kontaktpersoner.html.twig" %}
-				{% endif %}
-
-				{% include "Monstring/videresending.html.twig" %}
-
-				{# TA INN MØNSTRING LAND #}
+                {% include "Monstring/videresending.html.twig" %}
 			</div>
-			<div class="col-12 col-lg-offset-1 col-lg-4">
-                <p>&nbsp;</p>
-				<div>
+			<div class="col-12 col-sm-12 col-lg-offset-1 col-lg-4">
+				<p>&nbsp;</p>
+				
+                <div>
+                    {% include "Infobokser/avlys.html.twig" %}
+                </div>
+                <div>
 					{% embed "Infobokser/meldinger.html.twig" %}{% endembed %}
 				</div>
 				<div>
@@ -38,8 +39,6 @@ jQuery('#arrangementForm').submit();
 				</div>
 			</div>
 		</div>
-
-
 		<div class="row" style="margin-top: 4em;">
 			<div class="col-xs-12 col-sm-12">
 				<button type="submit" class="btn btn-ukm btn-success" id="formSubmit">Lagre</button>
