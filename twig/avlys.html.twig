@@ -80,12 +80,14 @@
 				</div>
 			</div>
 
+
+
             {# VIDERESENDING BLIR AVLYST #}
 			<div class="col-12 col-sm-12 mt-5 detaljer" id="detaljer_avlys_videresending_sikkert" style="display: none;">
 				<div class="form-group">
                     <label>Skriv kort oppsummert status <span class="text-muted small">(maks 140 tegn)</span></label>
                     <p class="text-muted">Denne vises på toppen av nettsiden din</p>
-					<input type="text" maxlength="140" class="form-control" name="avlys_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. kommunelegen tillater ikke at vi sender deltakere til UKM {{ arrangement.getFylke().getNavn() }}..." />
+					<input type="text" maxlength="140" class="form-control" name="avlys_videresending_sikkert_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. kommunelegen tillater ikke at vi sender deltakere til UKM {{ arrangement.getFylke().getNavn() }}..." />
 				</div>
                 
 				<div class="form-group">
@@ -97,7 +99,7 @@
                     </p>
 
                     <div class="form-group">
-                        <textarea class="form-control" name="avlys_status_lang" rows="4">{{ arrangement.getMetaValue('avlys_status_lang') }}</textarea>
+                        <textarea class="form-control" name="avlys_videresending_sikkert_status_lang" rows="4">{{ arrangement.getMetaValue('avlys_status_lang') }}</textarea>
                     </div>
                 </div>
 				<p>
@@ -166,13 +168,13 @@
 				<div class="form-group">
                     <label>Skriv kort oppsummert status <span class="text-muted small">(maks 140 tegn)</span></label>
                     <p class="text-muted">Denne vises på toppen av nettsiden din</p>
-					<input type="text" maxlength="140" class="form-control" name="avlys_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. kommunelegen tillater ikke at vi sender deltakere til UKM {{ arrangement.getFylke().getNavn() }}..." />
+					<input type="text" maxlength="140" class="form-control" name="gjennomforer_med_info_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. kommunelegen tillater ikke at vi sender deltakere til UKM {{ arrangement.getFylke().getNavn() }}..." />
 				</div>
                 
 				<div class="form-group">
     				<label>Her kan du skrive det deltakerne må vite.</label>
                     <div class="form-group">
-                        <textarea class="form-control" name="avlys_status_lang" rows="4">{{ arrangement.getMetaValue('avlys_status_lang') }}</textarea>
+                        <textarea class="form-control" name="gjennomforer_med_info_status_lang" rows="4">{{ arrangement.getMetaValue('avlys_status_lang') }}</textarea>
                     </div>
                 </div>
 			</div>

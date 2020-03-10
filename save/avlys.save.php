@@ -5,22 +5,13 @@ use UKMNorge\Meta\Write as WriteMeta;
 
 $arrangement = new Arrangement( intval(get_option('pl_id')));
 
-$meta = $arrangement->getMeta('avlys');
-$meta->set( str_replace('avlys_', '', $_POST['status']));
+// Set overordnet status
+$meta = $arrangement
+    ->getMeta('avlys')
+    ->set( str_replace('avlys_', '', $_POST['status']));
 
-$meta_status_kort = $arrangement->getMeta('avlys_status_kort');
-$meta_status_lang = $arrangement->getMeta('avlys_status_lang');
 
-switch( $_POST['status'] ) {
-    case 'gjennomforer':
-    break;
-
-    case 'avlys_videresending_kanskje';
-        $meta_status_kort->set($_POST['avlys_videresending_kanskje_status_kort']);
-        $meta_status_lang->set($_POST['avlys_videresending_kanskje_status_lang']);
-    break;
-}
-
+// Fjern status hvis det gjennomføres
 if( $_POST['status'] == 'gjennomforer' ) {
     try {
         WriteMeta::delete($meta);
@@ -29,8 +20,19 @@ if( $_POST['status'] == 'gjennomforer' ) {
             // Do nothing. Kan ikke slette ≈ slettet 
         }
     }
-} else {
+}
+// Oppdater tekster og status
+else {
     WriteMeta::set($meta);
-    WriteMeta::set($meta_status_kort);
-    WriteMeta::set($meta_status_lang);
+    WriteMeta::set(
+        $arrangement
+        ->getMeta('avlys_status_kort')
+        ->set($_POST[$_POST['status'].'_status_kort'])
+    );
+
+    WriteMeta::set(
+        $arrangement
+        ->getMeta('avlys_status_lang')
+        ->set($_POST[$_POST['status'].'_status_lang'])
+    );
 }
