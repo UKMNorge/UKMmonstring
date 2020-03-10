@@ -33,7 +33,7 @@
                                 <div class="dashicons dashicons-warning"></div>
                                 <div class="header">Videresendingen kan bli avlyst</div>
                                 <p>
-                                    Velg denne hvis du tror det er fare for at videresendingen kan bli avlyst.
+                                    Det er fare for at videresendingen kan bli avlyst.
                                 </p>
                             </div>
                         </div>
@@ -49,11 +49,21 @@
                         </div>
                     {% else %}
                         <div class="col-xs-6 col-sm-4 col-lg-3">
-                            <div class="optionCard card selected" data-group="status" data-value="gjennomforer">
+                            <div class="optionCard card {{ not arrangement.getMetaValue('avlys') ? 'selected' }}" data-group="status" data-value="gjennomforer">
                                 <div class="dashicons dashicons-buddicons-groups"></div>
                                 <div class="header">Vi gjennomfører som planlagt</div>
                                 <p>
                                     Inntil videre, operer vi med at arrangementet blir gjennomført som planlagt.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-lg-3">
+                            <div class="optionCard card {{ arrangement.getMetaValue('avlys') == 'gjennomforer_med_info' ? 'selected' }}" data-group="status" data-value="gjennomforer_med_info">
+                                <div class="dashicons dashicons-info"></div>
+                                <div class="header">Vi gjennomfører, men har viktig info</div>
+                                <p>
+                                    Arrangementet står i fare for å bli avlyst, eller vi gjennomfører
+                                    tiltak det er viktig at deltakerne får vite.
                                 </p>
                             </div>
                         </div>
@@ -70,12 +80,10 @@
 				</div>
 			</div>
 
-
-
             {# VIDERESENDING BLIR AVLYST #}
-			<div class="col-12 col-sm-12 mt-5 detaljer" id="detaljer_avlys_videresending_sikkert">
+			<div class="col-12 col-sm-12 mt-5 detaljer" id="detaljer_avlys_videresending_sikkert" style="display: none;">
 				<div class="form-group">
-                    <label>Skriv kort oppsummert status</label>
+                    <label>Skriv kort oppsummert status <span class="text-muted small">(maks 140 tegn)</span></label>
                     <p class="text-muted">Denne vises på toppen av nettsiden din</p>
 					<input type="text" maxlength="140" class="form-control" name="avlys_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. kommunelegen tillater ikke at vi sender deltakere til UKM {{ arrangement.getFylke().getNavn() }}..." />
 				</div>
@@ -108,9 +116,9 @@
 
             
             {# VIDERESENDING BLIR KANSKJE AVLYST #}
-            <div class="col-12 col-sm-12 mt-5 detaljer" id="detaljer_avlys_videresending_kanskje">
+            <div class="col-12 col-sm-12 mt-5 detaljer" id="detaljer_avlys_videresending_kanskje" style="display: none;">
 				<div class="form-group">
-                    <label>Skriv kort oppsummert status</label>
+                    <label>Skriv kort oppsummert status <span class="text-muted small">(maks 140 tegn)</span></label>
                     <p class="text-muted">Denne vises på toppen av nettsiden din</p>
 					<input type="text" maxlength="140" class="form-control" name="avlys_videresending_kanskje_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. UKM {{ arrangement.getFylke().getNavn() }} har varslet at festivalen kan bli avlyst..." />
 				</div>
@@ -134,6 +142,39 @@
                         </span>
                     {% endfor %}
                 </p>
+			</div>
+
+
+            {# ARRANGEMENTET BLIR AVLYST #}
+			<div class="col-12 col-sm-12 mt-5 detaljer" id="detaljer_avlys" style="display: none;">
+				<div class="form-group">
+                    <label>Skriv kort oppsummert status <span class="text-muted small">(maks 140 tegn)</span></label>
+                    <p class="text-muted">Denne vises på toppen av nettsiden din</p>
+					<input type="text" maxlength="140" class="form-control" name="avlys_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. kommunelegen tillater ikke at vi sender deltakere til UKM {{ arrangement.getFylke().getNavn() }}..." />
+				</div>
+                
+				<div class="form-group">
+    				<label>Beskriv hvorfor det er avlyst.</label>
+                    <div class="form-group">
+                        <textarea class="form-control" name="avlys_status_lang" rows="4">{{ arrangement.getMetaValue('avlys_status_lang') }}</textarea>
+                    </div>
+                </div>
+			</div>
+
+            {# ARRANGEMENTET GJENNOMFØRES, MEN VI HAR VIKTIG INFO #}
+			<div class="col-12 col-sm-12 mt-5 detaljer" id="detaljer_gjennomforer_med_info" style="display: none;">
+				<div class="form-group">
+                    <label>Skriv kort oppsummert status <span class="text-muted small">(maks 140 tegn)</span></label>
+                    <p class="text-muted">Denne vises på toppen av nettsiden din</p>
+					<input type="text" maxlength="140" class="form-control" name="avlys_status_kort" value="{{ arrangement.getMetaValue('avlys_status_kort') }}" placeholder="Eks. kommunelegen tillater ikke at vi sender deltakere til UKM {{ arrangement.getFylke().getNavn() }}..." />
+				</div>
+                
+				<div class="form-group">
+    				<label>Her kan du skrive det deltakerne må vite.</label>
+                    <div class="form-group">
+                        <textarea class="form-control" name="avlys_status_lang" rows="4">{{ arrangement.getMetaValue('avlys_status_lang') }}</textarea>
+                    </div>
+                </div>
 			</div>
 		</div>
 
