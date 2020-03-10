@@ -37,7 +37,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         require_once('skjema.save.php');
     }  
 
-    // "REDIRECT" TIL KONTAKT ETTER SAVE
+    // "REDIRECT" TIL KONTAKT/INFOTEKST/SKJEMA ETTER SAVE
     if ($_POST['goTo'] ) {
         switch( $_POST['goTo'] ) {
             case 'kontakt':
@@ -59,13 +59,6 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         }
     }
 }
-
-/* DEVELOPMENT */
-/*
-echo '<pre>';var_dump($_POST);echo '</pre>';
-UKMmonstring::setAction('skjema');
-UKMmonstring::includeActionController();
-*/
 
 /* HENT INN VIEW-DATA */
 
