@@ -5,6 +5,7 @@ use UKMNorge\Arrangement\Arrangementer;
 use UKMNorge\Arrangement\Eier;
 use UKMNorge\Google\StaticMap;
 use UKMNorge\Arrangement\Load as LoadArrangement;
+use UKMNorge\Innslag\Samling;
 use UKMNorge\Innslag\Typer\Typer;
 
 date_default_timezone_set('Europe/Oslo');
@@ -135,4 +136,14 @@ switch ($arrangement->getType()) {
         break;
 }
 
+$antall_per_type = [];
+foreach( Typer::getAlleInkludertSkjulteTyper() as $type ) {
+    $antall_personer = 0;
+    foreach( $arrangement->getInnslag()->getAllByType($type) as $innslag ) {
+        $antall_personer += $innslag->getPersoner()->getAntall();
+    }
+    $antall_per_type[ $type->getKey() ] = $antall_personer;
+}
+
+UKMmonstring::addViewData('pameldte_per_type', $antall_per_type);
 UKMmonstring::include('controller/dashboard.controller.php');

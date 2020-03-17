@@ -118,3 +118,13 @@
         min-height: 2em;
     }
 }
+
+span.dashicons.antallPameldte {
+    font-size: 1.2em;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    height: 1em;
+    margin-right: -.7em;
+    padding-right: 0;
+    margin-left: -0.1em;
+}
