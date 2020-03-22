@@ -119,12 +119,32 @@ jQuery(document).on('change', '#radioButtonValue_tillatVideresending', (e) => {
     }
 });
 
+/* SKAL ARRANGEMENTET BRUKE NOMINASJON */
+jQuery(document).on('change', '#radioButtonValue_benyttNominasjon', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('.nominasjon_detaljer').slideDown();
+    } else {
+        jQuery('.nominasjon_detaljer').slideUp();
+    }
+});
+
+/* SKAL ARRANGEMENTET BRUKE LEDERSKJEMA */
+jQuery(document).on('change', '#radioButtonValue_harLederskjema', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('#lederskjema_detaljer').slideDown();
+        jQuery('#lederskjema_neitakk').slideUp();
+    } else {
+        jQuery('#lederskjema_detaljer').slideUp();
+        jQuery('#lederskjema_neitakk').slideDown();
+    }
+});
+
 /* FILTRER ARRANGEMENT SOM KAN VIDERESENDE TIL ARRANGEMENTET */
 jQuery(document).on('keyup', '#filterArrangement', function() {
     var words = jQuery(this).val().toLowerCase().split(' ');
     if (words.length > 1 || (words.length == 1 && words[0].length > 0)) {
-        jQuery('.avsenderListe li').show().filter(function() {
-            var searchIn = jQuery(this).attr('data-filter').toLowerCase();
+        jQuery('.avsenderListe li.avsenderMonstring').show().filter(function() {
+            var searchIn = jQuery(this).data('filter').toLowerCase();
             var found = false;
 
             words.forEach(function(word) {

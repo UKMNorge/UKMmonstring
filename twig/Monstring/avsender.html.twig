@@ -4,7 +4,8 @@
             <label class="normal">
                 <input type="checkbox" class="form-control" name="avsender[]" value="{{ avsender.getId() }}" {{ arrangement.getId() == avsender.getId() ? 'disabled' }} {{ arrangement.getVideresending().harAvsender( avsender.getId() ) ? 'checked' }}/>
                 {{ avsender.getNavn() }}
-                <small>
+                <br />
+                <small class="text-muted" style="margin-left:2em;">
                     {% if arrangement.getId() == avsender.getId() %}
                         (dette arrangementet)
                     {% elseif avsender.getEier().getNavn() != avsender.getNavn() %}

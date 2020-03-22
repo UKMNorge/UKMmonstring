@@ -1,0 +1,6 @@
+<abbr title="{{ pameldte_per_type[innslag_type.getKey()] is defined ? pameldte_per_type[innslag_type.getKey()] : 0 }} påmeldt{{pameldte_per_type[innslag_type.getKey()] != 1 ? 'e'}} person{{pameldte_per_type[innslag_type.getKey()] != 1 ? 'er'}}">
+	<span class="pull-right badge {{ not arrangement.getInnslagTyper().har(innslag_type) and pameldte_per_type[innslag_type.getKey()] > 0 ? 'alert-danger' : 'badge-info' }}">
+		{{ pameldte_per_type[innslag_type.getKey()] is defined ? pameldte_per_type[innslag_type.getKey()] : 0 }}
+		<span class="dashicons dashicons-buddicons-buddypress-logo antallPameldte"></span>
+	</span>
+</abbr>

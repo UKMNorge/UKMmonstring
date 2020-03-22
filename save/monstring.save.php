@@ -1,5 +1,6 @@
 <?php
 
+use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
@@ -8,18 +9,20 @@ use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
 
+$arrangement = new Arrangement( intval(get_option('pl_id')) );
+
 // ENDRE SYNLIGHET
-if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig' ) {
+if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig') {
     $arrangement->setSynlig($_POST['goToId'] == 'true');
 
     UKMmonstring::getFlashbag()->add(
         'info',
-        'Arrangementet er nå '. ($_POST['goToId'] == 'true' ? 'synlig på' : 'skjult fra') .' UKM.no. '.
-        '<a href="?page='. $_GET['page'] .'" class="goTo" data-action="synlig" data-id="'.($_POST['goToId'] == 'true' ? 'false':'true').'">Angre</a>'
+        'Arrangementet er nå ' . ($_POST['goToId'] == 'true' ? 'synlig på' : 'skjult fra') . ' UKM.no. ' .
+            '<a href="?page=' . $_GET['page'] . '" class="goTo" data-action="synlig" data-id="' . ($_POST['goToId'] == 'true' ? 'false' : 'true') . '">Angre</a>'
     );
 }
-if( isset($_POST['goTo']) && $_POST['goTo'] == 'pamelding') {
-    if( $_POST['goToId'] == 'true' ) {
+if (isset($_POST['goTo']) && $_POST['goTo'] == 'pamelding') {
+    if ($_POST['goToId'] == 'true') {
         $arrangement->setPamelding('apen');
         UKMmonstring::getFlashbag()->add(
             'success',
@@ -29,9 +32,9 @@ if( isset($_POST['goTo']) && $_POST['goTo'] == 'pamelding') {
         $arrangement->setPamelding('ingen');
         UKMmonstring::getFlashbag()->add(
             'warning',
-            'Arrangementet tar ikke lenger i mot påmelding fra deltakere! All påmelding må skje via videresending. '.
-            '<br />'.
-            'Sjekk at du har oppgitt riktig på hvem som kan sende videre til ditt arrangement nederst på denne siden'
+            'Arrangementet tar ikke lenger i mot påmelding fra deltakere! All påmelding må skje via videresending. ' .
+                '<br />' .
+                'Sjekk at du har oppgitt riktig på hvem som kan sende videre til ditt arrangement nederst på denne siden'
         );
     }
 }
@@ -111,13 +114,13 @@ if (isset($_POST['navn'])) {
 }
 
 // STED
-if( isset($_POST['sted'])) {
+if (isset($_POST['sted'])) {
     $arrangement->setSted($_POST['sted']);
 }
 
 
 // GOOGLE-MAP
-if( isset($_POST['location_name'])){
+if (isset($_POST['location_name'])) {
     $map = StaticMap::fromPOST('location');
     $arrangement->setGoogleMapData($map->toJSON());
 }
@@ -138,17 +141,17 @@ foreach (Typer::getAllTyper() as $tilbud) {
         $arrangement->getInnslagtyper()->leggTil(Typer::getByName($tilbud->getKey()));
     }
 }
-if( $arrangement->erArrangement() ) {
+if ($arrangement->erArrangement()) {
     $arrangement->getInnslagTyper()->leggTil(Typer::getByName('enkeltperson'));
-} elseif( $arrangement->getInnslagTyper()->getAntall() == 0 ) {
+} elseif ($arrangement->getInnslagTyper()->getAntall() == 0) {
     UKMmonstring::getFlashbag()->info(
-        'Det er ikke mulig å ha et arrangement med påmelding uten noen tillatte kategorier. '.
-        'Vi har derfor åpnet for standard-kategoriene, men du må gjerne redigere de.'
+        'Det er ikke mulig å ha et arrangement med påmelding uten noen tillatte kategorier. ' .
+            'Vi har derfor åpnet for standard-kategoriene, men du må gjerne redigere de.'
     );
 }
 
 // VIDERESENDING
-if( isset($_POST['tillatVideresending'] ) ) {
+if (isset($_POST['tillatVideresending'])) {
     $arrangement->setHarVideresending($_POST['tillatVideresending'] == 'true');
 }
 
@@ -165,6 +168,63 @@ if ($arrangement->harVideresending()) {
     }
 }
 
+// Skal noen ting nomineres?
+if (isset($_POST['benyttNominasjon'])) {
+    if ($_POST['benyttNominasjon'] == 'true') {
+        $arrangement->setHarNominasjon(true);
+
+        // Lagre alle "nominer_$something"-settings
+        $count = 0;
+        foreach ($_POST as $post_key => $post_value) {
+            if (strpos($post_key, 'nominer_') === 0) {
+                $har_nominering = $post_value == 'true';
+                if ($har_nominering) {
+                    $count++;
+                }
+                $type = Typer::getByKey(str_replace('nominer_', '', $post_key));
+                $arrangement->setHarNominasjonFor($type, $har_nominering);
+            }
+        }
+        if ($count == 0) {
+            $arrangement->setHarNominasjon(false);
+        }
+    } else {
+        $arrangement->setHarNominasjon(false);
+    }
+}
+
+// Finnes det en nominasjonsinformasjon som skal lagres?
+if (isset($_POST['nominasjon_informasjon'])) {
+    $arrangement->setNominasjonInformasjon($_POST['nominasjon_informasjon']);
+}
+
+// Lagre diverse metadata hvis vi har tilgang på de
+$metadata = [
+    'harLederskjema',
+    'ledere_per_deltakere',
+    'ledere_per_deltakere_deltakere',
+    'kvote_deltakere',
+    'kvote_ledere',
+    'pris_hotelldogn',
+    'avgift_ordinar',
+    'avgift_subsidiert',
+    'avgift_reise',
+    'navn_deltakerovernatting'
+];
+
+foreach ($metadata as $meta_key) {
+    if (isset($_POST[$meta_key])) {
+        $value = $_POST[$meta_key];
+        if ($value == 'false') {
+            $value = false;
+        } elseif ($value == 'true') {
+            $value = true;
+        }
+        $arrangement->getMeta($meta_key)->set($value);
+    }
+}
+
+
 try {
     Write::save($arrangement);
     UKMmonstring::getFlashbag()->add(
@@ -172,23 +232,12 @@ try {
         'Arrangement-info er lagret!'
     );
 } catch (Exception $e) {
+    debug_print_backtrace();
     UKMmonstring::getFlashbag()->add(
         'danger',
-        'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage() .' ('.$e->getCode().')'
+        'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage() . ' (' . $e->getCode() . ')'
     );
 }
 
 // reload innslagTyper (i tilfelle man lagrer "blankt")
 $arrangement->resetInnslagTyper();
-
-if ($arrangement->getType() == 'land') {
-    throw new Exception('Flytt meta-data!');
-    foreach (UKMMonstring_sitemeta_storage() as $key) {
-        if (isset($_POST[$key])) {
-            update_site_option(
-                'UKMFvideresending_' . $key . '_' . $arrangement->getSesong(),
-                $_POST[$key]
-            );
-        }
-    }
-}

@@ -5,7 +5,7 @@ require_once('UKM/Autoloader.php');
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Meta\Write as WriteMeta;
 
-$arrangement = new Arrangement( get_option('pl_id') );
+$arrangement = new Arrangement( intval(get_option('pl_id')) );
 $tekst = $arrangement->getMeta('infotekst_videresending')->set( nl2br($_POST['infotekst']));
 
 try {

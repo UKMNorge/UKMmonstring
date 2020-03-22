@@ -65,6 +65,7 @@
                 {% for innslag_type in innslag_typer|filter( innslag_type => innslag_type.erViseFrem()) %}
                     <li class="list-group-item">
                         <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+                            {% include "Monstring/pameldte_per_type.html.twig" %}
                             <label>
                                 <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
                                 {{ innslag_type.getNavn() }}
@@ -89,6 +90,7 @@
                 {% for innslag_type in innslag_typer|filter( (innslag_type, arrangement) => innslag_type.erJobbeMed() and (innslag_type.getKey() != 'ressurs' or arrangement.getType() == 'land')) %}
                     <li class="list-group-item">
                         <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+                            {% include "Monstring/pameldte_per_type.html.twig" %}
                             <label>
                                 <input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
                                 {{ innslag_type.getNavn() }}

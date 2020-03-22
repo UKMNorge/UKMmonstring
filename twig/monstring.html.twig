@@ -23,7 +23,10 @@ jQuery('#arrangementForm').submit();
                     {% include "Monstring/kontaktpersoner.html.twig" %}
                 {% endif %}
 
-                {% include "Monstring/videresending.html.twig" %}
+				{% include "Monstring/videresending.html.twig" %}
+                {% if arrangement.getEierType() == 'land' and arrangement.erMonstring() %}
+				    {% include "Monstring/land.html.twig" %}
+                {% endif %}
 			</div>
 			<div class="col-12 col-sm-12 col-lg-offset-1 col-lg-4">
 				<p>&nbsp;</p>

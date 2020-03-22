@@ -1,0 +1,70 @@
+<div class="row" style="margin-top: 3em;">
+	<div class="col-12 col-sm-12">
+		<label>Vil du benytte standardisert lederskjema?</label>
+		<p>Dette inkluderer registrering av overnattinger</p>
+
+		<div>
+			<div class="btn-group radioButtons" data-name="harLederskjema">
+				<button type="button" class="btn btn-default {{ arrangement.getMetaValue('harLederskjema') ? 'selected' }}" value="true">
+					&nbsp; Ja &nbsp;</button>
+				<button type="button" class="btn btn-default {{ not arrangement.getMetaValue('harLederskjema') ? 'selected' }}" value="false">
+					&nbsp; Nei &nbsp;</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 col-sm-12 mt-2" id="lederskjema_neitakk" {{ arrangement.harNominasjon() ? 'style="display:none;"' }}>
+        <p class="text-muted">
+            Hvis du ikke bruker det standardiserte skjemaet, anbefaler vi at du bruker spørreskjema nedenfor for å innhente leder-informasjon.
+        </p>
+    </div>
+
+
+	<div class="col-12 col-sm-12 mt-5" id="lederskjema_detaljer" {{ not arrangement.harNominasjon() ? 'style="display:none;"' }}>
+		<ol class="list-group">
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-6 col-sm-7">
+						<label>Hvor mange ledere skal overnatte sammen med deltakerne hver natt?</label>
+					</div>
+					<div class="col-6 col-sm-5">
+						<input type="number" class="form-control" maxlength="2" style="width: 3.5em;display: initial;" name="ledere_per_deltakere" value="{{ arrangement.getMetaValue('ledere_per_deltakere') }}" />
+						ledere per
+						<input type="number" class="form-control" maxlength="2" style="width: 3.5em;display: initial;" name="ledere_per_deltakere_deltakere" value="{{ arrangement.getMetaValue('ledere_per_deltakere_deltakere') }}"/>
+						deltakere
+					</div>
+				</div>
+			</li>
+
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-6 col-sm-7">
+						<label>Hva er hotell-prisen for ledere per enkeltrom?</label>
+					</div>
+					<div class="col-6 col-sm-5">
+						<div class="input-group">
+							<span class="input-group-addon">kr.</span>
+							<input type="number" class="form-control" maxlength="4" name="pris_hotelldogn" value="{{ arrangement.getMetaValue('pris_hotelldogn') }}"/>
+						</div>
+					</div>
+				</div>
+			</li>
+
+            <li class="list-group-item">
+				<div class="row">
+					<div class="col-6 col-sm-7">
+						<label>Hva heter deltakerovernattingen din?</label>
+                        <p class="text-muted">
+                            Det er helt greit å kalle det "deltakerovernattingen".
+                            Valget er her, i tilfelle dere har valgt å kalle det noe annet (den nasjonale UKM-festivalen kaller det for eksempel "Landsbyen"),
+                            og synes det er gjør kommunikasjonen deres enklere.
+                        </p>
+					</div>
+					<div class="col-6 col-sm-5">
+                        <input type="text" class="form-control" name="navn_deltakerovernatting" value="{{ arrangement.getMetaValue('navn_deltakerovernatting') ? arrangement.getMetaValue('navn_deltakerovernatting') : 'deltakerovernattingen' }}"/>
+					</div>
+				</div>
+			</li>
+		</ol>
+	</div>
+</div>
