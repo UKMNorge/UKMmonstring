@@ -1,5 +1,6 @@
 <?php
 
+use UKMNorge\Database\SQL\Update;
 
 $pl_id = get_option('pl_id');
 
@@ -11,7 +12,7 @@ foreach( $_POST['order'] as $contact_id ) {
     }
     
     # UPDATE ORDER
-	$qry = new SQLins(
+	$qry = new Update(
         'smartukm_rel_pl_ab',
         [
             'pl_id' => $pl_id,

@@ -7,6 +7,7 @@ use UKMNorge\Google\StaticMap;
 use UKMNorge\Arrangement\Load as LoadArrangement;
 use UKMNorge\Innslag\Samling;
 use UKMNorge\Innslag\Typer\Typer;
+use UKMNorge\Log\Logger;
 
 date_default_timezone_set('Europe/Oslo');
 
@@ -15,8 +16,7 @@ $arrangement = new Arrangement(intval(get_option('pl_id')));
 
 /* LAGRE ENDRINGER */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    require_once('UKM/logger.class.php');
-    UKMlogger::initWP(get_option('pl_id'));
+    Logger::initWP(get_option('pl_id'));
 
     // LAGRE ENDRINGER I MØNSTRING
     if (isset($_POST['type']) && $_POST['type'] == 'monstring') {

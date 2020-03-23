@@ -4,19 +4,19 @@
  */
 
 use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Arrangement\Kontaktperson\Write as WriteKontaktperson;
+use UKMNorge\Arrangement\Write;
+use UKMNorge\Innslag\Context\Kontaktperson;
 
-require_once('UKM/kontakt.class.php');
-require_once('UKM/write_kontakt.class.php');
 require_once('UKM/Autoloader.php');
-require_once('UKM/write_monstring.class.php');
 
 try {
     $arrangement = new Arrangement( get_option('pl_id') );
 
-    $kontakt = new kontakt_v2( $_POST['id'] );
+    $kontakt = new Kontaktperson( $_POST['id'] );
     $arrangement->getKontaktpersoner()->fjern( $kontakt );
-    write_monstring::save( $arrangement );
-    write_kontakt::delete( $kontakt );
+    Write::save( $arrangement );
+    WriteKontaktperson::delete( $kontakt );
 
     UKMmonstring::addResponseData('success', true);
 } catch( Exception $e ) {
