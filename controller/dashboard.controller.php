@@ -1,5 +1,8 @@
 <?php
-$arrangement = UKMmonstring::getViewData()['arrangement'];
+
+use UKMNorge\Arrangement\Arrangement;
+
+$arrangement = new Arrangement(intval(get_option('pl_id')));
 
 /* MESSAGES */
 $messages = apply_filters('UKMWPDASH_messages', []);
