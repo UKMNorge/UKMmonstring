@@ -20,6 +20,6 @@ $antall_innslag = 0;
 $antall_personer = 0;
 foreach( $arrangement->getInnslag()->getAll() as $innslag ) {
     $antall_innslag++;
-    $antall_personer += $innslag->getPersoner()->getAntall();
+    $antall_personer += $innslag->getPersoner()->getAntallSimple();
 }
 UKMmonstring::addViewData('antall', ['personer' => $antall_personer, 'innslag' => $antall_innslag]);
