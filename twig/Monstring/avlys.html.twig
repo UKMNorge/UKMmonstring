@@ -1,0 +1,18 @@
+{% if arrangement.getMetaValue('avlys') %}
+    <div id="avlyst_banner" style="{{ discrete is not defined ? 'background: #ff128b;color: #fff; padding: 1em; border-radius: 3px; margin-bottom: 3em;' }}">
+        <a href="?action=avlys" class="btn btn-ukm btn-sm {{ discrete is not defined ? 'btn-white' }} pull-right">ENDRE VARSEL</a>
+        <small style="font-weight: bold; text-transform: uppercase;">Vises på forsiden:</small>
+        <h2 style="margin-top:0;">
+            {% if arrangement.getMetaValue('avlys') == 'videresending_kanskje' %}
+                Videresendingen kan bli avlyst!
+            {% elseif arrangement.getMetaValue('avlys') == 'videresending_sikkert' %}
+                Ingen blir videresendt
+            {% elseif arrangement.getMetaValue('avlys') == 'avlys' %}
+                Avlyst!
+            {% elseif arrangement.getMetaValue('avlys') == 'gjennomforer_med_info' %}
+                Viktig info!
+            {% endif %}
+        </h2>
+        <p>{{ arrangement.getMetaValue('avlys_status_kort') }}</p>
+    </div>
+{% endif %}

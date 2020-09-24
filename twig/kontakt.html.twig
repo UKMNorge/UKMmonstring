@@ -1,66 +1,137 @@
-<form method="POST" action="index.php">
+<script>
+    jQuery(document).on('change', '#velgAdmin', function(){
+        var selected = jQuery('#velgAdmin option:selected');
+        jQuery('#fornavn').val( selected.data('fornavn') );
+        jQuery('#etternavn').val( selected.data('etternavn') );
+        jQuery('#mobil').val( selected.data('mobil') );
+        jQuery('#epost').val( selected.data('epost') );
+        jQuery('#admin_id').val( selected.data('adminid') );
+
+        if( selected.data('image') ) {
+            jQuery('#contact_image').attr('src', selected.data('image'));
+            jQuery('#contact_image_input').val( selected.data('image') );
+        }
+
+        jQuery('#skjema').slideDown();
+    });
+
+
+    jQuery(document).ready(function() {
+        UKMresources.optionCard.on('kontakt_type', function(valgt) {
+            if (valgt == 'administrator') {
+                jQuery('#velgAdmin').slideDown();
+                jQuery('#skjema').slideUp();
+            } else {
+                jQuery('#velgAdmin').slideUp();
+                jQuery('#skjema').slideDown();
+                jQuery('#kontaktskjema').trigger('reset');
+            }
+            jQuery('#omArrangementet').slideDown();
+        });
+    });
+</script>
+<form method="POST" action="index.php" id="kontaktskjema">
     <input type="hidden" name="id" value="{{ GET('kontakt') }}"/>
     <input type="hidden" name="type" value="kontakt" />
-    <div style="margin-left: .2em; margin-right: 1em; max-width: 768px;">
+    <input type="hidden" value="{{ kontakt.getAdminId() }}" id="admin_id" name="admin_id" />
+
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-sm-12">
                 <h2>{{ kontakt is defined ? 'Rediger '~ kontakt.getNavn() : 'Legg til kontakt' }}</h2>
+                {% if GET('kontakt') != 'new' and kontakt.getAdminId() > 0 %}
+                    <p class="text-muted small mt-0">
+                        Denne kontaktpersonen er knyttet til administratoren "{{ arrangement.getEierOmrade().getAdministratorer().get( kontakt.getAdminId() ).getNavn() }}"
+                    </p>
+                {% endif %}
                 {% include "wp_modul.flashbag.html.twig" %}
             </div>
         </div>
 
-        <div class="row">
+        {% if GET('kontakt') == 'new' %}
+            <div class="row">
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="optionCard card selected" data-group="kontakt_type" data-value="administrator">
+                        <div class="dashicons dashicons-businessperson"></div>
+                        <div class="header">Legg til administrator</div>
+                        <p>
+                            Legg til en eller flere av administratorene for {{ arrangement.getEierOmrade().getNavn() }}.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="optionCard card" data-group="kontakt_type" data-value="ny">
+                        <div class="dashicons dashicons-universal-access"></div>
+                        <div class="header">Legg til ny kontaktperson</div>
+                        <p>
+                            For kontaktpersoner som ikke er administratorer.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="velgAdmin">
+                <div class="col-12 col-sm-12 mt-5">
+                    <select class="form-control">
+                        <option value="0" disabled selected>Velg administrator</option>
+                        {% for admin in arrangement.getEierOmrade().getAdministratorer().getAll()|filter( admin => admin.getId() not in admin_kontakter) %}
+                            {% set kontakt = admin.getKontaktperson() %}
+                            <option data-adminid="{{admin.getId()}}" data-fornavn="{{kontakt.getFornavn()}}" data-etternavn="{{ kontakt.getEtternavn()}}" data-mobil="{{kontakt.getTelefon()}}" data-epost="{{kontakt.getEpost()}}" data-image="{{kontakt.getBilde()}}">{{ kontakt.getNavn() }} {{ kontakt.getNavn() != admin.getNavn() ? '('~ admin.getNavn() ~')'}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        {% endif %}
+        
+        <div class="row" id="skjema" {{ GET('kontakt') == 'new' ? 'style="display:none;"'}}>
             <div class="col-12 col-sm-6">
                 <div class="form-group">
                     <label>Fornavn</label>
-                    <input type="text" class="form-control" name="fornavn" value="{{ kontakt.getFornavn() }}" autofocus />
+                    <input type="text" class="form-control" id="fornavn" name="fornavn" value="{{ kontakt.getFornavn() }}" autofocus />
                 </div>
                 <div class="form-group">
                     <label>Etternavn</label>
-                    <input type="text" class="form-control" name="etternavn" value="{{ kontakt.getEtternavn() }}" />
+                    <input type="text" class="form-control" id="etternavn" name="etternavn" value="{{ kontakt.getEtternavn() }}" />
                 </div>
 
                 <div class="form-group">
                     <label>Mobil</label>
-                    <input type="tel" class="form-control" name="telefon" value="{{ kontakt.getTelefon() }}" maxlength="8" />
+                    <input type="tel" class="form-control" id="mobil" name="telefon" value="{{ kontakt.getTelefon() }}" maxlength="8" />
                 </div>
             
                 <div class="form-group">
                     <label>E-post</label>
-                    <input type="text" class="form-control" name="epost" value="{{ kontakt.getEpost() }}" />
+                    <input type="text" class="form-control" id="epost" name="epost" value="{{ kontakt.getEpost() }}" />
                 </div>
 
                 <div class="form-group">
                     <label>Tittel</label>
-                    <input type="text" class="form-control" name="tittel" value="{{ kontakt.getTittel() }}" />
+                    <input type="text" class="form-control" id="tittel" name="tittel" value="{{ kontakt.getTittel() }}" />
                 </div>
-            </div>
-
-            <div class="col-12 col-sm-6">
-                <img src="{{kontakt.getBilde()|replace({'http:':'https:'})}}" class="thumbnail" id="contact_image" width="250" />
-                <input type="hidden" value="{{kontakt.getBilde()}}" name="image" id="contact_image_input" />
-                <p class="text-muted">Det er sterkt anbefalt å laste opp bilde, <br />da det senker terskelen for å ta kontakt</p>
-                <button class="btn btn-ukm btn-xs btn-primary" id="imageedit">Endre bilde</button>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-12 col-sm-12">
+                
                 <div class="form-group">
                     <label>Facebook-profil</label>
-                    <input type="url" class="form-control" name="facebook" value="{{ kontakt.getFacebook() }}" />
+                    <input type="url" class="form-control" id="facebook" name="facebook" value="{{ kontakt.getFacebook() }}" />
                     <p class="text-muted">
                     Gå inn på din egen facebook-profil, og kopier adresselinjen. Adressen skal se ca slik ut:<br />
                     https://facebook.com/hans.hansen
                     </p>
                 </div>
             </div>
-        </div>
-        
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-12">
-                <button type="submit" class="btn btn-ukm btn-success" id="formSubmit">Lagre</button>
+            <div class="col-12 col-sm-6">
+                <p>&nbsp;</p>
+                <img src="{{kontakt.getBilde()|replace({'http:':'https:'})}}" class="thumbnail" id="contact_image" width="250" />
+                <input type="hidden" value="{{kontakt.getBilde()}}" name="image" id="contact_image_input" />
+                <p class="text-muted">Det er sterkt anbefalt å laste opp bilde, <br />da det senker terskelen for å ta kontakt</p>
+                <button class="btn btn-ukm btn-xs btn-primary" id="imageedit">Endre bilde</button>
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <button type="submit" class="btn btn-ukm btn-success" id="formSubmit">Lagre</button>
+                </div>
             </div>
         </div>
 
