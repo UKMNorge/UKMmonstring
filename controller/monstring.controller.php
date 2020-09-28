@@ -113,6 +113,9 @@ switch ($arrangement->getType()) {
                 )->getAll()
             )
         );
+        if( $arrangement->getType() == 'kommune') {
+            break;
+        }
     case 'land':
         $fylke_arrangement = [];
         $fylke_monstring = [];
