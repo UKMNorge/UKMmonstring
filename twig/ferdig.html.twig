@@ -1,0 +1,55 @@
+<script>
+	jQuery(document).on('click', 'a.goTo', (e) => {
+        e.preventDefault();
+        jQuery('#goTo').val(jQuery(e.target).attr('data-action'));
+        jQuery('#goToId').val(jQuery(e.target).attr('data-id'));
+        jQuery('#arrangementForm').submit();
+    });
+</script>
+
+<div id="status"></div>
+<form method="POST" id="arrangementForm">
+	<input type="hidden" name="goTo" id="goTo" value="ferdig"/>
+	<input type="hidden" name="goToId" id="goToId" value=""/>
+	<input type="hidden" name="type" value="nothingtosave"/>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-lg-7">
+                <h2>{{ arrangement.getNavn() }}</h2>
+                <p class="mt-0 text-muted">
+                    {{ arrangement.getStart()|dato('j. M Y' ) }} - 
+                    {{ arrangement.getStop()|dato('j. M Y' ) }},
+                    {{ arrangement.getSted() }}
+                </p>
+
+                <div class="alert alert-info" style="vertical-align: middle;">
+                    <div class="dashicons dashicons-lock" style="font-size: 4em;height: 100%;float: left;margin: 0.1em 1em .1em 0;"></div>
+                    Dette arrangementet er gjennomført, og stengt for endring.
+                    Hvis du trenger å endre kontaktpersoner, kan du gjøre det nedenfor.
+                    Alle rapporter, påmeldte osv er fortsatt tilgjengelig via menyen til venstre.
+                    <div class="clearfix"></div>
+                </div>
+                {% include "wp_modul.flashbag.html.twig" %}
+
+                {% if arrangement.erSynlig() %}
+                    {% include "Monstring/kontaktpersoner.html.twig" with { directAction: true } %}
+                {% endif %}
+
+                <div class="clearfix mt-5"></div>
+                {% include "Monstring/avlys.html.twig" with {discrete: true} %}
+            </div>
+
+            <div class="col-12 col-sm-12 col-lg-offset-1 col-lg-4">
+                <p>&nbsp;</p>
+                <div>
+                    {% embed "Infobokser/meldinger.html.twig" %}{% endembed %}
+                </div>
+                <div>
+                    {% embed "Infobokser/pameldte.html.twig" %}{% endembed %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

@@ -6,28 +6,12 @@
 		</div>
 	</div>
 </div>
-{% if arrangement.getMetaValue('avlys') %}
-	<div class="row">
-		<div class="col-12 col-sm-12">
-			<div id="avlyst_banner" style="background: #ff128b;color: #fff; padding: 1em; border-radius: 3px; margin-bottom: 3em;">
-				<a href="?action=avlys" class="btn btn-ukm btn-sm btn-white pull-right">ENDRE VARSEL</a>
-				<small style="font-weight: bold; text-transform: uppercase;">Vises på forsiden:</small>
-				<h1 style="margin-top:0;">
-					{% if arrangement.getMetaValue('avlys') == 'videresending_kanskje' %}
-						Videresendingen kan bli avlyst!
-					{% elseif arrangement.getMetaValue('avlys') == 'videresending_sikkert' %}
-						Ingen blir videresendt
-					{% elseif arrangement.getMetaValue('avlys') == 'avlys' %}
-						Avlyst!
-					{% elseif arrangement.getMetaValue('avlys') == 'gjennomforer_med_info' %}
-						Viktig info!
-					{% endif %}
-				</h1>
-				<p>{{ arrangement.getMetaValue('avlys_status_kort') }}</p>
-			</div>
-		</div>
-	</div>
-{% endif %}
+
+<div class="row">
+	<div class="col-12 col-sm-12">
+        {% include "Monstring/avlys.html.twig" %}
+    </div>
+</div>
 
 <div class="row">
 

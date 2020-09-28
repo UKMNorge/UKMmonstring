@@ -11,3 +11,17 @@ if( is_numeric( $_GET['kontakt'] ) ) {
         $kontakt
     );
 }
+
+$arrangement = UKMmonstring::getArrangement();
+
+$admin_kontakter = [];
+foreach( $arrangement->getKontaktpersoner()->getAll() as $kontakt ) {
+    if( is_numeric( $kontakt->getAdminId() ) ) {
+        $admin_kontakter[] = $kontakt->getAdminId();
+    }
+}
+
+UKMmonstring::addViewData(
+    'admin_kontakter', 
+    $admin_kontakter
+);

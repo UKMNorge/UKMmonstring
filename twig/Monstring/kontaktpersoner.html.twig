@@ -21,7 +21,7 @@
                         </div>
                     {% endfor %}
                     <div class="clearfix"></div>
-                    <p style="margin-top: 1em;" class="pull-right">
+                    <p style="margin-top: 1em; margin-right: -1.2em;" class="pull-right">
                         <a href="#" class="btn btn-ukm btn-xs btn-primary" id="redigerKontaktpersoner">rediger / legg til kontaktpersoner</a>
                     </p>
                 </li>
@@ -63,7 +63,8 @@
                             Start med å legge til den første
                         </a>
                     {% else %}
-                        <a href="#" class="goTo" data-action="kontakt" data-id="new">
+                        <a href="#" class="goTo" data-action="kontakt" data-id="new" style="text-decoration: none;">
+                            <span class="dashicons dashicons-plus"></span>
                             Legg til en ny kontaktperson
                         </a>
                     {% endif %}

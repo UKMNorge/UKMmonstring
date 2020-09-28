@@ -3,8 +3,8 @@
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Arrangementer;
 use UKMNorge\Arrangement\Eier;
+use UKMNorge\Arrangement\Kommende;
 use UKMNorge\Google\StaticMap;
-use UKMNorge\Arrangement\Load as LoadArrangement;
 use UKMNorge\Innslag\Samling;
 use UKMNorge\Innslag\Typer\Typer;
 use UKMNorge\Log\Logger;
@@ -58,50 +58,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 UKMmonstring::includeActionController();
                 break;
         }
+    } else {
+        if( $arrangement->erFerdig() ) {
+            UKMmonstring::setAction('ferdig');
+        }
     }
     // Reload for å få med alle endringer
     $arrangement = new Arrangement(intval(get_option('pl_id')));
+} else {
+    if( $arrangement->erFerdig() ) {
+        UKMmonstring::setAction('ferdig');
+    }
 }
+
+
+// DEV
+#UKMmonstring::setAction('kontakt');
+#UKMmonstring::includeActionController();
+// DEV
+
 
 /* HENT INN VIEW-DATA */
-
-// Be brukeren om å vente til vi har satt opp ny sesong
-if (!is_super_admin() && date('m') > 6 && (int) $arrangement->getSesong() <= (int) date('Y')) {
-    UKMmonstring::setAction('vent-til-ny-sesong');
-} else {
-
-    if (date('m') > 6 && (int) $arrangement->getSesong() <= (int) date('Y')) {
-        UKMmonstring::getFlashbag()->add(
-            'warning',
-            'Redigering av arrangement er kun mulig fordi du er superadmin. ' .
-                'For alle andre er redigering stengt i påvente av at ny sesong skal settes opp.'
-        );
-    }
-
-    UKMmonstring::addViewData(
-        [
-            'arrangement' => $arrangement,
-            'innslag_typer' => Typer::getAllTyper(),
-            'is_superadmin' => is_super_admin(),
-            'GOOGLE_API_KEY' => defined('GOOGLE_API_KEY') ? GOOGLE_API_KEY : ''
-        ]
-    );
-}
+UKMmonstring::addViewData(
+    [
+        'arrangement' => $arrangement,
+        'innslag_typer' => Typer::getAllTyper(),
+        'is_superadmin' => is_super_admin(),
+        'GOOGLE_API_KEY' => defined('GOOGLE_API_KEY') ? GOOGLE_API_KEY : ''
+    ]
+);
 
 switch ($arrangement->getType()) {
     case 'kommune':
         UKMmonstring::addViewData(
             'arrangementer_av_kommunen',
-            LoadArrangement::byEier(
-                $arrangement->getSesong(),
+            Kommende::byEier(
                 $arrangement->getEier()
             )->getAll()
         );
     case 'fylke':
         UKMmonstring::addViewData(
             'arrangementer_av_fylket',
-            LoadArrangement::byEier(
-                $arrangement->getSesong(),
+            Kommende::byEier(
                 $arrangement->getFylke()
             )->getAll()
         );
@@ -110,8 +108,7 @@ switch ($arrangement->getType()) {
             'arrangementer_i_fylket',
             Arrangementer::filterSkipEier(
                 $arrangement->getEierObjekt(),
-                LoadArrangement::iFylke(
-                    $arrangement->getSesong(),
+                Kommende::iFylke(
                     $arrangement->getFylke()
                 )->getAll()
             )
@@ -120,7 +117,7 @@ switch ($arrangement->getType()) {
         $fylke_arrangement = [];
         $fylke_monstring = [];
         $andre_arrangement = [];
-        foreach (LoadArrangement::bySesong($arrangement->getSesong())->getAll() as $mottaker) {
+        foreach (Kommende::getAllCollection()->getAll() as $mottaker) {
             if ($mottaker->getEierType() == 'fylke' && $mottaker->erMonstring()) {
                 $fylke_monstring[] = $mottaker;
             } elseif ($mottaker->getEierType() == 'fylke') {

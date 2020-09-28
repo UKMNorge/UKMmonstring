@@ -13,11 +13,18 @@ require_once('UKM/Autoloader.php');
 $arrangement = new Arrangement( intval(get_option('pl_id')) );
 
 if ($_POST['id'] == 'new') {
-    $kontakt = Write::create(
-        $_POST['fornavn'],
-        $_POST['etternavn'],
-        $_POST['telefon']
-    );
+    try {
+        $kontakt = Kontaktperson::getByAdminId( (int) $_POST['admin_id'] );
+    } catch( Exception $e ) {
+        if( $e->getCode() != 111001 ) {
+            throw $e;
+        }
+        $kontakt = Write::create(
+            $_POST['fornavn'],
+            $_POST['etternavn'],
+            $_POST['telefon']
+        );
+    }
 } else {
     $kontakt = new Kontaktperson((int)$_POST['id']);
     $kontakt->setFornavn($_POST['fornavn']);
@@ -29,6 +36,9 @@ $kontakt->setTittel($_POST['tittel']);
 $kontakt->setEpost($_POST['epost']);
 $kontakt->setBilde($_POST['image']);
 $kontakt->setFacebook($_POST['facebook']);
+if( isset($_POST['admin_id'])) {
+    $kontakt->setAdminId( (int) $_POST['admin_id']);
+}
 
 // Lagre kontaktpersonen i databasen
 try {
