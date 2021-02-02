@@ -250,6 +250,9 @@ jQuery(document).on('click', '#addSporsmal', (e) => {
     var tekst = sporsmal.find('.sporsmal_tekst');
     var id = sporsmal.find('.sporsmal_id');
 
+    if( maxQuestions && maxQuestions < jQuery('#skjema > li.sporsmal').length ) {
+        return alert('Beklager, du kan legge til maks '+ maxQuestions +' spørsmål');
+    }
     // Sjekk at type er valgt
     if (type.val() == null) {
         alert('Du må velge type før du kan legge til spørsmålet');
@@ -294,7 +297,7 @@ jQuery(document).on('click', '#addSporsmal', (e) => {
 
     // Rendre nytt skjema for legg til spørsmål
     jQuery('#skjema').prepend(
-        jQuery('<li class="list-group-item sporsmal" style="background-color: rgb(217,218,218);"/>').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }))
+        jQuery('<li class="list-group-item sporsmal" style="background-color: rgb(217,218,218);"/>').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new'}, excludeQuestionTypes }))
     );
     jQuery('#newSporsmalContainer textarea').autogrow();
 });
@@ -302,7 +305,9 @@ jQuery(document).on('click', '#addSporsmal', (e) => {
 /* INITIER SKJEMA-FUNKSJONER */
 jQuery(document).ready(function() {
     jQuery("#skjema").sortable({ items: "> li:not(:first)" });
-    jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
+    if( jQuery('#newSporsmalContainer').length ) {
+        jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new'}, excludeQuestionTypes }));
+    }
     jQuery('textarea').autogrow();
 });
 

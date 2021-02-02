@@ -19,11 +19,11 @@ jQuery('#arrangementForm').submit();
 				{% include "wp_modul.flashbag.html.twig" %}
                 {% include "Monstring/basics.html.twig" %}
                 {% include "Monstring/pamelding.html.twig" %}
+				{% include "Monstring/skjema_person.html.twig" %}
                 {% if arrangement.erSynlig() %}
                     {% include "Monstring/kontaktpersoner.html.twig" %}
                 {% endif %}
 
-				{% include "Monstring/workshopskjema.html.twig" %}
 				
 				{% include "Monstring/videresending.html.twig" %}
                 {% if arrangement.getEierType() == 'land' and arrangement.erMonstring() %}

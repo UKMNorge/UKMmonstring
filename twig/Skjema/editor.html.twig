@@ -1,0 +1,23 @@
+<div class="col-12 col-sm-12">
+    <form action="index.php" method="POST">
+        <input type="hidden" name="type" value="skjema"/>
+        <input type="hidden" name="form_type" value="{{ form_type }}"/>
+        {% include "Skjema/innhold.html.twig" with {'readonly':false,'arrangement': arrangement, skjema: skjema, 'editmode':true} %}
+        <p>&nbsp;</p>
+        <button type="submit" class="btn btn-ukm btn-success">Lagre</button>
+        eller
+        <a href="index.php">avbryt</a>
+    </form>
+</div>
+
+<script>
+    var maxQuestions = {{limit is defined ? limit : 'null'}};
+    {% if excludeQuestionTypes is defined %}
+        var excludeQuestionTypes = [{% for type in excludeQuestionTypes %}'{{type}}'{{ not loop.last ? ','}}{% endfor %}];
+    {% else %}
+        var excludeQuestionTypes = [];
+    {% endif %}
+    jQuery(document).ready(function() {
+        jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new'}, excludeQuestionTypes }));
+    });
+</script>

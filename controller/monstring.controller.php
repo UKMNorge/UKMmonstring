@@ -14,6 +14,10 @@ date_default_timezone_set('Europe/Oslo');
 require_once('UKM/Autoloader.php');
 $arrangement = new Arrangement(intval(get_option('pl_id')));
 
+#UKMmonstring::setAction('skjema_person');
+#UKMmonstring::includeActionController();
+                
+
 /* LAGRE ENDRINGER */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     Logger::initWP(get_option('pl_id'));
@@ -57,16 +61,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 UKMmonstring::setAction('skjema');
                 UKMmonstring::includeActionController();
                 break;
+            case 'personskjema':
+                UKMmonstring::setAction('skjema_person');
+                UKMmonstring::includeActionController();
+                break;
         }
     } else {
-        if( $arrangement->erFerdig() ) {
+        if ($arrangement->erFerdig()) {
             UKMmonstring::setAction('ferdig');
         }
     }
     // Reload for å få med alle endringer
     $arrangement = new Arrangement(intval(get_option('pl_id')));
 } else {
-    if( $arrangement->erFerdig() ) {
+    if ($arrangement->erFerdig()) {
         UKMmonstring::setAction('ferdig');
     }
 }
@@ -113,7 +121,7 @@ switch ($arrangement->getType()) {
                 )->getAll()
             )
         );
-        if( $arrangement->getType() == 'kommune') {
+        if ($arrangement->getType() == 'kommune') {
             break;
         }
     case 'land':
@@ -137,12 +145,16 @@ switch ($arrangement->getType()) {
 }
 
 $antall_per_type = [];
-foreach( Typer::getAlleInkludertSkjulteTyper() as $type ) {
+foreach (Typer::getAlleInkludertSkjulteTyper() as $type) {
     $antall_personer = 0;
-    foreach( $arrangement->getInnslag()->getAllByType($type) as $innslag ) {
+    foreach ($arrangement->getInnslag()->getAllByType($type) as $innslag) {
         $antall_personer += $innslag->getPersoner()->getAntall();
     }
-    $antall_per_type[ $type->getKey() ] = $antall_personer;
+    $antall_per_type[$type->getKey()] = $antall_personer;
+}
+
+if ($arrangement->harDeltakerSkjema()) {
+    UKMmonstring::addViewData('deltakerskjema', $arrangement->getDeltakerSkjema());
 }
 
 UKMmonstring::addViewData('pameldte_per_type', $antall_per_type);

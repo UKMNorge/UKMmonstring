@@ -1,6 +1,7 @@
 <?php
 
 use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Arrangement\Skjema\Write as SkjemaWrite;
 use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
@@ -215,7 +216,8 @@ $metadata = [
     'avgift_ordinar',
     'avgift_subsidiert',
     'avgift_reise',
-    'navn_deltakerovernatting'
+    'navn_deltakerovernatting',
+    'harDeltakerskjema'
 ];
 
 foreach ($metadata as $meta_key) {
@@ -230,6 +232,20 @@ foreach ($metadata as $meta_key) {
     }
 }
 
+
+if( isset($_POST['harDeltakerskjema']) && $_POST['harDeltakerskjema'] == 'true' ) {
+    try {
+        $skjema = $arrangement->getDeltakerSkjema();
+    } catch( Exception $e ) {
+        // Fant ikke skjema
+        if( $e->getCode() == 101004 ) {
+            $skjema = SkjemaWrite::createForPerson($arrangement);
+            $arrangement->getMeta('deltakerskjema')->set($skjema->getId());
+        } else {
+            throw $e;
+        }
+    }
+}
 
 try {
     Write::save($arrangement);

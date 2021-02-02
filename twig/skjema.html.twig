@@ -7,19 +7,4 @@
     Du kan legge til så mange spørsmål du vil, og endre rekkefølgen ved å dra og slippe etterpå.
 </p>
 
-<div class="col-12 col-sm-12">
-    <form action="index.php" method="POST">
-        <input type="hidden" name="type" value="skjema"/>
-        {% include "Skjema/innhold.html.twig" with {'readonly':false,'arrangement': arrangement,'editmode':true} %}
-        <p>&nbsp;</p>
-        <button type="submit" class="btn btn-ukm btn-success">Lagre</button>
-        eller
-        <a href="index.php">avbryt</a>
-    </form>
-</div>
-
-<script>
-jQuery(document).ready(function() {
-    jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' } }));
-});
-</script>
+{% include "Skjema/editor.html.twig" with { form_type: 'arrangement', skjema: arrangement.getSkjema() } %}
