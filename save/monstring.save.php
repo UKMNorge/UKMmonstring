@@ -5,6 +5,7 @@ use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
 use UKMNorge\Innslag\Typer\Typer;
+use UKMNorge\Meta\Write as MetaWrite;
 use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
@@ -167,6 +168,11 @@ if ($arrangement->harVideresending()) {
         }
     }
 }
+
+// FYLKE: nedslagsfelt (fylke / land)
+$nedslagsfelt = $arrangement->getMeta('nedslagsfelt')->setValue($_POST['nedslagsfelt']);
+MetaWrite::set($nedslagsfelt);
+
 
 // Skal noen ting nomineres?
 if (isset($_POST['benyttNominasjon'])) {
