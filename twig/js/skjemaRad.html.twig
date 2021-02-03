@@ -4,7 +4,7 @@
         <div class="form-group">
             <select name="sporsmal_type[{{sporsmal.id}}]" class="form-control sporsmal_type">
                 <option value="false" {{sporsmal.id=='new'?'disabled selected':''}}>Velg type spørsmål</option>
-                {% if excludeQuestionTypes is defined and 'overskrift' not in excludeQuestionTypes %}
+                {% if  excludeQuestionTypes is not defined or (excludeQuestionTypes is defined and 'overskrift' not in excludeQuestionTypes) %}
                     <option value="overskrift" {{sporsmal.getType()=='overskrift'?'selected':''}}>Overskrift</option>
                 {% endif %}
                 <option value="janei" {{sporsmal.getType()=='janei'?'selected':''}}>Ja / nei-spørsmål</option>

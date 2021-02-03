@@ -3,7 +3,7 @@
     {% if not readonly and editmode is defined and editmode %}
         <li class="list-group-item sporsmal list-group-item-info" id="newSporsmalContainer" style="background-color: rgb(217,218,218);"></li>
     {% endif %}
-    {% for sporsmal in skjema.getSporsmal() %}
+    {% for sporsmal in skjema.getSporsmal().getAll() %}
         {% if editmode is defined and editmode %}
             {# Hvis vi er i edit-mode viser vi skjemaRad.html.twig, ellers viser vi fyll inn-modus. #}
             <li class="list-group-item sporsmal">

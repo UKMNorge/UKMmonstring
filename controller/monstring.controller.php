@@ -13,9 +13,6 @@ date_default_timezone_set('Europe/Oslo');
 
 require_once('UKM/Autoloader.php');
 $arrangement = new Arrangement(intval(get_option('pl_id')));
-
-#UKMmonstring::setAction('skjema_person');
-#UKMmonstring::includeActionController();
                 
 
 /* LAGRE ENDRINGER */
@@ -59,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;
             case 'skjema':
                 UKMmonstring::setAction('skjema');
-                UKMmonstring::includeActionController();
+#                UKMmonstring::includeActionController();
                 break;
             case 'personskjema':
                 UKMmonstring::setAction('skjema_person');
@@ -151,10 +148,6 @@ foreach (Typer::getAlleInkludertSkjulteTyper() as $type) {
         $antall_personer += $innslag->getPersoner()->getAntall();
     }
     $antall_per_type[$type->getKey()] = $antall_personer;
-}
-
-if ($arrangement->harDeltakerSkjema()) {
-    UKMmonstring::addViewData('deltakerskjema', $arrangement->getDeltakerSkjema());
 }
 
 UKMmonstring::addViewData('pameldte_per_type', $antall_per_type);

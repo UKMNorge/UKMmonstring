@@ -14,11 +14,11 @@
 	<ol class="list-group mt-3" {{ arrangement.getMetaValue('harDeltakerskjema') != 'yes' ? 'style="display:none;"' }} id="harDeltakerskjemaDetaljer">
 		<li class="list-group-item">
             <p class="bold">
-                Ditt skjema har {{ deltakerskjema is defined ? deltakerskjema.getSporsmal()|length : 'ingen' }} spørsmål.
+                Ditt skjema har {{ arrangement.harDeltakerskjema() ? arrangement.getDeltakerskjema.getSporsmal().getAntall() : 'ingen' }} spørsmål.
             </p>
 			<a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="personskjema">rediger skjema</a>
 			<span class="text-muted" style="margin-right: 1em;">
-				Svarene kan du se under menyvalget "<a href="?page=UKMrapporter&rapport=deltakerskjema&kat=monstring" target="_blank">rapporter</a>"
+				Svarene kan du se under menyvalget "<a href="admin.php?page=UKMrapporter&action=rapport&rapport=Deltakerskjema">rapporter</a>"
 			</span>
 		</li>
 	</ol>
