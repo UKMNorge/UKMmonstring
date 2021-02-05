@@ -19,15 +19,15 @@
                 <li class="list-group-item">
                     <div class="fade-collapsible">
                         <div class="content">
-                            {% if arrangement.getSkjema() is empty or arrangement.getSkjema().getSporsmal()|length == 0 %}
-                                <p>
-                                    Du har ikke laget et skjema enda.
-                                </p>
-                            {% else %}
+                            {% if arrangement.harSkjema() %}
                                 <p class="bold">
                                     Sånn ser spørreskjemaet ut for de som videresender til ditt arrangement.
                                 </p>
-                                {% include "Skjema/innhold.html.twig" with {'readonly':true,'arrangement': arrangement} %}
+                                {% include "Skjema/innhold.html.twig" with {'readonly':true,'arrangement': arrangement, skjema: arrangement.getSkjema()} %}
+                            {% else %}
+                                <p>
+                                    Du har ikke laget et skjema enda.
+                                </p>
                             {% endif %}
                         </div>
                         <div class="actions">
@@ -39,7 +39,7 @@
             <p style="margin-top: -1em;" class="pull-right">
                 {% if arrangement.harSkjema() %}
                     <span class="text-muted" style="margin-right: 1em;">
-                        Svarene kan du se under menyvalget "<a href="?page=UKMrapport_admin&rapport=videresendingsskjema&kat=monstring" target="_blank">rapporter</a>"
+                        Svarene kan du se under menyvalget "<a href="admin.php?page=UKMrapporter&action=rapport&rapport=Infoskjema">rapporter</a>"
                     </span>
                 {% endif %}
                 <a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="skjema">rediger skjema</a>

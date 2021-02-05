@@ -1,6 +1,7 @@
 <?php
 
 use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Arrangement\Skjema\Write as SkjemaWrite;
 use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
@@ -10,7 +11,7 @@ use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
 
-$arrangement = new Arrangement( intval(get_option('pl_id')) );
+$arrangement = new Arrangement(intval(get_option('pl_id')));
 
 // ENDRE SYNLIGHET
 if (isset($_POST['goTo']) && $_POST['goTo'] == 'synlig') {
@@ -156,9 +157,6 @@ if (isset($_POST['tillatVideresending'])) {
     $arrangement->setHarVideresending($_POST['tillatVideresending'] == 'true');
 }
 
-// VIDERESENDING: Skjema
-$arrangement->setHarSkjema($_POST['vilHaSkjema'] == 'true');
-
 // Hvis arrangementet tar i mot videresending, lagre hvem fra
 if ($arrangement->harVideresending()) {
     if (isset($_POST['avsender']) && is_array($_POST['avsender'])) {
@@ -215,7 +213,8 @@ $metadata = [
     'avgift_ordinar',
     'avgift_subsidiert',
     'avgift_reise',
-    'navn_deltakerovernatting'
+    'navn_deltakerovernatting',
+    'harDeltakerskjema'
 ];
 
 foreach ($metadata as $meta_key) {
@@ -230,6 +229,34 @@ foreach ($metadata as $meta_key) {
     }
 }
 
+// SKJEMA: for arrangement som videresender
+$arrangement->setHarSkjema($_POST['vilHaSkjema'] == 'true');
+if (isset($_POST['vilHaSkjema']) && $_POST['vilHaSkjema'] == 'true') {
+    try {
+        $skjema = $arrangement->getSkjema();
+    } catch (Exception $e) {
+        // Fant ikke skjema
+        if ($e->getCode() == 151002) {
+            $skjema = SkjemaWrite::createForArrangement($arrangement);
+        } else {
+            throw $e;
+        }
+    }
+}
+
+// SKJEMA: for enkeltpersoner
+if (isset($_POST['harDeltakerskjema']) && $_POST['harDeltakerskjema'] == 'true') {
+    try {
+        $skjema = $arrangement->getDeltakerSkjema();
+    } catch (Exception $e) {
+        // Fant ikke skjema
+        if ($e->getCode() == 151002) {
+            $skjema = SkjemaWrite::createForPerson($arrangement);
+        } else {
+            throw $e;
+        }
+    }
+}
 
 try {
     Write::save($arrangement);

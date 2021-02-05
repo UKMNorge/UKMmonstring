@@ -1,0 +1,36 @@
+{% if not arrangement.erMonstring() %}
+	<h4>Ekstra spørsmål</h4>
+	<p>
+		Har du noen ekstra spørsmål du skulle fått svar på ved påmelding?
+	</p>
+
+	<div class="btn-group radioButtons" data-name="harDeltakerskjema">
+		<button type="button" class="btn btn-default {{ arrangement.getMetaValue('harDeltakerskjema') == 'yes' ? 'selected' }} " value="true">
+			&nbsp; Ja &nbsp;</button>
+		<button type="button" class="btn btn-default {{ arrangement.getMetaValue('harDeltakerskjema') != 'yes' ? 'selected' }}" value="false">
+			&nbsp; Nei &nbsp;</button>
+	</div>
+
+	<ol class="list-group mt-3" {{ arrangement.getMetaValue('harDeltakerskjema') != 'yes' ? 'style="display:none;"' }} id="harDeltakerskjemaDetaljer">
+		<li class="list-group-item">
+            <p class="bold">
+                Ditt skjema har {{ arrangement.harDeltakerskjema() ? arrangement.getDeltakerskjema.getSporsmal().getAntall() : 'ingen' }} spørsmål.
+            </p>
+			<a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="personskjema">rediger skjema</a>
+			<span class="text-muted" style="margin-right: 1em;">
+				Svarene kan du se under menyvalget "<a href="admin.php?page=UKMrapporter&action=rapport&rapport=Deltakerskjema">rapporter</a>"
+			</span>
+		</li>
+	</ol>
+
+    <script>
+        // VALGT FELLESMØNSTRING JA/NEI
+        jQuery(document).on('change', '#radioButtonValue_harDeltakerskjema', function(e) {
+            if (jQuery(e.target).val() == 'true') {
+                jQuery('#harDeltakerskjemaDetaljer').slideDown();
+            } else {
+                jQuery('#harDeltakerskjemaDetaljer').slideUp();
+            }
+        });
+    </script>
+{% endif %}

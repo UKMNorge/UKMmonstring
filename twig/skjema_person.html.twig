@@ -1,0 +1,10 @@
+{% include "wp_modul.flashbag.html.twig" %}
+<h2>Ekstra spørsmål til deltakerne ved påmelding</h2>
+
+<p class="lead">
+    Skjemaet du lager her må fylles ut av alle som melder seg på arrangementet.
+    <br/>
+    Du kan legge til 5 spørsmål, og endre rekkefølgen ved å dra og slippe etterpå.
+</p>
+
+{% include "Skjema/editor.html.twig" with {limit: 5, excludeQuestionTypes: ['overskrift'], form_type: 'person', skjema: arrangement.getDeltakerSkjema() } %}
