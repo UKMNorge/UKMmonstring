@@ -1,25 +1,17 @@
-<style>
-    .table.table-dashboard > thead.danger > tr > th {
-        background-color: #ff128b;
-    }
-</style>
-<table class="table table-dashboard noborder">
-	<thead class="danger">
-		<tr>
-			<th>Må du avlyse {{ arrangement.erFerdig() ? 'videresending' : 'UKM' }}?</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td scope="row">
-                Hvis ditt arrangement er avlyst, eller
-                arrangementet du skal sende deltakere videre til er avlyst,
-                kan du legge inn informasjon her.
-
-                <br />
-                <a href="?action=avlys" class="btn btn-ukm btn-primary btn-sm pull-right">Legg inn informasjon</a>
-                <div class="clearfix"></div>
-            </td>
-		</tr>
-	</tbody>
-</table>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<h4 class="mt-4">Korona-status 😷</h4>
+		<ol class="list-group" style="margin-bottom: .4em;">
+			<li class="list-group-item">
+				Hvis arrangementet må avlyses, eller arrangementet du skal sende videre til er avlyst,
+                eller om du har annen viktig informasjon, kan du legge inn dette her.
+				<div class="clearfix"></div>
+			</li>
+		</ol>
+		<div class="mt-0" align="right">
+        	<a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="avlys">rediger korona-informasjon</a>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+<div class="clearfix"></div>

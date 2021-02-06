@@ -2,7 +2,7 @@
 function initMap() {
     var autocomplete = new google.maps.places.Autocomplete(document.getElementById('searchMapInput'));
 
-    autocomplete.addListener('place_changed', function() {
+    autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
 
         var map = 'https://maps.googleapis.com/maps/api/staticmap?center=' + place.name + ',' + place.formatted_address + '&zoom=15&size=400x300&scale=1' + '&markers=' + encodeURIComponent('icon:https://grafikk.ukm.no/profil/bobla/UKM-bobla_bla_0064.png|' + 'label:U|' + place.formatted_address);
@@ -20,10 +20,10 @@ function initMap() {
 }
 
 /* KONTAKTPERSONER: SORTERING */
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     jQuery("#kontaktpersoner_edit > ol").sortable({
         items: "> li:not(:last)",
-        update: function(event, ui) {
+        update: function (event, ui) {
             UKMresources.Request({
                 action: 'UKMmonstring',
                 controller: 'rekkefolge',
@@ -61,7 +61,7 @@ jQuery(document).on('click', '#skjulKontaktpersoner', (e) => {
 
 
 /* KONTAKTPERSONER: SLETT */
-jQuery(document).on('click', ".kontaktperson a.slettKontaktperson", function(e) {
+jQuery(document).on('click', ".kontaktperson a.slettKontaktperson", function (e) {
     e.preventDefault();
     var result = confirm('Sikker på at du vil slette denne kontaktpersonen?');
 
@@ -90,17 +90,17 @@ jQuery(document).on('click', ".kontaktperson a.slettKontaktperson", function(e) 
 });
 
 /* KONTAKTPERSON: BILDE */
-jQuery(document).on('click', '#imageedit', function(e) {
+jQuery(document).on('click', '#imageedit', function (e) {
     e.preventDefault();
 
     var custom_uploader = wp.media({
-            title: 'Velg nytt bilde for kontaktperson',
-            button: {
-                text: 'Bruk dette bildet'
-            },
-            multiple: false // Set this to true to allow multiple files to be selected
-        })
-        .on('select', function() {
+        title: 'Velg nytt bilde for kontaktperson',
+        button: {
+            text: 'Bruk dette bildet'
+        },
+        multiple: false // Set this to true to allow multiple files to be selected
+    })
+        .on('select', function () {
             var attachment = custom_uploader.state().get('selection').first().toJSON();
             jQuery('#contact_image').attr('src', attachment.url);
             jQuery('#contact_image_input').val(attachment.url);
@@ -140,14 +140,14 @@ jQuery(document).on('change', '#radioButtonValue_harLederskjema', (e) => {
 });
 
 /* FILTRER ARRANGEMENT SOM KAN VIDERESENDE TIL ARRANGEMENTET */
-jQuery(document).on('keyup', '#filterArrangement', function() {
+jQuery(document).on('keyup', '#filterArrangement', function () {
     var words = jQuery(this).val().toLowerCase().split(' ');
     if (words.length > 1 || (words.length == 1 && words[0].length > 0)) {
-        jQuery('.avsenderListe li.avsenderMonstring').show().filter(function() {
+        jQuery('.avsenderListe li.avsenderMonstring').show().filter(function () {
             var searchIn = jQuery(this).data('filter').toLowerCase();
             var found = false;
 
-            words.forEach(function(word) {
+            words.forEach(function (word) {
                 if (searchIn.indexOf(word) !== -1) {
                     found = true;
                     return; // return ut av forEach
@@ -221,7 +221,7 @@ jQuery(document).on('click', '.actions > .delete', (e) => {
     if (sure) {
         var sporsmal = jQuery(e.target).parents('li.sporsmal');
         var sporsmal_id = jQuery(sporsmal).find('.sporsmal_id').val();
-        sporsmal.fadeOut(300, function() {
+        sporsmal.fadeOut(300, function () {
             jQuery(this).remove();
         });
         // Sletter kun spørsmål som faktisk er lagret i databasen.
@@ -250,8 +250,8 @@ jQuery(document).on('click', '#addSporsmal', (e) => {
     var tekst = sporsmal.find('.sporsmal_tekst');
     var id = sporsmal.find('.sporsmal_id');
 
-    if( maxQuestions && maxQuestions < jQuery('#skjema > li.sporsmal').length ) {
-        return alert('Beklager, du kan legge til maks '+ maxQuestions +' spørsmål');
+    if (maxQuestions && maxQuestions < jQuery('#skjema > li.sporsmal').length) {
+        return alert('Beklager, du kan legge til maks ' + maxQuestions + ' spørsmål');
     }
     // Sjekk at type er valgt
     if (type.val() == null) {
@@ -297,16 +297,16 @@ jQuery(document).on('click', '#addSporsmal', (e) => {
 
     // Rendre nytt skjema for legg til spørsmål
     jQuery('#skjema').prepend(
-        jQuery('<li class="list-group-item sporsmal" style="background-color: rgb(217,218,218);"/>').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new'}, excludeQuestionTypes }))
+        jQuery('<li class="list-group-item sporsmal" style="background-color: rgb(217,218,218);"/>').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' }, excludeQuestionTypes }))
     );
     jQuery('#newSporsmalContainer textarea').autogrow();
 });
 
 /* INITIER SKJEMA-FUNKSJONER */
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     jQuery("#skjema").sortable({ items: "> li:not(:first)" });
-    if( jQuery('#newSporsmalContainer').length ) {
-        jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new'}, excludeQuestionTypes }));
+    if (jQuery('#newSporsmalContainer').length) {
+        jQuery('#newSporsmalContainer').html(twigJS_skjemaRad.render({ sporsmal: { id: 'new' }, excludeQuestionTypes }));
     }
     jQuery('textarea').autogrow();
 });
@@ -317,14 +317,14 @@ jQuery(document).ready(function() {
  * 
  */
 
-jQuery(document).on('click', '.UKMmonstringer .details_show', function() {
+jQuery(document).on('click', '.UKMmonstringer .details_show', function () {
     show = jQuery(this);
     monstring = jQuery(this).parents('li');
     monstring.find('.details_hide').show();
     show.hide();
     monstring.find('.details').slideDown()
 });
-jQuery(document).on('click', '.UKMmonstringer .details_hide', function() {
+jQuery(document).on('click', '.UKMmonstringer .details_hide', function () {
     hide = jQuery(this);
     monstring = jQuery(this).parents('li');
     monstring.find('.details_show').show();
@@ -332,15 +332,92 @@ jQuery(document).on('click', '.UKMmonstringer .details_hide', function() {
     monstring.find('.details').slideUp()
 });
 
-jQuery(document).on('click', '.UKMmonstringer .wpadmin', function() {
+jQuery(document).on('click', '.UKMmonstringer .wpadmin', function () {
     window.open(jQuery(this).attr('data-url'), '_blank');
 });
 
-jQuery(document).on('click', '.UKMmonstringer #smstoall', function() {
+jQuery(document).on('click', '.UKMmonstringer #smstoall', function () {
     var recipients = new Array();
-    jQuery('.UKMSMS').each(function() {
+    jQuery('.UKMSMS').each(function () {
         recipients.push(jQuery(this).find('a').html());
     });
     jQuery('#UKMSMS_to').val(recipients.join(','));
     jQuery('#UKMSMS_form').submit();
+});
+
+
+
+
+/* ENDRINGER FEB 2021 */
+
+/* SKAL ARRANGEMENTET VÆRE SYNLIG */
+jQuery(document).on('change', '#radioButtonValue_synlig', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        // Advarsel om synlighet
+        jQuery('#warn_synlig_true').slideDown();
+        jQuery('#warn_synlig_false').slideUp();
+
+        // Påmelding
+        jQuery('#pamelding_selector').slideDown();
+
+        // Kontaktpersoner
+        jQuery('#container_kontaktpersoner').slideDown();
+    } else {
+        // Advarsel om synliget
+        jQuery('#warn_synlig_false').slideDown();
+        jQuery('#warn_synlig_true').slideUp();
+
+        // Påmelding
+        jQuery('#pamelding_selector').slideUp();
+
+        // Kontaktpersoner
+        jQuery('#container_kontaktpersoner').slideUp();
+    }
+});
+
+/* JA/NEI TILLAT PÅMELDING */
+jQuery(document).on('change', '#radioButtonValue_pamelding', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        // Advarsler om påmelding
+        jQuery('#warn_pamelding_true').slideDown();
+        jQuery('#warn_pamelding_false').slideUp();
+    } else {
+        // Advarsler om påmelding
+        jQuery('#warn_pamelding_false').slideDown();
+        jQuery('#warn_pamelding_true').slideUp();
+    }
+});
+
+/* JA/NEI TILLAT VIDERESENDING */
+jQuery(document).on('change', '#radioButtonValue_tillatVideresending', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('#warn_videresending_true').fadeIn(150); // Advarsel i påmeldingsboksen
+        jQuery('#warn_videresending_more').slideDown(); // Advarsel i videresendingsboksen
+
+        jQuery('#videresending_frister_selector').slideDown();
+    } else {
+        jQuery('#warn_videresending_true').fadeOut(150);
+        jQuery('#warn_videresending_more').slideUp();
+        jQuery('#videresending_frister_selector').slideUp();
+    }
+});
+
+/* JA/NEI DELTAKERSKJEMA */
+jQuery(document).on('change', '#radioButtonValue_harDeltakerskjema', function (e) {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('#harDeltakerskjemaDetaljer').slideDown();
+    } else {
+        jQuery('#harDeltakerskjemaDetaljer').slideUp();
+    }
+});
+
+jQuery(document).ready(() => {
+    /* VIS / SKJUL NEDSLAGSFELT-SELECTOR */
+    jQuery(document).on('change', '#radioButtonValue_pamelding, #radioButtonValue_synlig', (e) => {
+        if (jQuery('#radioButtonValue_synlig').val() == jQuery('#radioButtonValue_pamelding').val() && jQuery('#radioButtonValue_synlig').val() == 'true') {
+            jQuery('#nedslagsfelt_selector').slideDown();
+        } else {
+            jQuery('#nedslagsfelt_selector').slideUp();
+        }
+    });
 });

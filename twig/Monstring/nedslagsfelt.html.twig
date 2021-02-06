@@ -1,0 +1,26 @@
+{# ARRANGEMENT I FYLKET KAN VELGE KOMMUNE #}
+{% if arrangement.getType() == 'fylke' %}
+	<li class="list-group-item" id="nedslagsfelt_selector" style="display: none;">
+		<div class="row">
+			<div class="col-xs-7">
+				<label style="margin-bottom: 0;">Hvilket nedslagsfelt har arrangementet?</label>
+				<div class="mt-0 help text-muted small">
+					Avgjør om deltakere fra hele landet, eller bare fra
+					{{ arrangement.getFylke().getNavn() }}
+					kan melde seg på.
+				</div>
+			</div>
+
+			<div class="col-xs-5" align="right">
+				<div class="btn-group radioButtons" data-name="nedslagsfelt">
+					<button type="button" class="btn btn-default {{ arrangement.getMetaValue('nedslagsfelt') == 'fylke' ? 'selected' }}" value="fylke">
+						&nbsp;
+						{{ arrangement.getFylke().getNavn() }}
+						&nbsp;</button>
+					<button type="button" class="btn btn-default {{ arrangement.getMetaValue('nedslagsfelt') == 'land' ? 'selected' }}" value="land">
+						&nbsp; Norge &nbsp;</button>
+				</div>
+			</div>
+		</div>
+	</li>
+{% endif %}

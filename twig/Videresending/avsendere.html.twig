@@ -48,7 +48,7 @@
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="list-header">I
                         {{ arrangement.getFylke().erOslo ? 'bydelen' : 'kommunen' }}</div>
-                    {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_av_kommunen } %}{% endembed %}
+                    {% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_av_kommunen } %}{% endembed %}
                 </div>
             {% endif %}
 
@@ -57,29 +57,29 @@
                     {{ arrangement.getFylke().erOslo ? 'bydeler' : 'kommuner' }}
                     i
                     {{ arrangement.getFylke().getNavn() }}</div>
-                {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_i_fylket } %}{% endembed %}
+                {% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_i_fylket } %}{% endembed %}
             </div>
 
             <div class="col-12 col-sm-6 col-md-4">
                 <div class="list-header">Av
                     {{ arrangement.getFylke().getNavn() }}
                     fylke</div>
-                {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_av_fylket } %}{% endembed %}
+                {% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_av_fylket } %}{% endembed %}
             </div>
         {# LANDSNIVÅ #}
         {% else %}
             <div class="col-12 col-sm-6 col-md-4">
                 <div class="list-header">Fylkesfestivaler</div>
-                {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_fylke_monstring } %}{% endembed %}
+                {% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_fylke_monstring } %}{% endembed %}
             </div>
             <div class="col-12 col-sm-6 col-md-4">
                 <div class="list-header">Fylkenes andre arrangement</div>
-                {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer_fylke } %}{% endembed %}
+                {% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_fylke } %}{% endembed %}
             </div>
             
             <div class="col-12 col-sm-6 col-md-4">
                 <div class="list-header">Dine og lokale arrangement</div>
-                {% embed "Monstring/avsender.html.twig" with {'avsendere': arrangementer } %}{% endembed %}
+                {% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer } %}{% endembed %}
             </div>
 
         {% endif %}
