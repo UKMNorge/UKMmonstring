@@ -2,10 +2,7 @@
 
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Arrangementer;
-use UKMNorge\Arrangement\Eier;
 use UKMNorge\Arrangement\Kommende;
-use UKMNorge\Google\StaticMap;
-use UKMNorge\Innslag\Samling;
 use UKMNorge\Innslag\Typer\Typer;
 use UKMNorge\Log\Logger;
 
@@ -13,30 +10,31 @@ date_default_timezone_set('Europe/Oslo');
 
 require_once('UKM/Autoloader.php');
 $arrangement = new Arrangement(intval(get_option('pl_id')));
-                
+
 
 /* LAGRE ENDRINGER */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    Logger::initWP(get_option('pl_id'));
+    Logger::initWP($arrangement->getId());
 
-    // LAGRE ENDRINGER I MØNSTRING
-    if (isset($_POST['type']) && $_POST['type'] == 'monstring') {
-        UKMmonstring::require('save/monstring.save.php');
-    }
-
-    // LAGRE ENDRINGER I KONTAKTPERSON
-    if (isset($_POST['type']) && $_POST['type'] == 'kontakt') {
-        UKMmonstring::require('save/kontakt.save.php');
-    }
-
-    // LAGRE ENDRINGER I INFOTEKST
-    if (isset($_POST['type']) && $_POST['type'] == 'infotekst') {
-        UKMmonstring::require('save/infotekst.save.php');
-    }
-
-    // LAGRE ENDRINGER I SKJEMA
-    if (isset($_POST['type']) && $_POST['type'] == 'skjema') {
-        UKMmonstring::require('save/skjema.save.php');
+    if (isset($_POST['type'])) {
+        switch ($_POST['type']) {
+            // ARRANGEMENT
+            case 'monstring':
+                UKMmonstring::require('save/monstring.save.php');
+                break;
+            // KONTAKTPERSON
+            case 'kontakt':
+                UKMmonstring::require('save/kontakt.save.php');
+                break;
+            // LAGRE ENDRINGER I (PERSON-)SKJEMA
+            case 'skjema':
+                UKMmonstring::require('save/skjema.save.php');
+                break;
+            // KORONA-INFO / AVLYS-INFO
+            case 'avlys':
+                UKMmonstring::require('save/avlys.save.php');
+                break;
+        }
     }
 
     // "REDIRECT" TIL KONTAKT/INFOTEKST/SKJEMA ETTER SAVE
@@ -47,17 +45,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 UKMmonstring::setAction('kontakt');
                 UKMmonstring::includeActionController();
                 break;
-            case 'infotekst':
+            case 'avlys':
+                UKMmonstring::setAction('avlys');
+                UKMmonstring::includeActionController();
+                break;
+            
+            
+            /*
+                case 'infotekst':
                 UKMmonstring::setAction('infotekst');
                 UKMmonstring::includeActionController();
                 do_action('admin_print_footer_scripts');
 
                 die();
                 break;
-            case 'skjema':
-                UKMmonstring::setAction('skjema');
-#                UKMmonstring::includeActionController();
-                break;
+            */
+
             case 'personskjema':
                 UKMmonstring::setAction('skjema_person');
                 UKMmonstring::includeActionController();
@@ -69,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     // Reload for å få med alle endringer
-    $arrangement = new Arrangement(intval(get_option('pl_id')));
+    $arrangement = new Arrangement($arrangement->getId());
 } else {
     if ($arrangement->erFerdig()) {
         UKMmonstring::setAction('ferdig');

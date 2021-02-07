@@ -1,6 +1,6 @@
 {# ARRANGEMENT I FYLKET KAN VELGE KOMMUNE #}
 {% if arrangement.getType() == 'fylke' %}
-	<li class="list-group-item" id="nedslagsfelt_selector" style="display: none;">
+	<li class="list-group-item" id="nedslagsfelt_selector" {{ not arrangement.erSynlig() or not arrangement.harPamelding() ? 'style="display: none;"' }}>
 		<div class="row">
 			<div class="col-xs-7">
 				<label style="margin-bottom: 0;">Hvilket nedslagsfelt har arrangementet?</label>

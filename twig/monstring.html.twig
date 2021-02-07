@@ -1,11 +1,9 @@
-{% set monstringen = arrangement.getType() == 'kommune' ? 'mønstringen' : 'festivalen' %}
-
 <script>
 	jQuery(document).on('click', 'a.goTo', (e) => {
-e.preventDefault();
-jQuery('#goTo').val(jQuery(e.target).attr('data-action'));
-jQuery('#goToId').val(jQuery(e.target).attr('data-id'));
-jQuery('#arrangementForm').submit();
+	e.preventDefault();
+	jQuery('#goTo').val(jQuery(e.target).attr('data-action'));
+	jQuery('#goToId').val(jQuery(e.target).attr('data-id'));
+	jQuery('#arrangementForm').submit();
 });
 </script>
 <style>
@@ -13,6 +11,14 @@ jQuery('#arrangementForm').submit();
 		font-size: .9em;
 	}
 </style>
+
+{% set display_hvisPamelding = not arrangement.harPamelding() ? 'display: none;' %}
+{% set display_hvisIkkePamelding = arrangement.harPamelding() ? 'display: none;' %}
+{% set display_hvisSynlig = not arrangement.erSynlig() ? 'display: none;' %}
+{% set display_hvisIkkeSynlig = arrangement.erSynlig() ? 'display: none;' %}
+{% set display_hvisVideresending = not arrangement.harVideresending() ? 'display: none;' %}
+{% set display_hvisIkkeVideresending = arrangement.harVideresending() ? 'display: none;' %}
+
 <div id="status"></div>
 <form method="POST" id="arrangementForm">
 	<input type="hidden" name="goTo" id="goTo" value="monstring"/>
@@ -24,8 +30,7 @@ jQuery('#arrangementForm').submit();
 				{% include "wp_modul.flashbag.html.twig" %}
                 {% include "Monstring/basics.html.twig" %}
 				
-				{% include "Infobokser/avlys.html.twig" %}
-				
+				{% include "Monstring/avlys.html.twig" %}
                 {% include "Monstring/synlighet.html.twig" %}
 
 				{% if arrangement.erArrangement() %}
@@ -36,15 +41,12 @@ jQuery('#arrangementForm').submit();
                 
 				{% include "Monstring/kontaktpersoner.html.twig" %}
 			
-				
-				{#% include "Monstring/videresending.html.twig" %#}
-                {% if arrangement.getEierType() == 'land' and arrangement.erMonstring() %}
+				{% if arrangement.getEierType() == 'land' and arrangement.erMonstring() %}
 				    {% include "Monstring/land.html.twig" %}
                 {% endif %}
 			</div>
 			<div class="col-12 col-sm-12 col-lg-4">
 				<p>&nbsp;</p>
-				
 				<div>
 					{% embed "Infobokser/pameldte.html.twig" %}{% endembed %}
 				</div>

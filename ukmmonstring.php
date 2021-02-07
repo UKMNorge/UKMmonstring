@@ -49,7 +49,7 @@ class UKMmonstring extends Modul
                 'Videresending',
                 'Videresending',
                 'editor',
-                'UKMmonstring',
+                'UKMarrangement_videresending',
                 ['UKMMonstring', 'renderAdminVideresending'],
                 40
             );
@@ -78,8 +78,24 @@ class UKMmonstring extends Modul
         wp_enqueue_script('TwigJS');
 
         wp_enqueue_script(
-            'UKMMonstring_script',
-            UKMmonstring::getPluginUrl()  . 'monstring.script.js'
+            'UKMMonstring_script_monstring',
+            UKMmonstring::getPluginUrl()  . 'js/monstring.js'
+        );
+        wp_enqueue_script(
+            'UKMMonstring_script_kontaktpersoner',
+            UKMmonstring::getPluginUrl()  . 'js/kontaktpersoner.js'
+        );
+        wp_enqueue_script(
+            'UKMMonstring_script_monstring',
+            UKMmonstring::getPluginUrl()  . 'js/monstring.js'
+        );
+        wp_enqueue_script(
+            'UKMMonstring_script_videresending',
+            UKMmonstring::getPluginUrl()  . 'js/videresending.js'
+        );
+        wp_enqueue_script(
+            'UKMMonstring_script_skjema',
+            UKMmonstring::getPluginUrl()  . 'js/skjema.js'
         );
         wp_enqueue_style(
             'UKMMonstring_style',

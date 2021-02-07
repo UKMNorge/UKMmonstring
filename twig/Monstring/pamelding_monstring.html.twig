@@ -7,8 +7,7 @@
             Skal du ha et arrangementet hvor de deltar som seg selv, og ikke som et innslag, må du opprette et workshop-arrangement.
 		</p>
 
-		<ol
-			class="list-group">
+		<ol class="list-group">
 			{# PÅMELDING FRA FYLKE ELLER LAND (HVIS FYLKE-ARRANGEMENT) #}
 			{% include "Monstring/nedslagsfelt.html.twig" %}
 
@@ -33,20 +32,18 @@
 	</div>
 
 	<div class="col-12 col-sm-6">
-		{% if arrangement.harPamelding() %}
-			<label class="bold">Påmeldingsfrist for de som vil vise frem noe</label>
-			<div class="input-group" style="margin-bottom: 1em;">
-				<input class="datepicker_kommune form-control" type="text" name="frist_1" value="{{ arrangement.getFrist1()|dato('d.m.Y') }}"/>
-				<span class="input-group-addon">kl. 23:59</span>
-			</div>
-		{% endif %}
-
+		<label class="bold">Påmeldingsfrist for de som vil vise frem noe</label>
+		<div class="input-group" style="margin-bottom: 1em;">
+			<input class="datepicker_kommune form-control" type="text" name="pl_deadline" value="{{ arrangement.getFrist1()|dato('d.m.Y') }}"/>
+			<span class="input-group-addon">kl. 23:59</span>
+		</div>
+		<input type="hidden" name="pl_deadline_time" value="23:59" />
 
 		<ol class="list-group">
 			{% for innslag_type in innslag_typer|filter( innslag_type => innslag_type.erViseFrem()) %}
 				<li class="list-group-item">
 					<div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
-						{% include "Monstring/pameldte_per_type.html.twig" %}
+						{% include "Monstring/pamelding_pameldte_per_type.html.twig" %}
 						<label>
 							<input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
 							{{ innslag_type.getNavn() }}
@@ -59,19 +56,18 @@
 
 
 	<div class="col-12 col-sm-6">
-		{% if arrangement.harPamelding() %}
-			<label class="bold">Påmeldingsfrist for de som vil bidra som noe</label>
-			<div class="input-group" style="margin-bottom: 1em;">
-				<input class="datepicker_kommune form-control" type="text" name="frist_2" value="{{ arrangement.getFrist2()|dato('d.m.Y') }}"/>
-				<span class="input-group-addon">kl. 23:59</span>
-			</div>
-		{% endif %}
+		<label class="bold">Påmeldingsfrist for de som vil bidra som noe</label>
+		<div class="input-group" style="margin-bottom: 1em;">
+			<input class="datepicker_kommune form-control" type="text" name="pl_deadline2" value="{{ arrangement.getFrist2()|dato('d.m.Y') }}"/>
+			<span class="input-group-addon">kl. 23:59</span>
+		</div>
+		<input type="hidden" name="pl_deadline2_time" value="23:59" />
 
 		<ol class="list-group">
 			{% for innslag_type in innslag_typer|filter( (innslag_type, arrangement) => innslag_type.erJobbeMed() and (innslag_type.getKey() != 'ressurs' or arrangement.getType() == 'land')) %}
 				<li class="list-group-item">
 					<div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
-						{% include "Monstring/pameldte_per_type.html.twig" %}
+						{% include "Monstring/pamelding_pameldte_per_type.html.twig" %}
 						<label>
 							<input type="checkbox" name="tilbud_{{ innslag_type.getKey() }}" value="on" {{ arrangement.getInnslagTyper().har( innslag_type ) ? 'checked' }}/>
 							{{ innslag_type.getNavn() }}

@@ -1,18 +1,36 @@
-{% if arrangement.getMetaValue('avlys') %}
-    <div id="avlyst_banner" style="{{ discrete is not defined ? 'background: #ff128b;color: #fff; padding: 1em; border-radius: 3px; margin-bottom: 3em;' }}">
-        <a href="?action=avlys" class="btn btn-ukm btn-sm {{ discrete is not defined ? 'btn-white' }} pull-right">ENDRE VARSEL</a>
-        <small style="font-weight: bold; text-transform: uppercase;">Vises på forsiden:</small>
-        <h2 style="margin-top:0;">
-            {% if arrangement.getMetaValue('avlys') == 'videresending_kanskje' %}
-                Videresendingen kan bli avlyst!
-            {% elseif arrangement.getMetaValue('avlys') == 'videresending_sikkert' %}
-                Ingen blir videresendt
-            {% elseif arrangement.getMetaValue('avlys') == 'avlys' %}
-                Avlyst!
-            {% elseif arrangement.getMetaValue('avlys') == 'gjennomforer_med_info' %}
-                Viktig info!
-            {% endif %}
-        </h2>
-        <p>{{ arrangement.getMetaValue('avlys_status_kort') }}</p>
-    </div>
-{% endif %}
+<div class="row hvisSynlig" style="{{display_hvisSynlig}}">
+	<div class="col-xs-12 col-sm-12">
+		<h4 class="mt-4">Korona-status 😷</h4>
+		<ol class="list-group" style="margin-bottom: .4em;">
+			<li class="list-group-item">
+				Hvis arrangementet må avlyses, eller arrangementet du skal sende videre til er avlyst,
+				eller om du har annen viktig informasjon, kan du legge inn dette her.
+				<div class="clearfix"></div>
+			</li>
+			{% if arrangement.getMetaValue('avlys') %}
+				<li class="list-group-item">
+					<small style="font-weight: bold; text-transform: uppercase;">Vises på forsiden til arrangementet:</small>
+					<div id="avlyst_banner" style="background: #ff128b;color: #fff; padding: 1em; border-radius: 3px;">
+						<h2 style="margin-top:0;">
+							{% if arrangement.getMetaValue('avlys') == 'videresending_kanskje' %}
+								Videresendingen kan bli avlyst!
+							{% elseif arrangement.getMetaValue('avlys') == 'videresending_sikkert' %}
+								Ingen blir videresendt
+							{% elseif arrangement.getMetaValue('avlys') == 'avlys' %}
+								Avlyst!
+							{% elseif arrangement.getMetaValue('avlys') == 'gjennomforer_med_info' %}
+								Viktig info!
+							{% endif %}
+						</h2>
+						<p>{{ arrangement.getMetaValue('avlys_status_kort') }}</p>
+					</div>
+				</li>
+			{% endif %}
+		</ol>
+		<div class="mt-0" align="right">
+			<a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="avlys">rediger korona-informasjon</a>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+<div class="clearfix"></div>
