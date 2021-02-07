@@ -1,0 +1,49 @@
+
+<ol class="list-group">
+	<li class="list-group-item">
+		<div class="row">
+			<div class="col-xs-8">
+				<label>Skal noen innslag nomineres før de kan videresendes?</label>
+			</div>
+			<div class="col-xs-4" align="right">
+				<div class="btn-group radioButtons" data-name="benyttNominasjon">
+					<button type="button" class="btn btn-default btn-sm {{ arrangement.harNominasjon() ? 'selected' }}" value="true">
+						&nbsp; Ja &nbsp;</button>
+					<button type="button" class="btn btn-default btn-sm {{ not arrangement.harNominasjon() ? 'selected' }}" value="false">
+						&nbsp; Nei &nbsp;</button>
+				</div>
+			</div>
+		</div>
+	</li>
+	<li class="list-group-item hvisNominasjon" style="{{display_hvisNominasjon}}">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<label>Velg hvilke typer innslag som skal nomineres</label>
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<ol class="list-unstyled">
+					{% for type in innslag_typer|filter(type => type.kanHaNominasjon() ) %}
+						<li>
+							<div class="pull-right">
+								<div class="btn-group radioButtons" data-name="nominer_{{type.getKey()}}">
+									<button type="button" class="btn btn-default {{ arrangement.harNominasjonFor(type) ? 'selected' }}" value="true">
+										&nbsp; Ja &nbsp;</button>
+									<button type="button" class="btn btn-default {{ not arrangement.harNominasjonFor(type) ? 'selected' }}" value="false">
+										&nbsp; Nei &nbsp;</button>
+								</div>
+							</div>
+
+							{{ type.getNavn() }}
+							<div class="clearfix"></div>
+						</li>
+					{% endfor %}
+				</ol>
+			</div>
+		</div>
+	</li>
+	<li class="list-group-item hvisNominasjon" style="{{display_hvisNominasjon}}">
+		<label>Beskriv frister og regler for nominasjon</label>
+		<p>Det du skriver her er kun synlig for de voksne som fyller ut skjema / videresender til ditt arrangement, og ikke til deltakerne.</p>
+		<textarea name="nominasjon_informasjon" id="nominasjon_informasjon" class="form-control">{{ arrangement.getNominasjonInformasjon() }}</textarea>
+	</li>
+</ol>

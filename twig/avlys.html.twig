@@ -11,8 +11,11 @@
 
 <div class="container-fluid">
 	<form method="POST">
+        <input type="hidden" name="type" value="avlys" />
 		<div class="row">
 			<div class="col-12 col-sm-12">
+                {% include "wp_modul.flashbag.html.twig" %}
+
 				<h1>Avlys UKM</h1>
 
 				<p class="lead">Hva er status hos deg nå?</p>

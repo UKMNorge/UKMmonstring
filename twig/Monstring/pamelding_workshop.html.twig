@@ -1,0 +1,57 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<h4 class="mt-4">Påmelding</h4>
+
+		<ol class="list-group" style="margin-bottom: 1em;">
+            {# PÅMELDING FRA FYLKE ELLER LAND (HVIS FYLKE-ARRANGEMENT) #}
+            {% include "Monstring/nedslagsfelt.html.twig" %}
+
+			{# PÅMELDINGSFRIST #}
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-xs-12 col-sm-7">
+						<label>Når er påmeldingsfristen?</label>
+
+						<div class="mt-0 help text-muted small">
+							Du må oppgi denne, selv om påmeldingen er stengt.
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-5" align="right">
+						<div class="input-group" style="margin-bottom: 1em;">
+							<input class="datepicker_kommune form-control" type="text" name="pl_deadline" value="{{ arrangement.getFrist1()|dato('d.m.Y') }}"/>
+							<span class="input-group-addon">kl. 23:59</span>
+						</div>
+						<input type="hidden" name="pl_deadline_time" value="23:59" />
+					</div>
+				</div>
+			</li>
+
+
+			{# EKSTRA-SKJEMA #}
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-xs-12 col-sm-7">
+						<label>Skal deltakerne fylle ut et ekstra skjema ved påmelding?</label>
+
+					</div>
+					<div class="col-xs-12 col-sm-5" align="right">
+						<div class="btn-group radioButtons" data-name="harDeltakerskjema">
+							<button type="button" class="btn btn-default {{ arrangement.getMetaValue('harDeltakerskjema') == 'yes' ? 'selected' }} " value="true">
+								&nbsp; Ja &nbsp;</button>
+							<button type="button" class="btn btn-default {{ arrangement.getMetaValue('harDeltakerskjema') != 'yes' ? 'selected' }}" value="false">
+								&nbsp; Nei &nbsp;</button>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ol>
+		<div id="harDeltakerskjemaDetaljer" {{ not arrangement.harDeltakerskjema() ? 'style="display:none;"' }} align="right">
+			<div class="pull-right">
+				<a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="personskjema" style="margin-top: -.8em;">rediger skjema</a>
+			</div>
+			<div class="pull-right text-muted" style="margin-right: 1em;">
+				Svarene kan du se under menyvalget "<a href="admin.php?page=UKMrapporter&action=rapport&rapport=Deltakerskjema">rapporter</a>"
+			</div>
+		</div>
+	</div>
+</div>

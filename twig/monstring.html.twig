@@ -1,13 +1,24 @@
-{% set monstringen = arrangement.getType() == 'kommune' ? 'mønstringen' : 'festivalen' %}
-
 <script>
 	jQuery(document).on('click', 'a.goTo', (e) => {
-e.preventDefault();
-jQuery('#goTo').val(jQuery(e.target).attr('data-action'));
-jQuery('#goToId').val(jQuery(e.target).attr('data-id'));
-jQuery('#arrangementForm').submit();
+	e.preventDefault();
+	jQuery('#goTo').val(jQuery(e.target).attr('data-action'));
+	jQuery('#goToId').val(jQuery(e.target).attr('data-id'));
+	jQuery('#arrangementForm').submit();
 });
 </script>
+<style>
+	.small {
+		font-size: .9em;
+	}
+</style>
+
+{% set display_hvisPamelding = not arrangement.harPamelding() ? 'display: none;' %}
+{% set display_hvisIkkePamelding = arrangement.harPamelding() ? 'display: none;' %}
+{% set display_hvisSynlig = not arrangement.erSynlig() ? 'display: none;' %}
+{% set display_hvisIkkeSynlig = arrangement.erSynlig() ? 'display: none;' %}
+{% set display_hvisVideresending = not arrangement.harVideresending() ? 'display: none;' %}
+{% set display_hvisIkkeVideresending = arrangement.harVideresending() ? 'display: none;' %}
+
 <div id="status"></div>
 <form method="POST" id="arrangementForm">
 	<input type="hidden" name="goTo" id="goTo" value="monstring"/>
@@ -15,32 +26,32 @@ jQuery('#arrangementForm').submit();
 	<input type="hidden" name="type" value="monstring"/>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-12 col-sm-12 col-lg-7">
+			<div class="col-12 col-sm-12 col-lg-8">
 				{% include "wp_modul.flashbag.html.twig" %}
                 {% include "Monstring/basics.html.twig" %}
-                {% include "Monstring/pamelding.html.twig" %}
-				{% include "Monstring/skjema_person.html.twig" %}
-                {% if arrangement.erSynlig() %}
-                    {% include "Monstring/kontaktpersoner.html.twig" %}
-                {% endif %}
-
 				
-				{% include "Monstring/videresending.html.twig" %}
-                {% if arrangement.getEierType() == 'land' and arrangement.erMonstring() %}
+				{% include "Monstring/avlys.html.twig" %}
+                {% include "Monstring/synlighet.html.twig" %}
+
+				{% if arrangement.erArrangement() %}
+					{% include "Monstring/pamelding_workshop.html.twig" %}
+				{% else %}
+					{% include "Monstring/pamelding_monstring.html.twig" %}
+				{% endif %}
+                
+				{% include "Monstring/kontaktpersoner.html.twig" %}
+			
+				{% if arrangement.getEierType() == 'land' and arrangement.erMonstring() %}
 				    {% include "Monstring/land.html.twig" %}
                 {% endif %}
 			</div>
-			<div class="col-12 col-sm-12 col-lg-offset-1 col-lg-4">
+			<div class="col-12 col-sm-12 col-lg-4">
 				<p>&nbsp;</p>
-				
-                <div>
-                    {% include "Infobokser/avlys.html.twig" %}
-                </div>
-                <div>
-					{% embed "Infobokser/meldinger.html.twig" %}{% endembed %}
-				</div>
 				<div>
 					{% embed "Infobokser/pameldte.html.twig" %}{% endembed %}
+				</div>
+                <div>
+					{% embed "Infobokser/meldinger.html.twig" %}{% endembed %}
 				</div>
 			</div>
 		</div>

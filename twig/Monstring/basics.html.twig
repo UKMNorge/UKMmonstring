@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-12 col-sm-12">
+	<div class="col-12 col-sm-12 mt-3">
 		<div class="form-group form-group-lg">
 			<label>Navn på arrangementet</label>
 			<input type="text" class="form-control input-lg" name="navn" value="{{ arrangement.getNavn() }}" placeholder="Navn på arrangementet"/>
@@ -8,81 +8,65 @@
 </div>
 
 <div class="row">
-	<div class="col-12 col-sm-12">
-        {% include "Monstring/avlys.html.twig" %}
-    </div>
-</div>
-
-<div class="row">
-
-	{% if arrangement.erSynlig() %}
-		<script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key={{ GOOGLE_API_KEY }}" async defer></script>
-		<div class="col-12 col-sm-6">
-			{% for key, value in arrangement.getGoogleMap().getPOSTValues() %}
-				<input type="hidden" name="location_{{key}}" id="location-{{key}}" value="{{value}}"/>
-			{% endfor %}
-			<div class="form-group">
-				<label>Hvor skal arrangmentet være?</label>
-				<input id="searchMapInput" type="text" class="form-control mapControls" name="sted" value="{{ arrangement.getSted() }}"/>
-				<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Stedet må være søkbart i google maps, og du kan både bruke navn og adresser.</p>
-			</div>
+	<div class="col-12 col-sm-7 hvisSynlig" style="{{display_hvisSynlig}}">
+		{% for key, value in arrangement.getGoogleMap().getPOSTValues() %}
+			<input type="hidden" name="location_{{key}}" id="location-{{key}}" value="{{value}}"/>
+		{% endfor %}
+		<div class="form-group">
+			<label>Hvor skal arrangmentet være?</label>
+			<input id="searchMapInput" type="text" class="form-control mapControls" name="sted" value="{{ arrangement.getSted() }}"/>
+			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Stedet må være søkbart i google maps, og du kan både bruke navn og adresser.</p>
 		</div>
+	</div>
 
-		<div class="col-12 col-sm-6" id="mapContainer">
+	<div class="col-12 col-sm-5" id="mapContainer">
+		<div class="hvisSynlig" style="{{display_hvisSynlig}}">
 			<a href="{{ arrangement.getGoogleMap().getLink() }}" target="_blank" id="mapLink">
-				<img src="{{ arrangement.getGoogleMap().getMap( GOOGLE_API_KEY ) }}" width="100%" id="map"/>
+				<img src="{{ arrangement.getGoogleMap().getMap( GOOGLE_API_KEY ) }}" width="100%" style="min-height: 200px;" id="map"/>
 			</a>
+			<p class="mb-3">&nbsp;</p>
 		</div>
+	</div>
 
-		<div class="col-12 col-sm-4">
-			<div class="form-group">
-				<label>Når starter arrangementet?</label>
-				<input class="datepicker_{{ arrangement.getType() }} form-control" type="text" name="start" value="{{ arrangement.getStart()|dato('d.m.Y') }}">
-			</div>
-		</div>
-		<div class="col-12 col-sm-2">
-			<label class="hidden-xs">&nbsp;</label>
-			<div class="input-group">
-				<span class="input-group-addon">kl.
-				</span>
-				<select class="form-control" name="start_time">
-					{% include "hourPicker.html.twig" with { current: arrangement.getStart() } %}
-				</select>
-			</div>
-		</div>
 
-		<div class="col-12 col-sm-4">
+	<div class="col-xs-12 col-sm-{{ arrangement.erSynlig() ? '7' : '12' }}" id="startTimeContainer">
+		<label>Når starter arrangementet?</label>
+	</div>
+	<div class="col-xs-8 col-sm-4">
+		<div class="form-group">
+			<input class="datepicker_{{ arrangement.getType() }} form-control" type="text" name="pl_start" value="{{ arrangement.getStart()|dato('d.m.Y') }}">
+		</div>
+	</div>
+	<div class="col-xs-4 col-sm-3">
+		<div class="input-group">
+			<span class="input-group-addon">kl.
+			</span>
+			<select class="form-control" name="pl_start_time">
+				{% include "hourPicker.html.twig" with { current: arrangement.getStart() } %}
+			</select>
+		</div>
+	</div>
+
+	<div class="hvisSynlig" style="{{display_hvisSynlig}}">
+		<div class="col-xs-12 col-sm-7">
+			<label>Omtrent når er arrangementet ferdig?</label>
+		</div>
+		<div class="col-xs-8 col-sm-4">
 			<div class="form-group">
-				<label>Omtrent når er arrangementet ferdig?</label>
-				<input class="datepicker_{{ arrangement.getType() }} form-control" type="text" name="stop" value="{{ arrangement.getStop()|dato('d.m.Y') }}">
+				<input class="datepicker_{{ arrangement.getType() }} form-control" type="text" name="pl_stop" value="{{ arrangement.getStop()|dato('d.m.Y') }}">
 			</div>
 		</div>
-		<div class="col-12 col-sm-2">
-			<label class="hidden-xs">&nbsp;</label>
+		<div class="col-xs-4 col-sm-3">
 			<div class="input-group">
-				<span class="input-group-addon">kl.
-				</span>
-				<select class="form-control" name="stop_time">
+				<span class="input-group-addon">kl.</span>
+				<select class="form-control" name="pl_stop_time">
 					{% include "hourPicker.html.twig" with { current: arrangement.getStop() } %}
 				</select>
 			</div>
 		</div>
-		<div class="clearfix"></div>
-		<div class="col-12 col-sm-12 mt-3">
-			<p class="text-muted">
-				Arrangementet vises på UKM.no.
-				<a href="#" class="goTo" data-action="synlig" data-id="false">Trykk her hvis du ønsker å skjule det.</a>
-				{% if arrangement.harPamelding() %}
-					OBS: Skjulte arrangementer kan ikke ta i mot påmelding fra deltaker
-				{% endif %}
-			</p>
-		</div>
-	{% else %}
-		<div class="col-12 col-sm-12" style="margin-top: -1.5em; margin-left: .4em; margin-right: .4em;">
-			<p class="text-muted">
-				Dette arrangementet vises ikke på UKM.no, og kan derfor ikke ha påmelding eller kontaktpersoner.
-				<a href="#" class="goTo" data-action="synlig" data-id="true">Trykk her for å gjøre arrangementet synlig</a>
-			</p>
-		</div>
-	{% endif %}
+	</div>
+	<div class="clearfix"></div>
 </div>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key={{ GOOGLE_API_KEY }}" async defer></script>

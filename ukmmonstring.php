@@ -26,7 +26,8 @@ class UKMmonstring extends Modul
         if (is_numeric(get_option('pl_id'))) {
             add_action(
                 'admin_menu',
-                ['UKMmonstring', 'meny']
+                ['UKMmonstring', 'meny'],
+                1000
             );
         }
         add_action(
@@ -41,24 +42,34 @@ class UKMmonstring extends Modul
      */
     public static function meny()
     {
-        
-        /*
-        $page = add_submenu_page(
-            'index.php',
-            'Arrangement',
-            'Arrangement',
-            'editor',
-            'UKMmonstring',
-            ['UKMMonstring', 'renderAdmin'],
-            'dashicons-buddicons-groups',
-            4
-        );
-        */
+        try {
+            $arrangement = static::getArrangement();
+            $page = add_submenu_page(
+                'index.php',
+                'Videresending',
+                'Videresending',
+                'editor',
+                'UKMarrangement_videresending',
+                ['UKMMonstring', 'renderAdminVideresending'],
+                40
+            );
+            add_action(
+                'admin_print_styles-'.$page,
+                ['UKMmonstring', 'scripts_and_styles']
+            );
+        } catch( Exception $e ) {
+            // Do nothing: skal ikke ha den uansett da
+        }
         
         add_action(
             'admin_print_styles-index.php',
             ['UKMmonstring', 'scripts_and_styles']
         );
+    }
+
+    public static function renderAdminVideresending() {
+        static::setAction('videresending');
+        return static::renderAdmin();
     }
 
     /**
@@ -71,8 +82,20 @@ class UKMmonstring extends Modul
         wp_enqueue_script('TwigJS');
 
         wp_enqueue_script(
-            'UKMMonstring_script',
-            UKMmonstring::getPluginUrl()  . 'monstring.script.js'
+            'UKMMonstring_script_monstring',
+            UKMmonstring::getPluginUrl()  . 'js/monstring.js'
+        );
+        wp_enqueue_script(
+            'UKMMonstring_script_kontaktpersoner',
+            UKMmonstring::getPluginUrl()  . 'js/kontaktpersoner.js'
+        );
+        wp_enqueue_script(
+            'UKMMonstring_script_videresending',
+            UKMmonstring::getPluginUrl()  . 'js/videresending.js'
+        );
+        wp_enqueue_script(
+            'UKMMonstring_script_skjema',
+            UKMmonstring::getPluginUrl()  . 'js/skjema.js'
         );
         wp_enqueue_style(
             'UKMMonstring_style',

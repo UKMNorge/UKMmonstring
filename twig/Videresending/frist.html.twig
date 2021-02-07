@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <label>Når åpner videresendingen?</label>
+        <div class="input-group" style="margin-bottom: 1em;">
+            <input class="datepicker_{{ arrangement.getType() == 'fylke' ? 'fylke_forward' : 'land' }} form-control" type="text" name="pl_forward_start" value="{{ arrangement.getVideresendingApner()|dato('d.m.Y') }}"/>
+            <span class="input-group-addon">kl. 08:00</span>
+        </div>
+        <input type="hidden" name="pl_forward_start_time" value="08:00" />
+    </div>
+
+    <div class="col-12 col-sm-6">
+        <label>Når stenger videresendingen?</label>
+        <div class="input-group" style="margin-bottom: 1em;">
+            <input class="datepicker_{{ arrangement.getType() == 'fylke' ? 'fylke_forward' : 'land' }} form-control" type="text" name="pl_forward_stop" value="{{ arrangement.getVideresendingStenger()|dato('d.m.Y') }}"/>
+            <span class="input-group-addon">kl. 23:59</span>
+        </div>
+        <input type="hidden" name="pl_forward_stop_time" value="23:59" />
+    </div>
+</div>

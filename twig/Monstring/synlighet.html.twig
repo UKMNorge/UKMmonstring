@@ -1,0 +1,87 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<h4 class="mt-4">Hvordan du får påmeldte</h4>
+		<ol class="list-group" style="margin-bottom: 1em;">
+			{# VIS PÅ UKM.no #}
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-xs-7">
+						<label>Skal arrangementet vises på ukm.no?</label>
+
+						<div class="mt-0 help text-muted small">
+							<div class="hvisSynlig" style="{{display_hvisSynlig}}">
+								Arrangementet vises i listen på din {{ arrangement.getEierType() }}sside.
+							</div>
+							<div class="hvisIkkeSynlig" style="{{display_hvisIkkeSynlig}}">
+								OBS: Skjulte arrangementer kan ikke ta i mot påmelding eller ha kontaktpersoner.
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-5" align="right">
+						<div class="btn-group radioButtons" data-name="synlig">
+							<button type="button" class="btn btn-default {{ arrangement.erSynlig() ? 'selected' }}" value="true">&nbsp; Vis &nbsp;</button>
+							<button type="button" class="btn btn-default {{ not arrangement.erSynlig() ? 'selected' }}" value="false">&nbsp; Skjul &nbsp;</button>
+						</div>
+					</div>
+				</div>
+			</li>
+
+			{# TA I MOT PÅMELDING #}
+			<li class="list-group-item hvisSynlig" style="{{display_hvisSynlig}}">
+				<div class="row">
+					<div class="col-xs-7">
+						<label>Er påmelding for deltakere åpen, eller stengt?</label>
+
+						<div class="mt-0 help text-muted small">
+							<div class="hvisPamelding" style="{{display_hvisPamelding}}">
+								Påmeldingen stenger automatisk på fristen du angir nedenfor.
+							</div>
+							<div class="hvisIkkePamelding" style="{{display_hvisIkkePamelding}}">
+								Deltakere kan ikke melde seg på.
+								<span id="warn_videresending_true" style="{{display_hvisVideresending}}">
+									Videresending til arrangementet likevel mulig frem til videresendingsfristen.
+								</span>
+								<span id="warn_videresending_false" style="{{display_hvisIkkeVideresending}}">
+									Fordi videresending er av, kan du ikke få flere påmeldte.
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-5" align="right">
+						<div class="btn-group radioButtons" data-name="pamelding">
+							<button type="button" class="btn btn-default {{ arrangement.harPamelding() ? 'selected' }}" value="true">&nbsp; Åpen &nbsp;</button>
+							<button type="button" class="btn btn-default {{ not arrangement.harPamelding() ? 'selected' }}" value="false">&nbsp; Stengt &nbsp;</button>
+						</div>
+					</div>
+				</div>
+			</li>
+
+			{# VIDERESENDING #}
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-xs-7">
+						<label style="margin-bottom: 0;">Vil du ta i mot videresending fra andre arrangementer?</label>
+						<div class="mt-0 help text-muted small">
+							<div class="hvisVideresending" style="{{display_hvisVideresending}}">
+								Du avgjør hvem som får videresende til ditt arrangement, og kan definere kvoter, informasjon og lederskjema nedenfor.
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xs-5" align="right">
+						<div class="btn-group radioButtons" data-name="videresending">
+							<button type="button" class="btn btn-default {{arrangement.harVideresending()?'selected'}}" value="true">
+								&nbsp; Ja &nbsp;</button>
+							<button type="button" class="btn btn-default {{not arrangement.harVideresending()?'selected'}}" value="false">
+								&nbsp; Nei &nbsp;</button>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ol>
+		<div class="mt-0 hvisVideresending" style="{{display_hvisVideresending}}" align="right">
+			<a href="#" id="editVideresending" class="btn btn-ukm btn-xs btn-primary" style="margin-top: -.8em;">rediger detaljer for videresending</a>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
