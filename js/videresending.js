@@ -1,22 +1,54 @@
-/* SKAL ARRANGEMENTET BRUKE NOMINASJON */
-jQuery(document).on('change', '#radioButtonValue_benyttNominasjon', (e) => {
-    if (jQuery(e.target).val() == 'true') {
-        jQuery('.nominasjon_detaljer').slideDown();
-    } else {
-        jQuery('.nominasjon_detaljer').slideUp();
-    }
-});
+jQuery(document).ready(() => {
+    UKMresources.radioButtons.get('videresending').on('change', (value) => {
+        if (value == 'true') {
+            jQuery('.hvisIkkeVideresending:visible').slideUp();
+            jQuery('.hvisVideresending:hidden').slideDown();
+        } else {
+            jQuery('.hvisIkkeVideresending:hidden').slideDown();
+            jQuery('.hvisVideresending:visible').slideUp();
+        }
+    });
 
-/* SKAL ARRANGEMENTET BRUKE LEDERSKJEMA */
-jQuery(document).on('change', '#radioButtonValue_harLederskjema', (e) => {
-    if (jQuery(e.target).val() == 'true') {
-        jQuery('#lederskjema_detaljer').slideDown();
-        jQuery('#lederskjema_neitakk').slideUp();
-    } else {
-        jQuery('#lederskjema_detaljer').slideUp();
-        jQuery('#lederskjema_neitakk').slideDown();
-    }
-});
+    /* SKAL ARRANGEMENTET BRUKE NOMINASJON */
+    UKMresources.radioButtons.get('benyttNominasjon').on('change', (value) => {
+        if (value == 'true') {
+            jQuery('.hvisIkkeNominasjon:visible').slideUp();
+            jQuery('.hvisNominasjon:hidden').slideDown();
+            /* HJELP AUTOGROW MED Å VELGE RIKTIG STØRRELSE */
+            jQuery('#nominasjon_informasjon').trigger('change');
+        } else {
+            jQuery('.hvisIkkeNominasjon:hidden').slideDown();
+            jQuery('.hvisNominasjon:visible').slideUp();
+        }
+    });
+    
+    /* SKAL ARRANGEMENTET BRUKE LEDERSKJEMA */
+        UKMresources.radioButtons.get('harLederskjema').on('change', (value) => {
+        if (value == 'true') {
+            jQuery('.hvisIkkeLederskjema:visible').slideUp();
+            jQuery('.hvisLederskjema:hidden').slideDown();
+        } else {
+            jQuery('.hvisIkkeLederskjema:hidden').slideDown();
+            jQuery('.hvisLederskjema:visible').slideUp();
+        }
+    });
+    
+    /* SKAL ARRANGEMENTET OGSÅ BRUKE EGENDEFINERT SKJEMA */
+        UKMresources.radioButtons.get('vilHaSkjema').on('change', (value) => {
+        if (value == 'true') {
+            jQuery('.hvisIkkeSkjema:visible').slideUp();
+            jQuery('.hvisSkjema:hidden').slideDown();
+        } else {
+            jQuery('.hvisIkkeSkjema:hidden').slideDown();
+            jQuery('.hvisSkjema:visible').slideUp();
+        }
+    });
+
+});    
+
+
+
+
 
 /* FILTRER ARRANGEMENT SOM KAN VIDERESENDE TIL ARRANGEMENTET */
 jQuery(document).on('keyup', '#filterArrangement', function () {
@@ -40,21 +72,28 @@ jQuery(document).on('keyup', '#filterArrangement', function () {
     }
 });
 
-/* SKJUL/VIS KOMPAKT LISTE-VISNING OVER ARRANGEMENT SOM KAN VIDERESENDE TIL DETTE ARRANGEMENTET */
-jQuery(document).on('click', '#visRedigerAvsenderArrangement', (e) => {
-    e.preventDefault();
-
+// Hjelpefunksjon for ledetekst i "disse kan videresende til deg"
+function skjulVisIngenAvsendere() {
     if (jQuery('#visAvsenderArrangement').find('.avsender').length == 0) {
         jQuery('#ingenAvsendere').show();
     } else {
         jQuery('#ingenAvsendere').hide();
     }
+}
 
-    if (jQuery('#redigerAvsenderArrangement').is(':visible')) {
-        jQuery('#redigerAvsenderArrangement').slideUp();
+/* SKJUL/VIS KOMPAKT LISTE-VISNING OVER ARRANGEMENT SOM KAN VIDERESENDE TIL DETTE ARRANGEMENTET */
+jQuery(document).on('click', '#visRedigerAvsenderArrangement', (e) => {
+    e.preventDefault();
+
+    skjulVisIngenAvsendere();
+
+    if (jQuery('#container_arrangementVelger').is(':visible')) {
+        jQuery('#container_arrangementVelger').slideUp();
+        // Oppdater knappens tekst
         jQuery('#visRedigerAvsenderArrangement').html(jQuery('#visRedigerAvsenderArrangement').attr('data-vis'));
     } else {
-        jQuery('#redigerAvsenderArrangement').slideDown();
+        jQuery('#container_arrangementVelger').slideDown();
+        // Oppdater knappens tekst
         jQuery('#visRedigerAvsenderArrangement').html(jQuery('#visRedigerAvsenderArrangement').attr('data-skjul'));
 
     }
@@ -75,11 +114,12 @@ jQuery(document).on('change', '.avsenderMonstring input[type="checkbox"]', (e) =
     } else {
         jQuery('#' + id).fadeOut().remove();
     }
+    skjulVisIngenAvsendere();
 });
 
 
-/* GJØR TEKSTEN TOGGLE-BAR FOR VIS/SKJUL ARRANGEMENTER SOM KAN VIDERESENDE */
 jQuery(document).ready(() => {
+    /* GJØR TEKSTEN TOGGLE-BAR FOR VIS/SKJUL ARRANGEMENTER SOM KAN VIDERESENDE */
     jQuery('#visRedigerAvsenderArrangement').attr('data-vis', jQuery('#visRedigerAvsenderArrangement').html());
 });
 
@@ -91,3 +131,4 @@ jQuery(document).on('change', '#radioButtonValue_vilHaSkjema', (e) => {
         jQuery('#previewForm').slideUp();
     }
 });
+

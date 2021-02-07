@@ -2,12 +2,9 @@
 
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Skjema\Write as SkjemaWrite;
-use UKMNorge\Arrangement\Videresending\Avsender;
 use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
 use UKMNorge\Innslag\Typer\Typer;
-use UKMNorge\Meta\Write as MetaWrite;
-use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
 

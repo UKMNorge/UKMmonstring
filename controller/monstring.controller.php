@@ -49,18 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 UKMmonstring::setAction('avlys');
                 UKMmonstring::includeActionController();
                 break;
-            
-            
-            /*
-                case 'infotekst':
-                UKMmonstring::setAction('infotekst');
-                UKMmonstring::includeActionController();
-                do_action('admin_print_footer_scripts');
-
-                die();
-                break;
-            */
-
             case 'personskjema':
                 UKMmonstring::setAction('skjema_person');
                 UKMmonstring::includeActionController();
@@ -95,54 +83,6 @@ UKMmonstring::addViewData(
         'GOOGLE_API_KEY' => defined('GOOGLE_API_KEY') ? GOOGLE_API_KEY : ''
     ]
 );
-
-switch ($arrangement->getType()) {
-    case 'kommune':
-        UKMmonstring::addViewData(
-            'arrangementer_av_kommunen',
-            Kommende::byEier(
-                $arrangement->getEier()
-            )->getAll()
-        );
-    case 'fylke':
-        UKMmonstring::addViewData(
-            'arrangementer_av_fylket',
-            Kommende::byEier(
-                $arrangement->getFylke()
-            )->getAll()
-        );
-
-        UKMmonstring::addViewData(
-            'arrangementer_i_fylket',
-            Arrangementer::filterSkipEier(
-                $arrangement->getEierObjekt(),
-                Kommende::iFylke(
-                    $arrangement->getFylke()
-                )->getAll()
-            )
-        );
-        if ($arrangement->getType() == 'kommune') {
-            break;
-        }
-    case 'land':
-        $fylke_arrangement = [];
-        $fylke_monstring = [];
-        $andre_arrangement = [];
-        foreach (Kommende::getAllCollection()->getAll() as $mottaker) {
-            if ($mottaker->getEierType() == 'fylke' && $mottaker->erMonstring()) {
-                $fylke_monstring[] = $mottaker;
-            } elseif ($mottaker->getEierType() == 'fylke') {
-                $fylke_arrangement[] = $mottaker;
-            } else {
-                $andre_arrangement[] = $mottaker;
-            }
-        }
-
-        UKMmonstring::addViewData('arrangementer', $andre_arrangement);
-        UKMmonstring::addViewData('arrangementer_fylke', $fylke_arrangement);
-        UKMmonstring::addViewData('arrangementer_fylke_monstring', $fylke_monstring);
-        break;
-}
 
 $antall_per_type = [];
 foreach (Typer::getAlleInkludertSkjulteTyper() as $type) {

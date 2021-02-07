@@ -1,12 +1,12 @@
 <div class="col-12 col-sm-12">
-    <form action="index.php" method="POST">
+    <form method="POST">
         <input type="hidden" name="type" value="skjema"/>
         <input type="hidden" name="form_type" value="{{ form_type }}"/>
         {% include "Skjema/innhold.html.twig" with {'readonly':false,'arrangement': arrangement, skjema: skjema, 'editmode':true} %}
         <p>&nbsp;</p>
         <button type="submit" class="btn btn-ukm btn-success">Lagre</button>
         eller
-        <a href="index.php">avbryt</a>
+        <a href="{{ GET('page') == 'UKMarrangement_videresending' ? 'admin.php?page='~ GET('page') :'index.php' }}">avbryt</a>
     </form>
 </div>
 

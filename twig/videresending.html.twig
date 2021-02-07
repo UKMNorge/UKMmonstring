@@ -1,19 +1,92 @@
-<h2>Videresending til
-	{{ arrangement.getNavn() }}</h2>
+{% set display_hvisVideresending = not arrangement.harVideresending() ? 'display: none;' %}
+{% set display_hvisIkkeVideresending = arrangement.harVideresending() ? 'display: none;' %}
 
-<p>
-	{% if arrangement.harPamelding() %}
-		I tillegg til direkte påmelding, kan du også ta i mot videresendte fra andre arrangementer.
-	{% else %}
-		Fordi arrangementet ikke har direkte påmelding, kommer alle deltakerne som videresending fra andre arrangementer.
-	{% endif %}
-</p>
+{% set display_hvisNominasjon = not arrangement.harNominasjon() ? 'display: none;' %}
+{% set display_hvisIkkeNominasjon = arrangement.harNominasjon() ? 'display: none;' %}
 
+{% set display_hvisLederskjema = not arrangement.getMetaValue('harLederskjema') ? 'display: none;' %}
+{% set display_hvisIkkeLederskjema = arrangement.getMetaValue('harLederskjema') ? 'display: none;' %}
 
-{#% include "Videresending/basics.html.twig" %}
-{% include "Videresending/frist.html.twig" %}
-{% include "Videresending/avsendere.html.twig" %}
-{% include "Videresending/infotekst.html.twig" %}
-{% include "Videresending/nominasjon.html.twig" %}
-{% include "Videresending/ledere.html.twig" %}
-{% include "Videresending/skjema.html.twig" %#}
+{% set display_hvisSkjema = not arrangement.harSkjema() ? 'display: none;' %}
+{% set display_hvisIkkeSkjema = arrangement.harSkjema() ? 'display: none;' %}
+
+<script>
+	jQuery(document).on('click', 'a.goTo', (e) => {
+		e.preventDefault();
+		jQuery('#goTo').val(jQuery(e.target).attr('data-action'));
+		jQuery('#goToId').val(jQuery(e.target).attr('data-id'));
+		jQuery('#videresendingForm').submit();
+	});
+</script>
+
+<form method="POST" id="videresendingForm">
+	<input type="hidden" name="goTo" id="goTo" value="monstring"/>
+	<input type="hidden" name="goToId" id="goToId" value=""/>
+	<input type="hidden" name="type" value="monstring"/>
+	<div class="container" style="margin-left: 0 !important; max-width: calc(100% - 1em)">
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Videresending til {{ arrangement.getNavn() }}</h2>
+
+				{% include "wp_modul.flashbag.html.twig" %}
+
+				<p class="alert-info alert">
+					TODO:
+					{% if arrangement.harPamelding() %}
+						I tillegg til direkte påmelding, kan du også ta i mot videresendte fra andre arrangementer.
+					{% else %}
+						Fordi arrangementet ikke har direkte påmelding, kommer alle deltakerne som videresending fra andre arrangementer.
+					{% endif %}
+				</p>
+
+				<ol class="list-group">
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-7">
+								<label style="margin-bottom: 0;">Vil du ta i mot videresending fra andre arrangementer?</label>
+								<div class="mt-0 help text-muted small">
+									<div class="hvisIkkeVideresending" style="{{display_hvisIkkeVideresending}}">
+										Du avgjør hvem som får videresende til ditt arrangement, og kan definere kvoter, informasjon og lederskjema nedenfor.
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xs-5" align="right">
+								<div class="btn-group radioButtons" data-name="videresending">
+									<button type="button" class="btn btn-default {{arrangement.harVideresending()?'selected'}}" value="true">
+										&nbsp; Ja &nbsp;</button>
+									<button type="button" class="btn btn-default {{not arrangement.harVideresending()?'selected'}}" value="false">
+										&nbsp; Nei &nbsp;</button>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="list-group-item hvisVideresending" style="{{display_hvisVideresending}}">
+						{% include "Videresending/frist.html.twig" %}
+					</li>
+					<li class="list-group-item hvisVideresending" style="{{display_hvisVideresending}}">
+						{% include "Videresending/infotekst.html.twig" %}
+					</li>
+				</ol>
+
+				<div class="hvisVideresending" style="{{display_hvisVideresending}}">
+					<h4 class="mt-5">Arrangement som kan videresende til deg</h4>
+					{% include "Videresending/avsendere.html.twig" %}
+					{% if arrangement.erMonstring() %}
+						<h4 class="mt-5">Nominasjon</h4>
+						{% include "Videresending/nominasjon.html.twig" %}
+					{% endif %}
+					<h4 class="mt-5">Ledere</h4>
+					{% include "Videresending/ledere.html.twig" %}
+					
+					<h4 class="mt-5">Egendefinert spørreskjema</h4>
+					{% include "Videresending/skjema.html.twig" %}
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12">
+				<button type="submit" class="btn btn-ukm btn-success" id="formSubmit">Lagre</button>
+			</div>
+		</div>
+	</div>
+</form>

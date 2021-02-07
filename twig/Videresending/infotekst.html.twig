@@ -1,34 +1,26 @@
-<div class="row" style="margin-top: 2em;">
-    <div class="col-12 col-sm-12">
-        <label>Informasjonstekst som vises til de som videresender</label>
-        <ol class="list-group">
-            <li class="list-group-item">
-                <div class="fade-collapsible">
-                    <div class="content">
-                        {% if arrangement.getInformasjonstekst() is empty %}
-                            <p>
-                                Du har ikke lagt til informasjonstekst enda. Dette er frivillig, men anbefalt.
-                            </p>
-                            <p>Ved videresending, kan denne informasjonsteksten vises.
-                                Dette er en god anledning til å skrive inn kvoter, viktige regler, eller annen
-                                informasjon som vil være nyttig ved videresendingen.
-                            </p>
-                            <p>Start gjerne med velkommen, eller hei, slik at det er blir litt hyggeligere for de som skal videresende.
-                            </p>
-                        {% else %}
-                            {{ arrangement.getInformasjonstekst()|raw }}
-                        {% endif %}
-                    </div>
-                    <div class="actions">
-                        <span class="icon dashicons dashicons-arrow-down-alt2"></span>
-                    </div>
-                </div>
-            </li>
-        </ol>
+<label>Informasjonstekst som vises til de som videresender</label>
+{% if arrangement.getInformasjonstekst() is empty %}
+	<p>
+		Du har ikke lagt til informasjonstekst enda. Dette er frivillig, men anbefalt.
+	</p>
+	<p>
+		Teksten vises ved videresending og er en god anledning til å skrive inn 
+        kvoter, viktige regler, eller annen nyttig informasjon.
+	</p>
+{% else %}
+	<div class="fade-collapsible">
+		<div class="content">
+			{{ arrangement.getInformasjonstekst()|raw }}
+		</div>
+		<div class="actions">
+			<span class="icon dashicons dashicons-arrow-down-alt2"></span>
+		</div>
+	</div>
+{% endif %}
 
-        <div class="clearfix"></div>
-        <p style="margin-top: -1em;" class="pull-right">
-            <a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="infotekst">rediger informasjonstekst</a>
-        </p>
-    </div>
-</div>
+<div class="clearfix"></div>
+<p class="pull-right">
+	<a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="infotekst">rediger informasjonstekst</a>
+</p>
+
+<div class="clearfix"></div>

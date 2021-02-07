@@ -53,6 +53,10 @@ class UKMmonstring extends Modul
                 ['UKMMonstring', 'renderAdminVideresending'],
                 40
             );
+            add_action(
+                'admin_print_styles-'.$page,
+                ['UKMmonstring', 'scripts_and_styles']
+            );
         } catch( Exception $e ) {
             // Do nothing: skal ikke ha den uansett da
         }
@@ -84,10 +88,6 @@ class UKMmonstring extends Modul
         wp_enqueue_script(
             'UKMMonstring_script_kontaktpersoner',
             UKMmonstring::getPluginUrl()  . 'js/kontaktpersoner.js'
-        );
-        wp_enqueue_script(
-            'UKMMonstring_script_monstring',
-            UKMmonstring::getPluginUrl()  . 'js/monstring.js'
         );
         wp_enqueue_script(
             'UKMMonstring_script_videresending',
