@@ -32,7 +32,13 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-7">
 						<label>Skal deltakerne fylle ut et ekstra skjema ved påmelding?</label>
-
+						<p class="text-muted hvisIkkeDeltakerskjema" style="{{display_hvisSkjema}}">
+							Uten ekstra skjema får du navn og mobilnummer til alle påmeldte. 
+							Her kan du velge å legge til inntil fem egendefinerte spørsmål.
+						</p>
+						<p class="text-muted hvisDeltakerskjema" style="{{display_hvisIkkeSkjema}}">
+							Du har lagt til et skjema{{ arrangement.harDeltakerskjema() ? ' med '~ arrangement.getDeltakerskjema().getSporsmal().getAntall() ~' spørsmål' : ' uten spørsmål'}}.
+						</p>
 					</div>
 					<div class="col-xs-12 col-sm-5" align="right">
 						<div class="btn-group radioButtons" data-name="harDeltakerskjema">

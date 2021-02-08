@@ -27,23 +27,25 @@ if( isset($_POST['slettede_sporsmal']) ) {
 }
 
 $rekkefolge = 0;
-foreach ($_POST['sporsmal_type'] as $post_id => $type) {
-    $rekkefolge++;
-    $id = $_POST['sporsmal_id'][$post_id];
-    $tittel = $_POST['sporsmal_tittel'][$post_id];
-    $tekst = $_POST['sporsmal_tekst'][$post_id];
+if( is_array($_POST['sporsmal_type'])) {
+    foreach ($_POST['sporsmal_type'] as $post_id => $type) {
+        $rekkefolge++;
+        $id = $_POST['sporsmal_id'][$post_id];
+        $tittel = $_POST['sporsmal_tittel'][$post_id];
+        $tekst = $_POST['sporsmal_tekst'][$post_id];
 
-    if (empty($id) || !is_numeric($id)) {
-        $sporsmal = WriteSkjema::createSporsmal($skjema, $rekkefolge, $type, $tittel, $tekst);
-    } else {
-        $sporsmal = new Sporsmal(
-            (Int) $id,
-            $skjema->getId(),
-            $rekkefolge,
-            $type,
-            $tittel,
-            $tekst
-        );
-        WriteSkjema::saveSporsmal( $sporsmal );
+        if (empty($id) || !is_numeric($id)) {
+            $sporsmal = WriteSkjema::createSporsmal($skjema, $rekkefolge, $type, $tittel, $tekst);
+        } else {
+            $sporsmal = new Sporsmal(
+                (Int) $id,
+                $skjema->getId(),
+                $rekkefolge,
+                $type,
+                $tittel,
+                $tekst
+            );
+            WriteSkjema::saveSporsmal( $sporsmal );
+        }
     }
 }

@@ -7,4 +7,10 @@
     Du kan legge til 5 spørsmål, og endre rekkefølgen ved å dra og slippe etterpå.
 </p>
 
+<p>
+    <b>HUSK:</b> Du har allerede mobilnummer og navn til alle. Deltakerne synes det er vanskelig nok å melde seg på, 
+    så vi anbefaler å holde skjemaet så kort som mulig.
+</p>
+
+
 {% include "Skjema/editor.html.twig" with {limit: 5, excludeQuestionTypes: ['overskrift'], form_type: 'person', skjema: arrangement.getDeltakerSkjema() } %}

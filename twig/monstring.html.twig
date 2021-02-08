@@ -18,6 +18,9 @@
 {% set display_hvisIkkeSynlig = arrangement.erSynlig() ? 'display: none;' %}
 {% set display_hvisVideresending = not arrangement.harVideresending() ? 'display: none;' %}
 {% set display_hvisIkkeVideresending = arrangement.harVideresending() ? 'display: none;' %}
+{% set display_hvisSkjema = not arrangement.harDeltakerskjema() ? 'display: none;' %}
+{% set display_hvisIkkeSkjema = arrangement.harDeltakerskjema() ? 'display: none;' %}
+
 
 <div id="status"></div>
 <form method="POST" id="arrangementForm">

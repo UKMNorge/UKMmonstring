@@ -6,11 +6,11 @@
 			<li class="list-group-item">
 				<div class="row">
 					<div class="col-xs-7">
-						<label>Skal arrangementet vises på ukm.no?</label>
+						<label>Skal arrangementet være synlig på din {{ arrangement.getEierType() }}sside?</label>
 
 						<div class="mt-0 help text-muted small">
 							<div class="hvisSynlig" style="{{display_hvisSynlig}}">
-								Arrangementet vises i listen på din {{ arrangement.getEierType() }}sside.
+								Vanligvis skal det det. Arrangementet vises i listen med arrangement.
 							</div>
 							<div class="hvisIkkeSynlig" style="{{display_hvisIkkeSynlig}}">
 								OBS: Skjulte arrangementer kan ikke ta i mot påmelding eller ha kontaktpersoner.
@@ -39,7 +39,7 @@
 							<div class="hvisIkkePamelding" style="{{display_hvisIkkePamelding}}">
 								Deltakere kan ikke melde seg på.
 								<span id="warn_videresending_true" style="{{display_hvisVideresending}}">
-									Videresending til arrangementet likevel mulig frem til videresendingsfristen.
+									Videresending til arrangementet er likevel mulig frem til videresendingsfristen.
 								</span>
 								<span id="warn_videresending_false" style="{{display_hvisIkkeVideresending}}">
 									Fordi videresending er av, kan du ikke få flere påmeldte.
@@ -63,7 +63,7 @@
 						<label style="margin-bottom: 0;">Vil du ta i mot videresending fra andre arrangementer?</label>
 						<div class="mt-0 help text-muted small">
 							<div class="hvisVideresending" style="{{display_hvisVideresending}}">
-								Du avgjør hvem som får videresende til ditt arrangement, og kan definere kvoter, informasjon og lederskjema nedenfor.
+								Du avgjør hvem som får videresende til ditt arrangement, og kan definere kvoter, informasjon og lederskjema i menyvalget "videresending" (under arrangement).
 							</div>
 						</div>
 					</div>

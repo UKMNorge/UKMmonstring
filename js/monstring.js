@@ -51,6 +51,18 @@ jQuery(document).on('change', '#radioButtonValue_pamelding', (e) => {
     }
 });
 
+
+/* JA/NEI SKJEMA */
+jQuery(document).on('change', '#radioButtonValue_harDeltakerskjema', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('.hvisDeltakerskjema:hidden').slideDown();
+        jQuery('.hvisIkkeDeltakerskjema:visible').slideUp();
+    } else {
+        jQuery('.hvisIkkeDeltakerskjema:hidden').slideDown();
+        jQuery('.hvisDeltakerskjema:visible').slideUp();
+    }
+});
+
 /* JA/NEI TILLAT VIDERESENDING */
 jQuery(document).on('change', '#radioButtonValue_videresending', (e) => {
     if (jQuery(e.target).val() == 'true') {
