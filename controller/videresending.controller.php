@@ -1,8 +1,8 @@
 <?php
 
+use UKMNorge\Arrangement\Aktuelle;
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Arrangementer;
-use UKMNorge\Arrangement\Kommende;
 use UKMNorge\Innslag\Typer\Typer;
 use UKMNorge\Log\Logger;
 
@@ -55,14 +55,14 @@ switch ($arrangement->getType()) {
     case 'kommune':
         UKMmonstring::addViewData(
             'arrangementer_av_kommunen',
-            Kommende::byEier(
+            Aktuelle::byEier(
                 $arrangement->getEier()
             )->getAll()
         );
     case 'fylke':
         UKMmonstring::addViewData(
             'arrangementer_av_fylket',
-            Kommende::byEier(
+            Aktuelle::byEier(
                 $arrangement->getFylke()
             )->getAll()
         );
@@ -71,7 +71,7 @@ switch ($arrangement->getType()) {
             'arrangementer_i_fylket',
             Arrangementer::filterSkipEier(
                 $arrangement->getEierObjekt(),
-                Kommende::iFylke(
+                Aktuelle::iFylke(
                     $arrangement->getFylke()
                 )->getAll()
             )
@@ -83,7 +83,7 @@ switch ($arrangement->getType()) {
         $fylke_arrangement = [];
         $fylke_monstring = [];
         $andre_arrangement = [];
-        foreach (Kommende::getAllCollection()->getAll() as $mottaker) {
+        foreach (Aktuelle::getAllCollection()->getAll() as $mottaker) {
             if ($mottaker->getEierType() == 'fylke' && $mottaker->erMonstring()) {
                 $fylke_monstring[] = $mottaker;
             } elseif ($mottaker->getEierType() == 'fylke') {
