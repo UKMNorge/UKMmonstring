@@ -83,23 +83,23 @@ class UKMmonstring extends Modul
 
         wp_enqueue_script(
             'UKMMonstring_script_monstring',
-            UKMmonstring::getPluginUrl()  . 'js/monstring.js'
+            PLUGIN_PATH . 'UKMmonstring/js/monstring.js'
         );
         wp_enqueue_script(
             'UKMMonstring_script_kontaktpersoner',
-            UKMmonstring::getPluginUrl()  . 'js/kontaktpersoner.js'
+            PLUGIN_PATH . 'UKMmonstring/js/kontaktpersoner.js'
         );
         wp_enqueue_script(
             'UKMMonstring_script_videresending',
-            UKMmonstring::getPluginUrl()  . 'js/videresending.js'
+            PLUGIN_PATH . 'UKMmonstring/js/videresending.js'
         );
         wp_enqueue_script(
             'UKMMonstring_script_skjema',
-            UKMmonstring::getPluginUrl()  . 'js/skjema.js'
+            PLUGIN_PATH . 'UKMmonstring/js/skjema.js'
         );
         wp_enqueue_style(
             'UKMMonstring_style',
-            UKMmonstring::getPluginUrl() . 'monstring.style.css'
+            PLUGIN_PATH . 'UKMmonstring/monstring.style.css'
         );
         wp_enqueue_script('jQuery_autogrow');
         wp_enqueue_script('WPbootstrap3_js');
