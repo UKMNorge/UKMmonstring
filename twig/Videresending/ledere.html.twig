@@ -3,7 +3,38 @@
 		<div class="row">
 			<div class="col-xs-8">
 				<label>Vil du benytte standardisert lederskjema?</label>
-				<p class="text-muted">Ved videresending må det også registreres hvor de ulike lederne overnatter (valgene er "deltakerovernattingen", "hotell", "privat/annet")</p>
+				{# <p class="text-muted">Ved videresending må det også registreres hvor de ulike lederne overnatter (valgene er "deltakerovernattingen", "hotell", "privat/annet")</p> #}
+				<p>
+					<a id="visMerKnapp" class="collapsed" data-toggle="collapse" href="#collapseForklaringen" role="button" aria-expanded="false" aria-controls="collapseForklaringen">
+					Les mer om hvordan dette fungerer
+					</a>
+				</p>
+				<div class="collapse" id="collapseForklaringen">
+					<p class="muted">Ved videresending må de som videresender til deg fylle ut et skjema med hvilke ledere som skal være med, og hvilken rolle de har.</p>
+					
+					<p class="muted"><strong>Ledere</strong><br>
+					Alle som videresender må oppgi én hovedleder og én utstillingsleder, og kan deretter oppgi så mange ekstra ledere de ønsker. For ekstra-ledere kan de velge mellom de ulike rollene "reiseleder", "ledsager" eller "turist".</p>
+					
+					<p class="muted">For hver leder får du: Navn, mobilnummer, e-post og rolle (reiseleder/ledsager/turist).</p>
+					
+					<p class="muted"><strong>Overnatting</strong><br>
+					Den som videresender må også oppgi hvor hver enkelt leder overnatter de ulike nettene. Her får de valg mellom "Deltakerovernattingen", "Lederhotellet", eller "Privat/annet". Dette gjør at du har full oversikt over hvilke ledere som overnatter med deltakerne de ulike nettene.</p>
+
+					<p class="muted"><strong>Hovedleder</strong><br>
+					Det oppgis også én ansvarlig hovedleder per natt blant lederne som overnatter i deltakerovernattingen. I rapporten vil disse være uthevet med fet skrift og teksten "hovedleder", slik at du lett vet hvem du skal ringe om du trenger å få tak i hovedlederen underveis.</p>
+
+					<p class="muted"><strong>Antall ledere per deltaker</strong><br>
+					Den som videresender får underveis i utfyllingen en oversikt som viser om de har nok ledere i deltakerovernattingen per natt, basert på forholdet mellom antall ledere og antall deltakere som du angir i spørsmålet "Hvor mange ledere skal overnatte sammen med deltakerne hver natt?". Hvis det er for lite ledere tilstede en natt, vil dette stå klart og tydelig allerede ved utfyllingen.</p>
+
+					<p class="muted"><strong>Pris per hotellrom</strong><br>
+					Den som videresender vil også få en oversikt over hvor mange hotelldøgn som bestilles som følge av utfyllingen, og kostnaden dette medfører. Du vil få ut en rapport fra systemet som kan benyttes til å bestille hotellrom.</p>
+
+					<a class="collapsed" onclick="jQuery('#visMerKnapp').addClass('collapsed')" data-toggle="collapse" href="#collapseForklaringen" role="button" aria-expanded="false" aria-controls="collapseForklaringen">
+					skjul forklaringen
+					</a>
+
+				</div>
+			
 			</div>
 			<div class="col-xs-4" align="right">
 				<div class="btn-group radioButtons" data-name="harLederskjema">
@@ -15,6 +46,27 @@
 			</div>
 		</div>
 	</li>
+	
+	{% if arrangement.getType() == 'land' %}
+	<li class="list-group-item hvisLederskjema" style="{{display_hvisLederskjema}}">
+		<div class="row">
+			<div class="col-6 col-sm-7">
+				<label>Hva heter deltakerovernattingen din?</label>
+				<p class="text-muted">
+					Det er helt greit å kalle det "deltakerovernattingen".
+					Valget er her, i tilfelle dere har valgt å kalle det noe annet (den nasjonale UKM-festivalen kaller det for eksempel "Landsbyen"),
+					fordi det gjør kommunikasjonen enklere.
+				</p>
+			</div>
+			<div class="col-6 col-sm-5">
+				<input type="text" class="form-control" name="navn_deltakerovernatting" value="{{ arrangement.getMetaValue('navn_deltakerovernatting') ? arrangement.getMetaValue('navn_deltakerovernatting') : 'deltakerovernattingen' }}"/>
+			</div>
+		</div>
+	</li>
+	{% else %}
+	<input type="text" class="form-control hide" name="navn_deltakerovernatting" value="Deltakerovernattingen"/>
+	{% endif %}
+
 	<li class="list-group-item hvisLederskjema" style="{{display_hvisLederskjema}}">
 		<div class="row">
 			<div class="col-6 col-sm-7">
@@ -43,21 +95,7 @@
 		</div>
 	</li>
 
-	<li class="list-group-item hvisLederskjema" style="{{display_hvisLederskjema}}">
-		<div class="row">
-			<div class="col-6 col-sm-7">
-				<label>Hva heter deltakerovernattingen din?</label>
-				<p class="text-muted">
-					Det er helt greit å kalle det "deltakerovernattingen".
-					Valget er her, i tilfelle dere har valgt å kalle det noe annet (den nasjonale UKM-festivalen kaller det for eksempel "Landsbyen"),
-					fordi det gjør kommunikasjonen enklere.
-				</p>
-			</div>
-			<div class="col-6 col-sm-5">
-				<input type="text" class="form-control" name="navn_deltakerovernatting" value="{{ arrangement.getMetaValue('navn_deltakerovernatting') ? arrangement.getMetaValue('navn_deltakerovernatting') : 'deltakerovernattingen' }}"/>
-			</div>
-		</div>
-	</li>
+	
 </ol>
 {#}
 
@@ -67,3 +105,13 @@
         </p>
     </div>
 #}
+
+<style>
+	#visMerKnapp{
+		display: none;
+	}
+	#visMerKnapp.collapsed {
+		display: inline;
+	}
+	
+</style>
