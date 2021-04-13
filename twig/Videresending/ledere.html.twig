@@ -3,7 +3,6 @@
 		<div class="row">
 			<div class="col-xs-8">
 				<label>Vil du benytte standardisert lederskjema?</label>
-				{# <p class="text-muted">Ved videresending må det også registreres hvor de ulike lederne overnatter (valgene er "deltakerovernattingen", "hotell", "privat/annet")</p> #}
 				<p>
 					<a id="visMerKnapp" class="collapsed" data-toggle="collapse" href="#collapseForklaringen" role="button" aria-expanded="false" aria-controls="collapseForklaringen">
 					Les mer om hvordan dette fungerer
@@ -64,7 +63,7 @@
 		</div>
 	</li>
 	{% else %}
-	<input type="text" class="form-control hide" name="navn_deltakerovernatting" value="Deltakerovernattingen"/>
+	<input type="text" type="hidden" class="form-control" name="navn_deltakerovernatting" value="Deltakerovernattingen"/>
 	{% endif %}
 
 	<li class="list-group-item hvisLederskjema" style="{{display_hvisLederskjema}}">
