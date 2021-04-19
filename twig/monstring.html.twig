@@ -30,9 +30,21 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12 col-sm-12 col-lg-8">
+
 				{% include "wp_modul.flashbag.html.twig" %}
-                {% include "Monstring/basics.html.twig" %}
 				
+                {% include "Monstring/basics.html.twig" %}
+				{% if arrangement.erFerdig() %}
+				<div class="superadmin">
+					<p>
+						<b>OBS: </b> Du får redigere arrangementet fordi du er logget inn som UKM Norge. For alle andre er arrangementet låst for redigering fordi det er ferdig.
+					</p>
+					<p>
+						Sperren er her for å forhindre resirkulering, som kan være fristende (men ikke effektivt), men som vil ødelegge historisk statistikk.
+					</p>
+				</div>
+				{% endif %}
+
 				{% include "Monstring/avlys.html.twig" %}
                 {% include "Monstring/synlighet.html.twig" %}
 
