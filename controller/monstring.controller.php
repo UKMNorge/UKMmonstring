@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Reload for å få med alle endringer
     $arrangement = new Arrangement($arrangement->getId());
 } else {
-    if ($arrangement->erFerdig()) {
+    if ($arrangement->erFerdig() && !is_super_admin()) {
         UKMmonstring::setAction('ferdig');
     }
 }
