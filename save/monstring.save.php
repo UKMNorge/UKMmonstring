@@ -5,6 +5,7 @@ use UKMNorge\Arrangement\Skjema\Write as SkjemaWrite;
 use UKMNorge\Arrangement\Write;
 use UKMNorge\Google\StaticMap;
 use UKMNorge\Innslag\Typer\Typer;
+use UKMNorge\Geografi\Kommune;
 
 require_once('UKM/Autoloader.php');
 
@@ -60,6 +61,16 @@ foreach ($tidspunkter as $felt => $tekst) {
             $arrangement->$funksjon($tidspunkt->getTimestamp());
         }
     }
+}
+
+if (isset($_POST['kommuner']) && is_array($_POST['kommuner'])) {
+    $kommuner = [];
+
+    foreach ($_POST['kommuner'] as $kommune_id) {
+        $kommuner[] = (int) $kommune_id;
+    }
+
+    $arrangement->setKommuner($kommuner);
 }
 
 

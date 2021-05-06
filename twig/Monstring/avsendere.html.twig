@@ -1,0 +1,70 @@
+<div class="row" id="avsendere">
+	<div class="col-12 col-sm-12">
+		<ol class="list-group">
+			<li class="list-group-item">
+				<div id="visAvsenderArrangement">
+					{% for fylke in fylker %}
+						{% for kommune in fylke.getKommuner().getAll() %}
+							{% if arrangement.harKommune(kommune.getId()) %}
+								<span class="avsender label label-primary" id="visAvsenderArrangement_{{ kommune.getId() }}">
+									{{ kommune.getNavn() }}
+								</span>
+							{% endif %}
+							
+						{% endfor %}
+						
+					{% endfor %}
+				</div>
+			</li>
+		</ol>
+		<p style="margin-top: -1em;" class="pull-right">
+			<a href="#" class="btn btn-ukm btn-xs btn-primary" id="visRedigerAvsenderArrangement" data-skjul="lukk listen">Endre kommuner / bydeler</a>
+		</p>
+	</div>
+	<div class="clearfix"></div>
+
+	<div id="container_arrangementVelger" style="display:none;">
+		<div class="col-12 col-sm-12" style="margin-top: .4em; margin-bottom: 1.4em;">
+			<div class="col-12 col-sm-6" style="padding-left: 0">
+				<div class="input-group">
+					<input type="text" class="form-control input-sm" placeholder="Søk etter kommune" id="filterArrangement">
+					<span class="input-group-btn">
+						<button class="btn btn-default btn-sm" type="button">
+							<span class="dashicons dashicons-search"></span>
+						</button>
+					</span>
+				</div>
+			</div>
+		</div>
+
+		{% if arrangement.getEierType() == 'kommune' %}
+			<div class="col-12 col-sm-6">
+				<ol class="list-group avsenderListe">
+					{% for fylke in fylker %}
+						{% for kommune in fylke.getKommuner().getAll() %}
+						<li class="list-group-item avsenderMonstring" data-filter="{{ kommune.getNavn() }}" data-id="{{ kommune.getId() }}" data-name="{{ kommune.getNavn() }}">
+							
+
+							<div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+								<abbr title="0 påmeldte personer"></abbr>
+								<label>
+								<input type="checkbox" name="kommuner[]" {{ arrangement.harKommune(kommune.getId()) ? 'checked' : '' }} value="{{ kommune.getId() }}">
+									<span>{{ kommune.getNavn() }}</span> <span style="float: right">{{ fylke.getNavn() }}</span>
+								</label>
+							</div>
+						</li>
+					{% endfor %}
+
+				{% endfor %}
+				</ol>
+			</div>
+		{% endif %}
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+<style>
+.label-primary {
+	background-color: #428bca;	
+}
+</style>
