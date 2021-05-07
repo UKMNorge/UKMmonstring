@@ -68,6 +68,11 @@ if (isset($_POST['benyttNominasjon'])) {
                 }
                 $type = Typer::getByKey(str_replace('nominer_', '', $post_key));
                 $arrangement->setHarNominasjonFor($type, $har_nominering);
+                
+                // Tillatt nominasjon (slå på) på arrangementet hvis det er slått av
+                if(!$arrangement->getInnslagTyper()->har($type)) {
+                    $arrangement->getInnslagtyper()->leggTil($type);
+                }
             }
         }
         if ($count == 0) {
