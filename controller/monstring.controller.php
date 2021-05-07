@@ -5,6 +5,8 @@ use UKMNorge\Arrangement\Arrangementer;
 use UKMNorge\Arrangement\Kommende;
 use UKMNorge\Innslag\Typer\Typer;
 use UKMNorge\Log\Logger;
+use UKMNorge\Geografi\Fylker;
+
 
 date_default_timezone_set('Europe/Oslo');
 
@@ -93,5 +95,7 @@ foreach (Typer::getAlleInkludertSkjulteTyper() as $type) {
     $antall_per_type[$type->getKey()] = $antall_personer;
 }
 
+
 UKMmonstring::addViewData('pameldte_per_type', $antall_per_type);
+UKMmonstring::addViewData('fylker', Fylker::getAll());
 UKMmonstring::include('controller/dashboard.controller.php');

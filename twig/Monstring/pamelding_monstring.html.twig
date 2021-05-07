@@ -12,7 +12,8 @@
 			{% include "Monstring/nedslagsfelt.html.twig" %}
 
 			{% if arrangement.getType() != 'fylke' %}
-				<li class="list-group-item">
+				{% if is_superadmin == false %}
+					<li class="list-group-item">
 					Arrangementet tar i mot påmelding for
 					{% for kommune in arrangement.getKommuner().getAll() %}
 						{{ kommune.getFylke().erOslo() ? ' bydel ' }}
@@ -27,8 +28,16 @@
 					{{ arrangement.getFylke().erOslo() ? 'bydel' : 'kommune' }}, må du
 					<a href="mailto:support@ukm.no?subject=Endre fellesmønstring">sende en e-post til support@ukm.no</a>
 				</li>
+			</ol>
+				{% else %}
+					<div class="superadmin">
+						<p><b>Endre hvilke kommuner/bydeler arrangementet tar i mot påmelding for</b><p/>
+						<p>Funksjon er tilgjengelig fordi du er logget inn som UKM Norge</p>
+						{% include "Monstring/avsendere.html.twig" %}
+					</div>
+				{% endif %}
+					
 			{% endif %}
-		</ol>
 	</div>
 
 	<div class="col-12 col-sm-6">
