@@ -87,10 +87,12 @@ UKMmonstring::addViewData(
 );
 
 $antall_per_type = [];
+$innslag_arr = [];
 foreach (Typer::getAlleInkludertSkjulteTyper() as $type) {
     $antall_personer = 0;
     foreach ($arrangement->getInnslag()->getAllByType($type) as $innslag) {
         $antall_personer += $innslag->getPersoner()->getAntall();
+        $innslag_arr[] = $innslag;
     }
     $antall_per_type[$type->getKey()] = $antall_personer;
 }
@@ -98,4 +100,5 @@ foreach (Typer::getAlleInkludertSkjulteTyper() as $type) {
 
 UKMmonstring::addViewData('pameldte_per_type', $antall_per_type);
 UKMmonstring::addViewData('fylker', Fylker::getAll());
+UKMmonstring::addViewData('innslag_liste', $innslag_arr); // Innslag liste og IKKE innslag type liste
 UKMmonstring::include('controller/dashboard.controller.php');

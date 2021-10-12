@@ -97,18 +97,24 @@ if (isset($_POST['videresending'])) {
  * PÅMELDING
  */
 // TYPER INNSLAG SOM TILLATES
-$arrangement->getInnslagtyper()->getAll(); // laster de inn
-foreach (Typer::getAllTyper() as $tilbud) {
-    if (!isset($_POST['tilbud_' . $tilbud->getKey()])) {
-        try {
-            $arrangement->getInnslagtyper()->fjern(Typer::getByKey($tilbud->getKey()));
-        } catch (Exception $e) {
-            if ($e->getCode() != 110001) {
-                throw $e;
+// Hvis arrangement er kunstgalleri så kan arrangementet ha bare innslag av type utstilling
+if($arrangement->erKunstgalleri()) {
+    $arrangement->getInnslagtyper()->leggTil(Typer::getByKey('Utstilling'));
+}
+else {
+    $arrangement->getInnslagtyper()->getAll(); // laster de inn
+    foreach (Typer::getAllTyper() as $tilbud) {
+        if (!isset($_POST['tilbud_' . $tilbud->getKey()])) {
+            try {
+                $arrangement->getInnslagtyper()->fjern(Typer::getByKey($tilbud->getKey()));
+            } catch (Exception $e) {
+                if ($e->getCode() != 110001) {
+                    throw $e;
+                }
             }
+        } else {
+            $arrangement->getInnslagtyper()->leggTil(Typer::getByKey($tilbud->getKey()));
         }
-    } else {
-        $arrangement->getInnslagtyper()->leggTil(Typer::getByKey($tilbud->getKey()));
     }
 }
 if ($arrangement->erArrangement()) {

@@ -1,0 +1,97 @@
+{# Bilder #}
+<div class="row">
+    <div class="col-xs-12 mt-5">
+        <h4 style="margin-top: 2em;">Kunstverk</h4>
+    </div>
+    <div id="collapseKunstverk" class="col-xs-12 kunstgalleri-arrangement-bilder collapse" style="height: 0px;">
+    {% for innslag in innslag_liste %}
+        {% for bilde in innslag.getBilder().getAll() %}
+            <div class="single-bilde">
+                <img src="{{ bilde.getSize('medium').getUrl() }}"/>
+                <h4 class="bilde-kunstgalleri-innslag">{{ innslag.getNavn() }}</h4>
+                {% for person in innslag.getPersoner() %}
+                    <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endfor %}
+            <div class="single-bilde legg-til btn btn-ukm">
+                <span class="dashicons dashicons-plus-alt2"></span>
+            </div>
+
+    </div>
+    
+    <div class="col-xs-12 kunstgalleri-arrangement-vis-mer">
+        <button id="btnCollapseKunstverk" class="btn btn-ukm collapsed show-open" data-toggle="collapse" href="#collapseKunstverk" role="button" aria-expanded="false" aria-controls="collapseKunstverk">
+            <span class="dashicons dashicons-arrow-down-alt2"></span>
+        </button>
+    </div>
+</div>
+
+<style>
+.kunstgalleri-arrangement-bilder {
+    display: inline;
+    min-height: 80px;
+    -webkit-transition: height .5 ease;
+    -o-transition: height .5 ease;
+    transition: height .5 ease;
+}
+.kunstgalleri-arrangement-bilder.collapse.in {
+    -webkit-transition: height .5 ease;
+    -o-transition: height .5 ease;
+    transition: height .5 ease;
+}
+.kunstgalleri-arrangement-bilder .single-bilde {
+    padding: 10px;
+    float: left;
+    opacity: .5;
+    transition: 1.5s opacity ease;
+
+}
+.kunstgalleri-arrangement-bilder.collapse.in .single-bilde {
+    opacity: 1;
+    transition: .5s opacity ease;
+}
+.kunstgalleri-arrangement-bilder .single-bilde.legg-til {
+    width: 140px;
+    height: 100px;
+    display: flex;
+    margin: 10px;
+}
+.kunstgalleri-arrangement-bilder .single-bilde.legg-til .dashicons {
+    margin: auto;
+}
+.kunstgalleri-arrangement-bilder .single-bilde img {
+    height: 100px;
+    width: auto;
+}
+.kunstgalleri-arrangement-vis-mer {
+    display: flex;
+    box-shadow: 0px -9px 6px 1px whitesmoke;
+    padding-top: 20px;
+}
+.kunstgalleri-arrangement-vis-mer button {
+    margin: 0 auto !important;
+    width: 100px;
+}
+.kunstgalleri-arrangement-vis-mer button .dashicons {
+    transition: .4s transform;
+    transform: rotate(180deg);
+}
+.kunstgalleri-arrangement-vis-mer button.show-open .dashicons {
+    transform: rotate(0deg);
+}
+</style>
+
+<script>
+    jQuery('#btnCollapseKunstverk').click((e) => {
+        var areaOpen = jQuery('#collapseKunstverk').hasClass('in');
+        
+        if(areaOpen) {
+            jQuery(e.currentTarget).addClass('show-open');
+        }
+        else {
+            jQuery(e.currentTarget).removeClass('show-open');
+        }
+    });
+</script>
