@@ -8,38 +8,41 @@
     </div>
     <div id="collapseKunstverk" class="col-xs-12 kunstgalleri-arrangement-bilder collapse" style="height: 0px;">
     {% for innslag in innslag_liste %}
-        {% for utstilling in innslag.getTitler().getAll() %}
-            {% if utstilling.getBilde() %}           
-                <div class="single-bilde">
-                    <div>
-                        <img src="{{ utstilling.getBilde().getSize('medium').getUrl() }}"/>
-                    </div>
-                    <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
-                    <span class="small text-muted normal">{{ utstilling.getType() }}</span>
-                    {% for person in innslag.getPersoner() %}
-                        <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
-                    {% endfor %}
-                </div>
-            {% elseif utstilling.getPlayback() %}
-                {% set playback = utstilling.getPlayback() %}
-                <div class="single-bilde">
-                    <div class="godkjenn-button-div">
-                        <span class="dashicons dashicons-info" data-toggle="tooltip" data-placement="bottom" title="Kunstverket er ikke godkjent!"></span>
+        {% if innslag.getType().getKey() == 'utstilling' %}            
+            {% for utstilling in innslag.getTitler().getAll() %}
+                {% if utstilling.getBilde() %}           
+                    <div class="single-bilde">
                         <div>
-                            <a href="admin.php?page=UKMplayback&action=assignkunstverk&innslag={{innslag.getId()}}&id={{playback.getId()}}" class="btn btn-ukm btn-sm btn-success">Godkjenn</a>
+                            <img src="{{ utstilling.getBilde().getSize('medium').getUrl() }}"/>
                         </div>
+                        <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
+                        <span class="small text-muted normal">{{ utstilling.getType() }}</span>
+                        {% for person in innslag.getPersoner() %}
+                            <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
+                        {% endfor %}
                     </div>
-                    <div>
-                        <img src="{{ playback.getUrl() }}"/>
+                {% elseif utstilling.getPlayback() %}
+                    {% set playback = utstilling.getPlayback() %}
+                    <div class="single-bilde">
+                        <div class="godkjenn-button-div">
+                            <span class="dashicons dashicons-info" data-toggle="tooltip" data-placement="bottom" title="Kunstverket er ikke godkjent!"></span>
+                            <div>
+                                <a href="admin.php?page=UKMplayback&action=assignkunstverk&innslag={{innslag.getId()}}&id={{playback.getId()}}" class="btn btn-ukm btn-sm btn-success">Godkjenn</a>
+                            </div>
+                        </div>
+                        <div>
+                            <img src="{{ playback.getUrl() }}"/>
+                        </div>
+                        <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
+                        <span class="small text-muted normal">{{ utstilling.getType() }}</span>
+                        {% for person in innslag.getPersoner() %}
+                            <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
+                        {% endfor %}
                     </div>
-                    <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
-                    <span class="small text-muted normal">{{ utstilling.getType() }}</span>
-                    {% for person in innslag.getPersoner() %}
-                        <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        
     {% endfor %}
 
     </div>
