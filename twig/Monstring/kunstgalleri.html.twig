@@ -6,7 +6,7 @@
             <span class="dashicons dashicons-format-gallery"></span>
         </a>
     </div>
-    <div id="collapseKunstverk" class="col-xs-12 kunstgalleri-arrangement-bilder collapse" style="height: 0px;">
+    <div id="collapseKunstverk" class="col-xs-12 kunstgalleri-arrangement-bilder collapse">
     {% for innslag in innslag_liste %}
         {% if innslag.getType().getKey() == 'utstilling' %}            
             {% for utstilling in innslag.getTitler().getAll() %}
@@ -14,7 +14,11 @@
                     <div class="single-bilde">
                         <div class="inner">
                             <div>
-                                <img src="{{ utstilling.getBilde().getSize('medium').getUrl() }}"/>
+                                {% set bildeId = utstilling.getId() %}
+                                <div class="modal-btn" data-toggle="modal" data-target="#modal{{ bildeId }}">
+                                    <img src="{{ utstilling.getBilde().getSize('medium').getUrl() }}"/>
+                                </div>
+
                             </div>
                             <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
                             <span class="small text-muted normal">{{ utstilling.getType() }}</span>
@@ -58,6 +62,25 @@
     </div>
 </div>
 
+ {% for innslag in innslag_liste %}
+    {% if innslag.getType().getKey() == 'utstilling' %}            
+        {% for utstilling in innslag.getTitler().getAll() %}
+            {% set bildeId = utstilling.getId() %}
+            <div class="modal" id="modal{{ bildeId }}" tabindex="5" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <img class="kunst-bilde" src="{{ utstilling.getBilde().getSize('original').getUrl() }}"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Lukk</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
 <style>
 .tittel-kunstverk {
     display: flex;
@@ -174,6 +197,18 @@
 }
 .kunstgalleri-arrangement-vis-mer button.show-open .dashicons {
     transform: rotate(0deg);
+}
+.modal-body .kunst-bilde {
+    max-width: 100%;
+}
+.modal-btn {
+    cursor: pointer;
+}
+#collapseKunstverk {
+    pointer-events: none;
+}
+#collapseKunstverk.in {
+    pointer-events: auto;
 }
 </style>
 
