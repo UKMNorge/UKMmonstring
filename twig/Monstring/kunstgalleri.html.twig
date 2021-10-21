@@ -12,32 +12,36 @@
             {% for utstilling in innslag.getTitler().getAll() %}
                 {% if utstilling.getBilde() %}           
                     <div class="single-bilde">
-                        <div>
-                            <img src="{{ utstilling.getBilde().getSize('medium').getUrl() }}"/>
+                        <div class="inner">
+                            <div>
+                                <img src="{{ utstilling.getBilde().getSize('medium').getUrl() }}"/>
+                            </div>
+                            <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
+                            <span class="small text-muted normal">{{ utstilling.getType() }}</span>
+                            {% for person in innslag.getPersoner() %}
+                                <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
+                            {% endfor %}
                         </div>
-                        <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
-                        <span class="small text-muted normal">{{ utstilling.getType() }}</span>
-                        {% for person in innslag.getPersoner() %}
-                            <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
-                        {% endfor %}
                     </div>
                 {% elseif utstilling.getPlayback() %}
                     {% set playback = utstilling.getPlayback() %}
                     <div class="single-bilde">
-                        <div class="godkjenn-button-div">
-                            <span class="dashicons dashicons-info" data-toggle="tooltip" data-placement="bottom" title="Kunstverket er ikke godkjent!"></span>
-                            <div>
-                                <a href="admin.php?page=UKMplayback&action=assignkunstverk&innslag={{innslag.getId()}}&id={{playback.getId()}}" class="btn btn-ukm btn-sm btn-success">Godkjenn</a>
+                        <div class="inner">
+                            <div class="godkjenn-button-div">
+                                <span class="dashicons dashicons-info" data-toggle="tooltip" data-placement="bottom" title="Kunstverket er ikke godkjent!"></span>
+                                <div>
+                                    <a href="admin.php?page=UKMplayback&action=assignkunstverk&innslag={{innslag.getId()}}&id={{playback.getId()}}" class="btn btn-ukm btn-sm btn-success">Gå til godkjenning</a>
+                                </div>
                             </div>
+                            <div>
+                                <img src="{{ playback.getUrl() }}"/>
+                            </div>
+                            <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
+                            <span class="small text-muted normal">{{ utstilling.getType() }}</span>
+                            {% for person in innslag.getPersoner() %}
+                                <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
+                            {% endfor %}
                         </div>
-                        <div>
-                            <img src="{{ playback.getUrl() }}"/>
-                        </div>
-                        <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
-                        <span class="small text-muted normal">{{ utstilling.getType() }}</span>
-                        {% for person in innslag.getPersoner() %}
-                            <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
-                        {% endfor %}
                     </div>
                 {% endif %}
             {% endfor %}
@@ -63,6 +67,8 @@
 #collapseKunstverk {
     background: #fff;
     padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
 }
 .tittel-kunstverk h4 {
     margin: 10px 0 !important;
@@ -91,17 +97,19 @@
     transition: height .5 ease;
 }
 .kunstgalleri-arrangement-bilder .single-bilde {
-    padding: 10px;
     float: left;
     opacity: .5;
     transition: 1.5s opacity ease;
-    background: #fff;
-    box-shadow: 0px 0px 3px #0000006b;
     margin: 20px 0;
     margin-bottom: 30px;
     margin-right: 20px;
     position: relative;
     max-width: 170px;
+}
+.kunstgalleri-arrangement-bilder .single-bilde .inner {
+    padding: 10px;
+    box-shadow: 0px 0px 3px #0000006b;
+    background: #fff;
 }
 .kunstgalleri-arrangement-bilder.collapse.in .single-bilde {
     opacity: 1;
@@ -143,10 +151,10 @@
 .kunstgalleri-arrangement-bilder .single-bilde.legg-til .dashicons {
     margin: auto;
 }
-.kunstgalleri-arrangement-bilder .single-bilde div {
+.kunstgalleri-arrangement-bilder .single-bilde .inner div {
     display: flex;
 }
-.kunstgalleri-arrangement-bilder .single-bilde div img {
+.kunstgalleri-arrangement-bilder .single-bilde .inner div img {
     height: auto;
     width: 100%;
     margin: auto;
