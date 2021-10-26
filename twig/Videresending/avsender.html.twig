@@ -1,6 +1,6 @@
 <ol class="list-group avsenderListe">
     {% for avsender in avsendere %}
-        {% if (arrangement.erKunstgalleri() and avsender.erKunstgalleri()) or arrangement.erKunstgalleri() == false %}
+        {% if (arrangement.erKunstgalleri() and avsender.erKunstgalleri()) or (not arrangement.erKunstgalleri() and not avsender.erKunstgalleri()) %}
         <li class="list-group-item avsenderMonstring {{ arrangement.getId() == avsender.getId() ? 'text-muted'}}" data-filter="{{ avsender.getNavn() }} {{ avsender.getEier().getNavn() }}" data-id="{{ avsender.getId() }}" data-name="{{ avsender.getNavn() }}">
             <label class="normal">
                 <input type="checkbox" class="form-control" name="avsender[]" value="{{ avsender.getId() }}" {{ arrangement.getId() == avsender.getId() ? 'disabled' }} {{ arrangement.getVideresending().harAvsender( avsender.getId() ) ? 'checked' }}/>
