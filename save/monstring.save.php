@@ -99,7 +99,7 @@ if (isset($_POST['videresending'])) {
 // TYPER INNSLAG SOM TILLATES
 // Hvis arrangement er kunstgalleri så kan arrangementet ha bare innslag av type utstilling
 if($arrangement->erKunstgalleri()) {
-    $arrangement->getInnslagtyper()->leggTil(Typer::getByKey('Utstilling'));
+    $arrangement->getInnslagtyper()->leggTil(Typer::getByKey('utstilling'));
 }
 else {
     $arrangement->getInnslagtyper()->getAll(); // laster de inn

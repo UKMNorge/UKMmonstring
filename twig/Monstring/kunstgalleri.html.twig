@@ -7,10 +7,13 @@
         </a>
     </div>
     <div id="collapseKunstverk" class="col-xs-12 kunstgalleri-arrangement-bilder collapse">
+    {% set nullBilde = true %}
     {% for innslag in innslag_liste %}
         {% if innslag.getType().getKey() == 'utstilling' %}            
             {% for utstilling in innslag.getTitler().getAll() %}
-                {% if utstilling.getBilde() %}           
+                {% if utstilling.getBilde() %}
+                    {% set nullBilde = false %}
+
                     <div class="single-bilde">
                         <div class="inner">
                             <div>
@@ -29,6 +32,7 @@
                     </div>
                 {% elseif utstilling.getPlayback() %}
                     {% set playback = utstilling.getPlayback() %}
+                    {% set nullBilde = false %}
                     <div class="single-bilde">
                         <div class="inner">
                             <div class="godkjenn-button-div">
@@ -53,13 +57,27 @@
         
     {% endfor %}
 
+    {% if nullBilde %}
+        <div class="ingen-kunstverk">
+            <span>Ingen kunstverk</span>
+            <span class="dashicons tooltip-down dashicons-info" data-toggle="tooltip" data-placement="bottom" title="Påmeldte har ikke sendt kunstverk!"></span>
+        </div>
+        <script>
+            jQuery('#collapseKunstverk').css('pointer-events', 'auto');
+        </script>
+    {% endif %}
+    
+
     </div>
     
-    <div class="col-xs-12 kunstgalleri-arrangement-vis-mer">
-        <button id="btnCollapseKunstverk" class="btn btn-ukm collapsed show-open" data-toggle="collapse" href="#collapseKunstverk" role="button" aria-expanded="false" aria-controls="collapseKunstverk">
-            <span class="dashicons dashicons-arrow-down-alt2"></span>
-        </button>
-    </div>
+    {% if not nullBilde %}
+        <div class="col-xs-12 kunstgalleri-arrangement-vis-mer">
+            <button id="btnCollapseKunstverk" class="btn btn-ukm collapsed show-open" data-toggle="collapse" href="#collapseKunstverk" role="button" aria-expanded="false" aria-controls="collapseKunstverk">
+                <span class="dashicons dashicons-arrow-down-alt2"></span>
+            </button>
+        </div>
+    {% endif %}
+    
 </div>
 
  {% for innslag in innslag_liste %}
@@ -210,6 +228,20 @@
 #collapseKunstverk.in {
     pointer-events: auto;
 }
+.ingen-kunstverk {
+    margin: 10px;
+    margin-left: -5px;
+}
+.ingen-kunstverk .dashicons-info {
+    font-size: 17px;
+}
+.modal-backdrop.in {
+    z-index: 9998;
+}
+.modal {
+    transition: 1s;
+    z-index: 9999;
+}
 </style>
 
 <script>
@@ -224,5 +256,5 @@
         }
     });
 
-    jQuery('.godkjenn-button-div .dashicons').tooltip();
+    jQuery('.godkjenn-button-div .dashicons, .tooltip-down').tooltip();
 </script>
