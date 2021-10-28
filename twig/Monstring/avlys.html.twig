@@ -1,10 +1,10 @@
 <div class="row hvisSynlig" style="{{display_hvisSynlig}}">
 	<div class="col-xs-12 col-sm-12">
-		<h4 class="mt-4">Korona-status 😷</h4>
+		<h4 class="mt-4">Endre status på arrangementet</h4>
 		<ol class="list-group" style="margin-bottom: .4em;">
 			<li class="list-group-item">
 				Hvis arrangementet må avlyses, eller arrangementet du skal sende videre til er avlyst,
-				eller om du har annen viktig informasjon, kan du legge inn dette her.
+				eller om du har annen viktig informasjon (f.eks. om smittevern), kan du legge inn dette her.
 				<div class="clearfix"></div>
 			</li>
 			{% if arrangement.getMetaValue('avlys') %}
@@ -28,7 +28,7 @@
 			{% endif %}
 		</ol>
 		<div class="mt-0" align="right">
-			<a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="avlys">rediger korona-informasjon</a>
+			<a href="#" class="goTo btn btn-ukm btn-xs btn-primary" data-action="avlys">Rediger status</a>
 		</div>
 		<div class="clearfix"></div>
 	</div>
