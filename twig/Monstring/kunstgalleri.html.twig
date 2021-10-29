@@ -1,0 +1,260 @@
+{# Bilder #}
+<div class="row">
+    <div class="col-xs-12 mt-5 tittel-kunstverk">
+        <h4 style="margin-top: 2em;">Kunstverk</h4>
+        <a href="edit.php?page=UKMbilder&action=list" class="alle-kunstverk btn btn-default btn-sm pull-right">
+            <span class="dashicons dashicons-format-gallery"></span>
+        </a>
+    </div>
+    <div id="collapseKunstverk" class="col-xs-12 kunstgalleri-arrangement-bilder collapse">
+    {% set nullBilde = true %}
+    {% for innslag in innslag_liste %}
+        {% if innslag.getType().getKey() == 'utstilling' %}            
+            {% for utstilling in innslag.getTitler().getAll() %}
+                {% if utstilling.getBilde() %}
+                    {% set nullBilde = false %}
+
+                    <div class="single-bilde">
+                        <div class="inner">
+                            <div>
+                                {% set bildeId = utstilling.getId() %}
+                                <div class="modal-btn" data-toggle="modal" data-target="#modal{{ bildeId }}">
+                                    <img src="{{ utstilling.getBilde().getSize('medium').getUrl() }}"/>
+                                </div>
+
+                            </div>
+                            <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
+                            <span class="small text-muted normal">{{ utstilling.getType() }}</span>
+                            {% for person in innslag.getPersoner() %}
+                                <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% elseif utstilling.getPlayback() %}
+                    {% set playback = utstilling.getPlayback() %}
+                    {% set nullBilde = false %}
+                    <div class="single-bilde">
+                        <div class="inner">
+                            <div class="godkjenn-button-div">
+                                <span class="dashicons dashicons-info" data-toggle="tooltip" data-placement="bottom" title="Kunstverket er ikke godkjent!"></span>
+                                <div>
+                                    <a href="admin.php?page=UKMplayback&action=assignkunstverk&innslag={{innslag.getId()}}&id={{playback.getId()}}" class="btn btn-ukm btn-sm btn-success">Gå til godkjenning</a>
+                                </div>
+                            </div>
+                            <div>
+                                <img src="{{ playback.getUrl() }}"/>
+                            </div>
+                            <h5 class="bilde-kunstgalleri-innslag">{{ utstilling.getNavn() }}</h5>
+                            <span class="small text-muted normal">{{ utstilling.getType() }}</span>
+                            {% for person in innslag.getPersoner() %}
+                                <p class="blide-kunstgalleri-kunstner">{{ person.getNavn() }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        
+    {% endfor %}
+
+    {% if nullBilde %}
+        <div class="ingen-kunstverk">
+            <span>Ingen kunstverk</span>
+            <span class="dashicons tooltip-down dashicons-info" data-toggle="tooltip" data-placement="bottom" title="Påmeldte har ikke sendt kunstverk!"></span>
+        </div>
+        <script>
+            jQuery('#collapseKunstverk').css('pointer-events', 'auto');
+        </script>
+    {% endif %}
+    
+
+    </div>
+    
+    {% if not nullBilde %}
+        <div class="col-xs-12 kunstgalleri-arrangement-vis-mer">
+            <button id="btnCollapseKunstverk" class="btn btn-ukm collapsed show-open" data-toggle="collapse" href="#collapseKunstverk" role="button" aria-expanded="false" aria-controls="collapseKunstverk">
+                <span class="dashicons dashicons-arrow-down-alt2"></span>
+            </button>
+        </div>
+    {% endif %}
+    
+</div>
+
+ {% for innslag in innslag_liste %}
+    {% if innslag.getType().getKey() == 'utstilling' %}            
+        {% for utstilling in innslag.getTitler().getAll() %}
+            {% set bildeId = utstilling.getId() %}
+            <div class="modal" id="modal{{ bildeId }}" tabindex="5" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <img class="kunst-bilde" src="{{ utstilling.getBilde().getSize('original').getUrl() }}"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Lukk</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+<style>
+.tittel-kunstverk {
+    display: flex;
+    background: #fff;
+    border-bottom: solid 1px #ededed;
+}
+#collapseKunstverk {
+    background: #fff;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.tittel-kunstverk h4 {
+    margin: 10px 0 !important;
+    margin-left: 0;
+}
+.tittel-kunstverk .alle-kunstverk {
+    margin: auto;
+    margin-right: 0;
+}
+.blide-kunstgalleri-kunstner, .bilde-kunstgalleri-innslag {
+    margin: 0;
+}
+.bilde-kunstgalleri-innslag {
+    margin-top: 10px;
+}
+.kunstgalleri-arrangement-bilder {
+    display: inline;
+    min-height: 80px;
+    -webkit-transition: height .5 ease;
+    -o-transition: height .5 ease;
+    transition: height .5 ease;
+}
+.kunstgalleri-arrangement-bilder.collapse.in {
+    -webkit-transition: height .5 ease;
+    -o-transition: height .5 ease;
+    transition: height .5 ease;
+}
+.kunstgalleri-arrangement-bilder .single-bilde {
+    float: left;
+    opacity: .5;
+    transition: 1.5s opacity ease;
+    margin: 20px 0;
+    margin-bottom: 30px;
+    margin-right: 20px;
+    position: relative;
+    max-width: 170px;
+}
+.kunstgalleri-arrangement-bilder .single-bilde .inner {
+    padding: 10px;
+    box-shadow: 0px 0px 3px #0000006b;
+    background: #fff;
+}
+.kunstgalleri-arrangement-bilder.collapse.in .single-bilde {
+    opacity: 1;
+    transition: .5s opacity ease;
+}
+.kunstgalleri-arrangement-bilder .single-bilde.legg-til {
+    width: 140px;
+    height: 100px;
+    display: flex;
+    margin: 10px;
+}
+.godkjenn-button-div {
+    position: absolute;
+    height: 100%;
+    background: #ffffff85;
+    width: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+}
+.godkjenn-button-div div {
+    margin: auto;
+}
+.godkjenn-button-div .dashicons {
+    right: 5px;
+    position: absolute;
+    font-size: 20px;
+    top: 5px;
+    color: #da4f49;
+}
+.godkjenn-button-div div .btn {
+    background: #fff !important;
+    box-shadow: 0px 0px 7px 7px white !important;
+}
+.godkjenn-button-div div .btn:focus,
+.godkjenn-button-div div .btn:hover {
+    background-color: #0daa00 !important;
+}
+.kunstgalleri-arrangement-bilder .single-bilde.legg-til .dashicons {
+    margin: auto;
+}
+.kunstgalleri-arrangement-bilder .single-bilde .inner div {
+    display: flex;
+}
+.kunstgalleri-arrangement-bilder .single-bilde .inner div img {
+    height: auto;
+    width: 100%;
+    margin: auto;
+}
+.kunstgalleri-arrangement-vis-mer {
+    display: flex;
+    box-shadow: 0px -9px 6px 1px whitesmoke;
+    padding-top: 20px;
+}
+.kunstgalleri-arrangement-vis-mer button {
+    margin: 0 auto !important;
+    width: 100px;
+}
+.kunstgalleri-arrangement-vis-mer button .dashicons {
+    transition: .4s transform;
+    transform: rotate(180deg);
+}
+.kunstgalleri-arrangement-vis-mer button.show-open .dashicons {
+    transform: rotate(0deg);
+}
+.modal-body .kunst-bilde {
+    max-width: 100%;
+}
+.modal-btn {
+    cursor: pointer;
+}
+#collapseKunstverk {
+    pointer-events: none;
+}
+#collapseKunstverk.in {
+    pointer-events: auto;
+}
+.ingen-kunstverk {
+    margin: 10px;
+    margin-left: -5px;
+}
+.ingen-kunstverk .dashicons-info {
+    font-size: 17px;
+}
+.modal-backdrop.in {
+    z-index: 9998;
+}
+.modal {
+    transition: 1s;
+    z-index: 9999;
+}
+</style>
+
+<script>
+    jQuery('#btnCollapseKunstverk').click((e) => {
+        var areaOpen = jQuery('#collapseKunstverk').hasClass('in');
+        
+        if(areaOpen) {
+            jQuery(e.currentTarget).addClass('show-open');
+        }
+        else {
+            jQuery(e.currentTarget).removeClass('show-open');
+        }
+    });
+
+    jQuery('.godkjenn-button-div .dashicons, .tooltip-down').tooltip();
+</script>

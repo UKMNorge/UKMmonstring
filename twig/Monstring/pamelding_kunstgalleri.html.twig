@@ -1,0 +1,52 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<h4 class="mt-5">Påmelding</h4>
+
+		<p>
+			Fordi dette er en mønstring, kan du velge hvilke typer innslag du tar i mot påmelding for.
+            Skal du ha et arrangementet hvor de deltar som seg selv, og ikke som et innslag, må du opprette et workshop-arrangement.
+		</p>
+
+		<ol class="list-group">
+			{# PÅMELDING FRA FYLKE ELLER LAND (HVIS FYLKE-ARRANGEMENT) #}
+			{% include "Monstring/nedslagsfelt.html.twig" %}
+
+			{% if arrangement.getType() != 'fylke' %}
+				{% if is_superadmin == false %}
+					<li class="list-group-item">
+					Arrangementet tar i mot påmelding for
+					{% for kommune in arrangement.getKommuner().getAll() %}
+						{{ kommune.getFylke().erOslo() ? ' bydel ' }}
+						{{ kommune }}
+						{{ not kommune.getFylke().erOslo() ? ' kommune ' }}
+						{% if loop.index == arrangement.getKommuner().getAntall() - 1 %}
+							og
+							{% elseif loop.index < arrangement.getKommuner().getAntall() %},
+						{% endif %}
+					{% endfor %}.
+                    Skal du legge til eller fjerne en
+					{{ arrangement.getFylke().erOslo() ? 'bydel' : 'kommune' }}, må du
+					<a href="mailto:support@ukm.no?subject=Endre fellesmønstring">sende en e-post til support@ukm.no</a>
+				</li>
+			</ol>
+				{% else %}
+					<div class="superadmin">
+						<p><b>Endre hvilke kommuner/bydeler arrangementet tar i mot påmelding for</b><p/>
+						<p>Funksjon er tilgjengelig fordi du er logget inn som UKM Norge</p>
+						{% include "Monstring/avsendere.html.twig" %}
+					</div>
+				{% endif %}
+					
+			{% endif %}
+	</div>
+
+	<div class="col-12 col-sm-6">
+		<label class="bold">Påmeldingsfrist for de som vil sende inn kunstverk</label>
+		<div class="input-group" style="margin-bottom: 1em;">
+			<input class="datepicker_kommune form-control" type="text" name="pl_deadline" value="{{ arrangement.getFrist1()|dato('d.m.Y') }}"/>
+			<span class="input-group-addon">kl. 23:59</span>
+		</div>
+		<input type="hidden" name="pl_deadline_time" value="23:59" />
+	</div>
+
+</div>

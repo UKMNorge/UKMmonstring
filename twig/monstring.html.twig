@@ -33,7 +33,12 @@
 
 				{% include "wp_modul.flashbag.html.twig" %}
 				
-                {% include "Monstring/basics.html.twig" %}
+				{% if arrangement.erKunstgalleri() %} 
+	                {% include "Monstring/basics_kunstgalleri.html.twig" with {'innslag_liste': innslag_liste} %}
+				{% else %}
+	                {% include "Monstring/basics.html.twig" %}
+				{% endif %}
+
 				{% if arrangement.erFerdig() %}
 				<div class="superadmin">
 					<p>
@@ -45,20 +50,29 @@
 				</div>
 				{% endif %}
 
-				{% include "Monstring/avlys.html.twig" %}
-                {% include "Monstring/synlighet.html.twig" %}
+				{% if arrangement.erKunstgalleri() %} 
+					{% include "Monstring/kunstgalleri.html.twig" with {'arrangement': arrangement} %}				
+					{% include "Monstring/pamelding_kunstgalleri.html.twig" %}
+					{% include "Monstring/kontaktpersoner.html.twig" %}
 
-				{% if arrangement.erArrangement() %}
-					{% include "Monstring/pamelding_workshop.html.twig" %}
 				{% else %}
-					{% include "Monstring/pamelding_monstring.html.twig" %}
+
+					{% include "Monstring/avlys.html.twig" %}
+					{% include "Monstring/synlighet.html.twig" %}
+
+					{% if arrangement.erArrangement() %}
+						{% include "Monstring/pamelding_workshop.html.twig" %}
+					{% else %}
+						{% include "Monstring/pamelding_monstring.html.twig" %}
+					{% endif %}
+					
+					{% include "Monstring/kontaktpersoner.html.twig" %}
+				
+					{% if arrangement.getEierType() == 'land' and arrangement.erMonstring() %}
+						{% include "Monstring/land.html.twig" %}
+					{% endif %}
 				{% endif %}
-                
-				{% include "Monstring/kontaktpersoner.html.twig" %}
-			
-				{% if arrangement.getEierType() == 'land' and arrangement.erMonstring() %}
-				    {% include "Monstring/land.html.twig" %}
-                {% endif %}
+				
 			</div>
 			<div class="col-12 col-sm-12 col-lg-4">
 				<p>&nbsp;</p>
