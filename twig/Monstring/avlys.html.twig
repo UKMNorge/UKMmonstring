@@ -9,9 +9,10 @@
 			</li>
 			{% if arrangement.getMetaValue('avlys') %}
 				<li class="list-group-item">
-					<small style="font-weight: bold; text-transform: uppercase;">Vises på forsiden til arrangementet:</small>
-					<div id="avlyst_banner" style="background: #ff128b;color: #fff; padding: 1em; border-radius: 3px;">
-						<h2 style="margin-top:0;">
+					<small style="font-weight: bold;">Vises på forsiden til arrangementet:</small>
+					<div id="avlyst_banner" style="background: gray;color: #fff; padding: 1em; border-radius: 3px;">
+						<h1 style="margin-top:0; font-size: 1em;">
+							<img src="//assets.{{ UKM_HOSTNAME }}/img/alert.svg" alt="alert" style="margin-right: 1rem;"/>
 							{% if arrangement.getMetaValue('avlys') == 'videresending_kanskje' %}
 								Videresendingen kan bli avlyst!
 							{% elseif arrangement.getMetaValue('avlys') == 'videresending_sikkert' %}
@@ -21,7 +22,7 @@
 							{% elseif arrangement.getMetaValue('avlys') == 'gjennomforer_med_info' %}
 								Viktig info!
 							{% endif %}
-						</h2>
+						</h1>
 						<p>{{ arrangement.getMetaValue('avlys_status_kort') }}</p>
 					</div>
 				</li>
