@@ -10,20 +10,24 @@
 			{% if arrangement.getMetaValue('avlys') %}
 				<li class="list-group-item">
 					<small style="font-weight: bold;">Vises på forsiden til arrangementet:</small>
-					<div id="avlyst_banner" style="background: gray;color: #fff; padding: 1em; border-radius: 3px;">
-						<h1 style="margin-top:0; font-size: 1em;">
-							<img src="//assets.{{ UKM_HOSTNAME }}/img/alert.svg" alt="alert" style="margin-right: 1rem;"/>
-							{% if arrangement.getMetaValue('avlys') == 'videresending_kanskje' %}
-								Videresendingen kan bli avlyst!
-							{% elseif arrangement.getMetaValue('avlys') == 'videresending_sikkert' %}
-								Ingen blir videresendt
-							{% elseif arrangement.getMetaValue('avlys') == 'avlys' %}
-								Avlyst!
-							{% elseif arrangement.getMetaValue('avlys') == 'gjennomforer_med_info' %}
-								Viktig info!
-							{% endif %}
-						</h1>
-						<p>{{ arrangement.getMetaValue('avlys_status_kort') }}</p>
+					<div class="media" id="avlyst_banner" style="background: gray;color: #fff; padding: 1em; border-radius: 3px; display: flex;">
+						<div class="pull-left" style="margin: auto 2rem auto 0;">
+							<img class="media-object" style="height: 3.5rem; width: 3.5rem;" src="//assets.{{ UKM_HOSTNAME }}/img/alert.svg" alt="alert"/>
+						</div>
+						<div class="media-body">
+							<h1 class="media-heading mt-0" style="margin-top:0; font-size: 1em;">
+								{% if arrangement.getMetaValue('avlys') == 'videresending_kanskje' %}
+									Videresendingen kan bli avlyst!
+								{% elseif arrangement.getMetaValue('avlys') == 'videresending_sikkert' %}
+									Ingen blir videresendt
+								{% elseif arrangement.getMetaValue('avlys') == 'avlys' %}
+									Avlyst!
+								{% elseif arrangement.getMetaValue('avlys') == 'gjennomforer_med_info' %}
+									Viktig info!
+								{% endif %}
+							</h1>
+							<p>{{ arrangement.getMetaValue('avlys_status_kort') }}</p>
+						</div>
 					</div>
 				</li>
 			{% endif %}
