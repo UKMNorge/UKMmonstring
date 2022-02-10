@@ -50,6 +50,33 @@
 					</div>
 				</div>
 			</li>
+
+			<!-- Maks antall deltagere -->
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-xs-7">
+						<label>Er antall deltagere begrenset?</label>
+
+						<div class="mt-0 help text-muted small">
+							<div class="hvisMaksantall" style="{{display_hvisIkkeMaksantall}}">
+								<input class="form-control" min="{{ arrangement.getAntallPersoner() }}" type="number" id="maksAntallDeltagere" name="maks_antall_deltagere" value="{{ arrangement.getMaksAntallDeltagere() }}" />
+							</div>
+
+							<div class="hvisIkkeMaksantall" style="{{display_hvisMaksantall}}">
+								<span class="muted">Ubegrenset antall deltagere kan meldes på</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-5" align="right">
+						<div class="btn-group radioButtons" data-name="maksantall">
+							<button type="button" class="btn btn-default {{ arrangement.erMaksAntallAktivert() ? 'selected' }}" value="true">&nbsp; Ja &nbsp;</button>
+							<button type="button" class="btn btn-default {{ not arrangement.erMaksAntallAktivert() ? 'selected' }}" value="false">&nbsp; Nei &nbsp;</button>
+						</div>
+					</div>
+				</div>
+			</li>
+
+
 		</ol>
 		<div id="harDeltakerskjemaDetaljer" {{ not arrangement.harDeltakerskjema() ? 'style="display:none;"' }} align="right">
 			<div class="pull-right">

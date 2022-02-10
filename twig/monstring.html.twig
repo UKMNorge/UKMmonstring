@@ -20,6 +20,8 @@
 {% set display_hvisIkkeVideresending = arrangement.harVideresending() ? 'display: none;' %}
 {% set display_hvisSkjema = not arrangement.harDeltakerskjema() ? 'display: none;' %}
 {% set display_hvisIkkeSkjema = arrangement.harDeltakerskjema() ? 'display: none;' %}
+{% set display_hvisIkkeMaksantall = not arrangement.erMaksAntallAktivert() ? 'display: none;' %}
+{% set display_hvisMaksantall = arrangement.erMaksAntallAktivert() ? 'display: none;' %}
 
 
 <div id="status"></div>
@@ -79,6 +81,11 @@
 				<div>
 					{% embed "Infobokser/pameldte.html.twig" %}{% endembed %}
 				</div>
+				{% if arrangement.erMaksAntallAktivert() %}
+					<div>
+						{% embed "Infobokser/venteliste.html.twig" %}{% endembed %}
+					</div>
+				{% endif %}
                 <div>
 					{% embed "Infobokser/meldinger.html.twig" %}{% endembed %}
 				</div>

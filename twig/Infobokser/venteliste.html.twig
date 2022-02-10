@@ -1,0 +1,53 @@
+<table class="table table-dashboard noborder venteliste">
+	<thead>
+		<tr>
+			<th>Venteliste</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td id="pameldte">
+                {% set ventelistePersoner = arrangement.getVenteliste().getAntall() %}
+                
+                <div class="personer">{{ ventelistePersoner == null ? 0 : ventelistePersoner }}</div>
+                <div class="innslag">{{ ventelistePersoner == null ? 0 : ventelistePersoner }} deltaker{{ ventelistePersoner > 1 ? 'e' : '' }} i venteliste</div>
+			</td>
+		</tr>
+	
+	</tbody>    
+</table>
+
+{% if arrangement.getVenteliste().getAntall() > 0 %}
+    <div id="collapseVenteliste" style="height: 0">
+        <div class="list">
+            {% for vePerson in arrangement.getVenteliste().getAllpersoner() %}
+                <div class="person">
+                    <span>{{ vePerson.getPerson().getNavn() }}</span>
+                    <span class="mobil">{{ vePerson.getPerson().getMobil() }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="toggleVenteliste" class="open">
+        <a class="btn btn-primary" onclick="toggleVenteliste()"><span style="color: #000;" class="dashicons dashicons-arrow-down-alt2"></span></a>
+    </div>
+
+    <script>
+        toggleVenteliste = function() {
+            var el = jQuery('#collapseVenteliste');
+            var btn = jQuery('#toggleVenteliste');
+            if(el.hasClass('open-list-collapse')) {
+                btn.addClass('open');
+                el.removeClass('open-list-collapse').animate({
+                    height: 0
+                }, 400);
+            }
+            else {
+                btn.removeClass('open');
+                el.addClass('open-list-collapse').animate({
+                    height: jQuery('#collapseVenteliste .list').height() + 40 + 'px'
+                }, 400);
+            }
+        }
+    </script>
+{% endif %}
