@@ -10,7 +10,7 @@
                 {% set ventelistePersoner = arrangement.getVenteliste().getAntall() %}
                 
                 <div class="personer">{{ ventelistePersoner == null ? 0 : ventelistePersoner }}</div>
-                <div class="innslag">{{ ventelistePersoner == null ? 0 : ventelistePersoner }} deltaker{{ ventelistePersoner > 1 ? 'e' : '' }} i venteliste</div>
+                <div class="innslag">{{ ventelistePersoner == null ? 0 : ventelistePersoner }} deltager{{ ventelistePersoner > 1 ? 'e' : '' }} står på ventelisten</div>
 			</td>
 		</tr>
 	
