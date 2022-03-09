@@ -1,6 +1,7 @@
 <?php
 
 use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Arrangement\UKMFestival;
 use UKMNorge\Arrangement\Arrangementer;
 use UKMNorge\Arrangement\Kommende;
 use UKMNorge\Innslag\Typer\Typer;
@@ -12,6 +13,11 @@ date_default_timezone_set('Europe/Oslo');
 
 require_once('UKM/Autoloader.php');
 $arrangement = new Arrangement(intval(get_option('pl_id')));
+
+// Hvis arrangement er UKM Festivalen (type 'land'), opprett UKMFestival klasse
+if($arrangement->getEierType() == 'land') {
+    $arrangement = new UKMFestival(intval(get_option('pl_id')));
+}
 
 
 /* LAGRE ENDRINGER */
