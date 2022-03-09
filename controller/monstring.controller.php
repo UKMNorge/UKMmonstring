@@ -17,7 +17,6 @@ $arrangement = new Arrangement(intval(get_option('pl_id')));
 // Hvis arrangement er UKM Festivalen (type 'land'), opprett UKMFestival klasse
 if($arrangement->getEierType() == 'land') {
     $arrangement = new UKMFestival(intval(get_option('pl_id')));
-    $arrangement->getOvernattingGrupper();
 }
 
 
