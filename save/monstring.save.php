@@ -161,6 +161,20 @@ foreach ($metadata as $meta_key) {
     }
 }
 
+// Maks antall deltagere
+if (isset($_POST['maksantall'])) {
+
+    // Ingen begrensning
+    if($_POST['maksantall'] == 'false') {
+        $arrangement->setMaksAntallDeltagere(null);
+    }
+    else if(isset($_POST['maks_antall_deltagere'])) {
+        if((int)$_POST['maks_antall_deltagere'] >= $arrangement->getAntallPersoner()) {
+            $arrangement->setMaksAntallDeltagere((int)$_POST['maks_antall_deltagere']);
+        }
+    }
+}
+
 // LAGRE
 try {
     Write::save($arrangement);
@@ -173,6 +187,12 @@ try {
         'danger',
         'Kunne ikke lagre arrangement-info. Systemet sa: ' . $e->getMessage() . ' (' . $e->getCode() . ')'
     );
+}
+
+// Oppdater personer som venter i venteliste
+if (isset($_POST['maksantall'])) {
+    $venteliste = $arrangement->getVenteliste();
+    $venteliste->updatePersoner();
 }
 
 // reload innslagTyper (i tilfelle man lagrer "blankt")

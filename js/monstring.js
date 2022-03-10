@@ -63,6 +63,17 @@ jQuery(document).on('change', '#radioButtonValue_harDeltakerskjema', (e) => {
     }
 });
 
+/* JA/NEI SKJEMA MAKS ANTALL DELTAGERE */
+jQuery(document).on('change', '#radioButtonValue_maksantall', (e) => {
+    if (jQuery(e.target).val() == 'true') {
+        jQuery('.hvisMaksantall:hidden').slideDown();
+        jQuery('.hvisIkkeMaksantall:visible').slideUp();
+    } else {
+        jQuery('.hvisIkkeMaksantall:hidden').slideDown();
+        jQuery('.hvisMaksantall:visible').slideUp();
+    }
+});
+
 /* JA/NEI TILLAT VIDERESENDING */
 jQuery(document).on('change', '#radioButtonValue_videresending', (e) => {
     if (jQuery(e.target).val() == 'true') {
