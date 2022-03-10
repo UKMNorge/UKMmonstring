@@ -52,7 +52,8 @@
 			</li>
 
 			<!-- Maks antall deltagere -->
-			<li class="list-group-item">
+			<li class="list-group-item" style="position: relative;">
+				<span id="newBadge"></span>
 				<div class="row">
 					<div class="col-xs-7">
 						<label>Er det begrenset antall deltakere på arrangementet?</label>
@@ -88,3 +89,13 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	if (!localStorage.pageCounter) {
+		localStorage.setItem('pageCounter',0);
+		localStorage.setItem('badge', 'NY');
+		document.getElementById("newBadge").innerHTML = localStorage.getItem("badge");
+		document.getElementById("newBadge").className = 'badge badge-secondary';
+		document.getElementById("newBadge").style.cssText = "background-color: hotpink; border: 4px solid hotpink; position: absolute; top: 0; padding: 2px; left: 100%; transform: translate(-50%, -50%);"
+	}
+</script>
