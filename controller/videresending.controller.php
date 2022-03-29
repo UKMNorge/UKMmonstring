@@ -90,7 +90,7 @@ switch ($arrangement->getType()) {
                 $fylke_arrangement[] = $mottaker;
             } else {
                 $stop = (int)$mottaker->getStop()->format('Y');
-                if($stop > (int)date("Y")-3) {
+                if($stop > (int)date("Y")-2) {
                     $andre_arrangement[] = $mottaker;
                 }
             }
