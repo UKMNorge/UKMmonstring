@@ -89,7 +89,10 @@ switch ($arrangement->getType()) {
             } elseif ($mottaker->getEierType() == 'fylke') {
                 $fylke_arrangement[] = $mottaker;
             } else {
-                $andre_arrangement[] = $mottaker;
+                $stop = (int)$mottaker->getStop()->format('Y');
+                if($stop > (int)date("Y")-3) {
+                    $andre_arrangement[] = $mottaker;
+                }
             }
         }
 
