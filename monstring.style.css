@@ -3,6 +3,7 @@
 @media(min-width: 768px) {
     #mapContainer {
         float: right;
+        max-height: 180px;
     }
 }
 
