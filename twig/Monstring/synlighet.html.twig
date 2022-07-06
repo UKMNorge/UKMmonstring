@@ -26,6 +26,26 @@
 				</div>
 			</li>
 
+			{# Skal antall deltakere være synlig på nettsiden #}
+			<li class="list-group-item hvisSynlig" style="{{display_hvisSynlig}}">
+				<div class="row">
+					<div class="col-xs-7">
+						<label>Skal antall deltakere være synlig på din {{ arrangement.getEierType() }}sside?</label>
+					</div>
+					<div class="col-xs-5" align="right">
+						<div class="btn-group radioButtons" data-name="deltakeresynlig">
+							<button type="button" class="btn btn-default {{ arrangement.erDeltakereSynlig() ? 'selected' }}" value="true">&nbsp; Ja &nbsp;</button>
+							<button type="button" class="btn btn-default {{ not arrangement.erDeltakereSynlig() ? 'selected' }}" value="false">&nbsp; Nei &nbsp;</button>
+						</div>
+					</div>
+				</div>
+			</li>
+
+			<li>
+			{{ dump(arrangement.erDeltakereSynlig()) }}
+			</li>
+
+
 			{# TA I MOT PÅMELDING #}
 			<li class="list-group-item hvisSynlig" style="{{display_hvisSynlig}}">
 				<div class="row">

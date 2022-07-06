@@ -82,6 +82,11 @@ if (isset($_POST['synlig'])) {
     $arrangement->setSynlig($_POST['synlig'] == 'true');
 }
 
+// SYNLIGHET
+if (isset($_POST['deltakeresynlig'])) {
+    $arrangement->setDeltakereSynlig($_POST['deltakeresynlig'] == 'true');
+}
+
 // PÅMELDING
 if (isset($_POST['pamelding'])) {
     $pamelding = str_replace(['true','false'],['apen','ingen'], $_POST['pamelding']);
