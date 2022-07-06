@@ -82,7 +82,7 @@ if (isset($_POST['synlig'])) {
     $arrangement->setSynlig($_POST['synlig'] == 'true');
 }
 
-// SYNLIGHET
+// Synlighet av deltakere
 if (isset($_POST['deltakeresynlig'])) {
     $arrangement->setDeltakereSynlig($_POST['deltakeresynlig'] == 'true');
 }
