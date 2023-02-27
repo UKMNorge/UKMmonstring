@@ -1,0 +1,15 @@
+<div class="row" id="avsendere">
+	<div class="col-12 col-sm-12">
+        <ol class="list-group">
+            <li class="list-group-item">
+                <div id="visAvsenderArrangement">
+                    {% for reqAvsender in arrangement.getRequestVideresendingerTil().getAll() %}
+                        <span class="avsender label label-warning">
+                        {{ reqAvsender.getArrangementFra().getNavn() }}
+                        </span>
+                    {% endfor %}
+                </div>
+            </li>
+        </ol>
+    </div>
+</div>

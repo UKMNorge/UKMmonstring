@@ -61,6 +61,11 @@
 				</ol>
 
 				<div class="hvisVideresending" style="{{display_hvisVideresending}}">
+					{% if arrangement.getRequestVideresendingerTil.getAntall() > 0 %}
+						<h4 class="mt-5">Arrangementer som har bedt deg om å åpne videresending</h4>
+						{% include "Videresending/requestedAvsendere.html.twig" %}
+					{% endif %}
+
 					<h4 class="mt-5">Arrangement som kan videresende til deg</h4>
 					{% include "Videresending/avsendere.html.twig" %}
 					{% if arrangement.erMonstring() %}
