@@ -38,13 +38,13 @@
 
 /* AVSENDER-MØNSTRINGER */
 
-#visAvsenderArrangement .label a,
-#visAvsenderArrangement .label a:hover,
-#visAvsenderArrangement .label a:visited {
+.vis-avsender-arrangement .label a,
+.vis-avsender-arrangement .label a:hover,
+.vis-avsender-arrangement .label a:visited {
     text-decoration: none;
 }
 
-#visAvsenderArrangement .label {
+.vis-avsender-arrangement .label {
     margin-right: 0.7em;
     display: inline-block;
     font-size: 1rem;
@@ -52,7 +52,7 @@
     margin-bottom: .5em;
 }
 
-#visAvsenderArrangement .label .dashicons {
+.vis-avsender-arrangement .label .dashicons {
     color: #fff;
     margin-left: 0.2em;
     margin-right: -0.20em;

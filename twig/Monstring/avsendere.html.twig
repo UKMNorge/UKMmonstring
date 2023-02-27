@@ -2,7 +2,7 @@
 	<div class="col-12 col-sm-12">
 		<ol class="list-group">
 			<li class="list-group-item">
-				<div id="visAvsenderArrangement">
+				<div id="visAvsenderArrangement" class="vis-avsender-arrangement">
 					{% for fylke in fylker %}
 						{% for kommune in fylke.getKommuner().getAll() %}
 							{% if arrangement.harKommune(kommune.getId()) %}
