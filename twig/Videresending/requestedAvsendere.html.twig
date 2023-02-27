@@ -3,9 +3,12 @@
         <ol class="list-group">
             <li class="list-group-item">
                 <div id="visAvsenderArrangement">
+                    {% set openVideresendingIds = arrangement.getVideresending().getAvsendere()|map((arrang) => arrang.getId()) %}
+                    
                     {% for reqAvsender in arrangement.getRequestVideresendingerTil().getAll() %}
-                        <span class="avsender label label-warning">
-                        {{ reqAvsender.getArrangementFra().getNavn() }}
+                        {% set requestArrangement = reqAvsender.getArrangementFra() %}
+                        <span class="avsender label label-{{ requestArrangement.getId() in openVideresendingIds ? 'success' : 'danger' }}" >
+                        {{ requestArrangement.getNavn() }}
                         </span>
                     {% endfor %}
                 </div>
