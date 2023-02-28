@@ -1,6 +1,23 @@
+{% set selectedIds = [] %}
+
+{% if arrangement.getType() == 'land' %}
+    {% set openVideresendingIds = arrangement.getVideresending().getAvsendere()|map((arrang) => arrang.getId()) %}
+    {% for reqAvsender in arrangement.getRequestVideresendingerTil().getAll() %}
+        {% set requestArrangement = reqAvsender.getArrangementFra() %}
+        {% if requestArrangement.getId() in openVideresendingIds %}
+            {% set selectedIds = selectedIds|merge([requestArrangement.getId()]) %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+
+
+
 <ol class="list-group avsenderListe">
     {% for avsender in avsendere %}
         {% if (arrangement.erKunstgalleri() and avsender.erKunstgalleri()) or (not arrangement.erKunstgalleri() and not avsender.erKunstgalleri()) %}
+
         <li class="list-group-item avsenderMonstring {{ arrangement.getId() == avsender.getId() ? 'text-muted'}}" data-filter="{{ avsender.getNavn() }} {{ avsender.getEier().getNavn() }}" data-id="{{ avsender.getId() }}" data-name="{{ avsender.getNavn() }}">
             <label class="normal">
                 <input type="checkbox" class="form-control" name="avsender[]" value="{{ avsender.getId() }}" {{ arrangement.getId() == avsender.getId() ? 'disabled' }} {{ arrangement.getVideresending().harAvsender( avsender.getId() ) ? 'checked' }}/>
@@ -14,6 +31,9 @@
                     {% endif %}
                 </small>
             </label>
+            {% if avsender.getId() in selectedIds %}
+                <span class="label label-warning">Bedt om videresending</span>
+            {% endif %}
         </li>
         {% endif %}
     {% else %} 
