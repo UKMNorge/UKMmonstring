@@ -2,7 +2,7 @@
 	<div class="col-12 col-sm-12">
 		<ol class="list-group">
 			<li class="list-group-item">
-				<div id="visAvsenderArrangement">
+				<div id="visAvsenderArrangement" class="vis-avsender-arrangement">
 					{% for avsender in arrangement.getVideresending().getAvsendere() %}
 						<span class="avsender label label-primary" id="visAvsenderArrangement_{{ avsender.getId() }}">
 							{{ avsender.getNavn() }}
