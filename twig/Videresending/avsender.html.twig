@@ -1,10 +1,12 @@
 {% set selectedIds = [] %}
 
 {% if arrangement.getType() == 'land' %}
-    {% set openVideresendingIds = arrangement.getVideresending().getAvsendere()|map((arrang) => arrang.getId()) %}
+    {% set arrangementerILista = avsendere|map((arrang) => arrang.getId()) %}
+
+    {# Alle arrangementer som har bedt om videresending #}
     {% for reqAvsender in arrangement.getRequestVideresendingerTil().getAll() %}
         {% set requestArrangement = reqAvsender.getArrangementFra() %}
-        {% if requestArrangement.getId() in openVideresendingIds %}
+        {% if requestArrangement.getId() in arrangementerILista %}
             {% set selectedIds = selectedIds|merge([requestArrangement.getId()]) %}
         {% endif %}
     {% endfor %}
