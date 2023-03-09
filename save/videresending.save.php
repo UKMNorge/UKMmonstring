@@ -53,6 +53,11 @@ if (isset($_POST['avsender']) && is_array($_POST['avsender'])) {
     }
 }
 
+// Ingen avsender, tømme listen av avsendere
+if($_POST['avsender'] == null) {
+    $arrangement->getVideresending()->nullstillAvsendere();
+}
+
 
 // Skal noen ting nomineres?
 if (isset($_POST['benyttNominasjon'])) {
