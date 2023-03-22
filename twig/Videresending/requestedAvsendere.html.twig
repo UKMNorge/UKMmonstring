@@ -9,7 +9,7 @@
                         {% set requestArrangement = reqAvsender.getArrangementFra() %}
                         <span class="avsender label label-{{ requestArrangement.getId() in openVideresendingIds ? 'success' : 'danger' }}" >
                         {{ requestArrangement.getNavn() }}
-                        <svg class="{{ requestArrangement.getId() in openVideresendingIds ? '' : 'hide' }}" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 18 21" style="fill: #fff ;transform: ;msFilter:;"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>
+                        <svg class="{{ requestArrangement.getId() in openVideresendingIds ? '' : 'hide' }}" xmlns="http://www.w3.org/2000/svg" width="17" height="12" viewBox="0 0 18 21" style="fill: #fff ;transform: ;msFilter:;"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>
                         </span>
                     {% endfor %}
                 </div>
