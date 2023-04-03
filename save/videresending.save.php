@@ -54,7 +54,7 @@ if (isset($_POST['avsender']) && is_array($_POST['avsender'])) {
 }
 
 // Ingen avsender, tømme listen av avsendere
-if($_POST['avsender'] == null) {
+if($_POST['type'] == 'monstring' && $_POST['avsender'] == null) {
     $arrangement->getVideresending()->nullstillAvsendere();
 }
 
