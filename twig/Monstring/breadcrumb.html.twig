@@ -1,0 +1,41 @@
+<div class="">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/wp-admin/user/">Min side</a></li>
+    {% if arrangement.getEierType() == 'fylke' %}
+        {% set fylke = arrangement.getFylke() %}
+        <li class="breadcrumb-item"><a data-toggle="tooltip" data-placement="bottom" data-original-title="Fylke" href="/wp-admin/user/admin.php?page=UKMnettverket_fylke&omrade={{ fylke.getId() }}&type=fylke">{{ fylke.getNavn() }}</a></li>
+    {% elseif arrangement.erFellesmonstring == false and arrangement.getEierType() == 'kommune' %}
+        {% set fylke = arrangement.getKommune().getFylke() %}
+        {% set kommune = arrangement.getKommune() %}
+
+        {# Fylke #}
+        <li class="breadcrumb-item"><a data-toggle="tooltip" data-placement="bottom" data-original-title="Fylke" href="/wp-admin/user/admin.php?page=UKMnettverket_fylke&omrade={{ fylke.getId() }}&type=fylke">{{ fylke.getNavn() }}</a></li>        
+        {# Kommune #}
+        <li class="breadcrumb-item"><a data-toggle="tooltip" data-placement="bottom" data-original-title="Kommune" href="/wp-admin/user/admin.php?page=UKMnettverket_kommune&omrade={{ kommune.getId() }}&type=kommune">{{ kommune.getNavn() }}</a></li>        
+    {% endif %}
+        <li class="breadcrumb-item active" aria-current="page">
+            <span class="badge badge-info selected-item">{{ arrangement.getNavn() }}</span>
+        </li>
+    </ol>
+    </nav>
+</div>
+
+<style>
+.breadcrumb {
+    margin-top: 25px;
+    margin-bottom: 0;
+    background: #fff;
+}
+.breadcrumb > li {
+    margin-bottom: 0;
+}
+.label-info, .badge-info {
+    background: #3a87ad;
+}
+</style>
+<script>
+jQuery(document).ready(function() {
+    jQuery("body").tooltip({ selector: '[data-toggle=tooltip]' });
+});
+</script>
