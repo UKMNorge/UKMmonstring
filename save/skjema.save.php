@@ -21,7 +21,7 @@ if( isset($_POST['slettede_sporsmal']) ) {
         try {        
             WriteSkjema::fjernSporsmalFraSkjema($sporsmal_id, $skjema->getId());
         } catch( Exception $e ) {
-			throw new("Klarte ikke å fjerne spørsmål. Systemet sa: ".$e->getMessage().". Kode: ".$e->getCode());
+			throw new Exception("Klarte ikke å fjerne spørsmål. Systemet sa: " . $e->getMessage() . " Kode: " . $e->getCode());
         }
     }    
 }
