@@ -180,6 +180,16 @@ if (isset($_POST['maksantall'])) {
     }
 }
 
+if($arrangement->getEierType() == 'land') {
+    if(isset($_POST['kvote_deltakere'])) {
+        $arrangement->getMeta('kvote_deltakere')->set((int)$_POST['kvote_deltakere']);
+        $arrangement->getMeta('kvote_ledere')->set((int)$_POST['kvote_ledere']);
+        $arrangement->getMeta('avgift_ordinar')->set((int)$_POST['avgift_ordinar']);
+        $arrangement->getMeta('avgift_subsidiert')->set((int)$_POST['avgift_subsidiert']);
+        $arrangement->getMeta('avgift_reise')->set((int)$_POST['avgift_reise']);
+    }
+}
+
 // LAGRE
 try {
     Write::save($arrangement);
