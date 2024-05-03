@@ -13,10 +13,21 @@ date_default_timezone_set('Europe/Oslo');
 
 require_once('UKM/Autoloader.php');
 $arrangement = new Arrangement(intval(get_option('pl_id')));
+$videresendtArrFylke = [];
 
 // Hvis arrangement er UKM Festivalen (type 'land'), opprett UKMFestival klasse
 if($arrangement->getEierType() == 'land') {
     $arrangement = new UKMFestival(intval(get_option('pl_id')));
+
+    foreach($arrangement->getVideresending()->getAvsendere() as $arrangAvsender) {
+		$arrang = $arrangAvsender->getArrangement();
+		$fylke = $arrang->getFylke();
+
+		$videresendtArrFylke[] = array('fylkeName' => $fylke->getNavn(), 
+            'arrangementName' => $arrang->getNavn(),
+            'festivalId' => $arrang->getId(),
+            'link' => $arrang->getLink());
+	}
 }
 
 
@@ -115,6 +126,7 @@ foreach (Typer::getAlleInkludertSkjulteTyper() as $type) {
 
 
 UKMmonstring::addViewData('pameldte_per_type', $antall_per_type);
+UKMmonstring::addViewData('videresendtArrFylke', $videresendtArrFylke);
 UKMmonstring::addViewData('fylker', Fylker::getAll());
 UKMmonstring::addViewData('innslag_liste', $innslag_arr); // Innslag liste og IKKE innslag type liste
 UKMmonstring::include('controller/dashboard.controller.php');

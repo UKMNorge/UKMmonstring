@@ -78,3 +78,25 @@
 		</p>
 	</div>
 </div>
+
+<div class="row" style="margin-top: 3em;">
+	<div class="col-12 col-sm-12">
+		<h4>Videresendte arrangementer fra fylker</h4>
+		<span style="margin-bottom: 8px !important; margin-top: 0 !important" class="notice notice-warning update-nag inline">Bare <b>superadministratorer</b> har full tilgang til alle arrangementer. Dersom du ikke har de nødvendige rettighetene og ønsker tilgang til et arrangement, ber vi deg vennligst kontakte oss på <a href="mailto:support@ukm.no">support@ukm.no</a></span>
+	</div>
+</div>
+
+
+<ol class="list-group">
+{% for fylkeArr in videresendtArrFylke %}
+	<li class="list-group-item">
+		<a href="{{ fylkeArr.link }}">
+			<div class="row">
+				<div class="col-6 col-sm-7">
+					<label>{{ fylkeArr.arrangementName }} - ({{ fylkeArr.fylkeName }})</label>
+				</div>
+			</div>
+		</a>
+	</li>
+{% endfor %}
+</ol>
