@@ -60,11 +60,11 @@
                 <li class="list-group-item kontaktperson">
                     {% if arrangement.getKontaktpersoner().getAntall() == 0 %}
                         Du har ingen kontaktpersoner.
-                        <a href="#" class="goTo" data-action="kontakt" data-id="new">
+                        <a href="?action=ny_kontaktperson" style="text-decoration: none;">
                             Start med å legge til den første
                         </a>
                     {% else %}
-                        <a href="#" class="goTo" data-action="kontakt" data-id="new" style="text-decoration: none;">
+                        <a href="?action=ny_kontaktperson" style="text-decoration: none;">
                             <span class="dashicons dashicons-plus"></span>
                             Legg til en ny kontaktperson
                         </a>
