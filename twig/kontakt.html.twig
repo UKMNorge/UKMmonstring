@@ -1,109 +1,140 @@
-<div class="container as-container">
-    <div class="as-card-1 as-padding-space-3 as-margin-top-space-4">
-
-        {% if tilgang == false %}
-            <h4>Du har ikke tilgang til å endre denne kontaktpersonen</h4>
-            <br>
-            <p>Kontakt personen tilhører <b>{{ omrade.getNavn() }}</b> og du har ikke tilgang til å endre denne kontaktpersonen.</p>
-            <p>Kontakt {{ omrade.getNavn() }} eller <a href="mailto:support@ukm.no">support</a> hvis du ønsker vil redigere denne kontaktpersonen</p>
-        {% else %}
-            
-
-            <form method="POST" action="?action=kontakt" enctype="multipart/form-data">
-
-                <input type="hidden" name="omradeId" value="{{ omrade.getForeignId() }}">
-                <input type="hidden" name="omradeType" value="{{ omrade.getType() }}">
-                <input type="hidden" id="okpId" name="okpId" value="{{ omradekontaktperson.getId() }}">
-                <input type="hidden" id="mobil" name="mobil" value="{{ omradekontaktperson.getMobil() }}">
-                <input type="hidden" id="deletedProfileImage" name="deletedProfileImage" value="false">
-
-                <div class="form-group">
-                    <label for="mobildisabled">Mobil</label>
-                    <input disabled class="form-control on-change-input-okp" id="mobildisabled" type="tel" name="mobildisabled" maxlength="8" required value="{{ omradekontaktperson.getMobil() }}"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="first_nafornavnme">Fornavn</label>
-                    <input class="form-control on-change-input-okp" id="fornavn" type="text" name="fornavn" required value="{{ omradekontaktperson.getFornavn() }}" autofocus/>
-                </div>
-
-                <div class="form-group">
-                    <label for="etternavn">Etternavn</label>
-                    <input class="form-control on-change-input-okp" id="etternavn" type="text" name="etternavn" required value="{{ omradekontaktperson.getEtternavn() }}"/>
-                </div>
-
-
-                <div class="form-group">
-                    <label for="epost">E-postadresse</label>
-                    <input class="form-control on-change-input-okp" id="epost" type="epost" name="epost" value="{{ omradekontaktperson.getEpost() }}"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="epost">Beskrivelse</label>
-                    <textarea class="form-control" id="beskrivelse" type="beskrivelse" name="beskrivelse" value="">{{ omradekontaktperson.getBeskrivelse() }}</textarea>
-                </div>
-
-                {% if omradekontaktperson.hasProfileImage() %}
-                    <div class="profilbilde form-group">
-                        <label for="epost">Profilbilde</label>
-                        <br>
-                        <div class="profile_picture">
-                            <img class="okp-img" src="{{ omradekontaktperson.getProfileImageUrl() }}" />
-                            <div class="slett-bilde as-margin-top-space-1">
-                                <button id="deleteProfileImageOkp" class="btn btn-send-form btn-sm btn-danger">Slett profilbilde</button>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                    <div id="lastOppBildeSection" class="last-opp-bilde {{ omradekontaktperson.hasProfileImage() ? 'hide' : '' }} ">
-                        <img class="okp-img" src="" />
-                        <div class="last-opp card card-body">
-                            Last opp profilbilde: <input id="profileImageInput" class="admin-profile-picture" accept="image/*" type="file" name="profile_picture" />
-                        </div>
-                        <div class="last-opp-vent hide card card-body">
-                            <span>Trykk lagre for å laste opp profilbildet!</span>
-                        </div>
-                    </div>
-                <br>
-                <div class="form-group">
-                    <button class="btn btn-send-form btn-sm btn-success" type="submit">Lagre</button>    
-                    {# <a href="?page=UKMnettverket_kommune&omrade={{ omrade.getForeignId() }}&type={{ omrade.getType() }}" class="btn btn-send-form btn-sm btn-info" type="submit">Tilbake</a>     #}
-                </div>
-            </form>
-
-        {% endif %}
-    </div>
-</div>
-
 <script>
-jQuery('#deleteProfileImageOkp').on('click', function(e) {
-    e.preventDefault();
-    jQuery('#deletedProfileImage').val('true');
-    jQuery(e.currentTarget).parent().parent().detach();
-    jQuery('#lastOppBildeSection').removeClass('hide');
-});
+    jQuery(document).on('change', '#velgAdmin', function(){
+        var selected = jQuery('#velgAdmin option:selected');
+        jQuery('#fornavn').val( selected.data('fornavn') );
+        jQuery('#etternavn').val( selected.data('etternavn') );
+        jQuery('#mobil').val( selected.data('mobil') );
+        jQuery('#epost').val( selected.data('epost') );
+        jQuery('#admin_id').val( selected.data('adminid') );
 
-jQuery('#profileImageInput').on('change', function(e) {
-    const file = event.target.files[0];
-
-    if(file) {
-        jQuery('.last-opp').addClass('hide');
-        jQuery('.last-opp-vent').removeClass('hide');
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            jQuery('.okp-img').attr('src', e.target.result);
+        if( selected.data('image') ) {
+            jQuery('#contact_image').attr('src', selected.data('image'));
+            jQuery('#contact_image_input').val( selected.data('image') );
         }
-        reader.readAsDataURL(file);
-    }
-});
-</script>
 
-<style>
-.okp-img {
-    max-width: 250px;
-    max-height: 250px;
-}
-.last-opp.card {
-    margin-top: 0;
-}
-</style>
+        jQuery('#skjema').slideDown();
+    });
+
+
+    jQuery(document).ready(function() {
+        UKMresources.optionCard.on('kontakt_type', function(valgt) {
+            if (valgt == 'administrator') {
+                jQuery('#velgAdmin').slideDown();
+                jQuery('#skjema').slideUp();
+            } else {
+                jQuery('#velgAdmin').slideUp();
+                jQuery('#skjema').slideDown();
+                jQuery('#kontaktskjema').trigger('reset');
+            }
+            jQuery('#omArrangementet').slideDown();
+        });
+    });
+</script>
+<form method="POST" action="index.php" id="kontaktskjema">
+    <input type="hidden" name="id" value="{{ GET('kontakt') }}"/>
+    <input type="hidden" name="type" value="kontakt" />
+    <input type="hidden" value="{{ kontakt.getAdminId() }}" id="admin_id" name="admin_id" />
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <h2>{{ kontakt is defined ? 'Rediger '~ kontakt.getNavn() : 'Legg til kontakt' }}</h2>
+                {% if GET('kontakt') != 'new' and kontakt.getAdminId() > 0 %}
+                    <p class="text-muted small mt-0">
+                        Denne kontaktpersonen er knyttet til administratoren "{{ arrangement.getEierOmrade().getAdministratorer().get( kontakt.getAdminId() ).getNavn() }}"
+                    </p>
+                {% endif %}
+                {% include "wp_modul.flashbag.html.twig" %}
+            </div>
+        </div>
+
+        {% if GET('kontakt') == 'new' %}
+            <div class="row">
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="optionCard card selected" data-group="kontakt_type" data-value="administrator">
+                        <div class="dashicons dashicons-businessperson"></div>
+                        <div class="header">Legg til administrator</div>
+                        <p>
+                            Legg til en eller flere av administratorene for {{ arrangement.getEierOmrade().getNavn() }}.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="optionCard card" data-group="kontakt_type" data-value="ny">
+                        <div class="dashicons dashicons-universal-access"></div>
+                        <div class="header">Legg til ny kontaktperson</div>
+                        <p>
+                            For kontaktpersoner som ikke er administratorer.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="velgAdmin">
+                <div class="col-12 col-sm-12 mt-5">
+                    <select class="form-control">
+                        <option value="0" disabled selected>Velg administrator</option>
+                        {% for admin in arrangement.getEierOmrade().getAdministratorer().getAll()|filter( admin => admin.getId() not in admin_kontakter) %}
+                            {% set kontakt = admin.getKontaktperson() %}
+                            <option data-adminid="{{admin.getId()}}" data-fornavn="{{kontakt.getFornavn()}}" data-etternavn="{{ kontakt.getEtternavn()}}" data-mobil="{{kontakt.getTelefon()}}" data-epost="{{kontakt.getEpost()}}" data-image="{{kontakt.getBilde()}}">{{ kontakt.getNavn() }} {{ kontakt.getNavn() != admin.getNavn() ? '('~ admin.getNavn() ~')'}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        {% endif %}
+        
+        <div class="row" id="skjema" {{ GET('kontakt') == 'new' ? 'style="display:none;"'}}>
+            <div class="col-12 col-sm-6">
+                <div class="form-group">
+                    <label>Fornavn</label>
+                    <input type="text" class="form-control" id="fornavn" name="fornavn" value="{{ kontakt.getFornavn() }}" autofocus />
+                </div>
+                <div class="form-group">
+                    <label>Etternavn</label>
+                    <input type="text" class="form-control" id="etternavn" name="etternavn" value="{{ kontakt.getEtternavn() }}" />
+                </div>
+
+                <div class="form-group">
+                    <label>Mobil</label>
+                    <input type="tel" class="form-control" id="mobil" name="telefon" value="{{ kontakt.getTelefon() }}" maxlength="8" />
+                </div>
+            
+                <div class="form-group">
+                    <label>E-post</label>
+                    <input type="text" class="form-control" id="epost" name="epost" value="{{ kontakt.getEpost() }}" />
+                </div>
+
+                <div class="form-group">
+                    <label>Tittel</label>
+                    <input type="text" class="form-control" id="tittel" name="tittel" value="{{ kontakt.getTittel() }}" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Facebook-profil</label>
+                    <input type="url" class="form-control" id="facebook" name="facebook" value="{{ kontakt.getFacebook() }}" />
+                    <p class="text-muted">
+                    Gå inn på din egen facebook-profil, og kopier adresselinjen. Adressen skal se ca slik ut:<br />
+                    https://facebook.com/hans.hansen
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <p>&nbsp;</p>
+                <img src="{{kontakt.getBilde()|replace({'http:':'https:'})}}" class="thumbnail" id="contact_image" width="250" />
+                <input type="hidden" value="{{kontakt.getBilde()}}" name="image" id="contact_image_input" />
+                <p class="text-muted">Det er sterkt anbefalt å laste opp bilde, <br />da det senker terskelen for å ta kontakt</p>
+                <button class="btn btn-ukm btn-xs btn-primary" id="imageedit">Endre bilde</button>
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <button type="submit" class="btn btn-ukm btn-success" id="formSubmit">Lagre</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+ </form>
+ 
