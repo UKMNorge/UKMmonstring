@@ -6,6 +6,7 @@
             <ol class="list-group">
                 <li class="list-group-item" id="kontaktpersoner_compact">
                     {% for kontakt in arrangement.getKontaktpersoner().getAll() %}
+                        {% set identifikator = 'okpId=' ~ kontakt.getId() %}
                         <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 kontaktperson" id="visKontakt_{{ kontakt.getId()}}">
                             {% if kontakt.getBilde() is empty %}
                                 <span class="dashicons dashicons-admin-users"></span>
@@ -13,7 +14,7 @@
                                 <img src="{{ kontakt.getBilde() }}" width="50" style="min-height: 50px;" class="img img-circle"/>
                             {% endif %}
                             <br/>
-                            <a href="#" class="goTo" data-action="kontakt" data-id="{{ kontakt.getId() }}">
+                            <a href="?action=kontakt&{{ identifikator }}">
                                 {{ kontakt.getNavn() }}
                             </a>
                             <br/>
