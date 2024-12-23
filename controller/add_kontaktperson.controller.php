@@ -15,8 +15,8 @@ $arrangement = new Arrangement(intval((get_option('pl_id'))));
 $eierOmrade = $arrangement->getEierOmrade();
 $arrangementOmrade = new Omrade('monstring', $arrangement->getId());
 
-$tilgang = 'kommune_eller_fylke';
-$tilgangAttribute = $omradeId;
+$tilgang = $eierOmrade->getType() == 'kommune' ? 'kommune_eller_fylke' : 'fylke';
+$tilgangAttribute = $eierOmrade->getForeignId();
 
 // For å legge til en kontaktperson i området, trenger ikke tilgang til området siden alle kan bruke same kontaktpersoner
 $foundMobil = HandleAPICallWithAuthorization::getArgumentBeforeInit('foundMobil', 'POST');
