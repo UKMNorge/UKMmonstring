@@ -18,13 +18,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tilgang = 'kommune_eller_fylke'; // Har tilgang til kommunen eller fylket
     $tilgangAttribute = $omrade->getForeignId();
 
-    $handleCall = new HandleAPICallWithAuthorization(['okpId', 'fornavn', 'mobil', 'etternavn'], ['epost', 'beskrivelse', 'deletedProfileImage'], ['POST'], false, false, $tilgang, $tilgangAttribute);
+    $handleCall = new HandleAPICallWithAuthorization(['okpId', 'fornavn', 'etternavn'], ['mobil', 'epost', 'beskrivelse', 'deletedProfileImage'], ['POST'], false, false, $tilgang, $tilgangAttribute);
 
     $id = $handleCall->getArgument('okpId');
     $fornavn = $handleCall->getArgument('fornavn');
     $etternavn = $handleCall->getArgument('etternavn');
-    $mobil = $handleCall->getArgument('mobil');
+
+    $mobil = $handleCall->getOptionalArgument('mobil');
     $epost = $handleCall->getOptionalArgument('epost');
+    
+    if(empty($mobil) && empty($epost)) {
+        HandleAPICallWithAuthorization::sendError('Mobil eller epost må fylles ut', 400);
+    }
+
     $beskrivelse = $handleCall->getOptionalArgument('beskrivelse') ?? '';
     $deletedProfileImage = $handleCall->getOptionalArgument('deletedProfileImage') == 'true' ? true : false;
 
