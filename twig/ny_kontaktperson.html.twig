@@ -68,6 +68,8 @@
 <script>
     disableButtons();
     disableFields();
+    var currentMobil = '';
+
     
     var $okpUser = null;
     jQuery('#mobil').on('load', function () {
@@ -77,7 +79,11 @@
     });
 
     jQuery('#mobil').on('keyup change', function() {
-        checkUserExist();
+        let mobil = jQuery('#mobil').val();
+        if(mobil != currentMobil) {
+            currentMobil = mobil;
+            checkUserExist();
+        }
     });
 
     // Event
