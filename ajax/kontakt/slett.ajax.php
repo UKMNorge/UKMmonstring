@@ -8,18 +8,18 @@ use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Kontaktperson\Kontaktperson;
 use UKMNorge\Arrangement\Kontaktperson\Write as WriteKontaktperson;
 use UKMNorge\Arrangement\Write;
+use UKMNorge\Nettverk\Omrade;
+use UKMNorge\Nettverk\OmradeKontaktpersoner;
+use UKMNorge\Nettverk\WriteOmradeKontaktperson;
 
 require_once('UKM/Autoloader.php');
 
 try {
     $arrangement = new Arrangement(get_option('pl_id'));
-
-    $kontakt = new Kontaktperson($_POST['id']);
-    $arrangement->getKontaktpersoner()->fjern($kontakt);
-    Write::save($arrangement);
-    if (!is_numeric($kontakt->getAdminId())) {
-        WriteKontaktperson::delete($kontakt);
-    }
+    $okp = OmradeKontaktpersoner::getById($_POST['id']);
+    
+    $arrangementOmrade = new Omrade('monstring', $arrangement->getId());
+    WriteOmradeKontaktperson::removeFromOmrade($okp, $arrangementOmrade);
 
     UKMmonstring::addResponseData('success', true);
 } catch (Exception $e) {
