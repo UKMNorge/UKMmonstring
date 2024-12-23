@@ -6,6 +6,7 @@
             <ol class="list-group">
                 <li class="list-group-item" id="kontaktpersoner_compact">
                     {% for kontakt in arrangement.getKontaktpersoner().getAll() %}
+                        {% set identifikator = 'okpId=' ~ kontakt.getId() %}
                         <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 kontaktperson" id="visKontakt_{{ kontakt.getId()}}">
                             {% if kontakt.getBilde() is empty %}
                                 <span class="dashicons dashicons-admin-users"></span>
@@ -13,7 +14,7 @@
                                 <img src="{{ kontakt.getBilde() }}" width="50" style="min-height: 50px;" class="img img-circle"/>
                             {% endif %}
                             <br/>
-                            <a href="#" class="goTo" data-action="kontakt" data-id="{{ kontakt.getId() }}">
+                            <a href="?action=kontakt&{{ identifikator }}">
                                 {{ kontakt.getNavn() }}
                             </a>
                             <br/>
@@ -33,7 +34,7 @@
                 {% for kontakt in arrangement.getKontaktpersoner().getAll() %}
                     <li class="list-group-item kontaktperson" data-id="{{ kontakt.getId() }}" id="kontakt_{{ kontakt.getId()}}">
                         <div class="float-right pull-right">
-                            <a href="#" data-action="kontakt" data-id="{{ kontakt.getId() }}" class="goTo btn btn-ukm btn-xs btn-primary">rediger</a>
+                            <a class="btn btn-ukm btn-xs btn-primary" href="?action=kontakt&okpId={{ kontakt.getId() }}">rediger</a>
                             {% if not kontakt.erLast() %}
                                 <a href="#" class="btn btn-ukm btn-xs btn-danger slettKontaktperson">fjern</a>
                             {% endif %}
@@ -59,11 +60,11 @@
                 <li class="list-group-item kontaktperson">
                     {% if arrangement.getKontaktpersoner().getAntall() == 0 %}
                         Du har ingen kontaktpersoner.
-                        <a href="#" class="goTo" data-action="kontakt" data-id="new">
+                        <a href="?action=ny_kontaktperson" style="text-decoration: none;">
                             Start med å legge til den første
                         </a>
                     {% else %}
-                        <a href="#" class="goTo" data-action="kontakt" data-id="new" style="text-decoration: none;">
+                        <a href="?action=ny_kontaktperson" style="text-decoration: none;">
                             <span class="dashicons dashicons-plus"></span>
                             Legg til en ny kontaktperson
                         </a>
