@@ -39,7 +39,7 @@ else {
         HandleAPICallWithAuthorization::sendError('Mobilnummeret må være 8 siffer og kun tall', 400);
     }
 
-    $okp = new OmradeKontaktperson(['id' => -1, 'fornavn' => $fornavn, 'etternavn' => $etternavn, 'mobil' => $mobil, 'epost' => $epost, 'beskrivelse' => $beskrivelse, 'eier_omrade_id' => $eierOmrade->getForeignId(), 'eier_omrade_type' => $eierOmrade->getType()]);
+    $okp = new OmradeKontaktperson(['id' => -1, 'fornavn' => $fornavn, 'etternavn' => $etternavn, 'mobil' => $mobil, 'epost' => $epost, 'beskrivelse' => $beskrivelse, 'eier_omrade_id' => $arrangement->getId(), 'eier_omrade_type' => 'monstring']);
     // Upload profile image
     WriteOmradeKontaktperson::uploadProfileImage($_FILES['profile_picture'], $okp, false);
 
