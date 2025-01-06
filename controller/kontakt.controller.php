@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $arrangement = new Arrangement(intval((get_option('pl_id'))));
     $omrade = $arrangement->getEierOmrade();
 
-    $tilgang = 'kommune_eller_fylke'; // Har tilgang til kommunen eller fylket
-    $tilgangAttribute = $omrade->getForeignId();
+    $tilgang = 'arrangement_i_kommune_fylke'; // Har tilgang til arrangement eller kommuner eller fylket arrangementet er opprettet i
+    $tilgangAttribute = $arrangement->getId();
 
     $handleCall = new HandleAPICallWithAuthorization(['okpId', 'fornavn', 'etternavn'], ['epost', 'beskrivelse', 'deletedProfileImage'], ['POST'], false, false, $tilgang, $tilgangAttribute);
 

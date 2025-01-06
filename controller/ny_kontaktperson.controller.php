@@ -10,8 +10,8 @@ require_once('UKM/Autoloader.php');
 $arrangement = new Arrangement(intval((get_option('pl_id'))));
 $eierOmrade = $arrangement->getEierOmrade();
 
-$tilgang = $eierOmrade->getType() == 'kommune' ? 'kommune_eller_fylke' : 'fylke';
-$tilgangAttribute = $eierOmrade->getForeignId();
+$tilgang = 'arrangement_i_kommune_fylke'; // Har tilgang til arrangement eller kommuner eller fylket arrangementet er opprettet id
+$tilgangAttribute = $arrangement->getId();
 
 $handleCall = new HandleAPICallWithAuthorization([], [], ['GET'], false, false, $tilgang, $tilgangAttribute);
 
