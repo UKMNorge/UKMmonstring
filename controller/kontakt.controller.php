@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $beskrivelse = $handleCall->getOptionalArgument('beskrivelse') ?? '';
     $deletedProfileImage = $handleCall->getOptionalArgument('deletedProfileImage') == 'true' ? true : false;
+    $epost = $handleCall->getOptionalArgument('epost');
 
     try {
         $okp = OmradeKontaktpersoner::getById($id);
