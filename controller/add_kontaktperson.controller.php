@@ -19,7 +19,14 @@ $tilgang = 'arrangement_i_kommune_fylke'; // Har tilgang til arrangement eller k
 $tilgangAttribute = $arrangement->getId();
 
 // For å legge til en kontaktperson i området, trenger ikke tilgang til området siden alle kan bruke same kontaktpersoner
-$foundMobil = HandleAPICallWithAuthorization::getArgumentBeforeInit('foundMobil', 'POST');
+$foundMobil = null;
+try {
+    $foundMobil = HandleAPICallWithAuthorization::getArgumentBeforeInit('foundMobil', 'POST');
+} catch(Exception $e) {
+    // Kan skje når brukeren går tilbake, da sendes ikke foundMobil
+    echo '<script>window.location.href = "?";</script>';
+    exit();
+}
 if($foundMobil != 'null') {
     $okp = OmradeKontaktpersoner::getByMobil($foundMobil);
     connectOkpToOmrade($okp, $arrangementOmrade);
