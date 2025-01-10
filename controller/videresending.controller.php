@@ -85,7 +85,9 @@ switch ($arrangement->getType()) {
         $andre_arrangement = [];
         foreach (Aktuelle::getAllCollection()->getAll() as $mottaker) {
             if ($mottaker->getEierType() == 'fylke' && $mottaker->erMonstring()) {
-                $fylke_monstring[] = $mottaker;
+                if($mottaker->getSesong() > date('Y')-2) { // Henter arrangementer i nåværende og forrige sesonger (år)
+                    $fylke_monstring[] = $mottaker;
+                }
             } elseif ($mottaker->getEierType() == 'fylke') {
                 $fylke_arrangement[] = $mottaker;
             } else {
