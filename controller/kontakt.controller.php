@@ -52,6 +52,7 @@ else {
     if(!AccessControlArrSys::hasOmradeAccess($omrade)) {
         UKMnettverket::addViewData('omrade', $omrade);
         UKMnettverket::addViewData('tilgang', false);
+        UKMnettverket::addViewData('omradekontaktperson', $okp);
     }
     else {
         showUser($okp);

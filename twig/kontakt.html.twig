@@ -4,8 +4,31 @@
         {% if tilgang == false %}
             <h3 class="as-text-center">Du har ikke tilgang!</h3>
             <br>
-            <p class="as-text-center">Kontaktpersonen er tilknyttet <b>{{ omrade.getNavn() }}</b>, og du har ikke tilgang til å redigere informasjonen.
+            <p class="as-text-center">{{ omradekontaktperson.getFornavn() }} er tilknyttet <b>{{ omrade.getNavn() }}</b>, og du har ikke tilgang til å redigere informasjonen.
             <p class="as-text-center">For å gjøre endringer, vennligst kontakt <b>{{ omrade.getNavn() }}</b> eller <a href="mailto:support@ukm.no">support</a></p>
+
+            <div class="as-margin-top-space-6">
+                <h4>Vil du overta {{ omradekontaktperson.getFornavn() }} {{ omradekontaktperson.getEtternavn() }} ({{ omradekontaktperson.getMobil() }})?</h4>
+                <div class="as-margin-top-space-1">
+                    <p>Når du overtar en kontaktperson, blir kontaktpersonen tilknyttet ditt fylke, din kommune eller ditt arrangement, og du får muligheten til å redigere informasjonen deres.</p>
+                </div>
+                
+                <div class="warning-type vue-componment-notification-message nosh-impt as-card-2 as-padding-space-2 as-margin-top-space-2">
+                    <div class="as-padding-bottom-space-1">
+                        <h5 class="title">Viktig å være oppmerksom på:</h5>
+                    </div> 
+                    <span class="description nop">En kontaktperson kan være tilknyttet flere steder. Eventuelle endringer du gjør vil gjenspeiles på alle steder der kontaktpersonen er i bruk. Sørg derfor for at oppdateringene er riktige og relevante for alle sammenhenger.</span>
+                    <div class="as-margin-top-space-1">
+                        <p><b>Merk: Denne prosessen vil bli loggført. Dette gjør det mulig å spore hvem som har utført handlingen senere.</b></p>
+                    </div>
+
+                </div>
+
+                <div class="as-margin-top-space-2">
+                    <button id="overtaKontakt" okpid="{{ omradekontaktperson.getId() }}" class="btn btn-send-form btn-sm btn-warning">Overta kontaktperson</button>
+                </div>
+            </div>
+            
         {% else %}
             
 
@@ -96,6 +119,54 @@ jQuery('#profileImageInput').on('change', function(e) {
         reader.readAsDataURL(file);
     }
 });
+
+jQuery(document).on('click', "#overtaKontakt", function (e) {
+    e.preventDefault();
+    var result = confirm('Er du sikker på at du vil ta over denne kontaktpersonen?');
+
+    if (result) {
+        var id = jQuery(this).attr('okpid');
+        var DeleteContact = UKMresources.Request({
+            action: 'UKMmonstring',
+            controller: 'overta',
+            module: 'kontakt',
+            containers: {
+                fatalError: '#status',
+                main: '#arrangementForm'
+            },
+            handleSuccess: (response) => {
+                // refresh current page
+                window.location.href = `?action=kontakt&okpId=${id}`;
+            },
+            handleError: (response) => {
+                alert('Noe gikk galt. Vennligst kontakt support');
+            }
+        }).do({
+            id: id
+        });
+    }
+    return false;
+});
+
+// function overtaKontakt(omradeKontaktpersonId) {
+//     // Run ajax call
+//     jQuery.ajax({
+//         url: '/wp-admin/admin-ajax.php/',
+//         method: 'POST',
+//         data: {
+//             action: overta
+//             id: omradeKontaktpersonId,
+//         },
+//         success: function(response) {
+//             alert('aaa');
+//             if(response.success) {
+//                 window.location.href = '?';
+//             } else {
+//                 alert('Noe gikk galt. Vennligst prøv igjen.');
+//             }
+//         }
+//     });
+// }
 </script>
 
 <style>
@@ -105,5 +176,9 @@ jQuery('#profileImageInput').on('change', function(e) {
 }
 .last-opp.card {
     margin-top: 0;
+}
+.vue-componment-notification-message.warning-type {
+    background: var(--as-color-primary-warning-lightest);
+    border: 2px solid var(--as-color-primary-warning-light);
 }
 </style>
