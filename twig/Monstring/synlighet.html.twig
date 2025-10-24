@@ -96,6 +96,25 @@
 					</div>
 				</div>
 			</li>
+
+			<!-- GUI type -->
+			<li class="list-group-item" style="position: relative;">
+				<span id="newBadge"></span>
+				<div class="row">
+					<div class="col-xs-7">
+						<label>Hvordan arrangementet skal vises for publikum?</label>
+						<div class="mt-0 help text-muted small">
+							<span class="muted">Velg “Enkelt” for en ren og oversiktlig visning, eller “Utvidet” for en mer utfyllende presentasjon av arrangementet.</span>
+						</div>
+					</div>
+					<div class="col-xs-5" align="right">
+						<div class="btn-group radioButtons" data-name="gui_type">
+							<button type="button" class="btn btn-default {{ arrangement.getGuiType() != null and arrangement.getGuiType() == 1 ? 'selected' }}" value="true">&nbsp; Utvidet &nbsp;</button>
+							<button type="button" class="btn btn-default {{ arrangement.getGuiType() == null or arrangement.getGuiType() != 1 ? 'selected' }}" value="false">&nbsp; Enkelt &nbsp;</button>
+						</div>
+					</div>
+				</div>
+			</li>
 		</ol>
 		<div class="mt-0 hvisVideresending" style="{{display_hvisVideresending}}" align="right">
 			<a href="#" id="editVideresending" class="btn btn-ukm btn-xs btn-primary" style="margin-top: -.8em;">rediger detaljer for videresending</a>
