@@ -180,6 +180,11 @@ if (isset($_POST['maksantall'])) {
     }
 }
 
+// Utvidet GUI-type
+if(isset($_POST['gui_type'])) {
+    $arrangement->setGuiType($_POST['gui_type'] == 'true' ? 1 : 0);
+}
+
 if($arrangement->getEierType() == 'land') {
     if(isset($_POST['kvote_deltakere'])) {
         $arrangement->getMeta('kvote_deltakere')->set((int)$_POST['kvote_deltakere']);
