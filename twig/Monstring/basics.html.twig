@@ -21,6 +21,16 @@
 </div>
 
 <div class="row">
+	<div class="col-12 col-sm-12 mt-3">
+		<div class="form-group">
+			<label>Beskrivelse</label>
+			<textarea class="form-control" name="beskrivelse" placeholder="Beskrivelse av arrangementet">{{ arrangement.getBeskrivelse() }}</textarea>
+			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Beskrivelse vises på nettsiden</p>
+		</div>
+	</div>
+</div>
+
+<div class="row">
 	<div class="col-12 col-sm-7 hvisSynlig" style="{{display_hvisSynlig}}">
 		{% for key, value in arrangement.getGoogleMap().getPOSTValues() %}
 			<input type="hidden" name="location_{{key}}" id="location-{{key}}" value="{{value}}"/>

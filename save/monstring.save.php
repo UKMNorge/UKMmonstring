@@ -82,6 +82,11 @@ if (isset($_POST['synlig'])) {
     $arrangement->setSynlig($_POST['synlig'] == 'true');
 }
 
+if (isset($_POST['beskrivelse'])) {
+    $arrangement->setBeskrivelse($_POST['beskrivelse']);
+}
+
+
 // Synlighet av deltakere
 if (isset($_POST['deltakeresynlig'])) {
     $arrangement->setDeltakereSynlig($_POST['deltakeresynlig'] == 'true');
