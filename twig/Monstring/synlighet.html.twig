@@ -98,8 +98,9 @@
 			</li>
 
 			<!-- GUI type -->
+			{# Kun mønstring har mulighet til å velge utvidet GUI type #}
+			{% if arrangement.erMonstring() %}
 			<li class="list-group-item" style="position: relative;">
-				<span id="newBadge"></span>
 				<div class="row">
 					<div class="col-xs-7">
 						<label>Hvordan arrangementet skal vises for publikum?</label>
@@ -115,6 +116,9 @@
 					</div>
 				</div>
 			</li>
+			{% endif %}
+			
+
 		</ol>
 		<div class="mt-0 hvisVideresending" style="{{display_hvisVideresending}}" align="right">
 			<a href="#" id="editVideresending" class="btn btn-ukm btn-xs btn-primary" style="margin-top: -.8em;">rediger detaljer for videresending</a>
