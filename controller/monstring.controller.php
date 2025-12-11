@@ -129,4 +129,6 @@ UKMmonstring::addViewData('pameldte_per_type', $antall_per_type);
 UKMmonstring::addViewData('videresendtArrFylke', $videresendtArrFylke);
 UKMmonstring::addViewData('fylker', Fylker::getAll());
 UKMmonstring::addViewData('innslag_liste', $innslag_arr); // Innslag liste og IKKE innslag type liste
+UKMmonstring::addViewData('bilde_banner', get_option('UKM_banner_image'));
+
 UKMmonstring::include('controller/dashboard.controller.php');

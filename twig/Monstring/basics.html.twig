@@ -22,6 +22,29 @@
 
 <div class="row">
 	<div class="col-12 col-sm-12 mt-3">
+		<div class="form-group form-group-lg">
+			<label>Forsidebilde</label>
+
+			<div>
+				<input type="hidden" id="banner_image_id_input" name="banner_image_id" value="{{ image_id }}"/>
+				<input type="hidden" id="arrangement_banner_image_input" name="banner_image" value="{{ bilde_banner }}"/>
+				<button type="button" class="btn btn-ukm btn-primary btn-sm" id="banner_image_select">Velg bilde</button>
+				{% if bilde_banner is not empty %}
+					&nbsp;
+					<button type="button" class="btn btn-ukm btn-danger btn-sm" id="banner_image_remove">Fjern bilde</button>
+				{% endif %}
+				<div class="clearfix"></div>
+			</div>
+			<div class="forside-detaljer" {{ bilde_banner is empty ? 'style="display:none;"' }}>
+				<img id="arrangementBannerImage" src="{{ bilde_banner }}" />
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12 col-sm-12 mt-3">
 		<div class="form-group">
 			<label>Beskrivelse</label>
 			<textarea class="form-control" name="beskrivelse" placeholder="Beskrivelse av arrangementet">{{ arrangement.getBeskrivelse() }}</textarea>
@@ -91,4 +114,54 @@
 </div>
 
 
+<style>
+#arrangementBannerImage {
+	margin-top: 10px;
+	max-width: 400px;
+	height: auto;
+}
+</style>
+
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key={{ GOOGLE_API_KEY }}" async defer></script>
+
+<script>
+jQuery(document).on('click', '#banner_image_select', function(e) {
+    var custom_uploader = wp.media({
+            title: 'Velg banner-bilde',
+            button: {
+                text: 'Bruk dette bildet'
+            },
+            multiple: false // Set this to true to allow multiple files to be selected
+        })
+        .on('select', function() {
+            var attachment = custom_uploader.state().get('selection').first().toJSON();
+
+            //console.log( attachment );
+            var image = attachment.sizes.large;
+            if (image == null || image == undefined) {
+                image = attachment.sizes.full;
+            }
+
+			console.log('imageBB');
+			console.log(image);
+
+            jQuery('.forside-header').css('background-image', 'url(' + image.url + ')');
+            
+			jQuery('.forside-detaljer').slideDown();
+            jQuery('#arrangementBannerImage').attr('src', image.url);
+            jQuery('#arrangement_banner_image_input').val(image.url);
+            jQuery('#banner_image_id_input').val(attachment.id);
+        })
+        .open();
+});
+
+jQuery(document).on('click', '#banner_image_remove', function() {
+    jQuery('.forside-header').attr('background-image', false);
+    jQuery('.forside-detaljer').slideUp();
+    jQuery('#arrangement_banner_image_input').val(false);
+
+    jQuery('#banner_image_remove').hide();
+});
+
+
+</script>
