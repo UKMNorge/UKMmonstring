@@ -44,19 +44,21 @@ class UKMmonstring extends Modul
     {
         try {
             $arrangement = static::getArrangement();
-            $page = add_submenu_page(
-                'index.php',
-                'Videresending',
-                'Videresending',
-                'editor',
-                'UKMarrangement_videresending',
-                ['UKMMonstring', 'renderAdminVideresending'],
-                40
-            );
-            add_action(
-                'admin_print_styles-'.$page,
-                ['UKMmonstring', 'scripts_and_styles']
-            );
+            if($arrangement->getType() != 'kommune') {
+                $page = add_submenu_page(
+                    'index.php',
+                    'Videresending',
+                    'Motta videresending',
+                    'editor',
+                    'UKMarrangement_videresending',
+                    ['UKMMonstring', 'renderAdminVideresending'],
+                    40
+                );
+                add_action(
+                    'admin_print_styles-'.$page,
+                    ['UKMmonstring', 'scripts_and_styles']
+                );
+            }
         } catch( Exception $e ) {
             // Do nothing: skal ikke ha den uansett da
         }
