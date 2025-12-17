@@ -58,8 +58,8 @@
 	<div class="col-12 col-sm-12 mt-3">
 		<div class="form-group">
 			<label>Info til deltakere</label>
-			<textarea class="form-control" name="info_til_deltakere" placeholder="Viktig beskjed, en lenke eller noe annet">{{ arrangement.getInfoTilDeltakere() }}</textarea>
-			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Info til deltakere vises kun når deltakeren er meld på i påmeldingssystemet</p>
+			<textarea class="form-control" name="info_til_deltakere" placeholder="Viktig informasjon, lenker eller beskjeder til deltakerne">{{ arrangement.getInfoTilDeltakere() }}</textarea>
+			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Info til deltakere vises kun når deltakerne er meldt på i påmeldingssystemet</p>
 		</div>
 	</div>
 </div>
@@ -72,7 +72,7 @@
 		<div class="form-group">
 			<label>Hvor skal arrangementet være?</label>
 			<input id="searchMapInput" type="text" class="form-control mapControls" name="sted" value="{{ arrangement.getSted() }}"/>
-			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Stedet må være søkbart i google maps, og du kan både bruke navn og adresser.</p>
+			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Stedet må være søkbart i Google Maps, og du kan både bruke navn og adresser.</p>
 		</div>
 	</div>
 
