@@ -105,6 +105,9 @@ if (isset($_POST['beskrivelse'])) {
     $arrangement->setBeskrivelse($_POST['beskrivelse']);
 }
 
+if (isset($_POST['info_til_deltakere'])) {
+    $arrangement->setInfoTilDeltakere($_POST['info_til_deltakere']);
+}
 
 // Synlighet av deltakere
 if (isset($_POST['deltakeresynlig'])) {

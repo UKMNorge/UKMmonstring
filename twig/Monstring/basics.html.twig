@@ -55,6 +55,16 @@
 </div>
 
 <div class="row">
+	<div class="col-12 col-sm-12 mt-3">
+		<div class="form-group">
+			<label>Info til deltakere</label>
+			<textarea class="form-control" name="info_til_deltakere" placeholder="Viktig beskjed, en lenke eller noe annet">{{ arrangement.getInfoTilDeltakere() }}</textarea>
+			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Info til deltakere vises kun når deltakeren er meld på i påmeldingssystemet</p>
+		</div>
+	</div>
+</div>
+
+<div class="row">
 	<div class="col-12 col-sm-7 hvisSynlig" style="{{display_hvisSynlig}}">
 		{% for key, value in arrangement.getGoogleMap().getPOSTValues() %}
 			<input type="hidden" name="location_{{key}}" id="location-{{key}}" value="{{value}}"/>
