@@ -57,9 +57,10 @@
 <div class="row">
 	<div class="col-12 col-sm-12 mt-3">
 		<div class="form-group">
-			<label>Info til deltakere</label>
-			<textarea class="form-control" name="info_til_deltakere" placeholder="Viktig informasjon, lenker eller beskjeder til deltakerne">{{ arrangement.getInfoTilDeltakere() }}</textarea>
-			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Info til deltakere vises kun når deltakerne er meldt på i påmeldingssystemet</p>
+			<label>Info som vises på deltakernes "min side" når de har meldt seg på</label>
+			<textarea class="form-control" name="info_til_deltakere" placeholder="Viktig informasjon eller beskjeder til deltakerne">{{ arrangement.getInfoTilDeltakere() }}</textarea>
+			<input id="lenkeTilDeltakere" class="form-control" name="lenke_til_deltakere" type="text" placeholder="Lenke til deltakerne" value="{{ arrangement.getLenkeTilDeltakere() }}"/>
+			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Her kan du legge ut informasjon som deltakerne trenger. Teksten kan oppdateres etter som arrangementet nærmer seg. Du kan også legge inn en hyperlenke</p>
 		</div>
 	</div>
 </div>
@@ -69,7 +70,7 @@
 		{% for key, value in arrangement.getGoogleMap().getPOSTValues() %}
 			<input type="hidden" name="location_{{key}}" id="location-{{key}}" value="{{value}}"/>
 		{% endfor %}
-		<div class="form-group">
+		<div class="form-group as-margin-top-space-2">
 			<label>Hvor skal arrangementet være?</label>
 			<input id="searchMapInput" type="text" class="form-control mapControls" name="sted" value="{{ arrangement.getSted() }}"/>
 			<p class="text-muted" style="margin-top: -.6em; padding-left: .2em">Stedet må være søkbart i Google Maps, og du kan både bruke navn og adresser.</p>

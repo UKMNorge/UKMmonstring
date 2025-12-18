@@ -109,6 +109,10 @@ if (isset($_POST['info_til_deltakere'])) {
     $arrangement->setInfoTilDeltakere($_POST['info_til_deltakere']);
 }
 
+if (isset($_POST['lenke_til_deltakere'])) {
+    $arrangement->setLenkeTilDeltakere($_POST['lenke_til_deltakere']);
+}
+
 // Synlighet av deltakere
 if (isset($_POST['deltakeresynlig'])) {
     $arrangement->setDeltakereSynlig($_POST['deltakeresynlig'] == 'true');
