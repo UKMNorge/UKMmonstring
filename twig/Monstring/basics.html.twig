@@ -132,6 +132,23 @@
 	max-width: 400px;
 	height: auto;
 }
+
+/* Google Places autocomplete – tilpasset Bootstrap input */
+#searchMapInputWidget gmp-place-autocomplete {
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+
+	border: 1px solid #ced4da;
+	border-radius: .375rem;
+	background: #fff;
+
+	font-family: inherit;
+	font-size: 1rem;
+}
+#searchMapInputWidget {
+	height: 38px;
+}
 </style>
 
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key={{ GOOGLE_API_KEY }}" async defer></script>
