@@ -1,22 +1,80 @@
 /* KART-CONFIG */
 function initMap() {
-    var autocomplete = new google.maps.places.Autocomplete(document.getElementById('searchMapInput'));
+    // 1) Lag en container for ny widget rett ved siden av eksisterende input
+    //    (vi beholder #searchMapInput for backend, men skjuler det og fyller det ved valg)
+    let widgetHost = document.getElementById('searchMapInputWidget');
+    if (!widgetHost) {
+        const oldInput = document.getElementById('searchMapInput');
+        widgetHost = document.createElement('div');
+        widgetHost.id = 'searchMapInputWidget';
+        oldInput.parentNode.insertBefore(widgetHost, oldInput);
 
-    autocomplete.addListener('place_changed', function () {
-        var place = autocomplete.getPlace();
+        // skjul original input (backend-felt)
+        oldInput.style.display = 'none';
+    }
 
-        var map = 'https://maps.googleapis.com/maps/api/staticmap?center=' + place.name + ',' + place.formatted_address + '&zoom=15&size=400x300&scale=1' + '&markers=' + encodeURIComponent('icon:https://grafikk.ukm.no/profil/bobla/UKM-bobla_bla_0064.png|' + 'label:U|' + place.formatted_address);
+    // 2) Sett inn den nye Places-widgeten (lager sitt eget inputfelt)
+const existingName = (document.getElementById('location-name')?.value || '').trim();
+const existingSted = (document.getElementById('searchMapInput')?.value || '').trim();
+const existingAddr = (document.getElementById('location-address')?.value || '').trim();
 
-        jQuery('#location-name').val(place.name);
-        jQuery('#location-address').val(place.formatted_address);
-        jQuery('#location-lat').val(place.geometry.location.lat());
-        jQuery('#location-lon').val(place.geometry.location.lng());
-        jQuery('#location-map').val(map);
-        jQuery('#location-link').val(place.url);
+// Prioriter: navn → sted-feltet → adresse
+const existing = existingName || existingSted || existingAddr;
 
-        jQuery('#mapLink').attr('href', place.url);
-        jQuery('#map').attr('src', map + '&key=' + GOOGLE_API_KEY);
+    const widget = new google.maps.places.PlaceAutocompleteElement({
+    value: existing
     });
+    widgetHost.innerHTML = '';
+    widgetHost.appendChild(widget);
+
+    // 3) Når bruker velger et sted
+    widget.addEventListener('gmp-select', async (event) => {
+        const place = event.placePrediction.toPlace();
+
+        await place.fetchFields({
+            fields: ["displayName", "formattedAddress", "location", "googleMapsURI"],
+        });
+
+        const name = place.displayName || '';
+        const address = place.formattedAddress || '';
+        const lat = place.location?.lat();
+        const lon = place.location?.lng();
+        const url = place.googleMapsURI || '';
+
+        // Oppdater "sted"-feltet backend forventer
+        jQuery('#searchMapInput').val(name);
+        widget.value = name;
+
+
+        // Bygg static map med koordinater (mer robust enn name+address)
+        const center = `${lat},${lon}`;
+        const markerIcon = 'https://assets.ukm.no/img/UKM_logo_64x64.png';
+
+        const map =
+            'https://maps.googleapis.com/maps/api/staticmap' +
+            '?center=' + encodeURIComponent(center) +
+            '&zoom=15&size=400x300&scale=1' +
+            '&markers=' + encodeURIComponent(`icon:${markerIcon}|label:U|${center}`) +
+            '&key=' + GOOGLE_API_KEY;
+
+        // Sett hidden felter som før
+        jQuery('#location-name').val(name);
+        jQuery('#location-address').val(address);
+        jQuery('#location-lat').val(lat);
+        jQuery('#location-lon').val(lon);
+        jQuery('#location-map').val(map);
+        jQuery('#location-link').val(url);
+
+        // Oppdater preview
+        jQuery('#mapLink').attr('href', url || '#');
+        jQuery('#map').attr('src', map);
+    });
+
+    // 4) Hvis arrangement allerede har kart lagret: vis preview ved load
+    const existingMap = jQuery('#location-map').val();
+    const existingLink = jQuery('#location-link').val();
+    if (existingMap) jQuery('#map').attr('src', existingMap);
+    if (existingLink) jQuery('#mapLink').attr('href', existingLink);
 }
 
 /* SKAL ARRANGEMENTET VÆRE SYNLIG */
