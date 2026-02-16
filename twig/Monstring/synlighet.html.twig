@@ -23,17 +23,17 @@
 							<button type="button" class="btn btn-default {{ not arrangement.erSynlig() ? 'selected' }}" value="false">&nbsp; Skjul &nbsp;</button>
 						</div>
 					</div>
-				</div>
+				</div>	
 			</li>
 
 			{# Gjelder ikke fra desember 2025 etter ny nettside fra TRY #}
 			{# Skal antall deltakere være synlig på nettsiden #} 
-			{# <li class="list-group-item hvisSynlig" style="{{display_hvisSynlig}}">
+			<li class="list-group-item hvisSynlig" style="{{display_hvisSynlig}}">
 				<div class="row">
 					<div class="col-xs-7">
-						<label>Skal antall deltakere være synlig på din {{ arrangement.getEierType() }}sside?</label>
+						<label>Skal antall deltakere være synlig på din nettsiden?</label>
 						<div class="mt-0 help text-muted small">
-							Deltakere info skjules også 
+							Hvis du ønsker å vise frem hvor mange som har meldt seg på, kan du velge å gjøre antall deltakere synlig
 						</div>
 					</div>
 					<div class="col-xs-5" align="right">
@@ -43,7 +43,7 @@
 						</div>
 					</div>
 				</div>
-			</li> #}
+			</li>
 
 			{# TA I MOT PÅMELDING #}
 			<li class="list-group-item hvisSynlig" style="{{display_hvisSynlig}}">
