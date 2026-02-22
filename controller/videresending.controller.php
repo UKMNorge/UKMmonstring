@@ -68,10 +68,16 @@ switch ($arrangement->getType()) {
         );
 
         UKMmonstring::addViewData(
-            'arrangementer_i_fylket',
-            Arrangementer::filterSkipEier(
-                $arrangement->getEierObjekt(),
-                Aktuelle::iFylke(
+            'arrangementer_i_alle_kommuner',
+            array_merge(
+                Aktuelle::bySesong(date('Y')-1)->getAll(),
+                Aktuelle::bySesong(date('Y'))->getAll(),
+                Aktuelle::bySesong(date('Y')+1)->getAll()
+            )
+        );
+
+        UKMmonstring::addViewData(
+            'arrangementer_i_fylket', Arrangementer::filterSkipEier($arrangement->getEierObjekt(), Aktuelle::iFylke(
                     $arrangement->getFylke()
                 )->getAll()
             )
@@ -85,14 +91,14 @@ switch ($arrangement->getType()) {
         $andre_arrangement = [];
         foreach (Aktuelle::getAllCollection()->getAll() as $mottaker) {
             if ($mottaker->getEierType() == 'fylke' && $mottaker->erMonstring()) {
-                if($mottaker->getSesong() > date('Y')-2) { // Henter arrangementer i nåværende og forrige sesonger (år)
+                if ($mottaker->getSesong() >= $last_season) { // Henter arrangementer i nåværende og forrige sesonger (år)
                     $fylke_monstring[] = $mottaker;
                 }
             } elseif ($mottaker->getEierType() == 'fylke') {
                 $fylke_arrangement[] = $mottaker;
             } else {
                 $stop = (int)$mottaker->getStop()->format('Y');
-                if($stop > (int)date("Y")-2) {
+                if ($stop >= $last_season) {
                     $andre_arrangement[] = $mottaker;
                 }
             }

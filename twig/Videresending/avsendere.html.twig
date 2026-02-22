@@ -46,14 +46,14 @@
 		{% if arrangement.getEierType() in ['kommune','fylke'] %}
 			{% if arrangement.getEierType() == 'kommune' %}
 				<div class="col-12 col-sm-6 col-md-4">
-					<div class="list-header">I
+					<div class="list-header as-margin-bottom-space-1">I
 						{{ arrangement.getFylke().erOslo ? 'bydelen' : 'kommunen' }}</div>
 					{% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_av_kommunen } %}{% endembed %}
 				</div>
 			{% endif %}
 
 			<div class="col-12 col-sm-6 col-md-4">
-				<div class="list-header">Andre
+				<div class="list-header as-margin-bottom-space-1">Andre
 					{{ arrangement.getFylke().erOslo ? 'bydeler' : 'kommuner' }}
 					i
 					{{ arrangement.getFylke().getNavn() }}</div>
@@ -61,24 +61,30 @@
 			</div>
 
 			<div class="col-12 col-sm-6 col-md-4">
-				<div class="list-header">Av
+				<div class="list-header as-margin-bottom-space-1">Av
 					{{ arrangement.getFylke().getNavn() }}
 					fylke</div>
 				{% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_av_fylket } %}{% endembed %}
 			</div>
+
+			<div class="col-12 col-sm-6 col-md-4">
+				<div class="list-header as-margin-bottom-space-1">Arrangementer fra hele landet</div>
+				{% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_i_alle_kommuner } %}{% endembed %}
+			</div>
+
 			{# LANDSNIVÅ #}
 		{% else %}
 			<div class="col-12 col-sm-6 col-md-4">
-				<div class="list-header">Fylkesfestivaler</div>
+				<div class="list-header as-margin-bottom-space-1">Fylkesfestivaler</div>
 				{% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_fylke_monstring } %}{% endembed %}
 			</div>
 			<div class="col-12 col-sm-6 col-md-4">
-				<div class="list-header">Fylkenes andre arrangement</div>
+				<div class="list-header as-margin-bottom-space-1">Fylkenes andre arrangement</div>
 				{% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer_fylke } %}{% endembed %}
 			</div>
 
 			<div class="col-12 col-sm-6 col-md-4">
-				<div class="list-header">Dine og lokale arrangement</div>
+				<div class="list-header as-margin-bottom-space-1">Dine og lokale arrangement</div>
 				{% embed "Videresending/avsender.html.twig" with {'avsendere': arrangementer } %}{% endembed %}
 			</div>
 
