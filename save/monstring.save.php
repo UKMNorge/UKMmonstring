@@ -156,10 +156,12 @@ else {
 if ($arrangement->erArrangement()) {
     $arrangement->getInnslagTyper()->leggTil(Typer::getByKey('enkeltperson'));
 } elseif ($arrangement->getInnslagTyper()->getAntall() == 0) {
-    UKMmonstring::getFlashbag()->info(
-        'Det er ikke mulig å ha et arrangement med påmelding uten noen tillatte kategorier. ' .
-            'Vi har derfor åpnet for standard-kategoriene, men du må gjerne redigere de.'
-    );
+    if(!$arrangement->erFerdig()) {
+        UKMmonstring::getFlashbag()->info(
+            'Det er ikke mulig å ha et arrangement med påmelding uten noen tillatte kategorier. ' .
+                'Vi har derfor åpnet for standard-kategoriene, men du må gjerne redigere de.'
+        );
+    }
 }
 
 // FYLKE: nedslagsfelt (fylke / land)
