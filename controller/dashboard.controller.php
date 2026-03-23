@@ -18,8 +18,19 @@ UKMmonstring::addViewData('kalender', apply_filters('UKMWPDASH_calendar',[]));
 /* ANTALL PÅMELDTE (arrangement satt i hoved-controller for mønstring) */
 $antall_innslag = 0;
 $antall_personer = 0;
+$unique_person_ids = [];
+
 foreach( $arrangement->getInnslag()->getAll() as $innslag ) {
     $antall_innslag++;
     $antall_personer += $innslag->getPersoner()->getAntallSimple();
+    foreach ($innslag->getPersoner()->getAll() as $person) {
+        $unique_person_ids[$person->getId()] = true;
+    }
 }
-UKMmonstring::addViewData('antall', ['personer' => $antall_personer, 'innslag' => $antall_innslag]);
+$antall_unike_personer = count($unique_person_ids);
+
+UKMmonstring::addViewData('antall', [
+    'personer' => $antall_personer, 
+    'innslag' => $antall_innslag, 
+    'unike_personer' => $antall_unike_personer
+]);
