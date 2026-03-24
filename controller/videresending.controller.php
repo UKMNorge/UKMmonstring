@@ -60,28 +60,43 @@ switch ($arrangement->getType()) {
             )->getAll()
         );
     case 'fylke':
+        $arrangementerAvFylket = Aktuelle::byEier($arrangement->getFylke())->getAll();
+        
         UKMmonstring::addViewData(
             'arrangementer_av_fylket',
-            Aktuelle::byEier(
-                $arrangement->getFylke()
-            )->getAll()
+            $arrangementerAvFylket
         );
+
+        $arrangementerIFylket = Arrangementer::filterSkipEier($arrangement->getEierObjekt(), Aktuelle::iFylke($arrangement->getFylke())->getAll());
+        UKMmonstring::addViewData(
+            'arrangementer_i_fylket',
+            $arrangementerIFylket
+        );
+
+
+
+        $arrangementerIAlleKommuner = array_merge(Aktuelle::bySesong(date('Y')-1)->getAll(), Aktuelle::bySesong(date('Y'))->getAll(), Aktuelle::bySesong(date('Y')+1)->getAll());
+        
+        // Fjern arrangementer som finnes i $arrangementerAvFylket eller $arrangementerIFylket
+        $arrangementerIAlleKommuner = array_filter($arrangementerIAlleKommuner, function($arrangement) use ($arrangementerAvFylket, $arrangementerIFylket) {
+            foreach ($arrangementerAvFylket as $arrangementAvFylket) {
+                if ($arrangement->getId() == $arrangementAvFylket->getId()) {
+                    return false;
+                }
+            }
+            foreach ($arrangementerIFylket as $arrangementIFylket) {
+                if ($arrangement->getId() == $arrangementIFylket->getId()) {
+                    return false;
+                }
+            }
+            return true;
+        });
 
         UKMmonstring::addViewData(
             'arrangementer_i_alle_kommuner',
-            array_merge(
-                Aktuelle::bySesong(date('Y')-1)->getAll(),
-                Aktuelle::bySesong(date('Y'))->getAll(),
-                Aktuelle::bySesong(date('Y')+1)->getAll()
-            )
+            $arrangementerIAlleKommuner
         );
 
-        UKMmonstring::addViewData(
-            'arrangementer_i_fylket', Arrangementer::filterSkipEier($arrangement->getEierObjekt(), Aktuelle::iFylke(
-                    $arrangement->getFylke()
-                )->getAll()
-            )
-        );
         if ($arrangement->getType() == 'kommune') {
             break;
         }
