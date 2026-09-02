@@ -51,25 +51,42 @@ jQuery(document).ready(() => {
 
 
 /* FILTRER ARRANGEMENT SOM KAN VIDERESENDE TIL ARRANGEMENTET */
-jQuery(document).on('keyup', '#filterArrangement', function () {
-    var words = jQuery(this).val().toLowerCase().split(' ');
-    if (words.length > 1 || (words.length == 1 && words[0].length > 0)) {
-        jQuery('.avsenderListe li.avsenderMonstring').show().filter(function () {
-            var searchIn = jQuery(this).data('filter').toLowerCase();
-            var found = false;
+var arrangementFilterTimer = null;
 
-            words.forEach(function (word) {
-                if (searchIn.indexOf(word) !== -1) {
-                    found = true;
-                    return; // return ut av forEach
-                }
+jQuery(document).on('input', '#filterArrangement', function () {
+    var input = jQuery(this);
+
+    clearTimeout(arrangementFilterTimer);
+    arrangementFilterTimer = setTimeout(function () {
+        var words = input.val()
+            .toLowerCase()
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+        var items = jQuery('.avsenderListe li.avsenderMonstring');
+
+        if (words.length === 0) {
+            items.stop(true, true).show();
+            return;
+        }
+
+        items.each(function () {
+            var el = jQuery(this);
+            var searchIn = el.data('filterLc');
+
+            if (!searchIn) {
+                searchIn = String(el.data('filter') || '').toLowerCase();
+                el.data('filterLc', searchIn);
+            }
+
+            var found = words.some(function (word) {
+                return searchIn.indexOf(word) !== -1;
             });
 
-            return !found;
-        }).slideUp({ duration: 100 });
-    } else {
-        jQuery('.avsenderListe li').stop().slideDown(200);
-    }
+            this.style.display = found ? '' : 'none';
+        });
+    }, 120);
 });
 
 // Hjelpefunksjon for ledetekst i "disse kan videresende til deg"
